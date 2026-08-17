@@ -1,0 +1,83 @@
+generated: '2026-08-17'
+method: derived
+format: nestjs-http-exception
+source: >-
+  Derived from the 4xx/5xx responses declared in openapi/lokki-external-api-openapi.json and
+  openapi/lokki-dashboard-api-openapi.json, enriched from the documented failure modes at
+  https://docs.getlokki.com/api-reference/authentication and Lokki's published Agent Skill
+  (https://docs.getlokki.com/.well-known/agent-skills/lokki/skill.md), and confirmed against a live
+  unauthenticated request to https://prod.api.eu-west-3.lokki.rent/v2/external/verticales on
+  2026-08-17.
+description: >-
+  Lokki does NOT use RFC 9457 application/problem+json. Errors are returned in the default NestJS
+  HTTP-exception envelope. Neither published OpenAPI declares any error response: the partner spec
+  declares only 200 on all seven operations, and the 896-operation Dashboard spec declares 200/201
+  plus a handful of 400/404/409. The catalog below is therefore assembled from the documented and
+  observed behaviour, not from the specs' response objects.
+envelope:
+  media_type: application/json
+  shape: '{ "statusCode": number, "message": string | string[], "error": string }'
+  rfc9457: false
+  problem_types_registry: false
+spec_coverage:
+  external_api:
+    declared_error_responses: 0
+    declared_success_responses: 7
+    note: All seven partner operations declare only a 200. 401/403/404 are real but undocumented in the spec.
+  dashboard_api:
+    declared_error_responses: 11
+    breakdown: {'400': 1, '404': 5, '409': 5}
+    note: 896 operations declare 652 200s and 260 201s; fewer than 2% declare any failure shape.
+problems:
+- status: 401
+  title: Unauthorized
+  error: Unauthorized
+  meaning: >-
+    No access token supplied, an invalid token, or the token sent under the wrong header name. The
+    docs are explicit that requests "with an incorrect header name will return a 401 Unauthorized".
+  remediation: Send the token in the x-api-key header; confirm the token matches the environment (lokki_sk_test_ vs lokki_sk_live_).
+  evidence: https://docs.getlokki.com/api-reference/authentication
+- status: 403
+  title: Forbidden
+  error: Forbidden
+  message: Forbidden resource
+  meaning: >-
+    The token is recognised but lacks the scope for this endpoint. Lokki scopes keys at domain
+    (stores, items), action (read, write) and route (HTTP method) level.
+  remediation: Ask your Lokki representative to widen the key's domain/action/route scopes.
+  evidence: >-
+    Observed verbatim: GET https://prod.api.eu-west-3.lokki.rent/v2/external/verticales with no
+    credentials returned HTTP 403 {"statusCode":403,"message":"Forbidden resource","error":"Forbidden"}
+    on 2026-08-17.
+  note: >-
+    The partner surface answers an anonymous call with 403, not the 401 the docs describe for a
+    missing token — worth knowing when writing error handling.
+- status: 404
+  title: Not Found
+  error: Not Found
+  meaning: The store id/slug, item id, or route does not exist. Unknown routes on the API host return an Express HTML 404, not JSON.
+  remediation: Resolve the store slug from GET /v2/external/stores before requesting its items.
+  evidence: openapi/lokki-dashboard-api-openapi.json (5 operations declare 404)
+- status: 400
+  title: Bad Request
+  error: Bad Request
+  meaning: Request validation failed — malformed query parameter, unparsable date in from/to, or an out-of-range limit/skip.
+  remediation: Check the parameter types in the OpenAPI; message is an array of validation strings under NestJS class-validator.
+  evidence: openapi/lokki-dashboard-api-openapi.json (1 operation declares 400)
+- status: 409
+  title: Conflict
+  error: Conflict
+  meaning: State conflict on a write operation (duplicate slug, already-existing resource). Dashboard API only; not reachable on the partner surface.
+  evidence: openapi/lokki-dashboard-api-openapi.json (5 operations declare 409)
+- status: 429
+  title: Too Many Requests
+  meaning: >-
+    Rate limit exhausted. Not documented, and not declared in either spec, but the API host emits
+    x-ratelimit-limit / x-ratelimit-remaining / x-ratelimit-reset, which is the express-rate-limit
+    signature and returns 429 on exhaustion.
+  remediation: Back off until the epoch second in x-ratelimit-reset.
+  evidence: rate-limits/lokki-rate-limits.yml
+gaps:
+- No error reference page in the documentation.
+- No machine-readable error code vocabulary; message is free text.
+- No 4xx/5xx responses declared on any partner operation, so generated clients will have no typed error models.

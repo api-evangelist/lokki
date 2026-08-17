@@ -1,20 +1,124 @@
 aid: lokki
 name: Lokki
-description: 'Lokki is a company surfaced as a portfolio company of serena and added to the API Evangelist
-  network as a stub for enrichment. Sector: climate-tech. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: Lokki is a Grenoble, France rental-management SaaS (getlokki.com) used by 2,500+ equipment
+  rental businesses across bikes, e-bikes, scooters, cars, ski, climbing, surf, paddle, canoe/kayak,
+  boats, event gear, groundskeeping equipment and tooling, paired with the lokki.rent consumer rental
+  marketplace. Lokki publishes a partner-facing read-only REST API — the Lokki External API, seven
+  operations on https://prod.api.eu-west-3.lokki.rent covering stores (rental providers), store items
+  with date-range pricing and stock, and the verticale/category taxonomy — documented on a Mintlify
+  docs host at docs.getlokki.com with an OpenAPI 3.1 specification, llms.txt, an A2A agent card, a
+  provider-authored Agent Skill and an anonymous documentation MCP server. Authentication is an
+  environment-scoped API key in the x-api-key header (lokki_sk_test_ for staging, lokki_sk_live_ for
+  production) issued by a Lokki representative under a partnership agreement, with scopes at domain,
+  action and route level. The same production host also serves an unauthenticated NestJS Swagger
+  document for the 896-operation internal Dashboard / Online Store API. Lokki has raised roughly
+  €6.3M, led by blisce with Racine2 (Serena + makesense), 50 Partners Impact, FJ Labs and Silence VC.
+accessModel:
+  pricing: paid
+  onboarding: sales
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Sales-gated API keys
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-08-17'
+  method: derived
+image: https://cdn.prod.website-files.com/5e287889fb7cee1c505303f4/66d86a1b9b17225aee5db549_logo.png
 url: https://raw.githubusercontent.com/api-evangelist/lokki/refs/heads/main/apis.yml
 x-type: company
 x-source: serena-portfolio
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: published-openapi-and-agent-surface
 specificationVersion: '0.20'
 created: '2026-08-17'
 modified: '2026-08-17'
 tags:
 - Company
 - Climate Tech
-apis: []
+- Circular Economy
+- Rental
+- Equipment Rental
+- Bike Rental
+- Marketplace
+- Booking
+- Reservations
+- Inventory
+- Catalog
+- Pricing
+- Availability
+- Mobility
+- Outdoor Recreation
+- Point of Sale
+- SaaS
+- France
+- MCP
+- Agents
+- Agent Skills
+apis:
+- aid: lokki:lokki-external-api
+  name: Lokki External API
+  description: The partner-facing read-only Lokki API — seven GET operations over rental providers
+    (stores), their store items with date-range pricing and stock, and the two-level verticale /
+    category taxonomy. Documented publicly at docs.getlokki.com with an OpenAPI 3.1 specification;
+    calls require an environment-scoped API key issued by a Lokki representative.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Stores
+  - Store Items
+  - Categories
+  - Verticales
+  - Rental
+  - Pricing
+  - Availability
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-external-api-openapi.json
+  - type: Overlay
+    url: overlays/lokki-external-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+- aid: lokki:lokki-dashboard-api
+  name: Lokki Dashboard API
+  description: 'The main API powering the Lokki Dashboard and Online Store: 896 operations across
+    company, order, order-event, long-term-rental (LLD), online-store, products, payment, delivery,
+    workshop, reconditioning, visibility and admin namespaces. Its NestJS Swagger UI and OpenAPI 3.0
+    document are served unauthenticated from the production API host at /v2/api and /v2/api-json;
+    every operation itself requires a JWT in the x-access-token header. Lokki does not document this
+    surface as a partner product — the partner contract is the Lokki External API.'
+  humanURL: https://prod.api.eu-west-3.lokki.rent/v2/api
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Dashboard
+  - Online Store
+  - Orders
+  - Bookings
+  - Products
+  - Payments
+  - Workshop
+  - Internal
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-dashboard-api-openapi.json
+  - type: Overlay
+    url: overlays/lokki-dashboard-api-overlay.yaml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -23,3 +127,68 @@ maintainers:
 common:
 - type: Website
   url: https://www.lokki.rent/
+- type: Portal
+  url: https://solutions.lokki.rent/en
+- type: DeveloperPortal
+  url: https://docs.getlokki.com/
+- type: Documentation
+  url: https://docs.getlokki.com/
+- type: APIReference
+  url: https://docs.getlokki.com/api-reference/getting-started
+- type: GettingStarted
+  url: https://docs.getlokki.com/api-reference/getting-started
+- type: Authentication
+  url: authentication/lokki-authentication.yml
+- type: HelpCenter
+  url: https://help.getlokki.com/fr/
+- type: Blog
+  url: https://solutions.lokki.rent/en/blog
+- type: GitHubOrganization
+  url: https://github.com/LokkiApp
+- type: Pricing
+  url: https://solutions.lokki.rent/en/tarifs
+- type: Plans
+  url: plans/lokki-plans-pricing.yml
+- type: SignUp
+  url: https://app.getlokki.com/welcome
+- type: Login
+  url: https://app.getlokki.com/
+- type: TermsOfService
+  url: https://solutions.lokki.rent/legals/conditions-generales-dutilisation
+- type: PrivacyPolicy
+  url: https://solutions.lokki.rent/legals/politique-de-confidentialite
+- type: StatusPage
+  url: https://status.getlokki.com/
+- type: Deprecation
+  url: https://docs.getlokki.com/api-reference/stores/deprecations
+- type: Lifecycle
+  url: lifecycle/lokki-lifecycle.yml
+- type: Conventions
+  url: conventions/lokki-conventions.yml
+- type: RateLimits
+  url: rate-limits/lokki-rate-limits.yml
+- type: Sandbox
+  url: sandbox/lokki-sandbox.yml
+- type: Conformance
+  url: conformance/lokki-conformance.yml
+- type: DomainSecurity
+  url: security/lokki-domain-security.yml
+- type: Packages
+  url: packages/lokki-packages.yml
+- type: LLMsTxt
+  url: llms/lokki-llms.txt
+- type: WellKnown
+  url: well-known/lokki-well-known.yml
+- type: MCPServer
+  url: mcp/lokki-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/lokki-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/lokki-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-17'
+  status: enriched
+  artifacts_added: 28
+  pass: local-v1

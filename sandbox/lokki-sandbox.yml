@@ -1,0 +1,58 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://docs.getlokki.com/api-reference/getting-started,
+  https://docs.getlokki.com/api-reference/authentication and
+  https://docs.getlokki.com/.well-known/agent-skills/lokki/skill.md
+description: >-
+  Lokki publishes a two-environment model — a staging environment holding test data and a production
+  environment holding live data — with environment-bound API keys. It is a real sandbox in the sense
+  that a partner can develop against non-production data, but it is NOT self-serve: both keys are
+  issued by a Lokki representative, and there are no published test fixtures, test cards, seeded
+  stores, time simulation, or trigger tooling.
+
+environments:
+- name: staging
+  base_url: https://staging.api.eu-west-3.lokki.rent
+  data: test data, not intended for production
+  key_prefix: lokki_sk_test_
+  http_status_probed: 403 (anonymous, 2026-08-17)
+- name: production
+  base_url: https://prod.api.eu-west-3.lokki.rent
+  data: live data
+  key_prefix: lokki_sk_live_
+  http_status_probed: 403 (anonymous, 2026-08-17)
+
+key_isolation:
+  enforced: true
+  statement: >-
+    "Access tokens are environment-specific. A token generated for Staging will not work on
+    Production, and vice-versa."
+  docs: https://docs.getlokki.com/api-reference/authentication
+
+self_serve: false
+signup_for_keys: Contact a Lokki representative; keys are issued as part of the partnership process.
+
+preview_flag:
+  param: preview
+  applies_to:
+  - GET /v2/external/stores/{slug}/items
+  - GET /v2/external/stores/{slug}/items/{itemId}
+  source: openapi/lokki-external-api-openapi.json
+  note: >-
+    A `preview` query parameter exists on both store-item operations in the published spec. Its
+    semantics are not documented anywhere in the docs or the Agent Skill, so no behaviour is asserted
+    here — recorded only because it is the one test-affordance the contract exposes.
+
+not_published:
+  test_credentials: false
+  test_cards: false
+  test_bank_accounts: false
+  hosted_test_tokens: false
+  seeded_fixtures: false
+  time_simulation: false
+  event_triggers: false
+  mock_server: false
+  notes: >-
+    No published test values of any kind. The key prefixes above are the format strings Lokki
+    documents, not usable credentials, and no example token was copied into this repository.

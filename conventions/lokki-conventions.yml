@@ -1,0 +1,164 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://docs.getlokki.com/api-reference/getting-started,
+  https://docs.getlokki.com/api-reference/authentication,
+  https://docs.getlokki.com/api-reference/stores/about,
+  https://docs.getlokki.com/api-reference/store-items/about,
+  https://docs.getlokki.com/api-reference/stores/deprecations, and
+  https://docs.getlokki.com/.well-known/agent-skills/lokki/skill.md — cross-checked against
+  openapi/lokki-external-api-openapi.json (parameters, response envelopes) and against live
+  unauthenticated responses observed on https://prod.api.eu-west-3.lokki.rent on 2026-08-17.
+description: >-
+  How the Lokki External API behaves across every operation: authentication style, the query filter
+  operator grammar, pagination, sparse fieldsets, localization, the date-range parameters that change
+  what pricing and stock mean, versioning, the error envelope and rate-limit signaling. These are the
+  runtime semantics the OpenAPI does not fully express.
+
+base_url: https://prod.api.eu-west-3.lokki.rent
+staging_base_url: https://staging.api.eu-west-3.lokki.rent
+api_style: REST over HTTPS, JSON responses, read-only (all seven partner operations are GET)
+
+authentication:
+  scheme: API key in a request header
+  header: x-api-key
+  key_types:
+  - lokki_sk_test_ (staging)
+  - lokki_sk_live_ (production)
+  issuance: Issued by a Lokki representative under a partnership agreement; there is no self-serve key.
+  scopes: Keys are scoped at three levels — domain (e.g. stores, items), action (read, write) and route (HTTP method).
+  docs: https://docs.getlokki.com/api-reference/authentication
+  detail: authentication/lokki-authentication.yml
+  discrepancy: >-
+    The docs, the getting-started page and Lokki's own published Agent Skill all name the header
+    `x-api-key`. The published OpenAPI declares the security scheme as `x-access-token` (apiKey, in:
+    header), which is also the header the internal Dashboard API uses for its JWT. An integrator
+    reading only the spec would send the wrong header; the docs are the newer statement and the docs
+    say a wrong header name returns 401. Recorded rather than resolved — only Lokki can say which is
+    authoritative.
+
+idempotency:
+  supported: false
+  mechanism: null
+  notes: >-
+    No Idempotency-Key header, no idempotency section in the documentation, and no occurrence of
+    "idempoten" anywhere in either published OpenAPI. The partner surface is read-only, so every
+    operation is inherently idempotent, but there is no idempotency contract for the write surface.
+
+pagination:
+  style: offset
+  request_params:
+    limit: page size
+    skip: number of documents to skip
+    sort: sort expression
+  response_fields:
+    total: total number of documents matching the query
+    docs: array of results for this page
+  applies_to:
+  - GET /v2/external/stores
+  - GET /v2/external/verticales/categories
+  - GET /v2/external/stores/{slug}/items
+  count_endpoint: GET /v2/external/stores/count returns only {total} for a filter set.
+  notes: >-
+    Lokki's own Agent Skill warns that the default limit is low and that limit/skip should always be
+    set explicitly for large result sets. The published spec does not state the default or maximum.
+  docs: https://docs.getlokki.com/api-reference/stores/get-many
+
+filtering:
+  style: dotted operator suffix on the field name
+  operators:
+  - equals
+  - notEquals
+  - in
+  - notIn
+  examples:
+  - verticale.equals=BIKE
+  - verticale.in=BIKE,SKI
+  - verticale.notIn=BOAT
+  geospatial:
+    params: [position.latitude, position.longitude, position.radius]
+    applies_to: [GET /v2/external/stores, GET /v2/external/stores/count]
+  item_filters: [verticale, verticaleCategoryIds, ids, sortBy]
+
+sparse_fieldsets:
+  supported: true
+  mechanism: fields query parameter
+  applies_to: stores (get-one, get-many), categories, store items
+  notes: Projection only — there is no expansion parameter; related objects are already inlined as modules.
+
+field_expansion:
+  supported: false
+  notes: >-
+    Responses are pre-composed into modules (profile, branding, geo, temporal, pricing, reviews,
+    booking, modules) rather than returning ids the client expands.
+
+localization:
+  param: lang
+  supported: [fr, en, nl, de, it, pt, es, pl]
+  default: fr
+  notes: >-
+    Localized text lives under infos.name / infos.description on stores, items, verticales and
+    categories. A store also reports localization.current and localization.available.
+
+date_range_semantics:
+  params: [from, to]
+  applies_to:
+  - 'GET /v2/external/stores/{slug}/items'
+  - 'GET /v2/external/stores/{slug}/items/{itemId}'
+  behaviour: >-
+    from/to are optional but change the MEANING of two fields. Without them, pricing.price is the
+    "starting from" (lowest available) price and stock.quantity is the maximum theoretical stock.
+    With them, pricing is computed for the requested window (pricing.basis switches from LOWEST_PRICE
+    to RANGE_COMPUTED) and stock.quantity is real availability for that window.
+  docs: https://docs.getlokki.com/api-reference/store-items/about
+
+metadata:
+  supported: false
+  notes: No customer-writable metadata surface; the partner API is read-only.
+
+request_tracing:
+  request_id_header: null
+  notes: >-
+    No request-id or correlation header was observed on live responses from
+    https://prod.api.eu-west-3.lokki.rent (2026-08-17). Responses carry only date, content-type,
+    x-powered-by: Express, vary, etag and, on some routes, the x-ratelimit-* family.
+
+versioning:
+  scheme: URI path
+  current: v2
+  mechanism: /v2/ path prefix; info.version reports "2.0"
+  header: null
+  notes: >-
+    There is no version request header and no dated version pinning. Breaking change management is
+    handled by field-level deprecation inside v2 rather than a new major version — see
+    lifecycle/lokki-lifecycle.yml and https://docs.getlokki.com/api-reference/stores/deprecations.
+
+error_envelope:
+  media_type: application/json
+  format: nestjs-http-exception
+  shape: '{ "statusCode": number, "message": string, "error": string }'
+  rfc9457: false
+  observed: '{"statusCode":403,"message":"Forbidden resource","error":"Forbidden"}'
+  detail: errors/lokki-problem-types.yml
+
+rate_limit_signaling:
+  headers: [x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset]
+  retry_after: false
+  status_on_exhaustion: 429 (documented nowhere; inferred from the express-rate-limit style headers)
+  detail: rate-limits/lokki-rate-limits.yml
+
+security_notes:
+  swagger_exposed_unauthenticated: >-
+    The production API host serves the full NestJS Swagger UI at /v2/api and the OpenAPI document at
+    /v2/api-json with no credentials — 896 operations including /v2/admin/*, /v2/login/* and
+    /v2/payment-v2/*. The operations themselves require an x-access-token JWT, so this is disclosure
+    of the internal contract rather than of data. Recorded because a partner-facing product normally
+    restricts the internal Swagger surface; only Lokki can decide whether that exposure is intended.
+
+cross_references:
+  authentication: authentication/lokki-authentication.yml
+  errors: errors/lokki-problem-types.yml
+  lifecycle: lifecycle/lokki-lifecycle.yml
+  rate_limits: rate-limits/lokki-rate-limits.yml
+  sandbox: sandbox/lokki-sandbox.yml
+  data_model: data-model/lokki-data-model.yml

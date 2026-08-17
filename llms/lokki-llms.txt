@@ -1,0 +1,22 @@
+# Lokki - API Documentation
+
+## Docs
+
+- [Lokki Documentation](https://docs.getlokki.com/index.md): Get started with Lokki
+- [Getting Started](https://docs.getlokki.com/api-reference/getting-started.md): Welcome to the Lokki technical documentation
+- [Authentication](https://docs.getlokki.com/api-reference/authentication.md): How to authenticate your requests to the Lokki API
+- [Stores - About](https://docs.getlokki.com/api-reference/stores/about.md): Detailed information about rental providers (stores) and their settings
+- [Deprecation Guide](https://docs.getlokki.com/api-reference/stores/deprecations.md): Migration guide for the new modular Store data structure
+- [Get One Store](https://docs.getlokki.com/api-reference/stores/get-one.md)
+- [Get Many Stores](https://docs.getlokki.com/api-reference/stores/get-many.md)
+- [Get Store Count](https://docs.getlokki.com/api-reference/stores/get-count.md)
+- [Store Items - About](https://docs.getlokki.com/api-reference/store-items/about.md): Detailed information about items, pricing, and availability
+- [Get One Store Item](https://docs.getlokki.com/api-reference/store-items/get-one.md)
+- [Get Many Store Items](https://docs.getlokki.com/api-reference/store-items/get-many.md)
+- [Categories - About](https://docs.getlokki.com/api-reference/categories/about.md): Understand the hierarchy of verticales and categories in Lokki
+- [Get Verticales](https://docs.getlokki.com/api-reference/categories/get-verticales.md)
+- [Get Categories](https://docs.getlokki.com/api-reference/categories/get-categories.md)
+
+## OpenAPI Specs
+
+- [openapi](https://docs.getlokki.com/api-reference/openapi.json)

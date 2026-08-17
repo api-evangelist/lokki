@@ -1,0 +1,70 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://docs.getlokki.com/.well-known/agent-skills/lokki/skill.md (provider-published, saved
+  verbatim) plus API Evangelist skills generated from openapi/lokki-external-api-openapi.json,
+  conventions/lokki-conventions.yml, errors/lokki-problem-types.yml,
+  lifecycle/lokki-lifecycle.yml and data-model/lokki-data-model.yml.
+note: >-
+  Lokki publishes its own Agent Skill, referenced from its A2A agent card — one of the few providers in
+  the catalog that does. It is preserved verbatim as lokki-provider-skill.md and nothing in it was
+  rewritten. The four generated skills sit alongside it and cover the marquee flows at operation level:
+  every step names an operationId verified verbatim in the published spec (all seven are
+  external__* identifiers), and none was invented. Because the partner surface is read-only there is no
+  write flow to package.
+skills:
+- file: lokki-provider-skill.md
+  name: Lokki
+  method: searched
+  source: https://docs.getlokki.com/.well-known/agent-skills/lokki/skill.md
+  http_status: 200
+  content_type: text/markdown
+  publisher: Lokki
+  verbatim: true
+  api: openapi/lokki-external-api-openapi.json
+  operations: []
+  description: >-
+    Lokki's own published Agent Skill. Covers the product summary, when to reach for the API,
+    authentication, the six documented endpoint shapes, the common query parameters, the verticale list,
+    the store and item data structures, decision guidance, a seven-step workflow, nine "common gotchas"
+    and a ten-item verification checklist. It documents paths rather than operationIds, and it names the
+    authentication header as x-api-key — which is where the discrepancy with the spec's x-access-token
+    scheme was first noticed.
+- file: lokki-find-rental-providers.md
+  name: Find rental providers near a location
+  method: generated
+  api: openapi/lokki-external-api-openapi.json
+  operations: [external__getCountStores, external__getManyStores]
+  description: Count then page the store list with verticale and geospatial filters, project with fields, and resolve the slug the item routes require.
+- file: lokki-price-and-check-availability.md
+  name: Price a rental and check availability for a date range
+  method: generated
+  api: openapi/lokki-external-api-openapi.json
+  operations: [external__getOneStore, external__getManyStoreItems, external__getOneStoreItem]
+  description: >-
+    The from/to flow. Explains that the date range changes what pricing.price and stock.availableQuantity
+    MEAN (LOWEST_PRICE vs RANGE_COMPUTED), not merely their values, plus deposits, LCD vs LLD and the
+    duration constraints.
+- file: lokki-browse-the-rental-taxonomy.md
+  name: Browse the rental taxonomy and filter by sector
+  method: generated
+  api: openapi/lokki-external-api-openapi.json
+  operations: [external__getManyVerticales, external__getManyCategories, external__getManyStoreItems]
+  description: Load and cache the two-level verticale/category taxonomy — the only precise filter the API offers, since there is no keyword search.
+- file: lokki-migrate-off-deprecated-store-fields.md
+  name: Migrate off the deprecated flat store fields
+  method: generated
+  api: openapi/lokki-external-api-openapi.json
+  operations: [external__getOneStore, external__getManyStores]
+  description: >-
+    Apply Lokki's published 11-row mapping table (21 deprecated properties) from the flat store fields to
+    the modular structure, including the fields projection change that silently breaks migrations, with
+    no Sunset header and no changelog to warn you.
+operations_verified:
+- external__getManyVerticales
+- external__getManyCategories
+- external__getManyStores
+- external__getCountStores
+- external__getOneStore
+- external__getOneStoreItem
+- external__getManyStoreItems

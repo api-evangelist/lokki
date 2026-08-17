@@ -1,0 +1,127 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Lokki External API
+  version: 1.0.0
+extends: ../openapi/lokki-external-api-openapi.json
+x-provenance:
+  generated: '2026-08-17'
+  method: generated
+  source: >-
+    Enhancements API Evangelist derived for the Lokki External API from the published documentation at
+    docs.getlokki.com, Lokki's own Agent Skill, and live probes of
+    https://prod.api.eu-west-3.lokki.rent on 2026-08-17. The original specification, fetched verbatim
+    from https://docs.getlokki.com/api-reference/openapi.json, is never mutated — every change lives
+    here as an Overlay 1.0.0 action.
+actions:
+- target: $.info
+  description: Add contact, documentation and license context the published spec omits (it declares only a bare license name "MIT", with no url and no contact block).
+  update:
+    contact:
+      name: Lokki API partnerships
+      url: https://docs.getlokki.com/api-reference/authentication
+    x-documentation: https://docs.getlokki.com/api-reference/getting-started
+    x-llms-txt: https://docs.getlokki.com/llms.txt
+    x-agent-skill: https://docs.getlokki.com/.well-known/agent-skills/lokki/skill.md
+    x-deprecation-guide: https://docs.getlokki.com/api-reference/stores/deprecations
+    x-status-page: https://status.getlokki.com/
+- target: $.servers
+  description: >-
+    Name the two environments. The published spec lists staging.api.eu-west-3.lokki.rent and
+    prod.api.eu-west-3.getlokki.com with no descriptions; the documentation names the production host as
+    prod.api.eu-west-3.lokki.rent. Both production hosts resolve and both are Lokki-owned domains, so
+    the overlay records all three rather than choosing for the provider.
+  update:
+  - url: https://prod.api.eu-west-3.lokki.rent
+    description: Production — the host named in the documentation, the authentication example and the Agent Skill.
+  - url: https://prod.api.eu-west-3.getlokki.com
+    description: Production — the host named in the published spec's servers[] block. Same product, Lokki-owned domain, but not the host the docs tell partners to call.
+  - url: https://staging.api.eu-west-3.lokki.rent
+    description: Staging — test data. Requires a lokki_sk_test_ key; production keys are rejected.
+- target: $.components.securitySchemes
+  description: >-
+    Record the header discrepancy. The spec declares x-access-token; the documentation, the
+    getting-started page and Lokki's Agent Skill all specify x-api-key, and the Skill lists the wrong
+    header name as a known cause of 401. Do NOT silently rewrite the provider's scheme — add the
+    documented one alongside and flag it.
+  update:
+    x-api-key:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: >-
+        The Access Token header specified by https://docs.getlokki.com/api-reference/authentication.
+        Keys are environment-bound (lokki_sk_test_ for staging, lokki_sk_live_ for production) and are
+        issued by a Lokki representative. Scoped at domain, action and route level; a key missing the
+        required scope returns 403.
+- target: $.components.securitySchemes['x-access-token']
+  description: Annotate the spec's own scheme with what it appears to be.
+  update:
+    x-note: >-
+      Declared in the published partner spec, and also the header the internal Dashboard API uses for
+      its JWT. The partner documentation specifies x-api-key instead. See
+      authentication/lokki-authentication.yml.
+- target: $.paths['/v2/external/stores'].get
+  description: Add the missing error responses. The published spec declares only a 200 on all seven operations; 401, 403, 404 and 429 are all reachable.
+  update:
+    responses:
+      '401':
+        description: No access token, an invalid token, or the token sent under the wrong header name.
+      '403':
+        description: 'The token lacks the domain/action/route scope for this endpoint. Observed body: {"statusCode":403,"message":"Forbidden resource","error":"Forbidden"}.'
+      '429':
+        description: Rate limit exhausted. Undocumented; the API host emits x-ratelimit-limit / x-ratelimit-remaining / x-ratelimit-reset.
+- target: $.paths['/v2/external/stores/{slug}/items'].get
+  description: Record that from/to change the MEANING of pricing and stock, not just their values, and add the missing error responses.
+  update:
+    x-state-dependent-fields:
+      pricing.basis: LOWEST_PRICE without from/to, RANGE_COMPUTED with them.
+      pricing.price: '"Starting from" (lowest available) without from/to; computed for the window with them.'
+      stock.availableQuantity: Maximum theoretical stock without from/to; real availability for the window with them.
+    responses:
+      '401':
+        description: No access token, an invalid token, or the token sent under the wrong header name.
+      '403':
+        description: The token lacks the domain/action/route scope for this endpoint.
+      '404':
+        description: Unknown store slug. Resolve the slug from GET /v2/external/stores first.
+- target: $.paths['/v2/external/stores/{slug}/items/{itemId}'].get
+  description: Same state-dependent pricing/stock semantics on the single-item read.
+  update:
+    x-state-dependent-fields:
+      pricing.basis: LOWEST_PRICE without from/to, RANGE_COMPUTED with them.
+      stock.availableQuantity: Maximum theoretical stock without from/to; real availability for the window with them.
+    responses:
+      '401':
+        description: No access token, an invalid token, or the token sent under the wrong header name.
+      '403':
+        description: The token lacks the domain/action/route scope for this endpoint.
+      '404':
+        description: Unknown store slug or item id.
+- target: $.components.schemas.Deprecated_External_Store
+  description: >-
+    Point the 21 deprecated flat properties at their modular replacements, so a code generator or agent
+    reading only the spec can migrate without reading the prose guide.
+  update:
+    x-migration-guide: https://docs.getlokki.com/api-reference/stores/deprecations
+    x-field-mapping:
+      name: profile.name
+      logoURL: branding.logoURL
+      bannerURL: branding.banners.urls
+      verticales: profile.verticales
+      address: geo.location.address
+      lat: geo.location.point.lat
+      lng: geo.location.point.lng
+      addressComponents: geo.location.components
+      googleRating: reviews.google.rating
+      googleReviewsNb: reviews.google.total
+      currency: pricing.currency
+- target: $
+  description: Record the cross-cutting runtime semantics the specification cannot express, as links to the repository artifacts that hold them.
+  update:
+    x-conventions: ../conventions/lokki-conventions.yml
+    x-error-catalog: ../errors/lokki-problem-types.yml
+    x-rate-limits: ../rate-limits/lokki-rate-limits.yml
+    x-lifecycle: ../lifecycle/lokki-lifecycle.yml
+    x-data-model: ../data-model/lokki-data-model.yml
+    x-sandbox: ../sandbox/lokki-sandbox.yml
+    x-authentication: ../authentication/lokki-authentication.yml

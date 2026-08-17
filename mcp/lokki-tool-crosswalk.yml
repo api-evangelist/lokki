@@ -1,0 +1,106 @@
+generated: '2026-08-17'
+method: derived
+source: >-
+  Derived by binding the live MCP tool list captured anonymously from https://docs.getlokki.com/mcp
+  (verbatim in mcp/lokki-mcp-tools.json, 3 tools with real inputSchemas) against the published
+  OpenAPI at openapi/lokki-external-api-openapi.json (7 operations) and the internal Swagger document
+  at openapi/lokki-dashboard-api-openapi.json (896 operations).
+purpose: >-
+  Bind each MCP tool to the REST operation(s) that back it, so a tool is a first-class discovery unit
+  with a real inputSchema. For Lokki the finding is a clean separation rather than an overlap: the MCP
+  surface and the REST surface do not intersect at all. All three tools are documentation tools with no
+  REST backing, and all seven partner REST operations have no tool. Nothing was mapped by guesswork.
+
+surfaces:
+  rest_openapi:
+    file: openapi/lokki-external-api-openapi.json
+    operations: 7
+    gated: true
+    note: Contract is public; calls require a partner API key in x-api-key.
+  rest_openapi_internal:
+    file: openapi/lokki-dashboard-api-openapi.json
+    operations: 896
+    gated: true
+    note: >-
+      Swagger document served unauthenticated at https://prod.api.eu-west-3.lokki.rent/v2/api-json;
+      operations require an x-access-token JWT. Not a partner product, so it is excluded from the
+      coverage math below and listed only for completeness.
+  graphql:
+    endpoint: null
+    note: No GraphQL surface. No /graphql path on any Lokki host, no mention in the docs or either spec.
+  mcp:
+    url: https://docs.getlokki.com/mcp
+    gated: false
+    tools: 3
+    kind: documentation-only (Mintlify docs MCP)
+
+crosswalk: []
+
+mcp_only:
+- tool: search_lokki_api_documentation
+  reason: >-
+    Documentation search over the Mintlify knowledge base. Backed by the docs platform's own index,
+    not by any Lokki REST operation.
+- tool: query_docs_filesystem_lokki_api_documentation
+  reason: >-
+    Read-only virtual filesystem over the documentation pages and specs. Platform capability; no Lokki
+    REST equivalent.
+- tool: submit_feedback
+  reason: >-
+    Writes documentation feedback to the docs platform. The only non-read-only tool Lokki exposes, and
+    it does not touch Lokki product data.
+
+rest_only:
+- operation: external__getManyStores
+  method: GET
+  path: /v2/external/stores
+  reason: no MCP tool exposes it
+  candidate_tool: list_stores
+- operation: external__getOneStore
+  method: GET
+  path: /v2/external/stores/{id}
+  reason: no MCP tool exposes it
+  candidate_tool: get_store
+- operation: external__getCountStores
+  method: GET
+  path: /v2/external/stores/count
+  reason: no MCP tool exposes it
+  candidate_tool: count_stores
+- operation: external__getManyStoreItems
+  method: GET
+  path: /v2/external/stores/{slug}/items
+  reason: no MCP tool exposes it
+  candidate_tool: list_store_items
+- operation: external__getOneStoreItem
+  method: GET
+  path: /v2/external/stores/{slug}/items/{itemId}
+  reason: no MCP tool exposes it
+  candidate_tool: get_store_item
+- operation: external__getManyVerticales
+  method: GET
+  path: /v2/external/verticales
+  reason: no MCP tool exposes it
+  candidate_tool: list_verticales
+- operation: external__getManyCategories
+  method: GET
+  path: /v2/external/verticales/categories
+  reason: no MCP tool exposes it
+  candidate_tool: list_categories
+rest_only_note: >-
+  candidate_tool names are illustrative of the gap only. No such tools exist, no endpoint serves them,
+  and none should be treated as an agent surface. Every one of these operations already has a real
+  inputSchema in the published OpenAPI, so wrapping them would be mechanical.
+
+coverage:
+  mcp_tools: 3
+  mcp_tools_bound_to_rest: 0
+  mcp_tools_documentation_only: 3
+  rest_operations_partner: 7
+  rest_operations_with_tool: 0
+  rest_operations_without_tool: 7
+  binding_rate: 0.0
+  finding: >-
+    Zero overlap. Lokki's agent investment is entirely in DISCOVERY (llms.txt, an agent card, a
+    provider-authored Agent Skill, a docs MCP server) and none of it is in ACTION. An agent handed
+    these surfaces can read every word of the Lokki documentation and still cannot look up a rental
+    store, because the only callable path is REST with a sales-issued key.

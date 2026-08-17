@@ -1,0 +1,66 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: Lokki
+providerId: lokki
+generated: '2026-08-17'
+method: probed
+source: >-
+  Live unauthenticated responses from https://prod.api.eu-west-3.lokki.rent observed on 2026-08-17.
+  Lokki publishes NO rate-limit documentation: there is no rate-limit page on docs.getlokki.com, no
+  mention of limits in llms.txt or llms-full.txt, and no rate-limit headers or 429 response declared
+  in either published OpenAPI. Every value below was read off the wire.
+description: >-
+  Lokki does not document rate limits. The production API host does emit an express-rate-limit header
+  triple on routes handled outside the /v2 controllers, so the runtime signal exists even though the
+  contract does not. Recorded as probed, with the specific caveat that the headers were NOT present on
+  the partner /v2/external/* responses observed.
+docs: null
+limit_count: 1
+headers:
+  limit: x-ratelimit-limit
+  remaining: x-ratelimit-remaining
+  reset: x-ratelimit-reset
+  reset_format: unix epoch seconds
+  retry_after: null
+  request_id: null
+responseCodes:
+  throttled: 429
+  throttled_confirmed: false
+  note: >-
+    429 is the express-rate-limit default and is inferred from the header family, not observed — the
+    probe stayed far below the limit deliberately.
+limits:
+- name: Default per-client request budget (production API host)
+  scope: per-client (IP/connection — the keying is not published)
+  metric: requests
+  limit: 200
+  window: unknown
+  timeFrame: unknown
+  observed:
+    endpoint: https://prod.api.eu-west-3.lokki.rent/ (and any unrouted path)
+    http_status: 404
+    x_ratelimit_limit: 200
+    x_ratelimit_remaining: 199
+    x_ratelimit_reset_offsets_seconds: [10, 28, 50]
+  note: >-
+    x-ratelimit-limit was 200 on every observation and x-ratelimit-remaining was 199 on every
+    observation, with x-ratelimit-reset landing 10s, 28s and 50s ahead of the response Date across
+    three probes. Remaining never decremented across requests and the reset target moved
+    non-monotonically, which is the signature of several instances behind a load balancer each holding
+    its own in-memory window. The effective per-client budget is therefore 200 per window PER
+    INSTANCE, and the window length cannot be established from outside — it is at most 60 seconds.
+observations:
+- endpoint: https://prod.api.eu-west-3.lokki.rent/v2/external/verticales
+  http_status: 403
+  rate_limit_headers_present: false
+  note: >-
+    The partner endpoints returned NO x-ratelimit-* headers. Either the limiter is not mounted on the
+    /v2 routes or the guard rejects before the limiter runs. An agent integrating the partner API gets
+    no runtime rate-limit signal at all.
+- endpoint: https://staging.api.eu-west-3.lokki.rent/v2/external/verticales
+  http_status: 403
+  rate_limit_headers_present: false
+gaps:
+- No published limits, no per-plan quotas, no burst policy, no documented 429 body.
+- No Retry-After header, so a client must convert the epoch in x-ratelimit-reset itself.
+- Rate-limit headers absent from exactly the routes partners are told to call.

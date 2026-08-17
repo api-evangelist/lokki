@@ -1,0 +1,91 @@
+generated: '2026-08-17'
+method: probed
+status: published
+source: https://docs.getlokki.com/mcp
+description: >-
+  Lokki operates ONE remote MCP server, at https://docs.getlokki.com/mcp. It is the documentation MCP
+  server that ships with the Mintlify docs platform, it answers tools/list anonymously, and its three
+  tools read and search the Lokki documentation. It is NOT an API server: no tool calls the Lokki
+  External API, no tool touches store, item or booking data, and there is no MCP surface on either API
+  host (POST /mcp on prod.api.eu-west-3.lokki.rent returns 404). An agent can therefore learn about
+  Lokki over MCP but cannot act on Lokki over MCP.
+
+deployment:
+  mode: remote
+  endpoint: https://docs.getlokki.com/mcp
+  auth: none
+  verified: probed
+  note: >-
+    tools/list succeeded with NO credentials: POST https://docs.getlokki.com/mcp with
+    {"jsonrpc":"2.0","id":1,"method":"tools/list"} returned HTTP 200 text/event-stream carrying the
+    three tools below, captured verbatim in lokki-mcp-tools.json. There is no stdio package to install
+    — nothing to npx, nothing to pip install — and no local server is published, so mode is remote
+    only.
+
+servers:
+- name: Lokki - API Documentation
+  key: lokki-docs-mcp
+  url: https://docs.getlokki.com/mcp
+  transport: streamable-http
+  platform: Mintlify
+  auth: none
+  scope: documentation (read) + documentation feedback (write)
+  tools_list:
+    probed: '2026-08-17'
+    http_status: 200
+    content_type: text/event-stream
+    gated: false
+    file: lokki-mcp-tools.json
+  discovery:
+    advertised_in_agent_card: false
+    oauth_protected_resource: null
+    note: >-
+      The A2A agent card at docs.getlokki.com/.well-known/agent-card.json points only at the docs site
+      and its Agent Skill; it does not advertise this MCP endpoint. /.well-known/oauth-protected-resource
+      and /.well-known/oauth-authorization-server both 404 on the docs host, consistent with an
+      unauthenticated server.
+  sse_endpoint:
+    url: https://docs.getlokki.com/sse
+    http_status: 405
+    note: The legacy SSE transport path exists but rejects POST; use the /mcp streamable-HTTP endpoint.
+
+tools:
+- name: search_lokki_api_documentation
+  title: Search documentation
+  category: documentation
+  read_only: true
+  input_schema: {query: string (required)}
+  description: >-
+    Semantic search across the Lokki - API Documentation knowledge base; returns contextual content
+    with titles and links to documentation pages.
+- name: query_docs_filesystem_lokki_api_documentation
+  category: documentation
+  read_only: true
+  input_schema: {command: string (required)}
+  description: >-
+    Read-only shell-like query (rg/grep/find/tree/ls/cat/head/tail/jq...) against a virtualized
+    in-memory filesystem containing only the Lokki documentation pages and OpenAPI specs. This is how
+    a page is read: pass its .mdx path to head or cat. Stateless per call.
+- name: submit_feedback
+  title: Submit documentation feedback
+  category: feedback
+  read_only: false
+  input_schema: {path: string (required), feedback: string (required)}
+  description: Report a problem with the documentation so the docs team can fix it.
+
+api_mcp_surface:
+  exists: false
+  probes:
+  - {url: 'https://prod.api.eu-west-3.lokki.rent/mcp', method: POST, http_status: 404}
+  - {url: 'https://docs.getlokki.com/sse', method: POST, http_status: 405}
+  note: >-
+    No MCP server exposes the seven Lokki External API operations as tools. The candidate mapping — what
+    such a server would look like if Lokki built one — is recorded in lokki-tool-crosswalk.yml under
+    rest_only, derived from the published OpenAPI. It is a gap analysis, not an endpoint: no MCP URL
+    was invented.
+
+related:
+  agent_card: a2a/lokki-a2a.yml
+  agent_skill: skills/lokki-provider-skill.md
+  crosswalk: mcp/lokki-tool-crosswalk.yml
+  llms_txt: llms/lokki-llms.txt

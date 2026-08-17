@@ -1,0 +1,90 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://docs.getlokki.com/api-reference/authentication (documented), plus the securitySchemes
+  derived from openapi/lokki-external-api-openapi.json and
+  openapi/lokki-dashboard-api-openapi.json by 0-working/derive-authentication.py, and a live
+  unauthenticated probe of https://prod.api.eu-west-3.lokki.rent/v2/external/verticales on 2026-08-17.
+description: >-
+  Lokki authenticates with a single long-lived API key (an "Access Token") in a request header. There is
+  no OAuth, no OIDC, no token endpoint, and no self-serve key issuance: keys are handed out by a Lokki
+  representative as part of a partnership agreement, separately for staging and production, and are
+  scoped at three levels.
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2: false
+  oidc: false
+  mutual_tls: false
+  self_serve_keys: false
+schemes:
+- name: x-api-key
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  applies_to: Lokki External API (partner surface)
+  method: searched
+  source: https://docs.getlokki.com/api-reference/authentication
+  documented_example: |
+    GET /v2/external/stores
+    Host: prod.api.eu-west-3.lokki.rent
+    x-api-key: YOUR_ACCESS_TOKEN
+- name: x-access-token
+  type: apiKey
+  in: header
+  parameter: x-access-token
+  scheme: bearer
+  bearer_format: JWT
+  applies_to: Lokki Dashboard API (internal) — and declared as the security scheme in BOTH published specs
+  method: derived
+  sources:
+  - openapi/lokki-dashboard-api-openapi.json
+  - openapi/lokki-external-api-openapi.json
+header_discrepancy:
+  documented: x-api-key
+  in_spec: x-access-token
+  note: >-
+    The published partner OpenAPI declares its only securityScheme as `x-access-token`, but the
+    authentication page, the getting-started page and Lokki's own published Agent Skill all say
+    `x-api-key` — and the Agent Skill explicitly lists "Wrong header name: must be x-api-key, not
+    x-api-token or Authorization. Incorrect header returns 401" as a common gotcha. x-access-token is
+    the header the internal Dashboard API uses for its JWT, so the partner spec appears to have
+    inherited the internal scheme. A client generated from the spec would send the wrong header. Not
+    resolved here — only Lokki can say which is authoritative. Recorded also in
+    conventions/lokki-conventions.yml.
+key_format:
+  staging_prefix: lokki_sk_test_
+  production_prefix: lokki_sk_live_
+  environment_bound: true
+  statement: A token generated for Staging will not work on Production, and vice-versa.
+scopes:
+  model: three-level key scoping (not OAuth scopes — no scope parameter, no consent screen)
+  levels:
+  - {level: domain, description: 'access to specific data sets, e.g. stores, items'}
+  - {level: action, description: 'permission to perform specific actions: read, write'}
+  - {level: route, description: 'access to specific HTTP methods, e.g. GET, POST'}
+  assignment: Set by Lokki according to the partnership agreement; a partner cannot self-modify scope.
+  failure_mode: 403 Forbidden when the key lacks the required scope for an endpoint.
+  note: >-
+    No scopes/ artifact is published for Lokki because these are API-key permissions, not OAuth2
+    scopes; 0-working/derive-oauth-scopes.py found no oauth2 securityScheme to derive from.
+issuance:
+  self_serve: false
+  process: Contact your Lokki representative; they guide the partnership process and provide credentials for both environments.
+  rotation: On request — "if you suspect a token has been compromised, contact your Lokki representative immediately to revoke it and issue a new one."
+  programmatic_rotation: false
+  expiry: not published
+published_guidance:
+- Treat the access token like a password; never expose it in client-side code or public repositories.
+- Store tokens in environment variables or a secret-management system.
+observed_behaviour:
+  probe: GET https://prod.api.eu-west-3.lokki.rent/v2/external/verticales (no credentials)
+  http_status: 403
+  body: '{"statusCode":403,"message":"Forbidden resource","error":"Forbidden"}'
+  date: '2026-08-17'
+  note: >-
+    An anonymous call returns 403, not the 401 the docs describe for a missing token. Both codes are
+    reachable — see errors/lokki-problem-types.yml.
+docs: https://docs.getlokki.com/api-reference/authentication

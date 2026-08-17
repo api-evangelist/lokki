@@ -1,0 +1,100 @@
+generated: '2026-08-17'
+method: probed
+source: >-
+  Live probes on 2026-08-17 of every host named in apis.yml (baseURL, Website, Portal, DeveloperPortal)
+  and in the servers[] blocks of both published OpenAPIs. Status is the HTTP code observed at fetch
+  time.
+description: >-
+  Result of probing the /.well-known/ discovery surface across all six Lokki hosts. Exactly ONE real
+  document is served: the A2A agent card on the documentation host, docs.getlokki.com. Every other
+  path 404s on every host — no security.txt, no OpenID/OAuth metadata, no api-catalog, no
+  ai-plugin.json. www.lokki.rent could not be probed: it answered 429 to every request from this
+  client, including the site root, so its /.well-known/ surface is unknown rather than absent.
+hosts:
+- host: https://docs.getlokki.com
+  role: documentation (Mintlify)
+  documents:
+  - {path: /.well-known/agent-card.json, status: 200, type: application/json, real_document: true, file: ../a2a/lokki-agent-card.json}
+  - {path: /.well-known/agent-skills/lokki/skill.md, status: 200, type: 'text/markdown', real_document: true, file: ../skills/lokki-provider-skill.md}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://prod.api.eu-west-3.lokki.rent
+  role: production API (documented partner base URL)
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  note: All 404s are the Express default handler (text/html, ~160 bytes) — a genuine miss, not an SPA shell.
+- host: https://staging.api.eu-west-3.lokki.rent
+  role: staging API
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://prod.api.eu-west-3.getlokki.com
+  role: production API host named in the published OpenAPI servers[] (not in the docs)
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://solutions.lokki.rent
+  role: product marketing site (Webflow)
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://www.lokki.rent
+  role: consumer rental marketplace
+  documents:
+  - {path: /.well-known/security.txt, status: 429}
+  - {path: /.well-known/openid-configuration, status: 429}
+  - {path: /.well-known/oauth-authorization-server, status: 429}
+  - {path: /.well-known/oauth-protected-resource, status: 429}
+  - {path: /.well-known/api-catalog, status: 429}
+  - {path: /.well-known/ai-plugin.json, status: 429}
+  - {path: /.well-known/agent-card.json, status: 429}
+  - {path: /.well-known/agent.json, status: 429}
+  note: >-
+    Every request to this host — including GET / — returned 429 Too Many Requests with a ~34KB HTML
+    body on first contact. This is edge bot mitigation, not a rate limit we tripped. The
+    /.well-known/ surface of the marketplace host is therefore UNKNOWN; do not read these rows as
+    absences.
+summary:
+  hosts_probed: 6
+  real_documents_found: 2
+  security_txt: false
+  openid_configuration: false
+  oauth_metadata: false
+  api_catalog: false
+  ai_plugin: false
+  agent_card: true
+  agent_skill: true
+related:
+  agent_card: a2a/lokki-a2a.yml
+  agent_skill: skills/_index.yml
+  mcp: mcp/lokki-mcp.yml

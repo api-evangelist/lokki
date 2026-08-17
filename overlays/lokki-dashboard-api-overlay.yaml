@@ -1,0 +1,55 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Lokki Dashboard API
+  version: 1.0.0
+extends: ../openapi/lokki-dashboard-api-openapi.json
+x-provenance:
+  generated: '2026-08-17'
+  method: generated
+  source: >-
+    Enhancements for the NestJS Swagger document served unauthenticated at
+    https://prod.api.eu-west-3.lokki.rent/v2/api-json (fetched verbatim 2026-08-17: openapi 3.0.0, 834
+    paths, 896 operations, 1,567 schemas). The original is never mutated. This overlay is deliberately
+    thin: this is Lokki's internal Dashboard / Online Store contract, not a partner product, so the only
+    additions are provenance and orientation — nothing here invents documentation Lokki has not written.
+actions:
+- target: $.info
+  description: Record where this document came from, what it is, and what it is not.
+  update:
+    x-source-url: https://prod.api.eu-west-3.lokki.rent/v2/api-json
+    x-swagger-ui: https://prod.api.eu-west-3.lokki.rent/v2/api
+    x-fetched: '2026-08-17'
+    x-surface: internal
+    x-partner-contract: ../openapi/lokki-external-api-openapi.json
+    x-note: >-
+      Served with no credentials from the production API host. The operations themselves require an
+      x-access-token JWT. Lokki does not document this surface for partners — the documented partner
+      contract is the seven-operation Lokki External API, whose /v2/external/* paths appear here as an
+      exact subset.
+- target: $.servers
+  description: The published document ships an empty servers[] block, so a generated client has no host. Supply the documented environments.
+  update:
+  - url: https://prod.api.eu-west-3.lokki.rent
+    description: Production.
+  - url: https://staging.api.eu-west-3.lokki.rent
+    description: Staging — test data.
+- target: $
+  description: Orientation for the 834 paths, and pointers to the cross-cutting artifacts.
+  update:
+    x-namespaces:
+      /v2/company: 104 operations — rental company/tenant configuration
+      /v2/admin: 70 operations — Lokki-internal administration
+      /v2/order-event: 54 operations — order event stream
+      /v2/order: 48 operations — rentals/orders
+      /v2/order-lld: 36 operations — long-term rental (LLD) orders
+      /v2/online-store: 34 operations — the merchant's customer-facing store
+      /v2/products: 34 operations — inventory
+      /v2/login: 22 operations — authentication flows
+      /v2/external: 7 operations — the partner surface documented at docs.getlokki.com
+      /v2/webhook/hyperline: inbound receiver for Lokki's own billing provider
+    x-conventions: ../conventions/lokki-conventions.yml
+    x-error-catalog: ../errors/lokki-problem-types.yml
+    x-authentication: ../authentication/lokki-authentication.yml
+    x-untagged-operations: >-
+      895 of 896 operations carry no tag (one carries "ahrefs"), and none declares a description, so the
+      document cannot be split by resource without inferring structure from paths.

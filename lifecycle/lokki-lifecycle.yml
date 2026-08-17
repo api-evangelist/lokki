@@ -1,0 +1,117 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://docs.getlokki.com/api-reference/stores/deprecations (the published deprecation/migration
+  guide), https://docs.getlokki.com/api-reference/getting-started (environments),
+  https://status.getlokki.com/ (Upptime status page) and
+  https://github.com/LokkiApp/LokkiApp.github.io/blob/master/.upptimerc.yml (the monitored endpoint
+  list). Deprecated fields derived from openapi/lokki-external-api-openapi.json.
+description: >-
+  Lokki versions its API in the URI path (v2) and manages breaking change at FIELD level inside that
+  version rather than by cutting a new major. It publishes a real deprecation guide with a
+  one-to-one mapping table, and it runs a public open-source status page. It publishes no changelog,
+  no SLA, and does not emit RFC 8594 Deprecation/Sunset headers.
+
+versioning:
+  scheme: uri-path
+  current: v2
+  mechanism: /v2/ path prefix
+  spec_version: '2.0'
+  header: null
+  docs: https://docs.getlokki.com/api-reference/getting-started
+  notes: >-
+    No version request header and no per-account pinning. The partner surface is namespaced further
+    under /v2/external/, separating it from the internal Dashboard controllers on the same host.
+
+environments:
+- name: staging
+  base_url: https://staging.api.eu-west-3.lokki.rent
+  purpose: development and testing against test data
+- name: production
+  base_url: https://prod.api.eu-west-3.lokki.rent
+  purpose: live data
+- name: production (spec servers[] variant)
+  base_url: https://prod.api.eu-west-3.getlokki.com
+  purpose: >-
+    The second entry in the published OpenAPI servers[] block. The documentation, the Agent Skill and
+    the authentication example all name prod.api.eu-west-3.lokki.rent instead. Both hosts resolve and
+    answer; getlokki.com is Lokki's own domain (it 301s to solutions.lokki.rent), so this is an
+    internal inconsistency between spec and docs, not a foreign host.
+
+deprecation:
+  policy_url: https://docs.getlokki.com/api-reference/stores/deprecations
+  published: true
+  style: field-level deprecation with a published migration mapping, backward compatible
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  removal_date: null
+  notes: >-
+    "While the old fields still return data for backward compatibility, they are marked as deprecated
+    and will be removed in future versions of the API." No date, no version, and no Sunset header is
+    emitted, so a client cannot detect the removal window programmatically — only by reading the page.
+
+deprecated_fields:
+  spec: openapi/lokki-external-api-openapi.json
+  schema: Deprecated_External_Store
+  count: 21
+  mapping:
+  - {from: name, to: profile.name}
+  - {from: logoURL, to: branding.logoURL}
+  - {from: bannerURL, to: branding.banners.urls}
+  - {from: verticales, to: profile.verticales}
+  - {from: address, to: geo.location.address}
+  - {from: lat, to: geo.location.point.lat}
+  - {from: lng, to: geo.location.point.lng}
+  - {from: addressComponents, to: geo.location.components}
+  - {from: googleRating, to: reviews.google.rating}
+  - {from: googleReviewsNb, to: reviews.google.total}
+  - {from: currency, to: pricing.currency}
+  note: >-
+    The response schema for GET /v2/external/stores and GET /v2/external/stores/{id} is still named
+    Deprecated_External_Store in the published spec, and its deprecated sub-schemas
+    (Deprecated_External_StoreCurrency, Deprecated_External_StoreAddressComponents) carry a further 10
+    deprecated properties. New integrations should read the modular paths only.
+
+deprecated_operations: []
+
+changelog:
+  published: false
+  url: null
+  evidence: >-
+    https://docs.getlokki.com/changelog returns 404, and neither llms.txt nor the docs sitemap lists a
+    changelog or release-notes page. Product news is published as marketing posts on
+    https://solutions.lokki.rent/en/blog, which is not an API changelog.
+
+sla:
+  url: null
+  public_uptime_target: null
+  notes: No published uptime commitment. API access is governed by a partnership agreement, not a public SLA.
+
+status_page:
+  url: https://status.getlokki.com/
+  provider: Upptime (open source, GitHub Actions + GitHub Pages)
+  repository: https://github.com/LokkiApp/LokkiApp.github.io
+  history: true
+  incidents_via: GitHub issues on the status repository
+  machine_readable_feed: false
+  robots: noindex (set in .upptimerc.yml metaTags)
+  monitored:
+  - {name: Dashboard, url: 'https://app.getlokki.com'}
+  - {name: Api, url: 'https://api.getlokki.com/v2/api'}
+  - {name: Strapi, url: 'https://strapi.getlokki.com'}
+  - {name: Rental Place, url: 'https://www.lokki.rent/'}
+  - {name: Online-Store, url: 'https://rent-itoum.lokki.rent/'}
+  notes: >-
+    The status page monitors api.getlokki.com/v2/api, which returned HTTP 526 (invalid SSL certificate
+    at the edge) when probed on 2026-08-17, and strapi.getlokki.com, whose certificate does not match
+    the hostname. Neither is the documented API host — the live partner API is on
+    prod.api.eu-west-3.lokki.rent, and that host is NOT on the monitored list. The status page
+    therefore does not report on the API a partner actually calls.
+
+evidence:
+- {url: 'https://docs.getlokki.com/api-reference/stores/deprecations', status: 200}
+- {url: 'https://docs.getlokki.com/changelog', status: 404}
+- {url: 'https://status.getlokki.com/', status: 200}
+- {url: 'https://api.getlokki.com/v2/api', status: 526}
+- {url: 'https://prod.api.eu-west-3.lokki.rent/v2/api', status: 200}

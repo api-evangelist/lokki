@@ -1,0 +1,60 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  Registry searches against registry.npmjs.org (/-/v1/search for "lokki", "getlokki", "lokki-rent"),
+  pypi.org/pypi/lokki/json, api.github.com/orgs/LokkiApp + /orgs/LokkiApp/repos, and the whole of
+  docs.getlokki.com (llms.txt, llms-full.txt, the getting-started and authentication pages) plus
+  https://solutions.lokki.rent. Probed 2026-08-17.
+description: >-
+  Lokki publishes NO first-party client libraries, SDKs or CLIs in any package registry. The
+  documentation contains no SDK section and no code samples beyond a raw HTTP request. Integrators call
+  the REST API directly. Recorded as a measured zero, not an unchecked gap.
+package_count: 0
+official_package_count: 0
+packages: []
+registries_checked:
+- {registry: npm, endpoint: 'https://registry.npmjs.org/-/v1/search', queries: [lokki, getlokki, lokki-rent], first_party_hits: 0}
+- {registry: pypi, endpoint: 'https://pypi.org/pypi/lokki/json', http_status: 200, first_party_hits: 0}
+- {registry: rubygems, checked: false, note: not checked — no evidence of any Ruby surface in the docs or repos}
+- {registry: packagist, checked: false, note: not checked — no evidence of any PHP surface in the docs or repos}
+- {registry: crates.io, checked: false, note: not checked — no evidence of any Rust surface}
+- {registry: nuget, checked: false, note: not checked — no evidence of any .NET surface}
+- {registry: maven, checked: false, note: not checked — no evidence of any JVM surface}
+- {registry: pkg.go.dev, checked: false, note: not checked — no evidence of any Go surface}
+name_collisions:
+- name: lokki (npm)
+  version: 1.1.0
+  published: '2026-01-27'
+  owner: github.com/orionivv
+  description: A framework-agnostic translation editor for i18next apps.
+  first_party: false
+  note: Unrelated project that happens to share the name. Do NOT credit this to Lokki.
+- name: lokki-qrmodal (npm)
+  version: 1.0.4
+  published: '2022-06-27'
+  owner: github.com/lokki-solution
+  description: WalletConnect QR code modal.
+  first_party: false
+  note: Different "Lokki" (lokki-solution), a crypto wallet project.
+- name: lokki (pypi)
+  version: 0.0.2
+  published: null
+  owner: github.com/greermj
+  description: An automatic machine-learning framework for 16s metagenomic data.
+  first_party: false
+github:
+  organization: https://github.com/LokkiApp
+  public_repos: 3
+  repos:
+  - {name: LokkiApp.github.io, language: Markdown, description: Uptime manager for Lokki, pushed: '2024-03-01', role: status page (Upptime)}
+  - {name: debug-frontend, language: TypeScript, description: Mirrors our frontend to reproduce issues in public, pushed: '2023-01-17', role: debugging mirror}
+  - {name: heroku-buildpack-nodejs, language: Shell, description: fork of the official Heroku Node.js buildpack, pushed: '2022-11-21', role: fork}
+  note: >-
+    None of the three public repositories is a client library. The newest push to any of them is
+    2024-03-01 (the status page), so the public GitHub presence is dormant relative to the API, which
+    shipped a v2 partner surface and an agent card since.
+distribution_gaps:
+- No SDK in any language.
+- No CLI.
+- No Postman collection (postman.com search for "lokki" returns only Grafana Loki workspaces).
+- No CDN-distributed browser build referenced anywhere in the docs.

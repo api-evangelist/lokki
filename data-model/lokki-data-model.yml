@@ -1,0 +1,98 @@
+generated: '2026-08-17'
+method: derived
+source: >-
+  Derived from the schema $ref graph and id-reference fields in
+  openapi/lokki-external-api-openapi.json (94 component schemas), enriched from the object
+  descriptions at https://docs.getlokki.com/api-reference/stores/about,
+  https://docs.getlokki.com/api-reference/store-items/about and
+  https://docs.getlokki.com/api-reference/categories/about.
+docs: https://docs.getlokki.com/api-reference/stores/about
+notation: >-
+  relationships use has_one / has_many / belongs_to with the field the reference travels on; direction
+  is from the entity that owns the reference. "module" means an embedded sub-object of the parent
+  document rather than an independently addressable resource — Lokki's partner API returns composed
+  documents, so most of this graph is composition, not foreign keys.
+
+identifiers:
+  store: MongoDB ObjectId (24-hex) OR a URL slug; both are accepted by GET /v2/external/stores/{id}
+  store_item: MongoDB ObjectId
+  category: MongoDB ObjectId
+  verticale: an enum string, not an id — BIKE, ELECTRIC_BIKE, MOPED, MOTORCYCLE, CAR, SCOOTER, SKI,
+    CLIMBING, SNOWSHOES, SURF, PADDLE, CANOE_KAYAK, BOAT, EVENT, MOTOCULTURE, TOOLING
+  rental_point: slug (rentalPointSlug), scoped inside a store
+  note: >-
+    There are no typed id prefixes. A store is addressed by slug in item routes
+    (/v2/external/stores/{slug}/items) and by id-or-slug in the store route, which is the one place the
+    two identifier spaces meet.
+
+entities:
+- {name: Verticale, key: enum, domain: taxonomy, description: Top-level rental sector. Fixed 16-value enum; carries localized infos.}
+- {name: Category, key: ObjectId, domain: taxonomy, description: Sub-sector inside a verticale (Mountain Bike under BIKE). Carries meta.isOptions / meta.isDefault flags.}
+- {name: Store, key: ObjectId|slug, domain: providers, description: A rental provider. Root document of the partner API; returned as the Deprecated_External_Store schema, composed of ten modules.}
+- {name: StoreLocation, key: slug, domain: providers, description: A physical rental point of a store — address, Google placeId, lat/lng point. A store has one primary location and a list of all locations.}
+- {name: StoreItem, key: ObjectId, domain: inventory, description: A rentable product or an add-on service in a store, with date-range-sensitive pricing and stock.}
+- {name: GoogleReview, key: none, domain: reputation, description: An aggregated Google rating plus latest comments, embedded under store.reviews.google.}
+
+modules:
+  store:
+  - {name: profile, fields: [name, description, verticales]}
+  - {name: localization, fields: [current, default, available]}
+  - {name: contact, fields: [socialMedia, ...]}
+  - {name: branding, fields: [logoURL, banners]}
+  - {name: geo, fields: [location, locations]}
+  - {name: temporal, fields: [timezone, schedule]}
+  - {name: pricing, fields: [currency, tax, discount, showPricingTable]}
+  - {name: reviews, fields: [google]}
+  - {name: booking, fields: [bookingType, instantBooking, fixedDurations, rules]}
+  - {name: modules, fields: [delivery, onlinePayment, insurance, multipleLocations, cancellation]}
+  - {name: metadata, fields: [timestamps]}
+  store_item:
+  - {name: settings, fields: [visibility]}
+  - {name: infos, fields: [name, description]}
+  - {name: category, fields: [storeItemCategory, verticale, categoryLevel1]}
+  - {name: media, fields: [images, videos, documents]}
+  - {name: pricing, fields: [basis, price, basePrice, discount, deposit, vat, pricingTable]}
+  - {name: time, fields: [duration, ranges]}
+  - {name: stock, fields: [availableQuantity, totalQuantity]}
+  - {name: modules, fields: [insurance]}
+
+relationships:
+- {from: Store, to: StoreItem, kind: has_many, via: 'slug (path parameter on /v2/external/stores/{slug}/items)'}
+- {from: Store, to: StoreLocation, kind: has_many, via: geo.locations}
+- {from: Store, to: StoreLocation, kind: has_one, via: geo.location (primary or the queried rental point)}
+- {from: Store, to: Verticale, kind: has_many, via: profile.verticales}
+- {from: Store, to: GoogleReview, kind: has_many, via: reviews.google}
+- {from: StoreItem, to: Verticale, kind: belongs_to, via: category.verticale}
+- {from: StoreItem, to: Category, kind: belongs_to, via: category.categoryLevel1}
+- {from: Category, to: Verticale, kind: belongs_to, via: infos.verticale}
+
+enumerations:
+  item_type: [product (limited stock), service (unlimited stock)]
+  rental_type: [LCD (short-term — hourly/daily), LLD (long-term — monthly subscription)]
+  pricing_basis: [LOWEST_PRICE (no from/to supplied — a "starting from" price), RANGE_COMPUTED (priced for the requested window)]
+  languages: [fr, en, nl, de, it, pt, es, pl]
+
+state_dependent_fields:
+- field: pricing.basis / pricing.price
+  depends_on: [from, to]
+  note: Without a date range the price is the lowest available, not the price for any booking.
+- field: stock.availableQuantity
+  depends_on: [from, to]
+  note: Without a date range this is maximum theoretical stock, not availability.
+
+deprecated_flat_fields:
+  count: 21
+  detail: lifecycle/lokki-lifecycle.yml
+  note: >-
+    The store document still carries the pre-modular flat fields (name, logoURL, bannerURL, currency,
+    lat, lng, address, addressComponents, googleRating, googleReviewsNb, verticales) alongside the
+    modules. New integrations read the modular paths.
+
+write_surface:
+  exists: false
+  note: >-
+    The partner data model is read-only — there is no Booking, Order, Customer or Payment entity on the
+    partner surface. Those entities exist only in the internal Dashboard API
+    (openapi/lokki-dashboard-api-openapi.json: /v2/order, /v2/order-event, /v2/order-lld, /v2/customer,
+    /v2/payment-v2), which is not a partner product. A partner can therefore build discovery and
+    catalog experiences but cannot create a rental.

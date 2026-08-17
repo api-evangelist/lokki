@@ -1,0 +1,47 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+provider: Lokki
+providerId: lokki
+generated: '2026-08-17'
+method: searched
+source: https://solutions.lokki.rent/en/tarifs
+description: >-
+  Lokki publishes NO priced tiers. The public pricing page names the three components of the bill and
+  then routes every visitor to a demo: "We have several offers depending on your use of the software
+  and your number of rental units. We prefer to show you our Pricing during a personalized
+  demonstration." No tier names, amounts, currencies, billing periods, quotas or overage rates are
+  published, so plan_count is an honest zero rather than an omission. API access is separate again — it
+  is granted under a partnership agreement negotiated with a Lokki representative and is not attached
+  to any published tier.
+plan_count: 0
+plans: []
+pricing_model:
+  disclosed: true
+  components:
+  - name: Monthly subscription
+    basis: calculated according to your stock (number of rental units)
+    amount: null
+  - name: Transaction fees on online payments
+    basis: percentage/fee on payments taken through the online store
+    amount: null
+  - name: Start-up costs
+    basis: one-off onboarding / launch fee
+    amount: null
+  included_in_all_offers:
+  - Unlimited users
+  - Unlimited support
+  - Personalized launch support
+  currency: EUR (implied — French/EU market; not stated on the page)
+api_pricing:
+  published: false
+  gating: partnership agreement; keys issued by a Lokki representative with domain/action/route scopes
+  free_tier: false
+  self_serve: false
+  docs: https://docs.getlokki.com/api-reference/authentication
+onboarding:
+  trial: https://app.getlokki.com/welcome ("Test Lokki")
+  demo: https://solutions.lokki.rent/en/demo
+  marketplace_listing: https://app.getlokki.com/visibility/signup
+evidence:
+- {url: 'https://solutions.lokki.rent/en/tarifs', status: 200}
+- {url: 'https://solutions.lokki.rent/en/demo', status: 200}
