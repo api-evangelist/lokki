@@ -39,6 +39,28 @@ tags:
 - Company
 - Climate Tech
 - Circular Economy
+- Rentals
+- Equipment Rental
+- Bike Rental
+- Marketplace
+- Booking
+- Reservations
+- Inventory
+- Catalog
+- Pricing
+- Availability
+- Mobility
+- Outdoor Recreation
+- Point-of-Sale
+- Software-as-a-Service
+- France
+- MCP
+- Agents
+- Agent Skills
+tags_raw:
+- Company
+- Climate Tech
+- Circular Economy
 - Rental
 - Equipment Rental
 - Bike Rental
@@ -67,6 +89,14 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Stores
+  - Store Items
+  - Categories
+  - Verticales
+  - Rentals
+  - Pricing
+  - Availability
+  tags_raw:
   - Stores
   - Store Items
   - Categories
@@ -104,6 +134,15 @@ apis:
   humanURL: https://prod.api.eu-west-3.lokki.rent/v2/api
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Dashboard
+  - Online Store
+  - Order
+  - Bookings
+  - Product
+  - Payments
+  - Workshop
+  - Internal
+  tags_raw:
   - Dashboard
   - Online Store
   - Orders
