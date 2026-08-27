@@ -80,35 +80,16 @@ tags_raw:
 - Agents
 - Agent Skills
 apis:
-- aid: lokki:lokki-external-api
-  name: Lokki External API
-  description: The partner-facing read-only Lokki API — seven GET operations over rental providers
-    (stores), their store items with date-range pricing and stock, and the two-level verticale /
-    category taxonomy. Documented publicly at docs.getlokki.com with an OpenAPI 3.1 specification;
-    calls require an environment-scoped API key issued by a Lokki representative.
+- aid: lokki:lokki-action-log-api
+  name: Lokki Action Log API
+  description: The Action Log API from Lokki — 3 operation(s) for action log.
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
-  - Stores
-  - Store Items
-  - Categories
-  - Verticales
-  - Rentals
-  - Pricing
-  - Availability
-  tags_raw:
-  - Stores
-  - Store Items
-  - Categories
-  - Verticales
-  - Rental
-  - Pricing
-  - Availability
+  - Action Log
   properties:
   - type: OpenAPI
-    url: openapi/lokki-external-api-openapi.json
-  - type: Overlay
-    url: overlays/lokki-external-api-overlay.yaml
+    url: openapi/lokki-action-log-api-openapi.yml
   - type: Documentation
     url: https://docs.getlokki.com/
   - type: APIReference
@@ -123,39 +104,2503 @@ apis:
     url: data-model/lokki-data-model.yml
   - type: ErrorCatalog
     url: errors/lokki-problem-types.yml
-- aid: lokki:lokki-dashboard-api
-  name: Lokki Dashboard API
-  description: 'The main API powering the Lokki Dashboard and Online Store: 896 operations across
-    company, order, order-event, long-term-rental (LLD), online-store, products, payment, delivery,
-    workshop, reconditioning, visibility and admin namespaces. Its NestJS Swagger UI and OpenAPI 3.0
-    document are served unauthenticated from the production API host at /v2/api and /v2/api-json;
-    every operation itself requires a JWT in the x-access-token header. Lokki does not document this
-    surface as a partner product — the partner contract is the Lokki External API.'
-  humanURL: https://prod.api.eu-west-3.lokki.rent/v2/api
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-admin-api
+  name: Lokki Admin API
+  description: The Admin API from Lokki — 70 operation(s) for admin.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
-  - Dashboard
-  - Online Store
-  - Order
-  - Bookings
-  - Product
-  - Payments
-  - Workshop
-  - Internal
-  tags_raw:
-  - Dashboard
-  - Online Store
-  - Orders
-  - Bookings
-  - Products
-  - Payments
-  - Workshop
-  - Internal
+  - Admin
   properties:
   - type: OpenAPI
-    url: openapi/lokki-dashboard-api-openapi.json
-  - type: Overlay
-    url: overlays/lokki-dashboard-api-overlay.yaml
+    url: openapi/lokki-admin-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-ahrefs-api
+  name: Lokki Ahrefs API
+  description: The ahrefs API from Lokki — 1 operation(s) for ahrefs.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - ahrefs
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-ahrefs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-ancv-api
+  name: Lokki Ancv API
+  description: The Ancv API from Lokki — 3 operation(s) for ancv.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Ancv
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-ancv-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-api-key-api
+  name: Lokki Api Key API
+  description: The Api Key API from Lokki — 5 operation(s) for api key.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Api Key
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-api-key-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-api-key-v2-api
+  name: Lokki Api Key V2 API
+  description: The Api Key V2 API from Lokki — 2 operation(s) for api key v2.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Api Key V2
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-api-key-v2-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-auth-api
+  name: Lokki Auth API
+  description: The Auth API from Lokki — 1 operation(s) for auth.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-auth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-aws-s3-api
+  name: Lokki Aws S3 API
+  description: The Aws S3 API from Lokki — 2 operation(s) for aws s3.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Aws S3
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-aws-s3-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-bookings-api
+  name: Lokki Bookings API
+  description: The Bookings API from Lokki — 10 operation(s) for bookings.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Bookings
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-bookings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-business-registry-api
+  name: Lokki Business Registry API
+  description: The Business Registry API from Lokki — 1 operation(s) for business registry.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Business Registry
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-business-registry-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-cart-suggestion-api
+  name: Lokki Cart Suggestion API
+  description: The Cart Suggestion API from Lokki — 4 operation(s) for cart suggestion.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Cart Suggestion
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-cart-suggestion-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-catalogue-api
+  name: Lokki Catalogue API
+  description: The Catalogue API from Lokki — 5 operation(s) for catalogue.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Catalogue
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-catalogue-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-chaos-api
+  name: Lokki Chaos API
+  description: The Chaos API from Lokki — 6 operation(s) for chaos.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Chaos
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-chaos-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-company-api
+  name: Lokki Company API
+  description: The Company API from Lokki — 104 operation(s) for company.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Company
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-company-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-company-payout-api
+  name: Lokki Company Payout API
+  description: The Company Payout API from Lokki — 1 operation(s) for company payout.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Company Payout
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-company-payout-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-company-redirect-api
+  name: Lokki Company Redirect API
+  description: The Company Redirect API from Lokki — 1 operation(s) for company redirect.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Company Redirect
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-company-redirect-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-company-signatures-api
+  name: Lokki Company Signatures API
+  description: The Company Signatures API from Lokki — 1 operation(s) for company signatures.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Company Signatures
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-company-signatures-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-customer-api
+  name: Lokki Customer API
+  description: The Customer API from Lokki — 8 operation(s) for customer.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Customer
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-customer-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-customer-model-api
+  name: Lokki Customer Model API
+  description: The Customer Model API from Lokki — 3 operation(s) for customer model.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Customer Model
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-customer-model-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-delivery-api
+  name: Lokki Delivery API
+  description: The Delivery API from Lokki — 13 operation(s) for delivery.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Delivery
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-delivery-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-document-api
+  name: Lokki Document API
+  description: The Document API from Lokki — 4 operation(s) for document.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Document
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-document-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-document-model-api
+  name: Lokki Document Model API
+  description: The Document Model API from Lokki — 3 operation(s) for document model.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Document Model
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-document-model-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-document-state-api
+  name: Lokki Document State API
+  description: The Document State API from Lokki — 2 operation(s) for document state.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Document State
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-document-state-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-editorial-api
+  name: Lokki Editorial API
+  description: The Editorial API from Lokki — 3 operation(s) for editorial.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Editorial
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-editorial-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-email-template-api
+  name: Lokki Email Template API
+  description: The Email Template API from Lokki — 4 operation(s) for email template.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Email Template
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-email-template-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-employee-api
+  name: Lokki Employee API
+  description: The Employee API from Lokki — 7 operation(s) for employee.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Employee
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-employee-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-export-csv-api
+  name: Lokki Export Csv API
+  description: The Export Csv API from Lokki — 2 operation(s) for export csv.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Export Csv
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-export-csv-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-external-api
+  name: Lokki External API
+  description: The External API from Lokki — 7 operation(s) for external.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - External
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-external-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-external-companies-api
+  name: Lokki External Companies API
+  description: The External Companies API from Lokki — 11 operation(s) for external companies.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - External Companies
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-external-companies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-fathom-api
+  name: Lokki Fathom API
+  description: The Fathom API from Lokki — 8 operation(s) for fathom.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Fathom
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-fathom-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-g8-api-api
+  name: Lokki G8 API
+  description: The G8 Api API from Lokki — 2 operation(s) for g8 api.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - G8 Api
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-g8-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-harvestr-api
+  name: Lokki Harvestr API
+  description: The Harvestr API from Lokki — 1 operation(s) for harvestr.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Harvestr
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-harvestr-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-health-api
+  name: Lokki Health API
+  description: The Health API from Lokki — 1 operation(s) for health.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-health-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-invoice-api
+  name: Lokki Invoice API
+  description: The Invoice API from Lokki — 2 operation(s) for invoice.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Invoice
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-invoice-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-login-api
+  name: Lokki Login API
+  description: The Login API from Lokki — 22 operation(s) for login.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Login
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-login-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-lokkit-api
+  name: Lokki Lokkit API
+  description: The Lokkit API from Lokki — 3 operation(s) for lokkit.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Lokkit
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-lokkit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-magic-schedule-api
+  name: Lokki Magic Schedule API
+  description: The Magic Schedule API from Lokki — 2 operation(s) for magic schedule.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Magic Schedule
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-magic-schedule-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-mail-api
+  name: Lokki Mail API
+  description: The Mail API from Lokki — 7 operation(s) for mail.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Mail
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-mail-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-mail-v2-api
+  name: Lokki Mail V2 API
+  description: The Mail V2 API from Lokki — 1 operation(s) for mail v2.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Mail V2
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-mail-v2-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-maps-api
+  name: Lokki Maps API
+  description: The Maps API from Lokki — 2 operation(s) for maps.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Maps
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-maps-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-marketing-api
+  name: Lokki Marketing API
+  description: The Marketing API from Lokki — 3 operation(s) for marketing.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Marketing
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-marketing-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-multi-order-api
+  name: Lokki Multi Order API
+  description: The Multi Order API from Lokki — 3 operation(s) for multi order.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Multi Order
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-multi-order-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-offline-api
+  name: Lokki Offline API
+  description: The Offline API from Lokki — 1 operation(s) for offline.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Offline
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-offline-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-on-boarding-api
+  name: Lokki On Boarding API
+  description: The On Boarding API from Lokki — 4 operation(s) for on boarding.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - On Boarding
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-on-boarding-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-online-store-api
+  name: Lokki Online Store API
+  description: The Online Store API from Lokki — 34 operation(s) for online store.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Online Store
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-online-store-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-online-store-text-api
+  name: Lokki Online Store Text API
+  description: The Online Store Text API from Lokki — 1 operation(s) for online store text.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Online Store Text
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-online-store-text-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-order-api
+  name: Lokki Order API
+  description: The Order API from Lokki — 48 operation(s) for order.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Order
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-order-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-order-deliveries-api
+  name: Lokki Order Deliveries API
+  description: The Order Deliveries API from Lokki — 1 operation(s) for order deliveries.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Order Deliveries
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-order-deliveries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-order-event-api
+  name: Lokki Order Event API
+  description: The Order Event API from Lokki — 54 operation(s) for order event.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Order Event
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-order-event-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-order-lld-api
+  name: Lokki Order Lld API
+  description: The Order Lld API from Lokki — 36 operation(s) for order lld.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Order Lld
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-order-lld-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-order-refusal-api
+  name: Lokki Order Refusal API
+  description: The Order Refusal API from Lokki — 1 operation(s) for order refusal.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Order Refusal
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-order-refusal-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-order-waiting-list-api
+  name: Lokki Order Waiting List API
+  description: The Order Waiting List API from Lokki — 2 operation(s) for order waiting list.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Order Waiting List
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-order-waiting-list-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-pack-api
+  name: Lokki Pack API
+  description: The Pack API from Lokki — 10 operation(s) for pack.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Pack
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-pack-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-password-recovery-api
+  name: Lokki Password Recovery API
+  description: The Password Recovery API from Lokki — 2 operation(s) for password recovery.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Password Recovery
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-password-recovery-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-payment-api
+  name: Lokki Payment API
+  description: The Payment API from Lokki — 9 operation(s) for payment.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Payment
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-payment-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-payment-v2-api
+  name: Lokki Payment V2 API
+  description: The Payment V2 API from Lokki — 17 operation(s) for payment v2.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Payment V2
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-payment-v2-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-price-rules-api
+  name: Lokki Price Rules API
+  description: The Price Rules API from Lokki — 2 operation(s) for price rules.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Price Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-price-rules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-price-template-api
+  name: Lokki Price Template API
+  description: The Price Template API from Lokki — 3 operation(s) for price template.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Price Template
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-price-template-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-product-availability-api
+  name: Lokki Product Availability API
+  description: The Product Availability API from Lokki — 5 operation(s) for product availability.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Product Availability
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-product-availability-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-product-history-api
+  name: Lokki Product History API
+  description: The Product History API from Lokki — 5 operation(s) for product history.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Product History
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-product-history-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-product-state-model-api
+  name: Lokki Product State Model API
+  description: The Product State Model API from Lokki — 2 operation(s) for product state model.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Product State Model
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-product-state-model-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-product-surveys-api
+  name: Lokki Product Surveys API
+  description: The Product Surveys API from Lokki — 2 operation(s) for product surveys.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Product Surveys
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-product-surveys-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-product-verticale-category-api
+  name: Lokki Product Verticale Category API
+  description: >-
+    The Product Verticale Category API from Lokki — 8 operation(s) for product verticale category.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Product Verticale Category
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-product-verticale-category-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-products-api
+  name: Lokki Products API
+  description: The Products API from Lokki — 34 operation(s) for products.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-products-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-promo-code-api
+  name: Lokki Promo Code API
+  description: The Promo Code API from Lokki — 5 operation(s) for promo code.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Promo Code
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-promo-code-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-quote-request-api
+  name: Lokki Quote Request API
+  description: The Quote Request API from Lokki — 4 operation(s) for quote request.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Quote Request
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-quote-request-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-reconditioning-api
+  name: Lokki Reconditioning API
+  description: The Reconditioning API from Lokki — 11 operation(s) for reconditioning.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Reconditioning
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-reconditioning-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-rental-place-api
+  name: Lokki Rental Place API
+  description: The Rental Place API from Lokki — 10 operation(s) for rental place.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Rental Place
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-rental-place-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-rental-place-b2b-api
+  name: Lokki Rental Place B2b API
+  description: The Rental Place B2b API from Lokki — 7 operation(s) for rental place b2b.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Rental Place B2b
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-rental-place-b2b-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-rental-place-cart-api
+  name: Lokki Rental Place Cart API
+  description: The Rental Place Cart API from Lokki — 5 operation(s) for rental place cart.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Rental Place Cart
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-rental-place-cart-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-rental-place-user-api
+  name: Lokki Rental Place User API
+  description: The Rental Place User API from Lokki — 13 operation(s) for rental place user.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Rental Place User
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-rental-place-user-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-search-engine-api
+  name: Lokki Search Engine API
+  description: The Search Engine API from Lokki — 4 operation(s) for search engine.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Search Engine
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-search-engine-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-self-test-api
+  name: Lokki Self Test API
+  description: The Self Test API from Lokki — 2 operation(s) for self test.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Self Test
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-self-test-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-service-api
+  name: Lokki Service API
+  description: The Service API from Lokki — 11 operation(s) for service.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-service-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-session-event-api
+  name: Lokki Session Event API
+  description: The Session Event API from Lokki — 20 operation(s) for session event.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Session Event
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-session-event-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-shifter-api-api
+  name: Lokki Shifter API
+  description: The Shifter Api API from Lokki — 2 operation(s) for shifter api.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Shifter Api
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-shifter-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-shop-api
+  name: Lokki Shop API
+  description: The Shop API from Lokki — 19 operation(s) for shop.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Shop
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-shop-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-skiset-api
+  name: Lokki Skiset API
+  description: The Skiset API from Lokki — 3 operation(s) for skiset.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Skiset
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-skiset-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-statistics-v3-api
+  name: Lokki Statistics V3 API
+  description: The Statistics V3 API from Lokki — 1 operation(s) for statistics v3.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Statistics V3
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-statistics-v3-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-status-model-api
+  name: Lokki Status Model API
+  description: The Status Model API from Lokki — 4 operation(s) for status model.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Status Model
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-status-model-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-strapi-api
+  name: Lokki Strapi API
+  description: The Strapi API from Lokki — 11 operation(s) for strapi.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Strapi
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-strapi-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-stripe-connect-api
+  name: Lokki Stripe Connect API
+  description: The Stripe Connect API from Lokki — 5 operation(s) for stripe connect.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Stripe Connect
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-stripe-connect-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-sub-products-api
+  name: Lokki Sub Products API
+  description: The Sub Products API from Lokki — 2 operation(s) for sub products.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Sub Products
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-sub-products-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-theme-api
+  name: Lokki Theme API
+  description: The Theme API from Lokki — 1 operation(s) for theme.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Theme
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-theme-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-trustpilot-api
+  name: Lokki Trustpilot API
+  description: The Trustpilot API from Lokki — 1 operation(s) for trustpilot.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Trustpilot
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-trustpilot-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-tulip-v2-api
+  name: Lokki Tulip V2 API
+  description: The Tulip V2 API from Lokki — 1 operation(s) for tulip v2.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Tulip V2
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-tulip-v2-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-universe-api
+  name: Lokki Universe API
+  description: The Universe API from Lokki — 3 operation(s) for universe.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Universe
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-universe-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-user-api
+  name: Lokki User API
+  description: The User API from Lokki — 7 operation(s) for user.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-user-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-visibility-api
+  name: Lokki Visibility API
+  description: The Visibility API from Lokki — 12 operation(s) for visibility.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Visibility
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-visibility-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-webhook-api
+  name: Lokki Webhook API
+  description: The Webhook API from Lokki — 1 operation(s) for webhook.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Webhook
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-webhook-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-workshop-api
+  name: Lokki Workshop API
+  description: The Workshop API from Lokki — 11 operation(s) for workshop.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Workshop
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-workshop-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-workshop-intervention-api
+  name: Lokki Workshop Intervention API
+  description: The Workshop Intervention API from Lokki — 2 operation(s) for workshop intervention.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Workshop Intervention
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-workshop-intervention-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-workshop-order-api
+  name: Lokki Workshop Order API
+  description: The Workshop Order API from Lokki — 5 operation(s) for workshop order.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Workshop Order
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-workshop-order-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-workshop-payment-api
+  name: Lokki Workshop Payment API
+  description: The Workshop Payment API from Lokki — 8 operation(s) for workshop payment.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Workshop Payment
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-workshop-payment-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-workshop-statistics-api
+  name: Lokki Workshop Statistics API
+  description: The Workshop Statistics API from Lokki — 1 operation(s) for workshop statistics.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Workshop Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-workshop-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-your-order-api
+  name: Lokki Your Order API
+  description: The Your Order API from Lokki — 9 operation(s) for your order.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Your Order
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-your-order-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-your-order-event-api
+  name: Lokki Your Order Event API
+  description: The Your Order Event API from Lokki — 8 operation(s) for your order event.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Your Order Event
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-your-order-event-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
   - type: Documentation
     url: https://prod.api.eu-west-3.lokki.rent/v2/api
 maintainers:
@@ -164,6 +2609,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/lokki-external-api-overlay.yaml
+- type: Overlay
+  url: overlays/lokki-dashboard-api-overlay.yaml
 - type: Website
   url: https://www.lokki.rent/
 - type: Portal
