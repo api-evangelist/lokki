@@ -51,7 +51,7 @@ tags:
 - Company
 - Climate Tech
 - Circular Economy
-- Rentals
+- Rental
 - Equipment Rental
 - Bike Rental
 - Marketplace
@@ -202,6 +202,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - APIKeys
+  tags_raw:
   - Api Key
   properties:
   - type: OpenAPI
@@ -254,6 +256,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -410,6 +414,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - chaos
+  tags_raw:
   - Chaos
   properties:
   - type: OpenAPI
@@ -540,6 +546,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Customers
+  tags_raw:
   - Customer
   properties:
   - type: OpenAPI
@@ -722,6 +730,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - EmailTemplate
+  tags_raw:
   - Email Template
   properties:
   - type: OpenAPI
@@ -1216,6 +1226,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Onboarding
+  tags_raw:
   - On Boarding
   properties:
   - type: OpenAPI
@@ -1737,6 +1749,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -1945,6 +1959,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Search Engines
+  tags_raw:
   - Search Engine
   properties:
   - type: OpenAPI
