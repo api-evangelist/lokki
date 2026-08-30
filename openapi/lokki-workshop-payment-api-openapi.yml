@@ -1,0 +1,1072 @@
+openapi: 3.2.0
+info:
+  title: Lokki Workshop Payment API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Workshop Payment
+paths:
+  /v2/workshop-payment/getPaymentInfoOrderWorkshopByDateRange:
+    get:
+      operationId: getPaymentInfoOrderWorkshopByDateRange
+      parameters:
+      - name: startDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: endDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        schema:
+          maximum: 30
+          default: 15
+          type: number
+      - name: searchCustomer
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: documentName
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: searchProducts
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: state
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+            enum:
+            - TODAY
+            - TO_COME
+            - IN_PROGRESS
+            - LATE
+            - ENDED
+            - PASS
+            - PRE_BOOKING
+            - PRE_BOOKING_ADMIN
+            - CANCELED
+      - name: personalStatus
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+      - name: documentStatus
+        required: false
+        in: query
+        schema:
+          enum:
+          - NOTUPTODATE
+          - WAITING
+          - SIGNED
+          - SENT
+          type: string
+      - name: createFromStatus
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+            enum:
+            - DASHBOARD
+            - QUICK_ORDER
+            - ONLINE_STORE
+            - RENTAL_PLACE_B2B
+            - RENTAL_PLACE_LOKKI
+            - BORNE
+            - SKISET
+            - SKIMIUM
+            - UNKNOWN
+            - TEST
+            - ADMIN_IMPORT
+      - name: withPaymentV2
+        required: false
+        in: query
+        schema:
+          default: false
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentInfoDto'
+      tags:
+      - Workshop Payment
+  /v2/workshop-payment/getPaginatedPaidPaymentsWorkshopByDateRange:
+    get:
+      operationId: getPaginatedPaidPaymentsWorkshopByDateRange
+      parameters:
+      - name: startDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: endDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        schema:
+          maximum: 30
+          default: 15
+          type: number
+      - name: searchCustomer
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: documentName
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: searchProducts
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: state
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+            enum:
+            - TODAY
+            - TO_COME
+            - IN_PROGRESS
+            - LATE
+            - ENDED
+            - PASS
+            - PRE_BOOKING
+            - PRE_BOOKING_ADMIN
+            - CANCELED
+      - name: personalStatus
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+      - name: documentStatus
+        required: false
+        in: query
+        schema:
+          enum:
+          - NOTUPTODATE
+          - WAITING
+          - SIGNED
+          - SENT
+          type: string
+      - name: createFromStatus
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+            enum:
+            - DASHBOARD
+            - QUICK_ORDER
+            - ONLINE_STORE
+            - RENTAL_PLACE_B2B
+            - RENTAL_PLACE_LOKKI
+            - BORNE
+            - SKISET
+            - SKIMIUM
+            - UNKNOWN
+            - TEST
+            - ADMIN_IMPORT
+      - name: withPaymentV2
+        required: false
+        in: query
+        schema:
+          default: false
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPaymentsWithWorkshopOrderDto'
+      tags:
+      - Workshop Payment
+  /v2/workshop-payment/getPaymentCsv:
+    get:
+      operationId: getWorkshopPaymentCsv
+      parameters:
+      - name: startDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: endDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          minimum: 1
+          default: 1
+          type: number
+      - name: limit
+        required: false
+        in: query
+        schema:
+          maximum: 30
+          default: 15
+          type: number
+      - name: searchCustomer
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: documentName
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: searchProducts
+        required: false
+        in: query
+        schema:
+          default: ''
+          type: string
+      - name: state
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+            enum:
+            - TODAY
+            - TO_COME
+            - IN_PROGRESS
+            - LATE
+            - ENDED
+            - PASS
+            - PRE_BOOKING
+            - PRE_BOOKING_ADMIN
+            - CANCELED
+      - name: personalStatus
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+      - name: documentStatus
+        required: false
+        in: query
+        schema:
+          enum:
+          - NOTUPTODATE
+          - WAITING
+          - SIGNED
+          - SENT
+          type: string
+      - name: createFromStatus
+        required: false
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+            enum:
+            - DASHBOARD
+            - QUICK_ORDER
+            - ONLINE_STORE
+            - RENTAL_PLACE_B2B
+            - RENTAL_PLACE_LOKKI
+            - BORNE
+            - SKISET
+            - SKIMIUM
+            - UNKNOWN
+            - TEST
+            - ADMIN_IMPORT
+      - name: withPaymentV2
+        required: false
+        in: query
+        schema:
+          default: false
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopPaymentCsvDto'
+      tags:
+      - Workshop Payment
+  /v2/workshop-payment/{workshopId}:
+    get:
+      operationId: getWorkshopPayments
+      parameters:
+      - name: workshopId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopPaymentDto'
+      tags:
+      - Workshop Payment
+  /v2/workshop-payment/payment/{workshopId}:
+    post:
+      operationId: workshopCreatePayment
+      parameters:
+      - name: workshopId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopCreatePaymentDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopPayment'
+      tags:
+      - Workshop Payment
+  /v2/workshop-payment/refund/{workshopId}:
+    post:
+      operationId: workshopOrderRefundPayment
+      parameters:
+      - name: workshopId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopRefundPaymentDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Workshop Payment
+  /v2/workshop-payment/batch-refunds/{workshopId}:
+    post:
+      operationId: workshopOrderBatchRefundPayment
+      parameters:
+      - name: workshopId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkshopBatchRefundDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Workshop Payment
+  /v2/workshop-payment/payment/{workshopId}/{paymentId}:
+    delete:
+      operationId: workshopDeletePayment
+      parameters:
+      - name: workshopId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: paymentId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Workshop Payment
+components:
+  schemas:
+    WorkshopCreatePaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        initialAmount:
+          type: number
+        paymentIntentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - waiting
+          - pending
+          - paid
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+        paymentDate:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        isEmailSent:
+          type: boolean
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPaymentRefund'
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
+      required:
+      - amount
+      - method
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+    PaymentWithWorkshopOrderDto:
+      type: object
+      properties:
+        payment:
+          $ref: '#/components/schemas/WorkshopPayment'
+        workshopOrder:
+          $ref: '#/components/schemas/WorkshopOrder'
+      required:
+      - payment
+    RepairerWorkshop:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+      required:
+      - userId
+      - name
+    WorkshopPaymentRefund:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+        date:
+          format: date-time
+          type: string
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+        reason:
+          type: string
+          enum:
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
+      required:
+      - id
+      - amount
+      - date
+      - method
+      - reason
+    CustomerField:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    PaginatedPaymentsWithWorkshopOrderDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentWithWorkshopOrderDto'
+      required:
+      - totalCount
+      - payments
+    SquarePaymentInfo:
+      type: object
+      properties:
+        squarePaymentId:
+          type: string
+        squareOrderId:
+          type: string
+      required:
+      - squarePaymentId
+      - squareOrderId
+    TulipInfos:
+      type: object
+      properties:
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
+      required:
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
+    WorkshopOrderDocument:
+      type: object
+      properties:
+        documentId:
+          type: string
+        documentModelId:
+          type: string
+        name:
+          type: string
+        createdDate:
+          format: date-time
+          type: string
+        key:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        documentUrl:
+          type: string
+      required:
+      - documentId
+      - documentModelId
+      - name
+      - createdDate
+      - key
+      - isEmailSend
+      - isSigned
+      - documentUrl
+    WorkshopOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        model:
+          type: string
+        remark:
+          type: string
+        shortCode:
+          type: string
+        label:
+          type: string
+        status:
+          type: string
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        vat:
+          type: number
+        isConfirmationEmailSend:
+          type: boolean
+        isFromOnlineStore:
+          type: boolean
+        changeHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusHistory'
+        quotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopOrderQuotes'
+        customInputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomInputWorkshop'
+        discount:
+          type: number
+        workshopLocation:
+          type: string
+        assignees:
+          type: array
+          items:
+            $ref: '#/components/schemas/RepairerWorkshop'
+        companyId:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        desiredReturnDate:
+          format: date-time
+          type: string
+        customer:
+          $ref: '#/components/schemas/Customer'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopOrderDocument'
+        sentMails:
+          type: array
+          items:
+            type: object
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPayment'
+        updatedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - model
+      - remark
+      - shortCode
+      - label
+      - status
+      - totalTTC
+      - totalHT
+      - vat
+      - isConfirmationEmailSend
+      - isFromOnlineStore
+      - changeHistory
+      - quotes
+      - customInputs
+      - discount
+      - workshopLocation
+      - assignees
+      - companyId
+      - startDate
+      - desiredReturnDate
+      - customer
+      - documents
+      - sentMails
+      - updatedAt
+      - createdAt
+    WorkshopPaymentCsvDto:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - payments
+    PaymentsInfo:
+      type: object
+      properties:
+        method:
+          type: string
+        amount:
+          type: number
+      required:
+      - method
+      - amount
+    WorkshopBatchRefundDto:
+      type: object
+      properties:
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopRefundPaymentDto'
+      required:
+      - refunds
+    WorkshopOrderQuotes:
+      type: object
+      properties:
+        id:
+          type: string
+        isDone:
+          type: boolean
+        name:
+          type: string
+        price:
+          type: number
+        timeInMinutes:
+          type: number
+        number:
+          type: number
+      required:
+      - id
+      - isDone
+      - name
+      - price
+      - timeInMinutes
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        companyName:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        zipCode:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerField'
+        companyId:
+          type: string
+        deliveryAddress:
+          type: string
+        deliveryZipCode:
+          type: string
+        deliveryCity:
+          type: string
+        isNewsletterSubscribe:
+          type: boolean
+        isLokkiNewsletterSubscribe:
+          type: boolean
+        customerImage:
+          type: string
+        type:
+          enum:
+          - entreprise
+          - individual
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CustomerSkisetInfos'
+        tulipInfos:
+          $ref: '#/components/schemas/TulipInfos'
+        createdAt:
+          format: date-time
+          type: string
+        remark:
+          type: string
+        customerRpId:
+          type: string
+        hidden:
+          type: boolean
+        createdFrom:
+          enum:
+          - DASHBOARD
+          - ONLINE_STORE
+          - RENTAL_PLACE_LOKKI
+          type: string
+      required:
+      - id
+      - firstName
+      - lastName
+      - companyName
+      - phone
+      - email
+      - zipCode
+      - fields
+      - companyId
+      - deliveryAddress
+      - deliveryZipCode
+      - deliveryCity
+      - isNewsletterSubscribe
+      - isLokkiNewsletterSubscribe
+      - customerImage
+      - type
+      - createdAt
+      - hidden
+      - createdFrom
+    StatusHistory:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          type: boolean
+        date:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+      - date
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    WorkshopRefundPaymentDto:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+        date:
+          format: date-time
+          type: string
+        paymentId:
+          type: string
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+        reason:
+          type: string
+          enum:
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
+      required:
+      - id
+      - amount
+      - date
+      - method
+      - reason
+    WorkshopPaymentDto:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPayment'
+      required:
+      - payments
+    WorkshopPayment:
+      type: object
+      properties:
+        id:
+          type: string
+        paymentDate:
+          format: date-time
+          type: string
+        initialAmount:
+          type: number
+        amount:
+          type: number
+        status:
+          enum:
+          - waiting
+          - pending
+          - paid
+          type: string
+        link:
+          type: string
+        paymentIntentId:
+          type: string
+        isEmailSent:
+          type: boolean
+        method:
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+          type: string
+        companyId:
+          type: string
+        orderWorkshopId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPaymentRefund'
+        stripeStatus:
+          enum:
+          - pending
+          - error
+          - success
+          - canceled
+          type: string
+        adyenPaymentData:
+          type: string
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
+      required:
+      - id
+      - initialAmount
+      - amount
+      - status
+      - isEmailSent
+      - method
+      - companyId
+      - orderWorkshopId
+      - createdAt
+      - isPartPayment
+      - refunds
+    CustomInputWorkshop:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        isDone:
+          type: boolean
+      required:
+      - id
+      - name
+      - price
+      - isDone
+    PaymentInfoDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentsInfo'
+      required:
+      - totalCount
+      - totalTTC
+      - totalHT
+      - payments
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

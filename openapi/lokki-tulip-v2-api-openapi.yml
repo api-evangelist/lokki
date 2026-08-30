@@ -1,0 +1,48 @@
+openapi: 3.2.0
+info:
+  title: Lokki Tulip V2 API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Tulip V2
+paths:
+  /v2/tulip-v2/citiesByZipcode/{zipcode}:
+    get:
+      operationId: tulipGetCitiesByZipcode
+      parameters:
+      - name: zipcode
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TulipGetCitiesResponse'
+      tags:
+      - Tulip V2
+components:
+  schemas:
+    TulipGetCitiesResponse:
+      type: object
+      properties:
+        cities:
+          type: array
+          items:
+            type: string
+      required:
+      - cities
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

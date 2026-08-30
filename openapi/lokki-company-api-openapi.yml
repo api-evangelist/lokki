@@ -1,0 +1,5963 @@
+openapi: 3.2.0
+info:
+  title: Lokki Company API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Company
+paths:
+  /v2/company/currentCompany:
+    get:
+      operationId: getCurrentCompany
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company:
+    patch:
+      operationId: updateCompany
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyUpdateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/slug/{slug}/{scope}:
+    get:
+      operationId: getCompanyBySlug
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: scope
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: language
+        required: true
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      - name: withNotOnboarded
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineStoreCompanyDto'
+      tags:
+      - Company
+  /v2/company/redirect-slug/{slug}:
+    get:
+      operationId: getCompanySlugRedirect
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Company
+  /v2/company/byID/{id}:
+    get:
+      operationId: getCompanyById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/shopId/{companyId}:
+    get:
+      operationId: getCompanyShopId
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Company
+  /v2/company/isSlugUnique/{slug}:
+    get:
+      operationId: getIsSlugUnique
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Company
+  /v2/company/isNameUnique/{name}:
+    get:
+      operationId: getIsNameUnique
+      parameters:
+      - name: name
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Company
+  /v2/company/squareLocations:
+    get:
+      operationId: getSquareLocations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SquareLocation'
+      tags:
+      - Company
+  /v2/company/squareDevices:
+    get:
+      operationId: getSquareDevices
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SquareDevices'
+      tags:
+      - Company
+  /v2/company/squareOAuthState:
+    get:
+      operationId: getSquareOAuthState
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSquareOAuthStateDto'
+      tags:
+      - Company
+  /v2/company/retro-2022:
+    get:
+      operationId: getRetro2022
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyRetro2022Infos'
+      tags:
+      - Company
+  /v2/company/bilan-summer-2023:
+    get:
+      operationId: getSummer2023
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyRetro2022Infos'
+      tags:
+      - Company
+  /v2/company/squareRevokeOauthToken:
+    post:
+      operationId: squareRevokeOauthToken
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Company
+  /v2/company/newCompanySquareDevice:
+    post:
+      operationId: createCompanyNewSquareDevice
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompanySquareDeviceDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Company
+  /v2/company/currency:
+    post:
+      operationId: updateCurrency
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyCurrencyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateCompanyOnlineStorePayment:
+    post:
+      operationId: updateCompanyOnlineStorePayment
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStorePaymentDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/tulip/updateSettings:
+    post:
+      operationId: updateTulipSettings
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTulipSettingsDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/tulip/updateTulipSettingsWording:
+    post:
+      operationId: updateTulipSettingsWording
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTulipSettingsWordingDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/tulip/updateTulipSettingsName:
+    post:
+      operationId: updateTulipSettingsName
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTulipSettingsNameDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/tulip/updateTulipSettingsDisplayedOptions:
+    post:
+      operationId: updateTulipSettingsDisplayedOptions
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTulipSettingsDisplayedOptionsDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateOnlineStoreRentalPointType:
+    post:
+      operationId: updateOnlineStoreRentalPointType
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOnlineStoreRentalPointTypeDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateSocialMedia:
+    post:
+      operationId: updateSocialMedia
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSocialMediaDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/timezone:
+    post:
+      operationId: updateTimezone
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTimezoneDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/opinionBooster:
+    post:
+      operationId: updateOpinionBooster
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOpinionBooster'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreSlots:
+    post:
+      operationId: updateOnlineStoreSlots
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStoreSlotsDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/orderReminder:
+    post:
+      operationId: updateOrderReminder
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOrderReminderDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/multipleFundsTransfer:
+    post:
+      operationId: updateCompanyMultipleFundsTransfer
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyMultipleFundsTransferDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/delivery:
+    post:
+      operationId: updateDelivery
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyDeliveryDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/rentalPlace:
+    put:
+      operationId: updateCompanyRentalPlace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRentalPlaceDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/eventCGU:
+    put:
+      operationId: updateEventCgu
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTermsConditionsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/docCustomFields:
+    put:
+      operationId: updateCompanyDocumentCustomFields
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyDocumentCustomFieldsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/customerTextRGPD:
+    put:
+      operationId: updateCompanyCustomerTextRGPD
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCustomerTextRGPDDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Company
+  /v2/company/documentColor:
+    put:
+      operationId: updateCompanyDocumentColor
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyDocumentColorDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/cancellationPolicy:
+    put:
+      operationId: updateCancellationPolicy
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancellationPolicyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/newsletterSubscription:
+    put:
+      operationId: updateNewsletterSubscription
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyNewsletterSubscriptionDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateShowPricing:
+    put:
+      operationId: updateShowPricing
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyShowPricingDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateShowStock:
+    put:
+      operationId: updateShowStock
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyShowStockDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateLLDBilling:
+    put:
+      operationId: updateLLDBilling
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyLLDBillingDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/automatic-internal-start-date-attribution:
+    put:
+      operationId: updateAutomaticInternalStartDateAttribution
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyAutomaticInternalStartDateAttributionDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateSlug:
+    put:
+      operationId: updateSlug
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanySlugDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateVatWorkshop:
+    put:
+      operationId: updateVatWorkshop
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVatWorkshopDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/categoryDiscounts:
+    put:
+      operationId: updateCompanyCategoryDiscounts
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyUpdateCategoryDiscountsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/hideOnlineStoreLCD:
+    put:
+      operationId: updateHideOnlineStoreLCD
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyHideOnlineStoreLCDDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/hideOnlineStoreLLD:
+    put:
+      operationId: updateHideOnlineStoreLLD
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyHideOnlineStoreLLDDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateSquareCredentialIsActive:
+    put:
+      operationId: updateSquareCredentialIsActive
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSquareIsActiveDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateSquareCredentialsLocation:
+    put:
+      operationId: updateSquareCredentialsLocation
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSquareCredentialLocationDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/eventDirectOrder:
+    put:
+      operationId: updateEventDirectOrder
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyEventDirectOrderDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/toggleRentalPlace:
+    put:
+      operationId: activateRentalPlace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyActivateRentalPlaceDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/activateNewOnlineStoreDesign:
+    put:
+      operationId: activateNewOnlineStoreDesign
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyActivateNewOnlineStoreDesignDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateCompanyAccessOnlineContract:
+    put:
+      operationId: updateCompanyAccessOnlineContract
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyAccessOnlineContractDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/partPayment:
+    put:
+      operationId: updateCompanyOnlinePartPayment
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartPaymentDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/partPaymentEvent:
+    put:
+      operationId: updateCompanyOnlinePartPaymentEvent
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartPaymentDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/bailAccess:
+    put:
+      operationId: updateCompanyAccessBail
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BailAccessDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/bailMax:
+    put:
+      operationId: updateCompanyBailMaxValue
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BailMaxValueDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/eventBailMax:
+    put:
+      operationId: updateCompanyEventBailMaxValue
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BailMaxValueDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/internalBailMax:
+    put:
+      operationId: updateInternalCompanyBailMaxValue
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BailMaxValueDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/internalEventBailMax:
+    put:
+      operationId: updateInternalCompanyEventBailMaxValue
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BailMaxValueDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/internalLLDBailMax:
+    put:
+      operationId: updateInternalCompanyLLDBailMaxValue
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BailMaxValueDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/eventTags:
+    put:
+      operationId: updateCompanyEventTags
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyEventTagUpdateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/eventUniverses:
+    put:
+      operationId: updateCompanyEventUniverses
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyEventUniversesUpdateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/eventUniversesActivated:
+    put:
+      operationId: updateCompanyEventUniversesActivated
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyEventUniversesActivatedDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/eventUniversesTag:
+    put:
+      operationId: updateCompanyEventUniversesTag
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyEventUniversesTagDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/vat:
+    put:
+      operationId: updateCompanyVat
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyVatDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/vatName:
+    put:
+      operationId: updateCompanyVatName
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyVatNameDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/placeId:
+    put:
+      operationId: updateCompanyPlaceId
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyPlaceIdDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreDescription:
+    put:
+      operationId: updateCompanyOnlineStoreDescription
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStoreDescriptionDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/termsConditions:
+    put:
+      operationId: updateCompanyTermsConditions
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTermsConditionsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/termsConditionsLLD:
+    put:
+      operationId: updateCompanyTermsConditionsLLD
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTermsConditionsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreFeaturedSectionTitle:
+    put:
+      operationId: updateCompanyOnlineStoreFeaturedSectionTitle
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFeaturedSectionTitleDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateOnlineStorePhoneNumber:
+    put:
+      operationId: updateCompanyOnlineStorePhoneNumber
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStorePhoneNumberDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateOnlineStoreDisplayPhoneNumber:
+    put:
+      operationId: updateCompanyOnlineStoreDisplayPhoneNumber
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStoreDisplayPhoneNumberDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateOnlineStoreFeaturedIds:
+    put:
+      operationId: updateCompanyOnlineStoreFeaturedIds
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStoreFeaturedIdsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreCustomFeaturedMode:
+    put:
+      operationId: updateCompanyOnlineStoreCustomFeaturedMode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStoreCustomFeaturedModeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreEventsTitle:
+    put:
+      operationId: updateCompanyOnlineStoreEventTitle
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOnlineStoreEventsTitleDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/productStateInfos:
+    put:
+      operationId: updateCompanyProductStateInfos
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyProductStateInfosDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/defaultPhoneCode:
+    put:
+      operationId: updateCompanyOnlineStoreDefaultPhoneCode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyUpdateDefaultPhoneCodeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateProductUnavailability:
+    put:
+      operationId: updateCompanyProductUnavailability
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyProductAvailabilityDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateQuickOrderDefaultMode:
+    put:
+      operationId: updateCompanyQuickOrderDefaultMode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyQuickOrderDefaultModeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateCompanyMainInfos:
+    put:
+      operationId: updateCompanyMainInfos
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyMainInfosDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateOfflinePin:
+    put:
+      operationId: updateCompanyOfflinePin
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyOfflinePinDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateReservationTimes:
+    put:
+      operationId: updateCompanyReservationTimes
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyReservationTimesDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/numberHoursOrder:
+    put:
+      operationId: updateNumberHoursOrderById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNumberHoursOrderDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/lowSeasonDates:
+    put:
+      operationId: updateLowSeasonDates
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLowSeasonDateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/uploadOnlineStoreImage:
+    post:
+      operationId: uploadOnlineStoreImage
+      parameters: []
+      requestBody:
+        required: true
+        description: upload image
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompanyUploadImageDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/companyImage/{type}:
+    post:
+      operationId: uploadCompanyImage
+      parameters:
+      - name: type
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: upload company image
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateBannerScroll:
+    post:
+      operationId: updateCompanyOnlineStoreImageScroll
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyBannerScrollDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/ancv/registerShopID:
+    post:
+      operationId: registerShopID
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterShopIdBodyDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Company
+  /v2/company/tulip/renter:
+    get:
+      operationId: getTulipRenter
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                oneOf:
+                - $ref: '#/components/schemas/TulipRenter'
+      tags:
+      - Company
+  /v2/company/tulip/config:
+    post:
+      operationId: updateCompanyTulipConfig
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyTulipConfigDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TulipSettings'
+      tags:
+      - Company
+  /v2/company/tulip/link/{tulipId}:
+    post:
+      operationId: linkTulipId
+      parameters:
+      - name: tulipId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TulipRenter'
+      tags:
+      - Company
+  /v2/company/updateCompanyRentalPoints:
+    put:
+      operationId: updateCompanyRentalPoints
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyRentalPointsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/updateCompanyMailSender:
+    put:
+      operationId: updateCompanyMailSender
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyMailSenderDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreClosedDates:
+    put:
+      operationId: updateClosedDatesById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateClosedDatesDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreOpeningHours:
+    put:
+      operationId: updateOpeningHoursById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOpeningHoursDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/onlineStoreTimeLapsBeforeBooking:
+    put:
+      operationId: updateTimeLapsBeforeBookingById
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTimeLapseBeforeBookingDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/csSupportRequested:
+    put:
+      operationId: updateCsSupportRequested
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCsSupportRequestedDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/dayType:
+    put:
+      operationId: updateCompanyDayType
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyDayTypeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/settings:
+    patch:
+      operationId: patchOneCompanySettings
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchCompanySettingsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Company
+  /v2/company/subscription/add-item:
+    post:
+      operationId: companySubscribeToModule
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeToModuleDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Company
+  /v2/company/subscription/remove-item:
+    post:
+      operationId: removeSubscriptionProduct
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnsubscribeToModuleDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Company
+  /v2/company/subscription/update-item:
+    post:
+      operationId: updateSubscriptionProductPrice
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSubscriptionModulePrice'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Company
+  /v2/company/periodic-discounts:
+    get:
+      operationId: getManyPeriodicDiscounts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PeriodicDiscount'
+      tags:
+      - Company
+    post:
+      operationId: createOnePeriodicDiscount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePeriodicDiscountDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Company
+  /v2/company/periodic-discounts/{periodicDiscountId}:
+    get:
+      operationId: getOnePeriodicDiscount
+      parameters:
+      - name: periodicDiscountId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Company
+    put:
+      operationId: updateOnePeriodicDiscount
+      parameters:
+      - name: periodicDiscountId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePeriodicDiscountDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Company
+    delete:
+      operationId: deleteOnePeriodicDiscount
+      parameters:
+      - name: periodicDiscountId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - Company
+components:
+  schemas:
+    UpdateCompanyTulipSettingsWordingDto:
+      type: object
+      properties:
+        i18nContent:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - i18nContent
+      - i18nTitle
+    OpeningHoursRange:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+        open:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - open
+      - from
+      - to
+    CompanyRentalPlaceDescriptionsDto:
+      type: object
+      properties:
+        fr:
+          type: string
+        en:
+          type: string
+      required:
+      - fr
+      - en
+    RentalPlaceStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        borderColor:
+          type: string
+        padding:
+          type: string
+    UpdateCompanyMainInfosDto:
+      type: object
+      properties:
+        name:
+          type: string
+        siret:
+          type: string
+        legalName:
+          type: string
+        headquartersAddress:
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        longitude:
+          type: number
+        latitude:
+          type: number
+        phone:
+          type: string
+        addressComponentsMachine:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+    UpdateVatWorkshopDto:
+      type: object
+      properties:
+        vatWorkshop:
+          type: number
+      required:
+      - vatWorkshop
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    UpdateCompanyOnlineStorePaymentDto:
+      type: object
+      properties:
+        onlineStorePayment:
+          type: boolean
+      required:
+      - onlineStorePayment
+    PeriodicDiscount:
+      type: object
+      properties:
+        _id:
+          type: string
+        discountInPercentage:
+          type: number
+        startDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        endDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        applicableDate:
+          enum:
+          - CREATED_DATE
+          - START_DATE
+          type: string
+        scope:
+          default:
+          - ONLINE_STORE
+          type: array
+          items:
+            type: string
+            enum:
+            - ONLINE_STORE
+            - DASHBOARD
+      required:
+      - _id
+      - discountInPercentage
+      - startDate
+      - endDate
+      - applicableDate
+    RentalPlaceTextStyle:
+      type: object
+      properties:
+        color:
+          type: string
+        fontSize:
+          type: string
+        fontWeight:
+          type: string
+        fontStyle:
+          type: string
+    CompanyAdyenCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: adyen
+          enum:
+          - adyen
+        apiKey:
+          type: string
+        merchantAccount:
+          type: string
+        clientKey:
+          type: string
+        liveEndpointUrlPrefix:
+          type: string
+        store:
+          type: string
+      required:
+      - provider
+      - apiKey
+      - merchantAccount
+      - clientKey
+      - liveEndpointUrlPrefix
+      - store
+    UpdateCompanyOnlineStoreFeaturedIdsDto:
+      type: object
+      properties:
+        featuredIds:
+          type: array
+          items:
+            type: string
+      required:
+      - featuredIds
+    UpdateSquareIsActiveDto:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+      required:
+      - isActive
+    CompanyTimezone:
+      type: object
+      properties:
+        timezone:
+          type: string
+      required:
+      - timezone
+    CompanyEventUniversesActivatedDto:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+      required:
+      - isActivated
+    CompanyOrderReminder:
+      type: object
+      properties:
+        emailOneDayBeforeOrderStart:
+          type: boolean
+        emailTemplateId:
+          type:
+          - string
+          - 'null'
+        bailLinkInEmail:
+          type: boolean
+        emailOneDayBeforeOrderEnd:
+          type: boolean
+        emailOnLokkiPayment:
+          type: boolean
+        emailOnFundsTransfer:
+          type: boolean
+        oneDayBeforeOrderEndEmailTemplateId:
+          type:
+          - string
+          - 'null'
+      required:
+      - emailOneDayBeforeOrderStart
+      - emailTemplateId
+      - bailLinkInEmail
+      - emailOneDayBeforeOrderEnd
+      - emailOnLokkiPayment
+      - emailOnFundsTransfer
+      - oneDayBeforeOrderEndEmailTemplateId
+    TulipOptions:
+      type: object
+      properties:
+        option:
+          type: boolean
+        inclusion:
+          type: boolean
+        LCD:
+          type: boolean
+        LMD:
+          type: boolean
+        LLD:
+          type: boolean
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/TulipOptionProduct'
+      required:
+      - option
+      - inclusion
+      - LCD
+      - LMD
+      - LLD
+      - products
+    UpdateSquareCredentialLocationDto:
+      type: object
+      properties:
+        locationId:
+          type: string
+        locationName:
+          type: string
+      required:
+      - locationId
+      - locationName
+    LocalizedReview:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleReview'
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - reviews
+    CompanyRentalPlaceDto:
+      type: object
+      properties:
+        image:
+          type: string
+        additionalImages:
+          type: array
+          items:
+            type: string
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        showcaseProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyShowcaseProductDto'
+        team:
+          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
+        lokkiComment:
+          type: string
+      required:
+      - image
+      - additionalImages
+      - descriptions
+      - universes
+      - verticales
+      - showcaseProducts
+      - team
+      - lokkiComment
+    CompanyUpdateDefaultPhoneCodeDto:
+      type: object
+      properties:
+        defaultPhoneCode:
+          type: string
+      required:
+      - defaultPhoneCode
+    AncvConnectSettings:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        shopId:
+          type:
+          - string
+          - 'null'
+      required:
+      - activated
+      - shopId
+    PartPaymentDto:
+      type: object
+      properties:
+        partPaymentAmount:
+          type: number
+      required:
+      - partPaymentAmount
+    RentalPlaceFooter:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        linkColOne:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkColTwo:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkSocial:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkSocial'
+      required:
+      - style
+      - textStyle
+      - linkColOne
+      - linkColTwo
+      - linkSocial
+    TulipTranslation:
+      type: object
+      properties:
+        en:
+          type: string
+        fr:
+          type: string
+      required:
+      - en
+      - fr
+    CompanyPlaceIdDto:
+      type: object
+      properties:
+        placeId:
+          type: string
+      required:
+      - placeId
+    UpdateCompanyOnlineStoreSlotsDto:
+      type: object
+      properties:
+        companyOnlineStoreSlots:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
+      required:
+      - companyOnlineStoreSlots
+    CompanyUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        lastConnected:
+          format: date-time
+          type: string
+        connectionDates:
+          type: array
+          items:
+            format: date-time
+            type: string
+        isAccountActivated:
+          type: boolean
+        role:
+          type: string
+        signedUpWith:
+          type: string
+          enum:
+          - google
+          - apple
+      required:
+      - name
+      - email
+      - id
+    GetSquareOAuthStateDto:
+      type: object
+      properties:
+        state:
+          type: string
+        env:
+          type: string
+      required:
+      - state
+      - env
+    CompanyHyperlineSubscriptionData:
+      type: object
+      properties:
+        isPaidByThirdParty:
+          type: boolean
+        customerId:
+          type: string
+        subscriptionId:
+          type: string
+        usageCustomerId:
+          type:
+          - string
+          - 'null'
+        usageSubscriptionId:
+          type:
+          - string
+          - 'null'
+        subscriptionCheckoutStatus:
+          type:
+          - string
+          - 'null'
+          enum:
+          - PENDING
+          - COMPLETED
+          - FAILED
+      required:
+      - isPaidByThirdParty
+      - customerId
+      - subscriptionId
+      - usageCustomerId
+      - usageSubscriptionId
+      - subscriptionCheckoutStatus
+    UnsubscribeToModuleDto:
+      type: object
+      properties:
+        module:
+          type: string
+          enum:
+          - ORDER_EVENT
+          - ANCV_CONNECT
+          - MULTIPLE_FUNDS_TRANSFER
+      required:
+      - module
+    ThemeMainStyles:
+      type: object
+      properties:
+        radius:
+          type: string
+        backgroundColor:
+          type: string
+        fontFamily:
+          type: string
+      required:
+      - radius
+      - backgroundColor
+      - fontFamily
+    SubscribeToModuleDto:
+      type: object
+      properties:
+        module:
+          type: string
+          enum:
+          - ORDER_EVENT
+          - ANCV_CONNECT
+          - MULTIPLE_FUNDS_TRANSFER
+      required:
+      - module
+    UpdateCompanyMailSenderDto:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    UpdateCompanyProductAvailabilityDto:
+      type: object
+      properties:
+        timeProductsUnavailableAfterOrder:
+          type: string
+        dayProductsUnavailableAfterOrder:
+          type: number
+        timeProductsUnavailableBeforeOrder:
+          type: string
+        dayProductsUnavailableBeforeOrder:
+          type: number
+      required:
+      - timeProductsUnavailableAfterOrder
+      - dayProductsUnavailableAfterOrder
+      - timeProductsUnavailableBeforeOrder
+      - dayProductsUnavailableBeforeOrder
+    CompanyActivateNewOnlineStoreDesignDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
+    SocialMedia:
+      type: object
+      properties:
+        facebook:
+          type: string
+        twitter:
+          type: string
+        instagram:
+          type: string
+        linkedIn:
+          type: string
+        tiktok:
+          type: string
+      required:
+      - facebook
+      - twitter
+      - instagram
+      - linkedIn
+      - tiktok
+    TulipRenter:
+      type: object
+      properties:
+        uid:
+          type: string
+        company:
+          $ref: '#/components/schemas/TulipCompanyInfo'
+        options:
+          $ref: '#/components/schemas/TulipOptions'
+      required:
+      - uid
+      - company
+      - options
+    TulipSettings:
+      type: object
+      properties:
+        state:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        initialState:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nContent:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+      - i18nName
+      - i18nContent
+      - i18nTitle
+      - displayedOptions
+    Trackers:
+      type: object
+      properties:
+        ga4Id:
+          type:
+          - string
+          - 'null'
+          pattern: ga4Pattern
+        googleAdsId:
+          type:
+          - string
+          - 'null'
+          pattern: googleAdsPattern
+        metaPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: metaPixelPattern
+        tiktokPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: tiktokPixelPattern
+        linkedinPartnerId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinPartnerPattern
+        linkedinConversionId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinConversionPattern
+        lastUpdatedBy:
+          type: string
+        lastUpdatedAt:
+          format: date-time
+          type: string
+    UpdateSubscriptionModulePrice:
+      type: object
+      properties:
+        module:
+          type: string
+          enum:
+          - ORDER_EVENT
+          - ANCV_CONNECT
+          - MULTIPLE_FUNDS_TRANSFER
+        prices:
+          type: array
+          items:
+            type: object
+        createIfNotExists:
+          type: boolean
+      required:
+      - module
+      - prices
+    CompanyTrialInfos:
+      type: object
+      properties:
+        productsNumber:
+          type: string
+          enum:
+          - '0'
+          - 1 - 10
+          - 11 - 20
+          - 21 - 50
+          - 51 - 100
+          - 101 - 250
+          - '> 250'
+        trialEndsAt:
+          format: date-time
+          type: string
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          format: date-time
+          type: string
+      required:
+      - trialEndsAt
+    RegisterShopIdBodyDto:
+      type: object
+      properties:
+        shopId:
+          type: string
+      required:
+      - shopId
+    UpdateCompanyTimezoneDto:
+      type: object
+      properties:
+        companyTimezone:
+          $ref: '#/components/schemas/CompanyTimezone'
+      required:
+      - companyTimezone
+    UpdateCsSupportRequestedDto:
+      type: object
+      properties:
+        requested:
+          type: boolean
+      required:
+      - requested
+    ReservationTime:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - start
+          - end
+        time:
+          type: string
+      required:
+      - id
+      - type
+      - time
+    RentalPlaceFile:
+      type: object
+      properties:
+        id:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+      required:
+      - filename
+      - url
+    CompanyAccess:
+      type: object
+      properties:
+        onlineStoreCreateOrder:
+          type: boolean
+        onlineStoreCreateOrderLLD:
+          type: boolean
+        productsUnavailableAfterOrder:
+          type: boolean
+        lcd:
+          type: boolean
+        lld:
+          type: boolean
+        priceExcludingTaxes:
+          type: boolean
+        useSeveralRentalPoints:
+          type: boolean
+        useOnlineStoreContract:
+          type: boolean
+        multipleFundsTransfer:
+          $ref: '#/components/schemas/MultipleFundsTransfer'
+        useOnlineBail:
+          type: boolean
+        lldOnlineBail:
+          type: boolean
+        payOnSite:
+          type: boolean
+        onlineStorePayment:
+          type: boolean
+        assuranceTulipInclusion:
+          type: boolean
+        assuranceTulip:
+          type: boolean
+        onlineStoreSlots:
+          type: boolean
+        lokkiEvent:
+          type: boolean
+        onlineHideHeader:
+          type: boolean
+        rentalPlace:
+          type: boolean
+        advancedStatistics:
+          type: boolean
+        checkoutSoftware:
+          type: string
+          enum:
+          - NONE
+          - G8
+          - SQUARE
+          - SHIFTER
+        lokkiWorkshop:
+          type: boolean
+        onlineStoreStyle:
+          type: string
+          enum:
+          - none
+          - basic
+          - advanced
+        orderAdditionalTime:
+          type: boolean
+        severalRentalPoints:
+          type: boolean
+        customerB2B:
+          type: boolean
+        corporate:
+          type: string
+          enum:
+          - NONE
+          - BMW
+          - BOULANGER
+          - CARREFOUR
+          - DECATHLON
+          - DECATHLON_CANADA
+          - DECATHLON_REUNION
+          - ESPACE_EMERAUDE
+          - LECLERC
+          - MONOPRIX
+          - PELLENC
+          - STATION_BEES
+          - SKISET
+          - SKIMIUM
+          - MWHEEL
+          - NATURA_PRO
+          - MR_BRICOLAGE
+          - CORA
+          - MR_JARDINAGE
+          - CAMARA
+          - NETSKI
+          - SPORT_2000
+        lokkiOffline:
+          type: boolean
+        lokkiPayment:
+          type: boolean
+        onlineStoreVersion:
+          type: string
+          enum:
+          - V1_SUBDOMAIN
+          - V2_RENTALPLACE
+        rentalPlaceNetwork:
+          $ref: '#/components/schemas/RentalPlaceNetwork'
+        rentalPlaceShowBreadcrumb:
+          type: boolean
+        quoteRequests:
+          type: boolean
+      required:
+      - onlineStoreCreateOrder
+      - onlineStoreCreateOrderLLD
+      - productsUnavailableAfterOrder
+      - lcd
+      - lld
+      - priceExcludingTaxes
+      - useSeveralRentalPoints
+      - useOnlineStoreContract
+      - multipleFundsTransfer
+      - useOnlineBail
+      - lldOnlineBail
+      - payOnSite
+      - onlineStorePayment
+      - assuranceTulipInclusion
+      - assuranceTulip
+      - onlineStoreSlots
+      - lokkiEvent
+      - onlineHideHeader
+      - rentalPlace
+      - advancedStatistics
+      - checkoutSoftware
+      - lokkiWorkshop
+      - onlineStoreStyle
+      - orderAdditionalTime
+      - severalRentalPoints
+      - customerB2B
+      - corporate
+      - lokkiOffline
+      - lokkiPayment
+      - onlineStoreVersion
+      - rentalPlaceNetwork
+      - rentalPlaceShowBreadcrumb
+      - quoteRequests
+    LowSeasonDateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - id
+      - startDate
+      - endDate
+    UpdateCompanyOnlineStorePhoneNumberDto:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+      required:
+      - phoneNumber
+    EventTag:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - name
+    CompanyEventUniversesTagDto:
+      type: object
+      properties:
+        tagId:
+          type: string
+      required:
+      - tagId
+    ThemeCompanyName:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
+      required:
+      - style
+    CompanyUpdateDto:
+      type: object
+      properties:
+        proposedRentalPlaceCommission:
+          $ref: '#/components/schemas/ProposedRentalPlaceCommissionDto'
+        lifecycleEvents:
+          $ref: '#/components/schemas/CompanyLifecycleEvents'
+    CompanyRetro2022Infos:
+      type: object
+      properties:
+        googleRating:
+          type: number
+        totalOrders:
+          type: number
+        bestMonth:
+          type: number
+      required:
+      - googleRating
+      - totalOrders
+      - bestMonth
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    UpdateCompanyProductStateInfosDto:
+      type: object
+      properties:
+        name:
+          type: string
+        displayGeneralConditions:
+          type: boolean
+        legalNotices:
+          type: string
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - displayGeneralConditions
+      - legalNotices
+      - useLegalCompanyInfo
+    CreateUpdatePeriodicDiscountDto:
+      type: object
+      properties:
+        discountInPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+        startDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        endDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        applicableDate:
+          enum:
+          - CREATED_DATE
+          - START_DATE
+          type: string
+        scope:
+          default:
+          - ONLINE_STORE
+          type: array
+          items:
+            type: string
+            enum:
+            - ONLINE_STORE
+            - DASHBOARD
+      required:
+      - discountInPercentage
+      - startDate
+      - endDate
+      - applicableDate
+    CompanyHideOnlineStoreLCDDto:
+      type: object
+      properties:
+        hideOnlineStoreLCD:
+          type: boolean
+      required:
+      - hideOnlineStoreLCD
+    UniverseMinimumPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - ALL_ASSOCIATED_CATEGORIES
+          - SPECIFIC_CATEGORY
+          - SPECIFIC_ITEM
+        id:
+          type: string
+      required:
+      - type
+      - id
+    CompanyBailMaxAmount:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        maxAmount:
+          type: number
+      required:
+      - activated
+      - maxAmount
+    CompanyRentalPlaceTeamDto:
+      type: object
+      properties:
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        image:
+          type: string
+        video:
+          type: string
+        teamName:
+          type: string
+      required:
+      - descriptions
+      - image
+      - video
+      - teamName
+    ThemeTitle:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
+      required:
+      - style
+    CompanyCategoryDiscount:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - categoryIds
+      - ranges
+    CompanyVatNameDto:
+      type: object
+      properties:
+        vatName:
+          type: string
+      required:
+      - vatName
+    CompanyMailSender:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    SquareDevices:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        deviceId:
+          type: string
+        status:
+          type: string
+        code:
+          type: string
+        pairBy:
+          type: string
+      required:
+      - id
+      - name
+      - deviceId
+      - status
+    CompanyCustomerTextRGPDDto:
+      type: object
+      properties:
+        rgpdText:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - rgpdText
+    CompanySkisetInfos:
+      type: object
+      properties:
+        id:
+          type: number
+        trademark:
+          type: string
+        resort_id:
+          type: number
+        country_id:
+          type: number
+        member_id:
+          type: number
+        name:
+          type: string
+        member:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+      - id
+      - trademark
+      - resort_id
+      - country_id
+      - member_id
+      - name
+      - member
+      - city
+      - country
+    CompanyDelivery:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+        freeDeliveryActivated:
+          type: boolean
+        freeDeliveryMinimumType:
+          type: string
+          enum:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
+          type: number
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - activated
+      - ranges
+      - deliveryOnly
+      - returnDelivery
+      - freeDeliveryActivated
+      - freeDeliveryMinimumType
+      - freeDeliveryMinimumVal
+      - excludedCities
+    UpdateLowSeasonDateDto:
+      type: object
+      properties:
+        lowSeasonDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/LowSeasonDateRange'
+      required:
+      - lowSeasonDates
+    UpdateCompanyTulipConfigDto:
+      type: object
+      properties:
+        hideInclusive:
+          type: boolean
+        activated:
+          type: boolean
+      required:
+      - hideInclusive
+      - activated
+    EventUniverse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+      required:
+      - id
+      - name
+      - imageUrl
+    Company:
+      type: object
+      properties:
+        addressComponents:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        paymentProvider:
+          oneOf:
+          - $ref: '#/components/schemas/CompanyAdyenCredentials'
+          - $ref: '#/components/schemas/CompanyStripeCredentials'
+        paymentProviderEvent:
+          oneOf:
+          - $ref: '#/components/schemas/CompanyAdyenCredentials'
+          - $ref: '#/components/schemas/CompanyStripeCredentials'
+        id:
+          type: string
+        slug:
+          type: string
+        redirectSlugs:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        description:
+          type: string
+        address:
+          type: string
+        addressLatitude:
+          type: string
+        addressLongitude:
+          type: string
+        logoURL:
+          type: string
+        vat:
+          type: number
+        vatName:
+          type: string
+        vatWorkshop:
+          type: number
+        hyperlineTaxRate:
+          type: number
+        generalConditions:
+          $ref: '#/components/schemas/LocalizedContent'
+        generalConditionsLLD:
+          $ref: '#/components/schemas/LocalizedContent'
+        cancellationPolicy:
+          $ref: '#/components/schemas/CancellationPolicyDto'
+        newsletterSubscription:
+          type: boolean
+        onlineStoreConfig:
+          $ref: '#/components/schemas/OnlineStoreConfig'
+        isGeneralConditionsLCDModified:
+          type: boolean
+        isDemo:
+          type: boolean
+        accountStatus:
+          enum:
+          - ACTIVE
+          - DEMO
+          - TRIAL
+          - ARCHIVED
+          type: string
+        accountType:
+          enum:
+          - PLATFORM
+          - VISIBILITY_ONE
+          type: string
+        calendarView:
+          type: string
+        user:
+          $ref: '#/components/schemas/CompanyUser'
+        phoneNumber:
+          type: string
+        companyMailSender:
+          $ref: '#/components/schemas/CompanyMailSender'
+        companyAccess:
+          $ref: '#/components/schemas/CompanyAccess'
+        siret:
+          type: string
+        legalName:
+          type: string
+        headquartersAddress:
+          type: string
+        companyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        group:
+          type: string
+        companyCurrency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        timezone:
+          type: string
+        companyOpinionBooster:
+          $ref: '#/components/schemas/CompanyOpinionBooster'
+        orderReminder:
+          $ref: '#/components/schemas/CompanyOrderReminder'
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPoint'
+        workshopLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopLocation'
+        onlineStoreRentalPointType:
+          enum:
+          - SAME
+          - DIFFERENT
+          type: string
+        partPayment:
+          $ref: '#/components/schemas/PartPayment'
+        partPaymentEvent:
+          $ref: '#/components/schemas/PartPayment'
+        onlineStoreSlots:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
+        timeProductsUnavailableAfterOrder:
+          type: string
+        dayProductsUnavailableAfterOrder:
+          type: number
+        dayType:
+          enum:
+          - full-24h
+          - opening-hours
+          type: string
+        timeProductsUnavailableBeforeOrder:
+          type: string
+        dayProductsUnavailableBeforeOrder:
+          type: number
+        magicSchedule:
+          type: boolean
+        enableQrCode:
+          type: boolean
+        templateEmailIdOnlineStore:
+          type: string
+        rentalPlaceInfos:
+          $ref: '#/components/schemas/CompanyRentalPlaceDto'
+        tulipSettings:
+          $ref: '#/components/schemas/TulipSettings'
+        ancvConnectSettings:
+          $ref: '#/components/schemas/AncvConnectSettings'
+        productStateInfo:
+          $ref: '#/components/schemas/ProductStateInfo'
+        eventCgu:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentCustomFields:
+          $ref: '#/components/schemas/CompanyDocumentCustomFieldsDto'
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+        isArchived:
+          type: boolean
+        hasRentalPlaceOrder:
+          type: boolean
+        lifecycleEvents:
+          $ref: '#/components/schemas/CompanyLifecycleEvents'
+        csInfos:
+          $ref: '#/components/schemas/CompanyCsInfos'
+        squareCredentials:
+          allOf:
+          - $ref: '#/components/schemas/SquareCredentials'
+        googleRating:
+          $ref: '#/components/schemas/GoogleRating'
+        responseDuration:
+          $ref: '#/components/schemas/CompanyResponseDuration'
+        openTime:
+          type: string
+        closeTime:
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CompanySkisetInfos'
+        createdAt:
+          format: date-time
+          type: string
+        documentColor:
+          type: string
+        quickOrderDefaultMode:
+          $ref: '#/components/schemas/CompanyDefaultQuickOrderMode'
+        automaticInternalStartDateAttribution:
+          type: boolean
+        socialMedia:
+          $ref: '#/components/schemas/SocialMedia'
+        offlinePin:
+          type: string
+        internalPaymentMethods:
+          $ref: '#/components/schemas/LokkiPaymentMethods'
+        onlineStorePaymentMethods:
+          $ref: '#/components/schemas/LokkiPaymentMethods'
+        lokkiPaymentTermsConditionsHistory:
+          $ref: '#/components/schemas/LokkiPaymentTermsConditionsHistory'
+        fee:
+          $ref: '#/components/schemas/CompanyGlobalFee'
+        proposedRentalPlaceCommission:
+          $ref: '#/components/schemas/ProposedRentalPlaceCommission'
+        trialInfos:
+          $ref: '#/components/schemas/CompanyTrialInfos'
+        marketing:
+          $ref: '#/components/schemas/MarketingSettings'
+        periodicDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PeriodicDiscount'
+        hasOrders:
+          type: boolean
+      required:
+      - id
+      - slug
+      - redirectSlugs
+      - name
+      - description
+      - address
+      - addressLatitude
+      - addressLongitude
+      - logoURL
+      - vat
+      - vatName
+      - vatWorkshop
+      - hyperlineTaxRate
+      - generalConditions
+      - generalConditionsLLD
+      - cancellationPolicy
+      - newsletterSubscription
+      - onlineStoreConfig
+      - isDemo
+      - accountStatus
+      - accountType
+      - calendarView
+      - user
+      - phoneNumber
+      - companyMailSender
+      - companyAccess
+      - siret
+      - legalName
+      - headquartersAddress
+      - companyBailMaxAmount
+      - companyBailEventMaxAmount
+      - companyBailLLDMaxAmount
+      - internalCompanyBailMaxAmount
+      - internalCompanyBailEventMaxAmount
+      - internalCompanyBailLLDMaxAmount
+      - group
+      - companyCurrency
+      - timezone
+      - companyOpinionBooster
+      - orderReminder
+      - rentalPoints
+      - workshopLocations
+      - onlineStoreRentalPointType
+      - partPayment
+      - partPaymentEvent
+      - onlineStoreSlots
+      - timeProductsUnavailableAfterOrder
+      - dayProductsUnavailableAfterOrder
+      - timeProductsUnavailableBeforeOrder
+      - dayProductsUnavailableBeforeOrder
+      - magicSchedule
+      - enableQrCode
+      - templateEmailIdOnlineStore
+      - rentalPlaceInfos
+      - tulipSettings
+      - ancvConnectSettings
+      - productStateInfo
+      - eventCgu
+      - documentCustomFields
+      - categoryDiscounts
+      - isArchived
+      - squareCredentials
+      - openTime
+      - closeTime
+      - createdAt
+      - documentColor
+      - quickOrderDefaultMode
+      - automaticInternalStartDateAttribution
+      - socialMedia
+      - lokkiPaymentTermsConditionsHistory
+      - fee
+    MarketingSettings:
+      type: object
+      properties:
+        trackers:
+          $ref: '#/components/schemas/Trackers'
+      required:
+      - trackers
+    ThemeColors:
+      type: object
+      properties:
+        primary:
+          type: string
+        secondary:
+          type: string
+        ternary:
+          type: string
+        priceColor:
+          type: string
+        priceColorText:
+          type: string
+        blockColor:
+          $ref: '#/components/schemas/ThemeBlockColor'
+        textColor:
+          type: string
+        danger:
+          type: string
+        header:
+          type: string
+      required:
+      - primary
+      - secondary
+      - ternary
+      - priceColor
+      - priceColorText
+      - blockColor
+      - textColor
+      - danger
+      - header
+    EventStatsOnlineStore:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        sessionEventsNb:
+          type: number
+        pricing:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pricing'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        bailAmount:
+          type: number
+        createdDate:
+          format: date-time
+          type: string
+        earliestSession:
+          format: date-time
+          type: string
+        earliestSessionNbSeats:
+          type: number
+        earliestSessionDuration:
+          type: number
+        productSurveyId:
+          type: string
+        vat:
+          type: number
+        tagValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagValue'
+        noEquipment:
+          type: boolean
+      required:
+      - id
+      - description
+      - name
+      - imageUrl
+      - sessionEventsNb
+      - pricing
+      - categories
+      - bailAmount
+      - createdDate
+      - productSurveyId
+      - vat
+      - tagValues
+      - noEquipment
+    UpdateClosedDatesDto:
+      type: object
+      properties:
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClosedDatesRange'
+      required:
+      - closedDates
+    RentalPlaceNetworkUpdatedBy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    RentalPlaceMainInfo:
+      type: object
+      properties:
+        font:
+          type: string
+          enum:
+          - DM Sans
+          - MontSerrat
+          - Open Sans
+          - Roboto Condensed
+          - Roboto
+          - PT Sans
+          - Poppins
+          - Lato
+          - Raleway
+          - Ubuntu
+          - Source Sans Pro
+        accentColor:
+          type: string
+        textColor:
+          type: string
+        backgroundColor:
+          type: string
+        favicon:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        logo:
+          $ref: '#/components/schemas/RentalPlaceFile'
+      required:
+      - font
+      - accentColor
+      - textColor
+      - backgroundColor
+      - favicon
+      - logo
+    UpdateCompanyOpinionBooster:
+      type: object
+      properties:
+        companyOpinionBooster:
+          $ref: '#/components/schemas/CompanyOpinionBooster'
+      required:
+      - companyOpinionBooster
+    UpdateCompanyTulipSettingsNameDto:
+      type: object
+      properties:
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - i18nName
+    ClosedDatesRange:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - id
+      - startDate
+      - endDate
+    CompanyEventTagUpdateDto:
+      type: object
+      properties:
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+      required:
+      - eventTags
+    UpdateCompanyQuickOrderDefaultModeDto:
+      type: object
+      properties:
+        booking:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        bookingUpdate:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        readyToGo:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        return:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        exchange:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        showDelivery:
+          type: boolean
+        showSurvey:
+          type: boolean
+        showUnavailability:
+          type: boolean
+        showUnavailabilityOnUpdate:
+          type: boolean
+      required:
+      - booking
+      - bookingUpdate
+      - readyToGo
+      - return
+      - exchange
+      - showDelivery
+      - showSurvey
+      - showUnavailability
+      - showUnavailabilityOnUpdate
+    CompanyUploadImageDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        names:
+          type: array
+          items:
+            type: string
+        indexes:
+          type: array
+          items:
+            type: number
+        indexesToDelete:
+          type: array
+          items:
+            type: number
+      required:
+      - files
+      - names
+      - indexes
+      - indexesToDelete
+    LokkiPaymentTermsConditionsHistory:
+      type: object
+      properties:
+        v0101:
+          format: date-time
+          type: string
+        v0102:
+          $ref: '#/components/schemas/LPTermConditionV0102'
+      required:
+      - v0101
+      - v0102
+    OnlineStoreCompanyDto:
+      type: object
+      properties:
+        payment:
+          oneOf:
+          - $ref: '#/components/schemas/OnlineStoreCompanyAdyenPayment'
+          - $ref: '#/components/schemas/OnlineStoreCompanyStripePayment'
+        paymentEvent:
+          oneOf:
+          - $ref: '#/components/schemas/OnlineStoreCompanyAdyenPayment'
+          - $ref: '#/components/schemas/OnlineStoreCompanyStripePayment'
+        id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        logoURL:
+          type: string
+        phoneNumber:
+          type: string
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        featuredSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        featuredIds:
+          type: array
+          items:
+            type: string
+        customerTextRGPD:
+          $ref: '#/components/schemas/LocalizedContent'
+        generalConditions:
+          $ref: '#/components/schemas/LocalizedContent'
+        generalConditionsLLD:
+          $ref: '#/components/schemas/LocalizedContent'
+        bannerURL:
+          type: array
+          items:
+            type: string
+        bannerScroll:
+          type: number
+        openingTimeFrames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingTimeFramesLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        lowSeasonRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        timeLapsBeforeBookingInHours:
+          type: number
+        reservationTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationTime'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OnlineStoreUniverseDto'
+        theme:
+          allOf:
+          - $ref: '#/components/schemas/CompanyTheme'
+        isDemo:
+          type: boolean
+        access:
+          $ref: '#/components/schemas/OnlineStoreCompanyAccessDto'
+        reservationRanges:
+          $ref: '#/components/schemas/ReservationRanges'
+        companyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        delivery:
+          $ref: '#/components/schemas/CompanyDelivery'
+        coordinate:
+          $ref: '#/components/schemas/Coordinate'
+        address:
+          type: string
+        companyCurrency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        onlineStoreScript:
+          type: string
+        timezone:
+          type: string
+        companyOpinionBooster:
+          $ref: '#/components/schemas/CompanyOpinionBooster'
+        partPayment:
+          $ref: '#/components/schemas/PartPayment'
+        partPaymentEvent:
+          $ref: '#/components/schemas/PartPayment'
+        onlineStoreSlots:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
+        vat:
+          type: number
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPoint'
+        onlineStoreRentalPointType:
+          type: string
+          enum:
+          - SAME
+          - DIFFERENT
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventStatsOnlineStore'
+        eventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        eventDirectOrder:
+          type: boolean
+        hideOnlineStoreLCD:
+          type: boolean
+        hideOnlineStoreLLD:
+          type: boolean
+        customFeaturedMode:
+          type: boolean
+        tulipSettings:
+          $ref: '#/components/schemas/TulipSettingsWithRenter'
+        eventCgu:
+          $ref: '#/components/schemas/LocalizedContent'
+        group:
+          type: string
+        rentalPlaceFooter:
+          $ref: '#/components/schemas/RentalPlaceFooter'
+        rentalPlaceMainInfo:
+          $ref: '#/components/schemas/RentalPlaceMainInfo'
+        corporate:
+          type: string
+          enum:
+          - NONE
+          - BMW
+          - BOULANGER
+          - CARREFOUR
+          - DECATHLON
+          - DECATHLON_CANADA
+          - DECATHLON_REUNION
+          - ESPACE_EMERAUDE
+          - LECLERC
+          - MONOPRIX
+          - PELLENC
+          - STATION_BEES
+          - SKISET
+          - SKIMIUM
+          - MWHEEL
+          - NATURA_PRO
+          - MR_BRICOLAGE
+          - CORA
+          - MR_JARDINAGE
+          - CAMARA
+          - NETSKI
+          - SPORT_2000
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+        eventUniverses:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventUniverse'
+        eventUniversesTag:
+          type: string
+        eventUniversesActivated:
+          type: boolean
+        displayPhoneNumber:
+          type: boolean
+        email:
+          type: string
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+        newsletterSubscription:
+          type: boolean
+        documentColor:
+          type: string
+        cancellationPolicy:
+          $ref: '#/components/schemas/CancellationPolicyDto'
+        defaultPhoneCode:
+          type: string
+        showPricing:
+          type: boolean
+        showStock:
+          type: boolean
+        googleRating:
+          type: number
+        googleReviewsNb:
+          type: number
+        googleMapsUrl:
+          type: string
+        googleReviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleReview'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        socialMedia:
+          $ref: '#/components/schemas/SocialMedia'
+        newOnlineStoreDesign:
+          type: boolean
+        lastYearOrdersNb:
+          type: number
+        paymentMethods:
+          allOf:
+          - $ref: '#/components/schemas/LokkiPaymentMethods'
+        lldBilling:
+          type: boolean
+        ancvPaymentActive:
+          type: boolean
+        hasShopId:
+          type: boolean
+        periodicDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PeriodicDiscount'
+        marketingTrackers:
+          $ref: '#/components/schemas/OnlineStoreMarketingTrackers'
+      required:
+      - id
+      - slug
+      - name
+      - logoURL
+      - phoneNumber
+      - description
+      - featuredSectionTitle
+      - featuredIds
+      - customerTextRGPD
+      - generalConditions
+      - generalConditionsLLD
+      - bannerURL
+      - bannerScroll
+      - openingTimeFrames
+      - openingTimeFramesLowSeason
+      - lowSeasonRanges
+      - closedDates
+      - timeLapsBeforeBookingInHours
+      - reservationTimes
+      - universes
+      - theme
+      - isDemo
+      - access
+      - reservationRanges
+      - companyBailMaxAmount
+      - companyBailLLDMaxAmount
+      - companyBailEventMaxAmount
+      - delivery
+      - coordinate
+      - companyCurrency
+      - timezone
+      - companyOpinionBooster
+      - partPayment
+      - partPaymentEvent
+      - onlineStoreSlots
+      - vat
+      - rentalPoints
+      - onlineStoreRentalPointType
+      - events
+      - eventsTitle
+      - eventDirectOrder
+      - hideOnlineStoreLCD
+      - hideOnlineStoreLLD
+      - customFeaturedMode
+      - tulipSettings
+      - eventCgu
+      - group
+      - corporate
+      - eventTags
+      - eventUniverses
+      - eventUniversesTag
+      - eventUniversesActivated
+      - displayPhoneNumber
+      - email
+      - categoryDiscounts
+      - newsletterSubscription
+      - documentColor
+      - cancellationPolicy
+      - defaultPhoneCode
+      - showPricing
+      - showStock
+      - googleRating
+      - googleReviewsNb
+      - googleMapsUrl
+      - googleReviews
+      - verticales
+      - socialMedia
+      - newOnlineStoreDesign
+      - lastYearOrdersNb
+      - paymentMethods
+      - lldBilling
+      - ancvPaymentActive
+      - hasShopId
+    RentalPlaceNetwork:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        updatedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        updatedBy:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceNetworkUpdatedBy'
+      required:
+      - enabled
+      - updatedAt
+      - updatedBy
+    CompanyLLDBillingDto:
+      type: object
+      properties:
+        lldBilling:
+          type: boolean
+      required:
+      - lldBilling
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    TagValue:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+        activated:
+          type: boolean
+        universeId:
+          type: string
+      required:
+      - id
+      - value
+      - activated
+    UpdateCompanyOnlineStoreEventsTitleDto:
+      type: object
+      properties:
+        onlineStoreEventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - onlineStoreEventsTitle
+    UpdateCompanyBannerScrollDto:
+      type: object
+      properties:
+        bannerScroll:
+          type: number
+      required:
+      - bannerScroll
+    UpdateCompanyOnlineStoreCustomFeaturedModeDto:
+      type: object
+      properties:
+        customFeaturedMode:
+          type: boolean
+      required:
+      - customFeaturedMode
+    CompanySlugDto:
+      type: object
+      properties:
+        slug:
+          type: string
+      required:
+      - slug
+    UpdateCompanyTulipSettingsDto:
+      type: object
+      properties:
+        state:
+          type: string
+        initialState:
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+    GoogleRating:
+      type: object
+      properties:
+        localizedReviews:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocalizedReview'
+        rating:
+          type: number
+        reviewNb:
+          type: number
+        placeId:
+          type: string
+        mapsUrl:
+          type: string
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - localizedReviews
+      - rating
+      - reviewNb
+      - placeId
+      - mapsUrl
+      - fetchedAt
+    CompanyFee:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - LOKKI_PAYMENT_ISO_STRIPE
+          - LOKKI_PAYMENT
+          - CUSTOM
+          - CUSTOM_BY_PAYMENT
+        percentage:
+          type: number
+        amount:
+          type: number
+        payments:
+          $ref: '#/components/schemas/CompanyFeePayments'
+      required:
+      - type
+      - percentage
+      - amount
+    CompanyEventDirectOrderDto:
+      type: object
+      properties:
+        eventDirectOrder:
+          type: boolean
+      required:
+      - eventDirectOrder
+    CompanyRentalPlaceUniversesDto:
+      type: object
+      properties:
+        id:
+          type: string
+        categoryIds:
+          type: array
+          items:
+            type: string
+        pack:
+          type: boolean
+      required:
+      - id
+      - categoryIds
+      - pack
+    PartPayment:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        percentage:
+          type: number
+      required:
+      - isActive
+      - percentage
+    UpdateCompanyTermsConditionsDto:
+      type: object
+      properties:
+        i18nGeneralConditions:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - i18nGeneralConditions
+    AllowedCompanyAccessPropertiesDto:
+      type: object
+      properties:
+        useOnlineBail:
+          type: boolean
+        lldOnlineBail:
+          type: boolean
+        quoteRequests:
+          type: boolean
+    SquareLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    TulipOptionProductContentSubType:
+      type: object
+      properties:
+        type:
+          type: string
+        translations:
+          $ref: '#/components/schemas/TulipTranslation'
+      required:
+      - type
+      - translations
+    OnlineStoreCompanyAccessDto:
+      type: object
+      properties:
+        useSeveralRentalPoints:
+          type: boolean
+        useOnlineStoreContract:
+          type: boolean
+        useOnlineBail:
+          type: boolean
+        useLLDOnlineBail:
+          type: boolean
+        payOnSite:
+          type: boolean
+        onlineStorePayment:
+          type: boolean
+        onlineStoreSlots:
+          type: boolean
+        priceExcludingTaxes:
+          type: boolean
+        onlineStoreCreateOrder:
+          type: boolean
+        onlineStoreCreateOrderLLD:
+          type: boolean
+        lokkiEvent:
+          type: boolean
+        lld:
+          type: boolean
+        lcd:
+          type: boolean
+        onlineHideHeader:
+          type: boolean
+        rentalPlace:
+          type: boolean
+        lokkiPayment:
+          type: boolean
+      required:
+      - useSeveralRentalPoints
+      - useOnlineStoreContract
+      - useOnlineBail
+      - useLLDOnlineBail
+      - payOnSite
+      - onlineStorePayment
+      - onlineStoreSlots
+      - priceExcludingTaxes
+      - onlineStoreCreateOrder
+      - onlineStoreCreateOrderLLD
+      - lokkiEvent
+      - lld
+      - lcd
+      - onlineHideHeader
+      - rentalPlace
+      - lokkiPayment
+    ProductStateInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        displayGeneralConditions:
+          type: boolean
+        legalNotices:
+          type: string
+        numberCreated:
+          type: number
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - displayGeneralConditions
+      - legalNotices
+      - numberCreated
+      - useLegalCompanyInfo
+    CompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
+    ThemeTextStyle:
+      type: object
+      properties:
+        color:
+          type: string
+        fontSize:
+          type: string
+        fontWeight:
+          type: string
+        fontStyle:
+          type: string
+      required:
+      - color
+      - fontSize
+      - fontWeight
+      - fontStyle
+    UpdateCompanyOnlineStoreDescriptionDto:
+      type: object
+      properties:
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - onlineStoreDescription
+    LPTermConditionV0102:
+      type: object
+      properties:
+        date:
+          format: date-time
+          type: string
+        fee:
+          $ref: '#/components/schemas/CompanyGlobalFee'
+      required:
+      - date
+      - fee
+    CompanyCsSupportRequested:
+      type: object
+      properties:
+        requested:
+          type: boolean
+        requestedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - requested
+      - requestedAt
+    TulipCompanyInfo:
+      type: object
+      properties:
+        company_name:
+          type: string
+        last_name:
+          type: string
+        first_name:
+          type: string
+        email:
+          type: string
+        phone_number:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        country:
+          type: string
+      required:
+      - company_name
+      - last_name
+      - first_name
+      - email
+      - phone_number
+      - address
+      - city
+      - zipcode
+      - country
+    Coordinate:
+      type: object
+      properties:
+        lng:
+          type: string
+        lat:
+          type: string
+      required:
+      - lng
+      - lat
+    TulipOptionProduct:
+      type: object
+      properties:
+        product_type:
+          type: string
+        translations:
+          $ref: '#/components/schemas/TulipTranslation'
+        product_subtypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TulipOptionProductContentSubType'
+      required:
+      - product_type
+      - translations
+      - product_subtypes
+    UpdateCompanyCurrencyDto:
+      type: object
+      properties:
+        companyCurrency:
+          $ref: '#/components/schemas/CompanyCurrency'
+      required:
+      - companyCurrency
+    OnlineStoreUniverseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          $ref: '#/components/schemas/LocalizedContent'
+        pictureURL:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        minimumPrice:
+          $ref: '#/components/schemas/UniverseMinimumPrice'
+        ranking:
+          type: number
+      required:
+      - id
+      - title
+      - pictureURL
+      - productModelIds
+      - minimumPrice
+      - ranking
+    CompanyOnlineStoreSlot:
+      type: object
+      properties:
+        hours:
+          type: number
+        minutes:
+          type: number
+        label:
+          type: string
+        id:
+          type: string
+      required:
+      - hours
+      - minutes
+      - label
+      - id
+    UpdateCompanyOnlineStoreDisplayPhoneNumberDto:
+      type: object
+      properties:
+        display:
+          type: boolean
+      required:
+      - display
+    CancellationPolicyDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        onlineRequests:
+          type: boolean
+        automaticRefunds:
+          type: boolean
+        policyType:
+          enum:
+          - FLEXIBLE
+          - MODERATE
+          - STRICT
+          - CUSTOM
+          type: string
+        lastMinuteThreshold:
+          type: number
+          minimum: 0
+        inAdvanceThreshold:
+          type: number
+          minimum: 0
+        lowRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+        midRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+        highRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+      - activated
+      - onlineRequests
+      - automaticRefunds
+      - policyType
+      - lastMinuteThreshold
+      - inAdvanceThreshold
+      - lowRefundRate
+      - midRefundRate
+      - highRefundRate
+    CompanyTheme:
+      type: object
+      properties:
+        id:
+          type: string
+        mainStyles:
+          $ref: '#/components/schemas/ThemeMainStyles'
+        button:
+          $ref: '#/components/schemas/ThemeButton'
+        companyName:
+          $ref: '#/components/schemas/ThemeCompanyName'
+        title:
+          $ref: '#/components/schemas/ThemeTitle'
+        colors:
+          $ref: '#/components/schemas/ThemeColors'
+      required:
+      - mainStyles
+      - button
+      - companyName
+      - title
+      - colors
+    PatchCompanySettingsDto:
+      type: object
+      properties:
+        companyAccess:
+          $ref: '#/components/schemas/AllowedCompanyAccessPropertiesDto'
+        marketing:
+          $ref: '#/components/schemas/MarketingSettings'
+        companyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+    OnlineStoreMarketingTrackers:
+      type: object
+      properties:
+        ga4Id:
+          type: string
+        googleAdsId:
+          type: string
+        metaPixelId:
+          type: string
+        tiktokPixelId:
+          type: string
+        linkedinPartnerId:
+          type: string
+        linkedinConversionId:
+          type: string
+    CompanyDefaultQuickOrderMode:
+      type: object
+      properties:
+        booking:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        bookingUpdate:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        readyToGo:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        return:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        exchange:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        showDelivery:
+          type: boolean
+        showSurvey:
+          type: boolean
+        showUnavailability:
+          type: boolean
+        showUnavailabilityOnUpdate:
+          type: boolean
+      required:
+      - booking
+      - bookingUpdate
+      - readyToGo
+      - return
+      - exchange
+      - showDelivery
+      - showSurvey
+      - showUnavailability
+      - showUnavailabilityOnUpdate
+    TulipSettingsWithRenter:
+      type: object
+      properties:
+        state:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        initialState:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nContent:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+        renter:
+          allOf:
+          - $ref: '#/components/schemas/TulipRenter'
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+      - i18nName
+      - i18nContent
+      - i18nTitle
+      - displayedOptions
+      - renter
+    CompanyShowcaseProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+      required:
+      - id
+      - price
+    CompanyNewsletterSubscriptionDto:
+      type: object
+      properties:
+        newsletterSubscription:
+          type: boolean
+      required:
+      - newsletterSubscription
+    ThemeBlockColor:
+      type: object
+      properties:
+        color:
+          type: string
+        backgroundColor:
+          type: string
+      required:
+      - color
+      - backgroundColor
+    UpdateTimeLapseBeforeBookingDto:
+      type: object
+      properties:
+        timeLapsBeforeBooking:
+          type: number
+      required:
+      - timeLapsBeforeBooking
+    CompanyGlobalFee:
+      type: object
+      properties:
+        rentalPlace:
+          $ref: '#/components/schemas/CompanyFee'
+        global:
+          $ref: '#/components/schemas/CompanyFee'
+        lld:
+          $ref: '#/components/schemas/CompanyFee'
+      required:
+      - rentalPlace
+      - global
+      - lld
+    ReservationRanges:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/ReservationRange'
+        maximum:
+          $ref: '#/components/schemas/ReservationRange'
+      required:
+      - minimum
+      - maximum
+    CompanyStripeCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: stripe
+          enum:
+          - stripe
+        account:
+          type: string
+        type:
+          enum:
+          - EXPRESS
+          - STANDARD
+          type: string
+        status:
+          enum:
+          - ONBOARDING
+          - ACTIVE
+          type: string
+        onboardingDate:
+          format: date-time
+          type: string
+      required:
+      - provider
+      - account
+      - type
+      - status
+    UpdateNumberHoursOrderDto:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/ReservationRange'
+        maximum:
+          $ref: '#/components/schemas/ReservationRange'
+      required:
+      - minimum
+      - maximum
+    RentalPlaceFooterLinkSocial:
+      type: object
+      properties:
+        name:
+          type: string
+        icon:
+          type: string
+        link:
+          type: string
+        id:
+          type: string
+        available:
+          type: boolean
+      required:
+      - name
+      - icon
+      - link
+      - id
+      - available
+    CompanyCsInfos:
+      type: object
+      properties:
+        plan:
+          type: string
+          enum:
+          - NONE
+          - PLAN_A
+          - PLAN_B
+        csSegment:
+          type: string
+          enum:
+          - NONE
+          - CS_SEGMENT_INDEP_OUTDOOR_SUMMER
+          - CS_SEGMENT_INDEP_OUTDOOR_WINTER
+          - CS_SEGMENT_INDEP_OUTDOOR_YEAR
+          - CS_SEGMENT_INDEP_YEAR
+          - CS_SEGMENT_LARGE_CORPORATE
+        pipedrive:
+          type: string
+        hubspot:
+          type: string
+        billing:
+          type: string
+          enum:
+          - NONE
+          - TRANSFER
+          - GOCARDLESS
+          - COMMISSION
+        demoDate:
+          format: date-time
+          type: string
+        archiveReason:
+          type: string
+          enum:
+          - CHURN
+          - NO_SIGN
+          - VISIBILITY_ACCOUNT_CREATION
+        scheduledChurnDate:
+          format: date-time
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        onboarding:
+          $ref: '#/components/schemas/CompanyOnboarding'
+        bankStatement:
+          type: string
+        octobatLink:
+          type: string
+        gocardlessLink:
+          type: string
+        websiteLink:
+          type: string
+        hyperlineSubscriptionData:
+          $ref: '#/components/schemas/CompanyHyperlineSubscriptionData'
+        subscriptionSalesOwnerEmail:
+          type: string
+        firstTransferDate:
+          type: string
+        formationBookedDate:
+          format: date-time
+          type: string
+        plgHasRentalActivity:
+          type: boolean
+        subscriptionShouldSendReminder:
+          type: boolean
+        subscriptionSentDate:
+          format: date-time
+          type: string
+        subscriptionCompletionDate:
+          format: date-time
+          type: string
+        subscriptionExpirationDate:
+          format: date-time
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        csSupportRequested:
+          $ref: '#/components/schemas/CompanyCsSupportRequested'
+      required:
+      - plan
+      - csSegment
+      - pipedrive
+      - hubspot
+      - billing
+      - verticales
+      - bankStatement
+      - octobatLink
+      - gocardlessLink
+      - websiteLink
+      - hyperlineSubscriptionData
+      - subscriptionSalesOwnerEmail
+    UpdateCompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
+    CompanyVatDto:
+      type: object
+      properties:
+        vat:
+          type: number
+      required:
+      - vat
+    CompanyResponseDuration:
+      type: object
+      properties:
+        average:
+          type: number
+        median:
+          type: number
+        min:
+          type: number
+        max:
+          type: number
+        count:
+          type: number
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - average
+      - median
+      - min
+      - max
+      - count
+      - fetchedAt
+    UpdateCompanyRentalPointsDto:
+      type: object
+      properties:
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateCompanyRentalPointDto'
+      required:
+      - rentalPoints
+    CompanyDocumentCustomFieldsDto:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDocumentCustomField'
+      required:
+      - fields
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CompanyCategoryDiscountRange:
+      type: object
+      properties:
+        discount:
+          type: number
+          description: Discount value for the range
+        discountType:
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          type: string
+          description: Type of discount applied (amount or percentage)
+        rangeFrom:
+          type:
+          - number
+          - 'null'
+          description: Minimum value of the range (Quantity of items)
+        rangeTo:
+          type:
+          - number
+          - 'null'
+          description: Maximum value of the range (Quantity of items)
+        infiniteTo:
+          type: boolean
+          description: Indicates if the range has no upper limit
+      required:
+      - discount
+      - discountType
+      - rangeFrom
+      - rangeTo
+      - infiniteTo
+    OnlineStoreConfig:
+      type: object
+      properties:
+        newOnlineStoreDesign:
+          type: boolean
+        customerTextRGPD:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        featuredSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        eventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        openingTimeFrames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingTimeFramesLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        lowSeasonRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        bannerURL:
+          type: array
+          items:
+            type: string
+        featuredIds:
+          type: array
+          items:
+            type: string
+        bannerScroll:
+          type: number
+        reservationRanges:
+          $ref: '#/components/schemas/ReservationRanges'
+        timeLapsBeforeBookingInHours:
+          type: number
+        delivery:
+          $ref: '#/components/schemas/CompanyDelivery'
+        reservationTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationTime'
+        insuranceActivated:
+          type: boolean
+        eventActivated:
+          type: boolean
+        customFeaturedMode:
+          type: boolean
+        hideOnlineStoreLCD:
+          type: boolean
+        hideOnlineStoreLLD:
+          type: boolean
+        displayAddressOnlineStore:
+          type: boolean
+        eventDirectOrder:
+          type: boolean
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+        eventUniverses:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventUniverse'
+        eventUniversesActivated:
+          type: boolean
+        eventUniversesTag:
+          type: string
+        phoneNumber:
+          type: string
+        displayPhoneNumber:
+          type: boolean
+        script:
+          type: string
+        defaultPhoneCode:
+          type: string
+        showPricing:
+          type: boolean
+        showStock:
+          type: boolean
+        lldBilling:
+          type: boolean
+      required:
+      - newOnlineStoreDesign
+      - customerTextRGPD
+      - description
+      - featuredSectionTitle
+      - eventsTitle
+      - openingTimeFrames
+      - openingTimeFramesLowSeason
+      - closedDates
+      - lowSeasonRanges
+      - bannerURL
+      - featuredIds
+      - bannerScroll
+      - reservationRanges
+      - timeLapsBeforeBookingInHours
+      - delivery
+      - reservationTimes
+      - insuranceActivated
+      - eventActivated
+      - customFeaturedMode
+      - hideOnlineStoreLCD
+      - hideOnlineStoreLLD
+      - displayAddressOnlineStore
+      - eventDirectOrder
+      - eventTags
+      - eventUniverses
+      - eventUniversesActivated
+      - eventUniversesTag
+      - phoneNumber
+      - displayPhoneNumber
+      - script
+      - defaultPhoneCode
+      - showPricing
+      - showStock
+      - lldBilling
+    Pricing:
+      type: object
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        id:
+          type: string
+      required:
+      - label
+      - amount
+      - id
+    SquareCredentials:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        token:
+          type: string
+        locationId:
+          type: string
+        locationName:
+          type: string
+        refreshToken:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        oAuthState:
+          type: string
+      required:
+      - isActive
+      - token
+      - locationId
+      - locationName
+      - refreshToken
+      - expiresAt
+    RentalPoint:
+      type: object
+      properties:
+        addressComponents:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        id:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        name:
+          type: string
+        slug:
+          type: string
+        fullAddress:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - id
+      - lat
+      - lng
+      - name
+      - slug
+      - fullAddress
+      - city
+      - country
+      - address
+      - zipcode
+    UpdateCompanyOrderReminderDto:
+      type: object
+      properties:
+        companyOrderReminder:
+          $ref: '#/components/schemas/CompanyOrderReminder'
+      required:
+      - companyOrderReminder
+    CompanyDocumentCustomField:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        fieldValue:
+          type: string
+        id:
+          type: string
+      required:
+      - fieldName
+      - fieldValue
+      - id
+    RentalPlaceFooterLinkCol:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        link:
+          type: string
+        id:
+          type: string
+        isScript:
+          type: boolean
+      required:
+      - text
+      - link
+      - id
+      - isScript
+    UpdateOnlineStoreRentalPointTypeDto:
+      type: object
+      properties:
+        onlineStoreRentalPointType:
+          type: string
+          enum:
+          - SAME
+          - DIFFERENT
+      required:
+      - onlineStoreRentalPointType
+    Item:
+      type: object
+      properties:
+        itemId:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        price:
+          type: number
+      required:
+      - itemId
+      - type
+      - price
+    UpdateCompanyAccessOnlineContractDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+      required:
+      - activated
+    MultipleFundsTransfer:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        isFree:
+          type: boolean
+        transferDays:
+          type: array
+          items:
+            type: number
+        activatedDate:
+          format: date-time
+          type: string
+      required:
+      - activated
+    UpdateCompanyTulipSettingsDisplayedOptionsDto:
+      type: object
+      properties:
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+      required:
+      - displayedOptions
+    CompanyEventUniversesUpdateDto:
+      type: object
+      properties:
+        eventUniverses:
+          type: array
+          items:
+            type: object
+      required:
+      - eventUniverses
+    UpdateCompanyMultipleFundsTransferDto:
+      type: object
+      properties:
+        multipleFundsTransfer:
+          $ref: '#/components/schemas/MultipleFundsTransfer'
+      required:
+      - multipleFundsTransfer
+    DeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - price
+      - cities
+    DeliveryRange:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        price:
+          type: number
+        specificPrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
+      required:
+      - min
+      - max
+      - price
+      - specificPrices
+    UpdateCompanyDayTypeDto:
+      type: object
+      properties:
+        dayType:
+          type: string
+          enum:
+          - full-24h
+          - opening-hours
+      required:
+      - dayType
+    OnlineStoreCompanyAdyenPayment:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: adyen
+          enum:
+          - adyen
+        clientKey:
+          type: string
+      required:
+      - provider
+      - clientKey
+    CompanyUpdateCategoryDiscountsDto:
+      type: object
+      properties:
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+      required:
+      - categoryDiscounts
+    UpdateCompanyDeliveryDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+        freeDeliveryActivated:
+          type: boolean
+        freeDeliveryMinimumType:
+          type: string
+          enum:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
+          type: number
+        showDeliveryInternal:
+          type: boolean
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+        displayAddressOnlineStore:
+          type: boolean
+    BailAccessDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+      required:
+      - activated
+    CompanyShowPricingDto:
+      type: object
+      properties:
+        showPricing:
+          type: boolean
+      required:
+      - showPricing
+    CompanyFeePayment:
+      type: object
+      properties:
+        percentage:
+          type: number
+        amount:
+          type: number
+      required:
+      - percentage
+      - amount
+    CompanyOnboarding:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        visibility:
+          type: boolean
+    UpdateFeaturedSectionTitleDto:
+      type: object
+      properties:
+        sectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - sectionTitle
+    Category:
+      type: object
+      properties:
+        item:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        name:
+          type: string
+        id:
+          type: string
+      required:
+      - item
+      - name
+      - id
+    CompanyHideOnlineStoreLLDDto:
+      type: object
+      properties:
+        hideOnlineStoreLLD:
+          type: boolean
+      required:
+      - hideOnlineStoreLLD
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    CompanyLifecycleEvents:
+      type: object
+      properties:
+        catalogMarkedCompleteAt:
+          format: date-time
+          type: string
+    WorkshopLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - id
+      - name
+      - city
+      - country
+      - address
+      - zipcode
+    BailMaxValueDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        amount:
+          type: number
+      required:
+      - activated
+      - amount
+    DateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - from
+      - to
+    ProposedRentalPlaceCommission:
+      type: object
+      properties:
+        commissionRate:
+          type: number
+        requiresSignature:
+          type: boolean
+        batchDate:
+          type: string
+      required:
+      - commissionRate
+      - requiresSignature
+      - batchDate
+    UpdateOpeningHoursDto:
+      type: object
+      properties:
+        openingHours:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningHoursRange'
+      required:
+      - openingHours
+    CompanyFeePayments:
+      type: object
+      properties:
+        standard:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        premium:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        uk:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        outOfUkUe:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        ancv:
+          $ref: '#/components/schemas/CompanyFeePayment'
+      required:
+      - standard
+      - premium
+      - uk
+      - outOfUkUe
+      - ancv
+    LokkiPaymentMethods:
+      type: object
+      properties:
+        card:
+          type: boolean
+        applePay:
+          type: boolean
+        googlePay:
+          type: boolean
+        ancvConnect:
+          type: boolean
+        sepa:
+          type: boolean
+        ideal:
+          type: boolean
+        bancontact:
+          type: boolean
+        giroPay:
+          type: boolean
+        p24:
+          type: boolean
+        blik:
+          type: boolean
+        multibanco:
+          type: boolean
+        eps:
+          type: boolean
+      required:
+      - card
+      - applePay
+      - googlePay
+      - ancvConnect
+      - sepa
+      - ideal
+      - bancontact
+      - giroPay
+      - p24
+      - blik
+      - multibanco
+      - eps
+    CompanyActivateRentalPlaceDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
+    CompanyShowStockDto:
+      type: object
+      properties:
+        showStock:
+          type: boolean
+      required:
+      - showStock
+    CompanyAutomaticInternalStartDateAttributionDto:
+      type: object
+      properties:
+        automaticInternalStartDateAttribution:
+          type: boolean
+      required:
+      - automaticInternalStartDateAttribution
+    ReservationRange:
+      type: object
+      properties:
+        nbHours:
+          type: number
+        activated:
+          type: boolean
+      required:
+      - nbHours
+      - activated
+    CompanyOpinionBooster:
+      type: object
+      properties:
+        googleBusinessLink:
+          type: string
+        activated:
+          type: boolean
+        daysBeforeSend:
+          type: number
+        emailTemplateId:
+          type: string
+      required:
+      - googleBusinessLink
+      - activated
+      - daysBeforeSend
+      - emailTemplateId
+    CompanyDocumentColorDto:
+      type: object
+      properties:
+        documentColor:
+          type: string
+      required:
+      - documentColor
+    UpdateCompanyReservationTimesDto:
+      type: object
+      properties:
+        reservationTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationTime'
+      required:
+      - reservationTimes
+    OnlineStoreCompanyStripePayment:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: stripe
+          enum:
+          - stripe
+        account:
+          type: string
+        isExpress:
+          type: boolean
+      required:
+      - provider
+      - account
+      - isExpress
+    ThemeButtonStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        padding:
+          type: string
+      required:
+      - backgroundColor
+      - borderRadius
+      - padding
+    ThemeButton:
+      type: object
+      properties:
+        textStyle:
+          $ref: '#/components/schemas/ThemeTextStyle'
+        style:
+          $ref: '#/components/schemas/ThemeButtonStyle'
+      required:
+      - textStyle
+      - style
+    UpdateSocialMediaDto:
+      type: object
+      properties:
+        facebook:
+          type: string
+        instagram:
+          type: string
+        twitter:
+          type: string
+        linkedIn:
+          type: string
+        tiktok:
+          type: string
+      required:
+      - facebook
+      - instagram
+      - twitter
+      - linkedIn
+      - tiktok
+    CompanyDeliveryCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+        sublocalityName:
+          type: string
+        zipCode:
+          type: string
+        placeId:
+          type: string
+        hasMultiplePostcodeLocalities:
+          type: boolean
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
+    UpdateCompanyRentalPointDto:
+      type: object
+      properties:
+        id:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        name:
+          type: string
+        slug:
+          type: string
+        fullAddress:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+    ProposedRentalPlaceCommissionDto:
+      type: object
+      properties:
+        requiresSignature:
+          type: boolean
+      required:
+      - requiresSignature
+    CreateCompanySquareDeviceDto:
+      type: object
+      properties:
+        deviceName:
+          type: string
+      required:
+      - deviceName
+    GoogleReview:
+      type: object
+      properties:
+        rating:
+          type: number
+        name:
+          type: string
+        comment:
+          type: string
+        authorPhotoUrl:
+          type:
+          - string
+          - 'null'
+        publishTime:
+          format: date-time
+          type: string
+      required:
+      - rating
+      - name
+      - comment
+      - authorPhotoUrl
+      - publishTime
+    UpdateCompanyOfflinePinDto:
+      type: object
+      properties:
+        offlinePin:
+          type: string
+      required:
+      - offlinePin
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

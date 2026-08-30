@@ -1,0 +1,153 @@
+openapi: 3.2.0
+info:
+  title: Lokki Invoice API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Invoice
+paths:
+  /v2/invoice/subscription:
+    get:
+      operationId: getSubscriptionInvoices
+      parameters:
+      - name: startDate
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: endDate
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: skip
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: limit
+        required: false
+        in: query
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSubscriptionInvoicesResponseDto'
+      tags:
+      - Invoice
+  /v2/invoice/lokkipayment:
+    get:
+      operationId: getLokkiPaymentInvoices
+      parameters:
+      - name: startDate
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: endDate
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: skip
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: limit
+        required: false
+        in: query
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLokkiPaymentInvoicesResponseDto'
+      tags:
+      - Invoice
+components:
+  schemas:
+    LokkiPaymentInvoice:
+      type: object
+      properties:
+        status:
+          enum:
+          - SUCCEEDED
+          - FAILED
+          type: string
+        payoutId:
+          type: string
+        hyperlineInvoiceId:
+          type: string
+        invoiceNb:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        currency:
+          type: string
+      required:
+      - status
+      - payoutId
+      - invoiceNb
+      - createdAt
+      - currency
+    SubscriptionInvoice:
+      type: object
+      properties:
+        hyperlineInvoiceId:
+          type: string
+        invoiceNb:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        currency:
+          type: string
+      required:
+      - hyperlineInvoiceId
+      - invoiceNb
+      - createdAt
+      - currency
+    GetLokkiPaymentInvoicesResponseDto:
+      type: object
+      properties:
+        totalItems:
+          type: number
+        invoices:
+          type: array
+          items:
+            $ref: '#/components/schemas/LokkiPaymentInvoice'
+      required:
+      - totalItems
+      - invoices
+    GetSubscriptionInvoicesResponseDto:
+      type: object
+      properties:
+        totalItems:
+          type: number
+        invoices:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionInvoice'
+      required:
+      - totalItems
+      - invoices
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,74 @@
+openapi: 3.2.0
+info:
+  title: Lokki Business Registry API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Business Registry
+paths:
+  /v2/business-registry/{country}/{registrationNumber}:
+    get:
+      operationId: getBusinessInformation
+      parameters:
+      - name: country
+        required: true
+        in: path
+        schema:
+          enum:
+          - FR
+          - BE
+          - CH
+          - DE
+          - NL
+          - ES
+          - PT
+          - IT
+          type: string
+      - name: registrationNumber
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessInformation'
+      tags:
+      - Business Registry
+components:
+  schemas:
+    BusinessInformation:
+      type: object
+      properties:
+        registrationId:
+          type: string
+        vatNumber:
+          type: string
+        companyName:
+          type: string
+        tradingName:
+          type:
+          - string
+          - 'null'
+        registeredOfficeAddress:
+          type: string
+      required:
+      - registrationId
+      - vatNumber
+      - companyName
+      - tradingName
+      - registeredOfficeAddress
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

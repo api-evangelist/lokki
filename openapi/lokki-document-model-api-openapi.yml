@@ -1,0 +1,289 @@
+openapi: 3.2.0
+info:
+  title: Lokki Document Model API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Document Model
+paths:
+  /v2/document-model/byCompany:
+    get:
+      operationId: getDocumentModelsByCompany
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentModel'
+      tags:
+      - Document Model
+  /v2/document-model/{documentModelId}:
+    get:
+      operationId: getDocumentModelById
+      parameters:
+      - name: documentModelId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentModel'
+      tags:
+      - Document Model
+    put:
+      operationId: updateDocumentModel
+      parameters:
+      - name: documentModelId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDocumentModelDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentModel'
+      tags:
+      - Document Model
+    delete:
+      operationId: deleteDocumentModelsById
+      parameters:
+      - name: documentModelId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Document Model
+  /v2/document-model:
+    post:
+      operationId: createDocumentModel
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDocumentModelDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentModel'
+      tags:
+      - Document Model
+components:
+  schemas:
+    CreateDocumentModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        companyId:
+          type: string
+        legalMentions:
+          type: string
+        signature:
+          type: boolean
+        onlineProductsName:
+          type: boolean
+        addComment:
+          type: boolean
+        termsAndConditions:
+          type: boolean
+        displayProductImage:
+          type: boolean
+        sortItemsByType:
+          type: boolean
+        sortItemsAlphabetically:
+          type: boolean
+        displayProductDescription:
+          type: boolean
+        onlineStore:
+          type: boolean
+        isWorkshop:
+          type: boolean
+        displaySubProducts:
+          type: boolean
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+        hidePrice:
+          type: boolean
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - companyId
+      - legalMentions
+      - signature
+      - onlineProductsName
+      - addComment
+      - termsAndConditions
+      - displayProductImage
+      - sortItemsByType
+      - sortItemsAlphabetically
+      - displayProductDescription
+      - onlineStore
+      - isWorkshop
+      - displaySubProducts
+      - hideTime
+      - hideDate
+      - hidePrice
+    DocumentModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        companyId:
+          type: string
+        legalMentions:
+          type: string
+        signature:
+          type: boolean
+        onlineProductsName:
+          type: boolean
+        addComment:
+          type: boolean
+        termsAndConditions:
+          type: boolean
+        numberCreated:
+          type: number
+        onlineStore:
+          type: boolean
+        isWorkshop:
+          type: boolean
+        displaySubProducts:
+          type: boolean
+        displayProductImage:
+          type: boolean
+        sortItemsByType:
+          type: boolean
+        sortItemsAlphabetically:
+          type: boolean
+        displayProductDescription:
+          type: boolean
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+        hidePrice:
+          type: boolean
+        useLegalCompanyInfo:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - companyId
+      - legalMentions
+      - signature
+      - onlineProductsName
+      - addComment
+      - termsAndConditions
+      - numberCreated
+      - onlineStore
+      - isWorkshop
+      - displaySubProducts
+      - displayProductImage
+      - sortItemsByType
+      - sortItemsAlphabetically
+      - displayProductDescription
+      - hideTime
+      - hideDate
+      - hidePrice
+      - useLegalCompanyInfo
+      - createdAt
+    UpdateDocumentModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        legalMentions:
+          type: string
+        signature:
+          type: boolean
+        onlineProductsName:
+          type: boolean
+        addComment:
+          type: boolean
+        termsAndConditions:
+          type: boolean
+        displayProductImage:
+          type: boolean
+        sortItemsByType:
+          type: boolean
+        sortItemsAlphabetically:
+          type: boolean
+        displayProductDescription:
+          type: boolean
+        onlineStore:
+          type: boolean
+        isWorkshop:
+          type: boolean
+        displaySubProducts:
+          type: boolean
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+        hidePrice:
+          type: boolean
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - legalMentions
+      - signature
+      - onlineProductsName
+      - addComment
+      - termsAndConditions
+      - displayProductImage
+      - sortItemsByType
+      - sortItemsAlphabetically
+      - displayProductDescription
+      - onlineStore
+      - isWorkshop
+      - displaySubProducts
+      - hideTime
+      - hideDate
+      - hidePrice
+      - useLegalCompanyInfo
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

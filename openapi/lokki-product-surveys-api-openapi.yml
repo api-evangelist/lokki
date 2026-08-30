@@ -1,0 +1,229 @@
+openapi: 3.2.0
+info:
+  title: Lokki Product Surveys API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Product Surveys
+paths:
+  /v2/product-surveys/{id}:
+    get:
+      operationId: getOneProductSurvey
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductSurvey'
+      tags:
+      - Product Surveys
+    put:
+      operationId: updateProductSurvey
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductSurveyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Product Surveys
+    delete:
+      operationId: deleteOneProductSurvey
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Product Surveys
+  /v2/product-surveys:
+    get:
+      operationId: getManyProductSurveys
+      parameters:
+      - name: ids
+        required: false
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductSurvey'
+      tags:
+      - Product Surveys
+    post:
+      operationId: createProductSurvey
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductSurveyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Product Surveys
+components:
+  schemas:
+    UpdateProductSurveyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateProductSurveyFieldDto'
+      required:
+      - name
+      - fields
+    UpdateProductSurveyFieldDto:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - MULTIPLE_SELECT
+          - DOCUMENT
+        selectAnswers:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - value
+      - type
+      - selectAnswers
+    ProductSurveyField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - MULTIPLE_SELECT
+          - DOCUMENT
+        selectAnswers:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - value
+      - type
+      - selectAnswers
+    CreateProductSurveyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateProductSurveyFieldDto'
+      required:
+      - name
+      - fields
+    CreateProductSurveyFieldDto:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - MULTIPLE_SELECT
+          - DOCUMENT
+        selectAnswers:
+          type: array
+          items:
+            type: string
+      required:
+      - value
+      - type
+      - selectAnswers
+    ProductSurvey:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductSurveyField'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - companyId
+      - name
+      - fields
+      - createdAt
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

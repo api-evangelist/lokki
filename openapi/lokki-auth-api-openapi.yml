@@ -1,0 +1,94 @@
+openapi: 3.2.0
+info:
+  title: Lokki Auth API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Auth
+paths:
+  /v2/auth/redirect-url/{thirdPartyService}:
+    get:
+      operationId: getThirdPartyAuthentificationUrl
+      parameters:
+      - name: thirdPartyService
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: action
+        required: true
+        in: query
+        schema:
+          enum:
+          - login
+          - visibility_signup
+          - rental_place_signup
+          type: string
+      - name: platform
+        required: false
+        in: query
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          - UNKNOWN
+          type: string
+      - name: lang
+        required: false
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+      - name: successUrl
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: failureUrl
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: authOrigin
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getThirdPartyAuthentificationUrlResponseDto'
+      tags:
+      - Auth
+components:
+  schemas:
+    getThirdPartyAuthentificationUrlResponseDto:
+      type: object
+      properties:
+        redirectionUrl:
+          type: string
+      required:
+      - redirectionUrl
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

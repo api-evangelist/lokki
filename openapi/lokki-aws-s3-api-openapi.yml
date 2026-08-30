@@ -1,0 +1,83 @@
+openapi: 3.2.0
+info:
+  title: Lokki Aws S3 API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Aws S3
+paths:
+  /v2/aws-s3/upload-image/{imgCategory}:
+    post:
+      operationId: awsS3UploadImage
+      parameters:
+      - name: imgCategory
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: image
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Aws S3
+  /v2/aws-s3/duplicate-image:
+    post:
+      operationId: awsS3DuplicateImage
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DuplicateImageDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Aws S3
+components:
+  schemas:
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    DuplicateImageDto:
+      type: object
+      properties:
+        key:
+          type: string
+        newKey:
+          type: string
+      required:
+      - key
+      - newKey
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

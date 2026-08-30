@@ -1,0 +1,223 @@
+openapi: 3.2.0
+info:
+  title: Lokki Email Template API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Email Template
+paths:
+  /v2/email-template/byCompany:
+    get:
+      operationId: getEmailTemplatesByCompany
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailTemplate'
+      tags:
+      - Email Template
+  /v2/email-template/byId/{id}:
+    get:
+      operationId: getEmailTemplateById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplate'
+      tags:
+      - Email Template
+    delete:
+      operationId: deleteEmailTemplateById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Email Template
+  /v2/email-template:
+    post:
+      operationId: createEmailTemplate
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmailTemplateDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplate'
+      tags:
+      - Email Template
+  /v2/email-template/{templateId}:
+    put:
+      operationId: updateEmailTemplate
+      parameters:
+      - name: templateId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmailTemplateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplate'
+      tags:
+      - Email Template
+components:
+  schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateEmailTemplateDto:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        type:
+          type: string
+        object:
+          $ref: '#/components/schemas/LocalizedContent'
+        content:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentState:
+          type: object
+        documents:
+          type: object
+        payment:
+          type: number
+        bail:
+          type: number
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+      required:
+      - companyId
+      - type
+      - object
+      - content
+    CreateEmailTemplateDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        type:
+          type: string
+        object:
+          $ref: '#/components/schemas/LocalizedContent'
+        content:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentId:
+          type: string
+        method:
+          type: string
+        payment:
+          type: number
+        bail:
+          type: number
+        methodState:
+          type: string
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+      required:
+      - companyId
+      - type
+      - object
+      - content
+    EmailTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        object:
+          $ref: '#/components/schemas/LocalizedContent'
+        content:
+          $ref: '#/components/schemas/LocalizedContent'
+        companyId:
+          type: string
+        documents:
+          $ref: '#/components/schemas/EmailTemplateDocument'
+        documentState:
+          $ref: '#/components/schemas/EmailTemplateDocument'
+        payment:
+          type: number
+        bail:
+          type: number
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - type
+      - object
+      - content
+      - companyId
+      - payment
+      - bail
+      - hideTime
+      - hideDate
+      - createdAt
+    EmailTemplateDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        method:
+          type: string
+      required:
+      - id
+      - method
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,169 @@
+openapi: 3.2.0
+info:
+  title: Lokki Sub Products API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Sub Products
+paths:
+  /v2/sub-products/{id}:
+    get:
+      operationId: getOneSubProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubProduct'
+      tags:
+      - Sub Products
+    patch:
+      operationId: patchOneSubProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchSubProductsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubProduct'
+      tags:
+      - Sub Products
+  /v2/sub-products:
+    patch:
+      operationId: bulkPatchSubProducts
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkPatchSubProductsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubProduct'
+      tags:
+      - Sub Products
+components:
+  schemas:
+    BulkPatchSubProductDto:
+      type: object
+      properties:
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        isAvailable:
+          type: boolean
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        id:
+          type: string
+      required:
+      - id
+    BulkPatchSubProductsDto:
+      type: object
+      properties:
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkPatchSubProductDto'
+      required:
+      - subProducts
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+    PatchSubProductsDto:
+      type: object
+      properties:
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        isAvailable:
+          type: boolean
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+    SubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

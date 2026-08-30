@@ -1,0 +1,74 @@
+openapi: 3.2.0
+info:
+  title: Lokki Order Refusal API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Order Refusal
+paths:
+  /v2/order-refusal:
+    post:
+      operationId: createOrderRefusal
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRefusalDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Order Refusal
+components:
+  schemas:
+    CreateOrderRefusalDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        refusalReason:
+          type: string
+          enum:
+          - INVENTORY_UNAVAILABILITY
+          - WEATHER
+          - EXCEPTIONAL_CLOSURE
+          - MAINTENANCE
+          - LAST_MINUTE_REQUEST
+          - BOOKED_IN_PERSON
+          - SCHEDULING_ISSUE
+          - LOGISTICAL_ISSUE
+          - BOOKING_ERROR
+          - CUSTOMER_SUITABILITY
+          - OTHER
+        customRefusalReason:
+          type: string
+        refuserUserId:
+          type: string
+        orderType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+          - EVENT
+      required:
+      - orderId
+      - refusalReason
+      - refuserUserId
+      - orderType
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

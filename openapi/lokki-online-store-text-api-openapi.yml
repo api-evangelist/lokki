@@ -1,0 +1,94 @@
+openapi: 3.2.0
+info:
+  title: Lokki Online Store Text API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Online Store Text
+paths:
+  /v2/online-store-text:
+    get:
+      operationId: getOnlineStoreTextByCompanyId
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineStoreText'
+      tags:
+      - Online Store Text
+    put:
+      operationId: updateOnlineStoreTextByCompanyId
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOnlineStoreTextDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineStoreText'
+      tags:
+      - Online Store Text
+components:
+  schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateOnlineStoreTextDto:
+      type: object
+      properties:
+        retrievalOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        retrievalOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        universeSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+    OnlineStoreText:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        retrievalOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        retrievalOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        universeSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - companyId
+      - retrievalOptionTitle
+      - retrievalOptionDescription
+      - deliveryOptionTitle
+      - deliveryOptionDescription
+      - universeSectionTitle
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

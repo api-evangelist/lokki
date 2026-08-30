@@ -1,0 +1,116 @@
+openapi: 3.2.0
+info:
+  title: Lokki Document API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Document
+paths:
+  /v2/document/download/{key}:
+    get:
+      operationId: downloadDocument
+      parameters:
+      - name: key
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Document
+  /v2/document/multiDownload:
+    get:
+      operationId: downloadMultipleDocuments
+      parameters:
+      - name: keys
+        required: true
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      tags:
+      - Document
+  /v2/document/uploadDocumentsForItemDescription:
+    post:
+      operationId: uploadDocumentForItemDescription
+      parameters: []
+      requestBody:
+        required: true
+        description: upload file
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderUploadFilesDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Document
+  /v2/document/{key}:
+    delete:
+      operationId: deleteDocument
+      parameters:
+      - name: key
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Document
+components:
+  schemas:
+    OrderUploadFilesDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        sizes:
+          type: array
+          items:
+            type: number
+        names:
+          type: array
+          items:
+            type: string
+        types:
+          type: array
+          items:
+            type: string
+      required:
+      - files
+      - sizes
+      - names
+      - types
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

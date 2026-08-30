@@ -1,0 +1,582 @@
+openapi: 3.2.0
+info:
+  title: Lokki Your Order Event API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Your Order Event
+paths:
+  /v2/your-order-event/{slug}/{orderEventId}:
+    get:
+      operationId: getYourOrderEvent
+      parameters:
+      - name: orderEventId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YourOrderEventDto'
+      tags:
+      - Your Order Event
+  /v2/your-order-event/getSignedUrlOrderEvent/{orderEventId}/{documentId}/{scope}:
+    get:
+      operationId: getSignedUrlYourOrderEvent
+      parameters:
+      - name: orderEventId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: documentId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: scope
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YourOrderSignUrlDto'
+      tags:
+      - Your Order Event
+  /v2/your-order-event/signDocument:
+    post:
+      operationId: signDocumentOrderEvent
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignDocumentYourOrderEventDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order Event
+  /v2/your-order-event/signDocumentState:
+    post:
+      operationId: signDocumentStateOrderEvent
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignDocumentYourOrderEventDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order Event
+  /v2/your-order-event/cancel-request/{orderEventId}:
+    post:
+      operationId: orderEventCancelRequest
+      parameters:
+      - name: orderEventId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelOrderInfosDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order Event
+  /v2/your-order-event/cancel-auto/{orderEventId}:
+    post:
+      operationId: orderEventCancelAuto
+      parameters:
+      - name: orderEventId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelOrderInfosDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order Event
+  /v2/your-order-event/checkout/stripe:
+    post:
+      operationId: initiateYourOrderEventStripeCheckout
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitiateStripeCheckoutYourOrderEventDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineStoreStripeCheckoutResultDto'
+      tags:
+      - Your Order Event
+  /v2/your-order-event/checkout/adyen:
+    post:
+      operationId: initiateYourOrderEventAdyenCheckout
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitiateCheckoutYourOrderEventAdyenDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order Event
+components:
+  schemas:
+    YourOrderEventAction:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - PAYMENT
+          - NONE
+          - DOCUMENT
+          - DOCUMENT_STATE
+        payment:
+          $ref: '#/components/schemas/YourOrderEventPaymentAndBail'
+        bail:
+          $ref: '#/components/schemas/YourOrderEventPaymentAndBail'
+        document:
+          $ref: '#/components/schemas/YourOrderDocumentAction'
+        documentState:
+          $ref: '#/components/schemas/YourOrderDocumentState'
+      required:
+      - type
+    OrderEventPricings:
+      type: object
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        initialAmount:
+          type: number
+        id:
+          type: string
+      required:
+      - label
+      - amount
+      - initialAmount
+      - id
+    YourOrderEventPaymentAndBail:
+      type: object
+      properties:
+        amount:
+          type: number
+        id:
+          type: string
+        disabled:
+          type: boolean
+        isError:
+          type: boolean
+      required:
+      - amount
+      - id
+    OnlineStoreAdyenCheckoutDto:
+      type: object
+      properties:
+        paymentMethod:
+          type: object
+        browserInfo:
+          type: object
+      required:
+      - paymentMethod
+      - browserInfo
+    SignDocumentYourOrderEventDto:
+      type: object
+      properties:
+        orderEventId:
+          type: string
+        documentId:
+          type: string
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+      required:
+      - orderEventId
+      - documentId
+      - lang
+    OrderEventPerson:
+      type: object
+      properties:
+        name:
+          type: string
+        pricing:
+          type: string
+        infos:
+          type: object
+        categoryItems:
+          type: object
+      required:
+      - name
+      - pricing
+      - infos
+      - categoryItems
+    YourOrderDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
+      required:
+      - id
+      - name
+      - scope
+    InitiateCheckoutYourOrderEventAdyenDto:
+      type: object
+      properties:
+        orderEventId:
+          type: string
+        scope:
+          type: string
+          enum:
+          - PAYMENT
+          - BAIL
+        linkId:
+          type: string
+        companyId:
+          type: string
+        adyenInfo:
+          $ref: '#/components/schemas/OnlineStoreAdyenCheckoutDto'
+      required:
+      - orderEventId
+      - scope
+      - linkId
+      - companyId
+      - adyenInfo
+    YourOrderOrderEventInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        isCanceled:
+          type: boolean
+        isRequest:
+          type: boolean
+        experienceName:
+          $ref: '#/components/schemas/LocalizedContent'
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventProduct'
+        pricings:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventPricings'
+        personInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventPerson'
+        totalTTC:
+          type: number
+        amountPaid:
+          type: number
+        amountBail:
+          type: number
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderDocument'
+        stateDocuments:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderEventStateDocumentFromOrderEvent'
+        createdFrom:
+          type: string
+          enum:
+          - DASHBOARD
+          - QUICK_ORDER
+          - ONLINE_STORE
+          - RENTAL_PLACE_B2B
+          - RENTAL_PLACE_LOKKI
+          - BORNE
+          - SKISET
+          - SKIMIUM
+          - UNKNOWN
+          - TEST
+          - ADMIN_IMPORT
+      required:
+      - id
+      - isCanceled
+      - isRequest
+      - experienceName
+      - startDate
+      - endDate
+      - products
+      - pricings
+      - personInfos
+      - totalTTC
+      - amountPaid
+      - amountBail
+      - documents
+      - stateDocuments
+      - createdFrom
+    YourOrderDocumentAction:
+      type: object
+      properties:
+        documentId:
+          type: string
+      required:
+      - documentId
+    YourOrderActionStateProduct:
+      type: object
+      properties:
+        name:
+          type: string
+        serialNumber:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+        stateInspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateInspectionField'
+        departureFiles:
+          type: array
+          items:
+            type: string
+        arrivalFiles:
+          type: array
+          items:
+            type: string
+      required:
+      - name
+      - serialNumber
+      - departureInfo
+      - arrivalInfo
+      - stateInspectionFields
+      - departureFiles
+      - arrivalFiles
+    OrderEventSubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        available:
+          type: boolean
+        serialNumber:
+          type: string
+        status:
+          type: string
+          enum:
+          - WAITING
+          - USED
+          - ENDED
+      required:
+      - id
+      - available
+      - serialNumber
+      - status
+    OnlineStoreStripeCheckoutResultDto:
+      type: object
+      properties:
+        paymentClientSecret:
+          type: string
+    CancelOrderInfosDto:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+    YourOrderDocumentState:
+      type: object
+      properties:
+        documentId:
+          type: string
+        name:
+          type: string
+        documentStateProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderActionStateProduct'
+      required:
+      - documentId
+      - name
+      - documentStateProducts
+    YourOrderEventStateDocumentFromOrderEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
+        status:
+          type: string
+          enum:
+          - TO_GENERATE
+          - GENERATED
+          - PENDING
+      required:
+      - id
+      - name
+      - scope
+      - status
+    YourOrderEventDto:
+      type: object
+      properties:
+        orderEvent:
+          $ref: '#/components/schemas/YourOrderOrderEventInfo'
+        action:
+          $ref: '#/components/schemas/YourOrderEventAction'
+      required:
+      - orderEvent
+      - action
+    OrderEventProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        name:
+          type: string
+        price:
+          type: number
+        vat:
+          type: number
+        productImage:
+          type: array
+          items:
+            type: string
+        nbSelected:
+          type: number
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventSubProduct'
+      required:
+      - id
+      - type
+      - name
+      - price
+      - vat
+      - productImage
+      - nbSelected
+      - subProducts
+    DocumentStateInspectionField:
+      type: object
+      properties:
+        name:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+      required:
+      - name
+      - departureInfo
+      - arrivalInfo
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    InitiateStripeCheckoutYourOrderEventDto:
+      type: object
+      properties:
+        orderEventId:
+          type: string
+        paymentId:
+          type: string
+        bailId:
+          type: string
+        companyId:
+          type: string
+      required:
+      - orderEventId
+      - paymentId
+      - bailId
+      - companyId
+    YourOrderSignUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

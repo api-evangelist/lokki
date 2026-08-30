@@ -1,0 +1,180 @@
+openapi: 3.2.0
+info:
+  title: Lokki Status Model API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Status Model
+paths:
+  /v2/status-model/delete/{id}:
+    delete:
+      operationId: deleteStatusModelById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Status Model
+  /v2/status-model/byCompany:
+    get:
+      operationId: getStatusModelsByCompany
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatusModel'
+      tags:
+      - Status Model
+  /v2/status-model/create-status-model:
+    post:
+      operationId: createStatusModel
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStatusModelDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusModel'
+      tags:
+      - Status Model
+  /v2/status-model/update-status-model:
+    put:
+      operationId: updateStatusModel
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusModelDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusModel'
+      tags:
+      - Status Model
+components:
+  schemas:
+    CreateStatusModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateStatusModelStatusDto'
+        companyId:
+          type: string
+        isFirst:
+          type: boolean
+      required:
+      - name
+      - status
+      - companyId
+    CreateStatusModelStatusDto:
+      type: object
+      properties:
+        id:
+          type: string
+        color:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - color
+      - name
+    StatusModelStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        color:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - color
+      - name
+    StatusModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isFirst:
+          type: boolean
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusModelStatus'
+        companyId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - isFirst
+      - status
+      - companyId
+      - createdAt
+    UpdateStatusModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateStatusModelStatusDto'
+        companyId:
+          type: string
+        isFirst:
+          type: boolean
+        id:
+          type: string
+      required:
+      - name
+      - status
+      - companyId
+      - id
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

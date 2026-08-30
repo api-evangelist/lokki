@@ -1,0 +1,2091 @@
+openapi: 3.2.0
+info:
+  title: Lokki Delivery API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Delivery
+paths:
+  /v2/delivery/create:
+    post:
+      operationId: createDelivery
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateDeliveryDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Delivery
+  /v2/delivery/getDeliveryDistance/{lat}/{lng}:
+    get:
+      operationId: getDeliveryDistance
+      parameters:
+      - name: lat
+        required: true
+        in: path
+        schema:
+          type: number
+      - name: lng
+        required: true
+        in: path
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: number
+      tags:
+      - Delivery
+  /v2/delivery/getAll:
+    get:
+      operationId: getAllDeliveries
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryJourneyList'
+      tags:
+      - Delivery
+  /v2/delivery/getbyDate/{date}:
+    get:
+      operationId: getDeliveriesByDate
+      parameters:
+      - name: date
+        required: true
+        in: path
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryJourneyList'
+      tags:
+      - Delivery
+  /v2/delivery/getNotAssignedbyDate/{date}:
+    get:
+      operationId: getNotAssignedDeliveriesByDate
+      parameters:
+      - name: date
+        required: true
+        in: path
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryJourney'
+      tags:
+      - Delivery
+  /v2/delivery/getById/{id}:
+    get:
+      operationId: getDeliveryById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Delivery
+  /v2/delivery/getStopById/{companyId}/{deliveryId}/{deliveryStopId}:
+    get:
+      operationId: getDeliveryStopById
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: deliveryId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: deliveryStopId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnlineStoreDeliveryStop'
+      tags:
+      - Delivery
+  /v2/delivery/getByOrderId/{orderId}/{type}:
+    get:
+      operationId: getDeliveryByOrderId
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: type
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryByOrder'
+      tags:
+      - Delivery
+  /v2/delivery/update/{id}:
+    put:
+      operationId: updateDeliveryJourney
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateDeliveryDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Delivery
+  /v2/delivery/updateStopDelivered/{deliveryId}/{deliveryStopId}:
+    put:
+      operationId: updateDeliveryStopDelivered
+      parameters:
+      - name: deliveryId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: deliveryStopId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDeliveryStopDeliveredDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Delivery
+  /v2/delivery/delete/{id}:
+    delete:
+      operationId: deleteDelivery
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Delivery
+  /v2/delivery/sendMail/{date}:
+    post:
+      operationId: sendDeliveryMail
+      parameters:
+      - name: date
+        required: true
+        in: path
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Delivery
+  /v2/delivery/signDelivery/{companyId}/{deliveryId}/{deliveryStopId}:
+    post:
+      operationId: signDelivery
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: deliveryId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: deliveryStopId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Delivery
+components:
+  schemas:
+    HistoryInspectionField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionAnswer'
+      required:
+      - id
+      - name
+      - answers
+    Status:
+      type: object
+      properties:
+        category:
+          type: string
+        name:
+          type: string
+        color:
+          type: string
+        id:
+          type: string
+        statusId:
+          type: string
+      required:
+      - category
+      - name
+      - color
+      - id
+      - statusId
+    AttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    PointSchema:
+      type: object
+      properties:
+        type:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: number
+      required:
+      - type
+      - coordinates
+    Delivery:
+      type: object
+      properties:
+        status:
+          type: boolean
+        departureAddress:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryAddress'
+        departurePrice:
+          type: number
+        departureReferencePrice:
+          type: number
+        departureDeliveredDate:
+          format: date-time
+          type: string
+        arrivalAddress:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryAddress'
+        arrivalPrice:
+          type: number
+        arrivalReferencePrice:
+          type: number
+        arrivalDeliveredDate:
+          format: date-time
+          type: string
+        price:
+          type: number
+      required:
+      - status
+      - departureAddress
+      - departurePrice
+      - departureReferencePrice
+      - departureDeliveredDate
+      - arrivalAddress
+      - arrivalPrice
+      - arrivalReferencePrice
+      - arrivalDeliveredDate
+    SentMailRecipients:
+      type: object
+      properties:
+        main:
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+      required:
+      - main
+      - cc
+    OrderMessageAutoCancel:
+      type: object
+      properties:
+        type:
+          type: string
+          default: AUTO_CANCEL
+          enum:
+          - AUTO_CANCEL
+        message:
+          type: string
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        solved:
+          type: boolean
+      required:
+      - type
+      - message
+      - id
+      - date
+      - solved
+    DocumentStateEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+        productsHistoryId:
+          type: string
+      required:
+      - eventId
+      - productsHistoryId
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+    HistoryAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    DocumentLink:
+      type: object
+      properties:
+        createdDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+        documentModelId:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        link:
+          type: string
+        name:
+          type: string
+        comment:
+          type: string
+        lang:
+          type: string
+      required:
+      - createdDate
+      - id
+      - documentModelId
+      - isEmailSend
+      - isSigned
+      - link
+      - name
+      - comment
+      - lang
+    WarrantedProducts:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductId:
+          type: string
+        serialNumber:
+          type: string
+        margin:
+          type: number
+        pricePerDay:
+          type: number
+        tulipProductId:
+          type: string
+        tulipContractOptionType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+        packId:
+          type: string
+      required:
+      - productId
+      - subProductId
+      - serialNumber
+      - margin
+      - pricePerDay
+      - tulipProductId
+      - tulipContractOptionType
+    SubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+    ShifterInfo:
+      type: object
+      properties:
+        shifterId:
+          type: string
+        status:
+          type: string
+          enum:
+          - IMPORTED
+          - TO_IMPORT
+          - NONE
+        importedDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - shifterId
+      - status
+      - importedDate
+    CustomerField:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    CompleteOrder:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/OrderMessageCancel'
+            - $ref: '#/components/schemas/OrderMessageQuestion'
+            - $ref: '#/components/schemas/OrderMessageAutoCancel'
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        startDateProductAvailable:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        endDateProductAvailable:
+          format: date-time
+          type: string
+        durationInHours:
+          type: number
+        discount:
+          type: number
+        vat:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        remark:
+          type: string
+        hiddenNote:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        labelCalendar:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderProduct'
+        packs:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPack'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderService'
+        customItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomItem'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        isConfirmationEmailSend:
+          type: boolean
+        companyId:
+          type: string
+        colorCalendar:
+          type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/Status'
+        delivery:
+          $ref: '#/components/schemas/Delivery'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        documentLink:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentLink'
+        departurePoint:
+          type: string
+        arrivalPoint:
+          type: string
+        additionalTimeBeforeOrder:
+          type: number
+        additionalTimeAfterOrder:
+          type: number
+        orderStatus:
+          enum:
+          - TO_COME
+          - IN_PROGRESS
+          - ENDED
+          type: string
+        documentsState:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentState'
+        documentStateLink:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateLink'
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/PromoCode'
+        extInvoiceNumber:
+          type: string
+        opinionBoosterSent:
+          type: boolean
+        type:
+          enum:
+          - ORDER
+          - PRE_BOOKING
+          - PRE_BOOKING_ADMIN
+          - CANCELED
+          type: string
+        sentMails:
+          type: array
+          items:
+            $ref: '#/components/schemas/SentMailDataDto'
+        createdFrom:
+          enum:
+          - DASHBOARD
+          - QUICK_ORDER
+          - ONLINE_STORE
+          - RENTAL_PLACE_B2B
+          - RENTAL_PLACE_LOKKI
+          - BORNE
+          - SKISET
+          - SKIMIUM
+          - UNKNOWN
+          - TEST
+          - ADMIN_IMPORT
+          type: string
+        referral:
+          enum:
+          - HEXPLO
+          - MOLLOW
+          - HOURRAIL
+          - YOUBOOK
+          - OISE_FUN
+          - OUTDOOR_ACTIVE
+          - GENERATION_VOYAGE
+          - DECATHLON_OUTDOOR
+          type: string
+        g8Info:
+          allOf:
+          - $ref: '#/components/schemas/G8Info'
+        shifterInfo:
+          allOf:
+          - $ref: '#/components/schemas/ShifterInfo'
+        updatedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        canceledAt:
+          format: date-time
+          type: string
+        renterConfirmedAt:
+          format: date-time
+          type: string
+        renterManualConfirmationEmailAt:
+          format: date-time
+          type: string
+        renterAutoConfirmationEmailSentAt:
+          format: date-time
+          type: string
+        tulipInformation:
+          allOf:
+          - $ref: '#/components/schemas/TulipInformation'
+        warrantedProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/WarrantedProducts'
+        rpTracking:
+          $ref: '#/components/schemas/RpTracking'
+        attribution:
+          $ref: '#/components/schemas/OrderAttribution'
+        skisetInfos:
+          $ref: '#/components/schemas/OrderSkisetInfos'
+        company:
+          $ref: '#/components/schemas/OrderCompanyDetails'
+        requestDate:
+          format: date-time
+          type: string
+        requestToOrderDate:
+          format: date-time
+          type: string
+        requestId:
+          type: string
+        quoteRequestId:
+          type: string
+        isRequest:
+          type: boolean
+        depositPrice:
+          type: number
+        isDepositManuallyEdited:
+          type: boolean
+        offlineId:
+          type: string
+      required:
+      - messages
+      - id
+      - startDate
+      - startDateProductAvailable
+      - endDate
+      - endDateProductAvailable
+      - durationInHours
+      - discount
+      - vat
+      - totalTTC
+      - totalHT
+      - remark
+      - hiddenNote
+      - attachedFiles
+      - labelCalendar
+      - products
+      - packs
+      - services
+      - customItems
+      - customer
+      - isConfirmationEmailSend
+      - companyId
+      - colorCalendar
+      - status
+      - delivery
+      - documents
+      - documentLink
+      - departurePoint
+      - arrivalPoint
+      - additionalTimeBeforeOrder
+      - additionalTimeAfterOrder
+      - orderStatus
+      - documentsState
+      - documentStateLink
+      - promoCode
+      - extInvoiceNumber
+      - opinionBoosterSent
+      - type
+      - sentMails
+      - createdFrom
+      - g8Info
+      - shifterInfo
+      - updatedAt
+      - createdAt
+      - tulipInformation
+      - warrantedProducts
+      - isRequest
+      - depositPrice
+    DocumentStateLink:
+      type: object
+      properties:
+        createdDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        link:
+          type: string
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DEPART
+          - RETOUR
+        productsInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateLinkProductsInfo'
+      required:
+      - createdDate
+      - id
+      - isEmailSend
+      - isSigned
+      - link
+      - name
+      - scope
+      - productsInfo
+    CustomItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        numberSelected:
+          type: number
+        price:
+          type: number
+      required:
+      - id
+      - name
+      - numberSelected
+      - price
+    TulipInfos:
+      type: object
+      properties:
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
+      required:
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
+    OnlineStoreDeliveryCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phone:
+          type: string
+        mail:
+          type: string
+      required:
+      - id
+      - firstName
+      - lastName
+      - phone
+      - mail
+    OrderSkisetInfos:
+      type: object
+      properties:
+        booking_id:
+          type: string
+        reference:
+          type: string
+        customer_id:
+          type:
+          - string
+          - 'null'
+        country_id:
+          type: number
+        resort_id:
+          type: number
+        shop_id:
+          type: number
+      required:
+      - booking_id
+      - reference
+      - customer_id
+      - country_id
+      - resort_id
+      - shop_id
+    DeliveryStop:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        type:
+          type: string
+          enum:
+          - DEPARTURE
+          - ARRIVAL
+        order:
+          $ref: '#/components/schemas/CompleteOrder'
+        orderId:
+          type: string
+        delivered:
+          type: boolean
+        deliveredAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - date
+      - type
+      - delivered
+      - deliveredAt
+    OrderPackCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    SentMailDataActionsDto:
+      type: object
+      properties:
+        sign:
+          type: boolean
+        payment:
+          type: boolean
+        bail:
+          type: boolean
+        booster:
+          type: boolean
+      required:
+      - sign
+      - payment
+      - bail
+    DeliveryAddress:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        streetName:
+          type: string
+        additional:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        location:
+          $ref: '#/components/schemas/PointSchema'
+        fullAddress:
+          type: string
+      required:
+      - streetNumber
+      - streetName
+      - additional
+      - postalCode
+      - city
+      - country
+      - location
+      - fullAddress
+    TulipInformation:
+      type: object
+      properties:
+        error:
+          type: boolean
+        errorMsg:
+          type: string
+        contractId:
+          type: string
+        totalAmount:
+          type: number
+        startDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        endDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - error
+      - contractId
+      - totalAmount
+      - startDate
+      - endDate
+    PackProduct:
+      type: object
+      properties:
+        depositAmount:
+          type: number
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        id:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderSubProduct'
+        uuid:
+          type: string
+        surveyId:
+          type: string
+        type:
+          type: string
+          enum:
+          - product
+          - service
+        productImage:
+          type: array
+          items:
+            type: string
+      required:
+      - depositAmount
+      - rentalType
+      - id
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
+      - subProducts
+      - uuid
+      - type
+      - productImage
+    OrderMessageQuestion:
+      type: object
+      properties:
+        type:
+          type: string
+          default: QUESTION
+          enum:
+          - QUESTION
+        message:
+          type: string
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        solved:
+          type: boolean
+      required:
+      - type
+      - message
+      - id
+      - date
+      - solved
+    ProductPriceRule:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceRule'
+      required:
+      - id
+      - title
+      - rules
+    HistoryInspectionOption:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    CreateUpdateDeliveryStopDto:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        type:
+          enum:
+          - DEPARTURE
+          - ARRIVAL
+          type: string
+        orderId:
+          type: string
+      required:
+      - date
+      - type
+      - orderId
+    OrderProduct:
+      type: object
+      properties:
+        depositAmount:
+          type: number
+        id:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        numberSelected:
+          type: number
+        productImage:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        priceLabelToDisplay:
+          type: string
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderSubProduct'
+        isDeleted:
+          type: boolean
+        vat:
+          type: number
+        priceRuleVariation:
+          allOf:
+          - $ref: '#/components/schemas/PriceRuleVariation'
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
+        initialUnitPrice:
+          type: number
+        insurance:
+          $ref: '#/components/schemas/ProductInsurance'
+        surveyId:
+          type: string
+        requestAnswers:
+          type: array
+          items:
+            type: object
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+      required:
+      - depositAmount
+      - id
+      - rentalType
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
+      - numberSelected
+      - productImage
+      - price
+      - priceLabelToDisplay
+      - subProducts
+      - isDeleted
+      - vat
+      - priceRuleVariation
+      - discount
+      - initialUnitPrice
+      - insurance
+    ItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        amount:
+          type: number
+      required:
+      - discountType
+      - amount
+    PromoCode:
+      type: object
+      properties:
+        code:
+          type: string
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliedDiscountAmount:
+          type: number
+        applyOnDelivery:
+          type: boolean
+        limitToNewCustomers:
+          type: boolean
+        limitToVerticales:
+          type: array
+          items:
+            type: string
+        limitToCompanies:
+          type: array
+          items:
+            type: string
+      required:
+      - code
+      - source
+      - discountAmount
+      - discountType
+      - applyOnDelivery
+    DeliveryLeg:
+      type: object
+      properties:
+        distance:
+          type: number
+        duration:
+          type: number
+      required:
+      - distance
+      - duration
+    PriceRuleVariation:
+      type: object
+      properties:
+        rule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        deltaAmount:
+          type: number
+        price:
+          type: number
+      required:
+      - rule
+      - deltaAmount
+      - price
+    DocumentState:
+      type: object
+      properties:
+        createdDate:
+          format: date-time
+          type: string
+        documentId:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        key:
+          type: string
+        name:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateEvent'
+        status:
+          type: string
+          enum:
+          - PENDING
+          - SUCCESS
+        pdfMonkeyDocumentId:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DEPART
+          - RETOUR
+      required:
+      - createdDate
+      - documentId
+      - isEmailSend
+      - isSigned
+      - key
+      - name
+      - events
+    OrderSubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        status:
+          type: string
+          enum:
+          - WAITING
+          - USED
+          - ENDED
+        returnDate:
+          format: date-time
+          type: string
+        answers:
+          type: object
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - status
+    OrderService:
+      type: object
+      properties:
+        isAssuranceTulip:
+          type: boolean
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        numberSelected:
+          type: number
+        serviceImage:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        priceLabelToDisplay:
+          type: string
+        isDeleted:
+          type: boolean
+        vat:
+          type: number
+        initialUnitPrice:
+          type: number
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
+        surveyId:
+          type: string
+        answers:
+          type: object
+      required:
+      - isAssuranceTulip
+      - id
+      - name
+      - rentalType
+      - onlineStoreName
+      - onlineStoreDescription
+      - numberSelected
+      - serviceImage
+      - price
+      - priceLabelToDisplay
+      - isDeleted
+      - vat
+      - initialUnitPrice
+      - discount
+    ProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+        contractType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    OnlineStoreDeliveryOrderItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        number:
+          type: number
+        itemName:
+          type: string
+        imageUrl:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - name
+      - number
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
+    DeliveryJourney:
+      type: object
+      properties:
+        id:
+          type: string
+        mail:
+          type: string
+        date:
+          format: date-time
+          type: string
+        deliveryStops:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryStop'
+        deliveryRoute:
+          $ref: '#/components/schemas/DeliveryRoute'
+        companyId:
+          type: string
+      required:
+      - id
+      - mail
+      - date
+      - deliveryStops
+      - deliveryRoute
+      - companyId
+    OrderPack:
+      type: object
+      properties:
+        depositAmount:
+          type: number
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        id:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        numberSelected:
+          type: number
+        packId:
+          type: string
+        packImage:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackProduct'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPackCategory'
+        vat:
+          type: number
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
+        initialUnitPrice:
+          type: number
+        type:
+          type: string
+          enum:
+          - PRODUCT
+          - CATEGORY
+        surveyId:
+          type: string
+        answers:
+          type: object
+        priceRuleVariation:
+          allOf:
+          - $ref: '#/components/schemas/PriceRuleVariation'
+      required:
+      - depositAmount
+      - rentalType
+      - id
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
+      - numberSelected
+      - packId
+      - packImage
+      - price
+      - products
+      - categories
+      - vat
+      - discount
+      - initialUnitPrice
+      - type
+      - priceRuleVariation
+    DocumentStateInspectionField:
+      type: object
+      properties:
+        name:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+      required:
+      - name
+      - departureInfo
+      - arrivalInfo
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        companyName:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        zipCode:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerField'
+        companyId:
+          type: string
+        deliveryAddress:
+          type: string
+        deliveryZipCode:
+          type: string
+        deliveryCity:
+          type: string
+        isNewsletterSubscribe:
+          type: boolean
+        isLokkiNewsletterSubscribe:
+          type: boolean
+        customerImage:
+          type: string
+        type:
+          enum:
+          - entreprise
+          - individual
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CustomerSkisetInfos'
+        tulipInfos:
+          $ref: '#/components/schemas/TulipInfos'
+        createdAt:
+          format: date-time
+          type: string
+        remark:
+          type: string
+        customerRpId:
+          type: string
+        hidden:
+          type: boolean
+        createdFrom:
+          enum:
+          - DASHBOARD
+          - ONLINE_STORE
+          - RENTAL_PLACE_LOKKI
+          type: string
+      required:
+      - id
+      - firstName
+      - lastName
+      - companyName
+      - phone
+      - email
+      - zipCode
+      - fields
+      - companyId
+      - deliveryAddress
+      - deliveryZipCode
+      - deliveryCity
+      - isNewsletterSubscribe
+      - isLokkiNewsletterSubscribe
+      - customerImage
+      - type
+      - createdAt
+      - hidden
+      - createdFrom
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    SentMailDataDto:
+      type: object
+      properties:
+        sentDate:
+          type: string
+        id:
+          type: string
+        object:
+          type: string
+        recipients:
+          $ref: '#/components/schemas/SentMailRecipients'
+        actions:
+          $ref: '#/components/schemas/SentMailDataActionsDto'
+        status:
+          type: string
+          enum:
+          - BOUNCED
+          - NOT_OPENED
+          - OPENED
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - sentDate
+      - id
+      - object
+      - actions
+      - createdAt
+    OnlineStoreDeliveryStop:
+      type: object
+      properties:
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        type:
+          type: string
+          enum:
+          - DEPARTURE
+          - ARRIVAL
+        order:
+          $ref: '#/components/schemas/OnlineStoreDeliveryOrder'
+        orderId:
+          type: string
+        delivered:
+          type: boolean
+      required:
+      - id
+      - date
+      - type
+      - order
+      - orderId
+      - delivered
+    DocumentStateLinkProductsInfo:
+      type: object
+      properties:
+        arrivalInfo:
+          type: string
+        departureInfo:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        subProduct:
+          $ref: '#/components/schemas/SubProduct'
+        inspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionField'
+        previousInspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionField'
+        stateInspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateInspectionField'
+        previousFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
+      required:
+      - arrivalInfo
+      - departureInfo
+      - id
+      - name
+      - subProduct
+      - inspectionFields
+      - previousInspectionFields
+      - stateInspectionFields
+      - previousFiles
+      - files
+    DeliveryRoute:
+      type: object
+      properties:
+        polyline:
+          type: string
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryLeg'
+      required:
+      - polyline
+      - legs
+    OrderAttribution:
+      type: object
+      properties:
+        isFromQuickCart:
+          type: boolean
+          description: True when the order originates from the Quick Cart (panier magique) flow
+        quickCartQuoteRequestId:
+          type: string
+          description: Id of the agency QuoteRequest created alongside a Quick Cart, carried so it can be cancelled on self-checkout. Distinct from the order's top-level quoteRequestId (agency conversion).
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+    UpdateDeliveryStopDeliveredDto:
+      type: object
+      properties:
+        delivered:
+          type: boolean
+      required:
+      - delivered
+    DeliveryByOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        mail:
+          type: string
+        stop:
+          $ref: '#/components/schemas/DeliveryStop'
+      required:
+      - id
+      - mail
+      - stop
+    HistoryInspectionAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        value:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionOption'
+      required:
+      - id
+      - answerType
+      - value
+      - options
+    DeliveryJourneyList:
+      type: object
+      properties:
+        journeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryJourney'
+      required:
+      - journeys
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
+    CreateUpdateDeliveryDto:
+      type: object
+      properties:
+        mail:
+          type: string
+        date:
+          format: date-time
+          type: string
+        deliveryStops:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateDeliveryStopDto'
+      required:
+      - mail
+      - date
+      - deliveryStops
+    RpTracking:
+      type: object
+      properties:
+        campaignid:
+          type: string
+        adgroupid:
+          type: string
+        keyword:
+          type: string
+        device:
+          type: string
+        gclid:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_term:
+          type: string
+        utm_content:
+          type: string
+        utm_campaign:
+          type: string
+        referrer:
+          type: string
+        ae:
+          type: string
+        aesubid0:
+          type: string
+        aesubid1:
+          type: string
+        visitor_id:
+          type: string
+        session_id:
+          type: string
+        fbclid:
+          type: string
+        msclkid:
+          type: string
+        pre_booking_created_from:
+          type: string
+          enum:
+          - manual
+        platform:
+          type: string
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+    OrderMessageCancel:
+      type: object
+      properties:
+        type:
+          type: string
+          default: CANCEL
+          enum:
+          - CANCEL
+        message:
+          type: string
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        solved:
+          type: boolean
+      required:
+      - type
+      - message
+      - id
+      - date
+      - solved
+    OnlineStoreDeliveryOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OnlineStoreDeliveryOrderItem'
+        customer:
+          $ref: '#/components/schemas/OnlineStoreDeliveryCustomer'
+        delivery:
+          $ref: '#/components/schemas/Delivery'
+      required:
+      - id
+      - startDate
+      - endDate
+      - items
+      - customer
+      - delivery
+    OrderCompanyDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        accountType:
+          type: string
+        currencySymbol:
+          type: string
+      required:
+      - id
+      - userId
+      - name
+      - phone
+      - email
+      - accountType
+      - currencySymbol
+    G8Info:
+      type: object
+      properties:
+        g8Id:
+          type: string
+        status:
+          type: string
+          enum:
+          - IMPORTED
+          - TO_IMPORT
+          - NONE
+        importedDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - g8Id
+      - status
+      - importedDate
+    Document:
+      type: object
+      properties:
+        createdDate:
+          format: date-time
+          type: string
+        documentId:
+          type: string
+        documentModelId:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        key:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+          - PENDING
+          - SUCCESS
+          - FAILED
+          type: string
+        pdfMonkeyDocumentId:
+          type: string
+      required:
+      - createdDate
+      - documentId
+      - documentModelId
+      - isEmailSend
+      - isSigned
+      - key
+      - name
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

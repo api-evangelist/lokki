@@ -1,0 +1,54 @@
+openapi: 3.2.0
+info:
+  title: Lokki Mail V2 API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Mail V2
+paths:
+  /v2/mail-v2/status/{messageId}:
+    get:
+      operationId: getEmailStatus
+      parameters:
+      - name: messageId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailStatusDto'
+      tags:
+      - Mail V2
+components:
+  schemas:
+    MailStatusDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - QUEUED
+          - IN_TRANSIT
+          - DELIVERED
+          - BOUNCED
+          - SOFT_BOUNCED
+          - SPAM
+          - UNKNOWN
+          type: string
+      required:
+      - status
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

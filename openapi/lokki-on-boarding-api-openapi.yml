@@ -1,0 +1,211 @@
+openapi: 3.2.0
+info:
+  title: Lokki On Boarding API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: On Boarding
+paths:
+  /v2/on-boarding/{userId}:
+    get:
+      operationId: getUserOnBoardingByUserId
+      parameters:
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOnboarding'
+      tags:
+      - On Boarding
+  /v2/on-boarding:
+    post:
+      operationId: createUserOnboarding
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserOnboardingDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOnboarding'
+      tags:
+      - On Boarding
+  /v2/on-boarding/{id}:
+    put:
+      operationId: updateUserOnboarding
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserOnboardingDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOnboarding'
+      tags:
+      - On Boarding
+  /v2/on-boarding/user/{userId}:
+    put:
+      operationId: updateUserOnboardingByUserId
+      parameters:
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserOnboardingDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOnboarding'
+      tags:
+      - On Boarding
+    post:
+      operationId: upsertUserOnboardingByUserId
+      parameters:
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserOnboardingDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOnboarding'
+      tags:
+      - On Boarding
+components:
+  schemas:
+    UpdateUserOnboardingDto:
+      type: object
+      properties:
+        step:
+          enum:
+          - account-creation
+          - shop-search
+          - user-infos
+          - company-verticales
+          - completed
+          type: string
+        metadata:
+          type: object
+      required:
+      - step
+    CreateUserOnboardingDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        tool:
+          enum:
+          - dashboard
+          - lokkit
+          - visibility
+          - visibility_one
+          - reconditioning
+          type: string
+        step:
+          enum:
+          - account-creation
+          - shop-search
+          - user-infos
+          - company-verticales
+          - completed
+          type: string
+        metadata:
+          type: object
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - userId
+      - tool
+      - step
+    UserOnboarding:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        tool:
+          enum:
+          - dashboard
+          - lokkit
+          - visibility
+          - visibility_one
+          - reconditioning
+          type: string
+        step:
+          enum:
+          - account-creation
+          - shop-search
+          - user-infos
+          - company-verticales
+          - completed
+          type: string
+        metadata:
+          type: object
+        createdAt:
+          format: date-time
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - userId
+      - tool
+      - step
+      - createdAt
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

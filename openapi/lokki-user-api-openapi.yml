@@ -1,0 +1,291 @@
+openapi: 3.2.0
+info:
+  title: Lokki User API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: User
+paths:
+  /v2/user/me:
+    get:
+      operationId: getMe
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - User
+  /v2/user/myAccess:
+    get:
+      operationId: getMyAccess
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeAccess'
+      tags:
+      - User
+  /v2/user/createTokenMeltingSpot:
+    get:
+      operationId: createTokenMeltingSpot
+      parameters:
+      - name: lang
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - User
+  /v2/user/uploadUserImg:
+    post:
+      operationId: uploadUserImg
+      parameters: []
+      requestBody:
+        required: true
+        description: user image
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - User
+  /v2/user/update/me:
+    put:
+      operationId: updateMe
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - User
+  /v2/user/update/companyUser:
+    put:
+      operationId: updateCompanyUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyUserDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - User
+  /v2/user/update/password/companyUser:
+    put:
+      operationId: updateCompanyUserPassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPasswordDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - User
+components:
+  schemas:
+    EmployeeAccess:
+      type: object
+      properties:
+        clients:
+          type: boolean
+        getNewOrderMails:
+          type: boolean
+        editCatalog:
+          type: boolean
+        addPromo:
+          type: boolean
+        workshop:
+          type: boolean
+        workshopStat:
+          type: boolean
+        marketing:
+          type: boolean
+        statistics:
+          type: boolean
+        cashBook:
+          type: boolean
+        settings:
+          type: boolean
+        bookingDeletion:
+          type: boolean
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    UpdateMeDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+      required:
+      - name
+      - email
+      - phone
+    UpdateCompanyUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      required:
+      - name
+      - email
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+        role:
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+          type: string
+        password:
+          type: string
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    UpdateUserPasswordDto:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      required:
+      - oldPassword
+      - newPassword
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

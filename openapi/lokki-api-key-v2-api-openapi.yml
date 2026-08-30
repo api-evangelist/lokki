@@ -1,0 +1,611 @@
+openapi: 3.2.0
+info:
+  title: Lokki Api Key V2 API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Api Key V2
+paths:
+  /v2/api-key-v2:
+    post:
+      operationId: postOneApiKeyV2
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostOneApiKeyV2BodyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostOneApiKeyV2ResponseDto'
+      tags:
+      - Api Key V2
+    get:
+      operationId: getManyApiKeyV2
+      parameters:
+      - name: skip
+        required: false
+        in: query
+        description: Number of documents to skip
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of documents to return
+        schema:
+          minimum: 1
+          type: number
+      - name: sort
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: 'Sort order for the results. Use ''__asc'' or ''__desc'' suffix to specify ascending or descending order respectively. Example: ''name__asc'''
+      - name: fields
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Fields to include in the response
+      - name: name.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: name.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: name.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: name.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: name.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: name.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: name.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: name.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      - name: createdAt.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: createdAt.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: createdAt.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific date
+        schema:
+          type: string
+      - name: createdAt.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific date
+        schema:
+          type: string
+      - name: createdAt.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified dates
+      - name: createdAt.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified dates
+      - name: createdAt.gt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than the specified date
+      - name: createdAt.lt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than the specified date
+      - name: createdAt.gte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than or equal to the specified date
+      - name: createdAt.lte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than or equal to the specified date
+      - name: updatedAt.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: updatedAt.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: updatedAt.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific date
+        schema:
+          type: string
+      - name: updatedAt.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific date
+        schema:
+          type: string
+      - name: updatedAt.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified dates
+      - name: updatedAt.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified dates
+      - name: updatedAt.gt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than the specified date
+      - name: updatedAt.lt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than the specified date
+      - name: updatedAt.gte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than or equal to the specified date
+      - name: updatedAt.lte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than or equal to the specified date
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyApiKeyV2ResponseDto'
+      tags:
+      - Api Key V2
+  /v2/api-key-v2/{id}:
+    get:
+      operationId: getOneApiKeyV2
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyV2'
+      tags:
+      - Api Key V2
+    patch:
+      operationId: patchOneApiKeyV2
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchOneApiKeyV2BodyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyV2'
+      tags:
+      - Api Key V2
+    delete:
+      operationId: deleteOneApiKeyV2
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Api Key V2
+components:
+  schemas:
+    PostOneApiKeyV2ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        note:
+          type: string
+        owner:
+          type: string
+        trailingDigits:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiKeyV2Scope'
+        status:
+          enum:
+          - ACTIVE
+          - INACTIVE
+          type: string
+        settings:
+          $ref: '#/components/schemas/ApiKeyV2Settings'
+        lastUsedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        apiKey:
+          type: string
+      required:
+      - id
+      - name
+      - note
+      - owner
+      - trailingDigits
+      - scopes
+      - status
+      - settings
+      - lastUsedAt
+      - createdAt
+      - updatedAt
+      - apiKey
+    PostOneApiKeyV2BodyDto:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: /^[a-z0-9-]+$/
+        note:
+          type: string
+        owner:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PostOneApiKeyV2BodyScopeDto'
+        settings:
+          $ref: '#/components/schemas/PostOneApiKeyV2BodySettinsDto'
+      required:
+      - name
+      - note
+      - owner
+      - scopes
+      - settings
+    ApiKeyV2Settings:
+      type: object
+      properties:
+        utm:
+          allOf:
+          - $ref: '#/components/schemas/ApiKeyV2Utm'
+      required:
+      - utm
+    ApiKeyV2Scope:
+      type: object
+      properties:
+        domain:
+          type: string
+          enum:
+          - STORES
+          - STORE_ITEMS
+          - VERTICALES
+        read:
+          type: boolean
+        write:
+          type: boolean
+        actions:
+          type: array
+          items:
+            type: string
+      required:
+      - domain
+      - read
+      - write
+      - actions
+    PatchOneApiKeyV2BodyDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        lastUsedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+    PostOneApiKeyV2BodyScopeDto:
+      type: object
+      properties:
+        domain:
+          type: string
+          enum:
+          - STORES
+          - STORE_ITEMS
+          - VERTICALES
+        read:
+          type: boolean
+        write:
+          type: boolean
+        actions:
+          type: array
+          items:
+            type: string
+      required:
+      - domain
+      - read
+      - write
+      - actions
+    ApiKeyV2Utm:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        source:
+          type: string
+        medium:
+          type: string
+        campaign:
+          type: string
+        term:
+          type: string
+        content:
+          type: string
+      required:
+      - enabled
+    ApiKeyV2:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        note:
+          type: string
+        owner:
+          type: string
+        trailingDigits:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiKeyV2Scope'
+        status:
+          enum:
+          - ACTIVE
+          - INACTIVE
+          type: string
+        settings:
+          $ref: '#/components/schemas/ApiKeyV2Settings'
+        lastUsedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - note
+      - owner
+      - trailingDigits
+      - scopes
+      - status
+      - settings
+      - lastUsedAt
+      - createdAt
+      - updatedAt
+    PostOneApiKeyV2BodyUtmDto:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        source:
+          type: string
+        medium:
+          type: string
+        campaign:
+          type: string
+        term:
+          type: string
+        content:
+          type: string
+      required:
+      - enabled
+    PostOneApiKeyV2BodySettinsDto:
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/PostOneApiKeyV2BodyUtmDto'
+    GetManyApiKeyV2ResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiKeyV2'
+      required:
+      - total
+      - docs
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

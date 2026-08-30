@@ -1,0 +1,389 @@
+openapi: 3.2.0
+info:
+  title: Lokki Strapi API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Strapi
+paths:
+  /v2/strapi/import-status:
+    get:
+      operationId: getImportStatus
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StrapiImportStatus'
+      tags:
+      - Strapi
+  /v2/strapi/upload-glossary-words:
+    post:
+      operationId: adminUploadGlossaryWordsCSV
+      parameters: []
+      requestBody:
+        required: true
+        description: glossary words csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Strapi
+  /v2/strapi/cities:
+    get:
+      operationId: exportStrapiCitiesCsv
+      parameters:
+      - name: countries
+        required: true
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+      - name: locale
+        required: true
+        in: query
+        schema:
+          default: fr
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExportStrapiCitiesDto'
+      tags:
+      - Strapi
+  /v2/strapi/upload-cities:
+    post:
+      operationId: adminUploadCitiesCSV
+      parameters: []
+      requestBody:
+        required: true
+        description: cities csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Strapi
+  /v2/strapi/discover-pages:
+    get:
+      operationId: exportStrapiDiscoverPagesCsv
+      parameters:
+      - name: verticales
+        required: true
+        in: query
+        schema:
+          default: []
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+      - name: locale
+        required: true
+        in: query
+        schema:
+          default: fr
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExportStrapiDiscoverPagesDto'
+      tags:
+      - Strapi
+  /v2/strapi/export-activity-city-pages:
+    get:
+      operationId: exportStrapiActivityCityPagesCsv
+      parameters:
+      - name: locale
+        required: true
+        in: query
+        schema:
+          default: fr
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetExportStrapiActivityCityPagesDto'
+      tags:
+      - Strapi
+  /v2/strapi/upload-discover-pages:
+    post:
+      operationId: adminUploadDiscoverPagesCSV
+      parameters: []
+      requestBody:
+        required: true
+        description: discover pages csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Strapi
+  /v2/strapi/upload-activity-city-pages:
+    post:
+      operationId: adminUploadActivityCitiesCSV
+      parameters: []
+      requestBody:
+        required: true
+        description: activity city pages csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Strapi
+  /v2/strapi/discover-pages-aggregate:
+    get:
+      operationId: getStrapiDiscoverPagesDataAggregate
+      parameters:
+      - name: locale
+        required: true
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoverPageAggregate'
+      tags:
+      - Strapi
+  /v2/strapi/update-lokki-categories:
+    post:
+      operationId: updateStrapiLokkiCategories
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Strapi
+  /v2/strapi/cleanup-obsolete-lokki-categories:
+    post:
+      operationId: cleanupObsoleteStrapiLokkiCategories
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CleanupObsoleteStrapiLokkiBodyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CleanupObsoleteCategoriesResponseDto'
+      tags:
+      - Strapi
+components:
+  schemas:
+    StrapiOrphanCategory:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+      required:
+      - id
+      - name
+    GetExportStrapiCitiesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    CleanupObsoleteCategoriesResponseDto:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+        verticales:
+          type: object
+        orphanCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrapiOrphanCategory'
+      required:
+      - dryRun
+      - verticales
+      - orphanCategories
+    CleanupObsoleteStrapiLokkiBodyDto:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+      required:
+      - dryRun
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    GetExportStrapiActivityCityPagesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    GetExportStrapiDiscoverPagesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    StrapiImportStatus:
+      type: object
+      properties:
+        importType:
+          type:
+          - string
+          - 'null'
+          enum:
+          - glossary-words
+          - cities
+          - discover-pages
+          - activity-city
+        isImporting:
+          type: boolean
+        importError:
+          type: string
+        importStep:
+          type: string
+        importStartedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        importEndedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - importType
+      - isImporting
+      - importError
+      - importStep
+      - importStartedAt
+      - importEndedAt
+    DiscoverPageAggregate:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

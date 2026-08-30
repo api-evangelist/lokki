@@ -1,0 +1,75 @@
+openapi: 3.2.0
+info:
+  title: Lokki Order Deliveries API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Order Deliveries
+paths:
+  /v2/order-deliveries/price/{companyId}:
+    get:
+      operationId: getDeliveryPrice
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: straightDistance
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: cityName
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: postalCode
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: latitude
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: longitude
+        required: false
+        in: query
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryPriceResponseDto'
+      tags:
+      - Order Deliveries
+components:
+  schemas:
+    DeliveryPriceResponseDto:
+      type: object
+      properties:
+        price:
+          type: number
+        isOutOfRange:
+          type: boolean
+          default: false
+      required:
+      - price
+      - isOutOfRange
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

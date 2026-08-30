@@ -1,0 +1,96 @@
+openapi: 3.2.0
+info:
+  title: Lokki Magic Schedule API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Magic Schedule
+paths:
+  /v2/magic-schedule/company:
+    post:
+      operationId: triggerMagicScheduleOptimization
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MagicScheduleOptimizeDto'
+      tags:
+      - Magic Schedule
+    get:
+      operationId: getMagicScheduleOptimizationState
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/MagicScheduleCompanyStateDto'
+      tags:
+      - Magic Schedule
+  /v2/magic-schedule/company/occupancy:
+    get:
+      operationId: getMagicScheduleOccupancy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MagicScheduleCompanyOccupancyDto'
+      tags:
+      - Magic Schedule
+components:
+  schemas:
+    MagicScheduleCompanyStateDto:
+      type: object
+      properties:
+        jobId:
+          type: string
+          example: optimize-company-1234567890
+        status:
+          type: string
+          example: pending
+        progress:
+          type: number
+          example: 50
+        error:
+          type: string
+          example: An error occurred during optimization.
+      required:
+      - jobId
+      - status
+      - progress
+      - error
+    MagicScheduleOptimizeDto:
+      type: object
+      properties:
+        jobId:
+          type: string
+          example: optimize-company-1234567890
+      required:
+      - jobId
+    MagicScheduleCompanyOccupancyDto:
+      type: object
+      properties:
+        occupancyRate:
+          type: number
+          example: 76
+      required:
+      - occupancyRate
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

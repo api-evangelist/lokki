@@ -1,0 +1,181 @@
+openapi: 3.2.0
+info:
+  title: Lokki Universe API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Universe
+paths:
+  /v2/universe/list:
+    get:
+      operationId: listUniverses
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Universe'
+      tags:
+      - Universe
+  /v2/universe/create:
+    post:
+      operationId: createUniverse
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateUniverseControllerFormDataDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Universe
+  /v2/universe/{id}:
+    put:
+      operationId: updateUniverse
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateUniverseControllerFormDataDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Universe'
+      tags:
+      - Universe
+    delete:
+      operationId: deleteUniverse
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Universe
+components:
+  schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateUniverseControllerFormDataDto:
+      type: object
+      properties:
+        picture:
+          type: string
+          format: binary
+        title:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        ranking:
+          type: number
+        minimumPrice:
+          type: string
+    CreateUniverseControllerFormDataDto:
+      type: object
+      properties:
+        picture:
+          type: string
+          format: binary
+        title:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        ranking:
+          type: number
+        minimumPrice:
+          type: string
+      required:
+      - picture
+      - title
+      - productModelIds
+      - ranking
+      - minimumPrice
+    UniverseMinimumPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - ALL_ASSOCIATED_CATEGORIES
+          - SPECIFIC_CATEGORY
+          - SPECIFIC_ITEM
+        id:
+          type: string
+      required:
+      - type
+      - id
+    Universe:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          $ref: '#/components/schemas/LocalizedContent'
+        pictureURL:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        ref:
+          type: string
+        rentalPlacePicture:
+          type: string
+        rentalPlaceTitle:
+          type: string
+        ranking:
+          type: number
+        minimumPrice:
+          $ref: '#/components/schemas/UniverseMinimumPrice'
+      required:
+      - id
+      - title
+      - pictureURL
+      - productModelIds
+      - ref
+      - rentalPlacePicture
+      - rentalPlaceTitle
+      - ranking
+      - minimumPrice
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,180 @@
+openapi: 3.2.0
+info:
+  title: Lokki Theme API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Theme
+paths:
+  /v2/theme:
+    get:
+      operationId: getCompanyTheme
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyTheme'
+      tags:
+      - Theme
+    put:
+      operationId: updateCompanyTheme
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyTheme'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyTheme'
+      tags:
+      - Theme
+components:
+  schemas:
+    ThemeButtonStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        padding:
+          type: string
+      required:
+      - backgroundColor
+      - borderRadius
+      - padding
+    ThemeButton:
+      type: object
+      properties:
+        textStyle:
+          $ref: '#/components/schemas/ThemeTextStyle'
+        style:
+          $ref: '#/components/schemas/ThemeButtonStyle'
+      required:
+      - textStyle
+      - style
+    ThemeMainStyles:
+      type: object
+      properties:
+        radius:
+          type: string
+        backgroundColor:
+          type: string
+        fontFamily:
+          type: string
+      required:
+      - radius
+      - backgroundColor
+      - fontFamily
+    ThemeBlockColor:
+      type: object
+      properties:
+        color:
+          type: string
+        backgroundColor:
+          type: string
+      required:
+      - color
+      - backgroundColor
+    CompanyTheme:
+      type: object
+      properties:
+        id:
+          type: string
+        mainStyles:
+          $ref: '#/components/schemas/ThemeMainStyles'
+        button:
+          $ref: '#/components/schemas/ThemeButton'
+        companyName:
+          $ref: '#/components/schemas/ThemeCompanyName'
+        title:
+          $ref: '#/components/schemas/ThemeTitle'
+        colors:
+          $ref: '#/components/schemas/ThemeColors'
+      required:
+      - mainStyles
+      - button
+      - companyName
+      - title
+      - colors
+    ThemeColors:
+      type: object
+      properties:
+        primary:
+          type: string
+        secondary:
+          type: string
+        ternary:
+          type: string
+        priceColor:
+          type: string
+        priceColorText:
+          type: string
+        blockColor:
+          $ref: '#/components/schemas/ThemeBlockColor'
+        textColor:
+          type: string
+        danger:
+          type: string
+        header:
+          type: string
+      required:
+      - primary
+      - secondary
+      - ternary
+      - priceColor
+      - priceColorText
+      - blockColor
+      - textColor
+      - danger
+      - header
+    ThemeTitle:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
+      required:
+      - style
+    ThemeCompanyName:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
+      required:
+      - style
+    ThemeTextStyle:
+      type: object
+      properties:
+        color:
+          type: string
+        fontSize:
+          type: string
+        fontWeight:
+          type: string
+        fontStyle:
+          type: string
+      required:
+      - color
+      - fontSize
+      - fontWeight
+      - fontStyle
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

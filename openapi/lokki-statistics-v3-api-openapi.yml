@@ -1,0 +1,41 @@
+openapi: 3.2.0
+info:
+  title: Lokki Statistics V3 API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Statistics V3
+paths:
+  /v2/statistics-v3/auth/token:
+    get:
+      operationId: getStatisticAuthToken
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatisticAuthTokenResponseDto'
+      tags:
+      - Statistics V3
+components:
+  schemas:
+    GetStatisticAuthTokenResponseDto:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+      - token
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

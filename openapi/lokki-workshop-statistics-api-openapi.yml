@@ -1,0 +1,77 @@
+openapi: 3.2.0
+info:
+  title: Lokki Workshop Statistics API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Workshop Statistics
+paths:
+  /v2/workshop-statistics:
+    get:
+      operationId: getWorkshopOrderStatistics
+      parameters:
+      - name: beginningOfRange
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: endOfRange
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopOrderStatisticsDto'
+      tags:
+      - Workshop Statistics
+components:
+  schemas:
+    StatisticsByQuoteDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        turnover:
+          type: number
+        number:
+          type: number
+      required:
+      - id
+      - name
+      - turnover
+      - number
+    WorkshopOrderStatisticsDto:
+      type: object
+      properties:
+        turnover:
+          type: number
+        numberOfOrders:
+          type: number
+        statisticsByQuotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticsByQuoteDto'
+      required:
+      - turnover
+      - numberOfOrders
+      - statisticsByQuotes
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

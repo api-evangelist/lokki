@@ -1,0 +1,381 @@
+openapi: 3.2.0
+info:
+  title: Lokki Payment API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Payment
+paths:
+  /v2/payment/adyen/payment-methods:
+    get:
+      operationId: getAdyenPaymentMethods
+      parameters:
+      - name: companyId
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Payment
+  /v2/payment/admin/exportAllLokkiPaymentTransactionsCsv:
+    get:
+      operationId: exportAllLokkiPaymentTransactionCSV
+      parameters:
+      - name: companyIds
+        required: true
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: startDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: endDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkiPaymentTransactionsCSVResponse'
+      tags:
+      - Payment
+  /v2/payment/lokkiPayment/stripeExpress/status:
+    get:
+      operationId: getLokkiPaymentStripeExpressStatus
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStripeExpressAcountStatusRespDto'
+      tags:
+      - Payment
+  /v2/payment/lokkiPayment/dashboard/infos:
+    get:
+      operationId: getLokkiPaymentDashboardInfos
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkiPaymentDashboardInfoResponseDto'
+      tags:
+      - Payment
+  /v2/payment/lokkiPayment/balance:
+    get:
+      operationId: getLokkiPaymentBalance
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkiPaymentBalanceResponseDto'
+      tags:
+      - Payment
+  /v2/payment/lokkiPayment/transactions:
+    get:
+      operationId: getLokkiPaymentTransactions
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkiPaymentTransactionsDto'
+      tags:
+      - Payment
+  /v2/payment/lokkiPayment/payouts:
+    get:
+      operationId: getLokkiPaymentPayouts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkiPaymentPayoutsDto'
+      tags:
+      - Payment
+  /v2/payment/lokkiPayment/payouts/stripe-login-link:
+    get:
+      operationId: getStripeLoginLink
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeLoginLinkDto'
+      tags:
+      - Payment
+  /v2/payment/checkout/stripe/initiate:
+    post:
+      operationId: initiateInternalStripeCheckout
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitiateInternalStripeCheckoutDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeCheckoutResultDto'
+      tags:
+      - Payment
+components:
+  schemas:
+    LokkiPaymentTransactionsCSVResponse:
+      type: object
+      properties:
+        csv:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csv
+    LastPayoutDashboardInfo:
+      type: object
+      properties:
+        date:
+          format: date-time
+          type: string
+        amount:
+          type: number
+        refundAmount:
+          type: number
+        fees:
+          type: number
+      required:
+      - date
+      - amount
+      - refundAmount
+      - fees
+    LokkiPaymentTransactionsDto:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StripeTransaction'
+      required:
+      - transactions
+    StripePayout:
+      type: object
+      properties:
+        payoutId:
+          type: string
+        date:
+          format: date-time
+          type: string
+        amount:
+          type: number
+        fee:
+          type: number
+        amountHT:
+          type: number
+        amountRefund:
+          type: number
+        relatedRefunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayoutRelatedRefund'
+      required:
+      - payoutId
+      - date
+      - amount
+      - fee
+      - amountHT
+      - amountRefund
+    StripePendingPayoutItem:
+      type: object
+      properties:
+        amount:
+          type: number
+        arrivalDate:
+          format: date-time
+          type: string
+      required:
+      - amount
+      - arrivalDate
+    PayoutRelatedRefund:
+      type: object
+      properties:
+        paymentIntentId:
+          type: string
+        amount:
+          type: number
+        date:
+          format: date-time
+          type: string
+      required:
+      - paymentIntentId
+      - amount
+      - date
+    GetStripeExpressAcountStatusRespDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - RESTRICTED
+          - COMPLETED
+      required:
+      - status
+    StripePendingPayoutDashboardInfo:
+      type: object
+      properties:
+        payouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/StripePendingPayoutItem'
+      required:
+      - payouts
+    LokkiPaymentPayoutsDto:
+      type: object
+      properties:
+        payouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/StripePayout'
+      required:
+      - payouts
+    StripeCheckoutResultDto:
+      type: object
+      properties:
+        paymentClientSecret:
+          type: string
+      required:
+      - paymentClientSecret
+    LokkiPaymentBalanceResponseDto:
+      type: object
+      properties:
+        available:
+          type: number
+        pending:
+          type: number
+      required:
+      - available
+      - pending
+    InitiateInternalStripeCheckoutDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        orderId:
+          type: string
+        isEvent:
+          type: boolean
+        paymentCheckoutType:
+          type: string
+          enum:
+          - PAYMENT
+          - BAIL
+      required:
+      - amount
+      - orderId
+      - isEvent
+      - paymentCheckoutType
+    StripeLoginLinkDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    NextPayoutDashboardInfo:
+      type: object
+      properties:
+        amount:
+          type: number
+        refundAmount:
+          type: number
+        fees:
+          type: number
+        pendingAmount:
+          type: number
+        pendingFees:
+          type: number
+      required:
+      - amount
+      - fees
+    StripeTransaction:
+      type: object
+      properties:
+        status:
+          type: string
+        date:
+          format: date-time
+          type: string
+        amount:
+          type: number
+        fee:
+          type: number
+        amountHT:
+          type: number
+      required:
+      - status
+      - date
+      - amount
+      - fee
+      - amountHT
+    LokkiPaymentDashboardInfoResponseDto:
+      type: object
+      properties:
+        monthAmount:
+          type: number
+        monthFees:
+          type: number
+        lastPayout:
+          $ref: '#/components/schemas/LastPayoutDashboardInfo'
+        nextPayout:
+          $ref: '#/components/schemas/NextPayoutDashboardInfo'
+        stripePendingPayout:
+          $ref: '#/components/schemas/StripePendingPayoutDashboardInfo'
+      required:
+      - monthAmount
+      - monthFees
+      - nextPayout
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

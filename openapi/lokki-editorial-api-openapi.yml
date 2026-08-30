@@ -1,0 +1,146 @@
+openapi: 3.2.0
+info:
+  title: Lokki Editorial API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Editorial
+paths:
+  /v2/editorial/globals/{globalSlug}:
+    get:
+      operationId: getOneGlobal
+      parameters:
+      - name: locale
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: depth
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: globalSlug
+        required: true
+        in: path
+        description: The slug of the global
+        schema:
+          enum:
+          - main-configuration
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Editorial
+  /v2/editorial/collections/{collectionSlug}:
+    get:
+      operationId: getManyCollectionDocuments
+      parameters:
+      - name: collectionSlug
+        required: true
+        in: path
+        description: The slug of the collection
+        schema:
+          enum:
+          - features
+          - feature-pages
+          - action-calls
+          - list-pages
+          - terms-and-conditions
+          type: string
+      - name: many
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: where
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: depth
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: locale
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: fallbackLocale
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: draft
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: showHiddenFields
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: limit
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+      tags:
+      - Editorial
+  /v2/editorial/collections/{collectionSlug}/{documentId}:
+    get:
+      operationId: getOneCollectionDocument
+      parameters:
+      - name: documentId
+        required: true
+        in: path
+        description: The ID of the document
+        schema:
+          type: string
+      - name: collectionSlug
+        required: true
+        in: path
+        description: The slug of the collection
+        schema:
+          enum:
+          - features
+          - feature-pages
+          - action-calls
+          - list-pages
+          - terms-and-conditions
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Editorial
+components:
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

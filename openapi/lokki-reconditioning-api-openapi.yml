@@ -1,0 +1,548 @@
+openapi: 3.2.0
+info:
+  title: Lokki Reconditioning API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Reconditioning
+paths:
+  /v2/reconditioning/create:
+    post:
+      operationId: createReconditioningSale
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateReconditioningSaleDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSale'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/getAllByCompany:
+    get:
+      operationId: getAllReconditioningSalesByCompany
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSaleList'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/getAll:
+    get:
+      operationId: getAllReconditioningSales
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSaleList'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/getAllActive:
+    get:
+      operationId: getAllActiveReconditioningSales
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSaleList'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/myOffers:
+    get:
+      operationId: getMyOffers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSaleList'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/getById/{id}:
+    get:
+      operationId: getReconditioningSaleById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSale'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/offer/{id}:
+    post:
+      operationId: makeOfferOnReconditioningSale
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSale'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/update/{id}:
+    put:
+      operationId: updateReconditioningSale
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateReconditioningSaleDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSale'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/offer/{id}/{offerId}:
+    put:
+      operationId: customizeOfferOnReconditioningSale
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: offerId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSale'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/archive/{id}:
+    put:
+      operationId: archiveReconditioningSale
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSale'
+      tags:
+      - Reconditioning
+  /v2/reconditioning/delete/{id}:
+    delete:
+      operationId: deleteReconditioningSale
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReconditioningSale'
+      tags:
+      - Reconditioning
+components:
+  schemas:
+    ReconditioningSaleOfferCustomizationDto:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        comment:
+          type: string
+      required:
+      - subProductId
+      - comment
+    CreateUpdateReconditioningSaleDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        productId:
+          type: string
+        productName:
+          type: string
+        price:
+          type: number
+        availabilityDate:
+          format: date-time
+          type: string
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateReconditioningSaleSubProductDto'
+      required:
+      - title
+      - description
+      - verticale
+      - productId
+      - productName
+      - price
+      - availabilityDate
+      - subProducts
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    ReconditioningSaleList:
+      type: object
+      properties:
+        sales:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSale'
+      required:
+      - sales
+    ReconditioningSaleOfferCustomizationsDto:
+      type: object
+      properties:
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
+      required:
+      - customizations
+    ReconditioningSaleOfferCustomize:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        comment:
+          type: string
+      required:
+      - subProductId
+      - comment
+    ReconditioningSaleOffer:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomize'
+        details:
+          $ref: '#/components/schemas/ReconditioningSaleOfferUserDetails'
+      required:
+      - id
+      - userId
+      - customizations
+    CreateUpdateReconditioningSaleSubProductDto:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        serial:
+          type: string
+        brand:
+          type: string
+        years:
+          type: string
+          enum:
+          - YEAR_OR_LESS
+          - TWO_YEARS
+          - THREE_YEARS
+          - FOUR_YEARS
+          - FIVE_OR_MORE
+        state:
+          type: string
+          enum:
+          - EXCELLENT
+          - GOOD
+          - MEDIUM
+          - BAD
+        priceNew:
+          type: number
+        comment:
+          type: string
+        pictures:
+          type: array
+          items:
+            type: string
+        certificate:
+          type: string
+      required:
+      - subProductId
+      - serial
+      - brand
+      - years
+      - state
+      - priceNew
+      - comment
+      - pictures
+      - certificate
+    ReconditioningSaleCompanyDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        currency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        address:
+          type: string
+        name:
+          type: string
+        companyMailSender:
+          $ref: '#/components/schemas/CompanyMailSender'
+        phone:
+          type: string
+        logoURL:
+          type: string
+      required:
+      - id
+      - currency
+      - address
+      - name
+      - companyMailSender
+      - phone
+      - logoURL
+    ReconditioningSaleSubProduct:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        serial:
+          type: string
+        brand:
+          type: string
+        years:
+          type: string
+          enum:
+          - YEAR_OR_LESS
+          - TWO_YEARS
+          - THREE_YEARS
+          - FOUR_YEARS
+          - FIVE_OR_MORE
+        state:
+          type: string
+          enum:
+          - EXCELLENT
+          - GOOD
+          - MEDIUM
+          - BAD
+        priceNew:
+          type: number
+        comment:
+          type: string
+        pictures:
+          type: array
+          items:
+            type: string
+        certificate:
+          type: string
+      required:
+      - subProductId
+      - serial
+      - brand
+      - years
+      - state
+      - priceNew
+      - comment
+      - pictures
+      - certificate
+    CompanyMailSender:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    ReconditioningSale:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        company:
+          $ref: '#/components/schemas/ReconditioningSaleCompanyDetails'
+        title:
+          type: string
+        description:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        productId:
+          type: string
+        productName:
+          type: string
+        productImage:
+          type: string
+        price:
+          type: number
+        availabilityDate:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - ACTIVE
+          - OFFER
+          - ARCHIVED
+          - FINISHED
+          type: string
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleSubProduct'
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOffer'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - companyId
+      - title
+      - description
+      - verticale
+      - productId
+      - productName
+      - productImage
+      - price
+      - availabilityDate
+      - status
+      - subProducts
+      - offers
+      - createdAt
+    ReconditioningSaleOfferUserDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

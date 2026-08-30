@@ -1,0 +1,108 @@
+openapi: 3.2.0
+info:
+  title: Lokki Company Redirect API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Company Redirect
+paths:
+  /v2/company-redirect/{slug}:
+    get:
+      operationId: getCompanyRedirect
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        description: Slug of the archived company
+        example: henri-corp
+        schema:
+          type: string
+      - name: lang
+        required: true
+        in: query
+        description: Language for the redirect target's localized content
+        schema:
+          default: fr
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyRedirectTargetDto'
+      tags:
+      - Company Redirect
+components:
+  schemas:
+    CompanyRedirectTargetType:
+      type: string
+      description: 'DISCOVER: redirect to /location/{citySlug}/{categorySlug}. SEARCH: redirect to a /rent search scoped to lat/lng/address/verticales. HOME: redirect to the homepage (the archived renter had no usable location).'
+      enum:
+      - DISCOVER
+      - SEARCH
+      - HOME
+    CompanyRedirectTargetDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CompanyRedirectTargetType'
+        citySlug:
+          type: string
+          description: Discover page city slug (type=DISCOVER)
+        categorySlug:
+          type: string
+          description: Discover page category slug (type=DISCOVER)
+        lat:
+          type: number
+          description: Archived renter's latitude (type=SEARCH)
+        lng:
+          type: number
+          description: Archived renter's longitude (type=SEARCH)
+        address:
+          type: string
+          description: Archived renter's city (type=SEARCH)
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+          description: Archived renter's verticales (type=SEARCH)
+      required:
+      - type
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

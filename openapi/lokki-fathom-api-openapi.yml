@@ -1,0 +1,463 @@
+openapi: 3.2.0
+info:
+  title: Lokki Fathom API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Fathom
+paths:
+  /v2/fathom/totalVisits:
+    get:
+      operationId: getFathomTotalVisits
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomTotalVisitsDto'
+      tags:
+      - Fathom
+  /v2/fathom/bq/aggregation:
+    get:
+      operationId: queryFathomAggregationBQ
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomTotalVisitsArrayDto'
+      tags:
+      - Fathom
+  /v2/fathom/visitsByHost:
+    get:
+      operationId: getFathomVisitsByHost
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomByHostDto'
+      tags:
+      - Fathom
+  /v2/fathom/visitsByDevice:
+    get:
+      operationId: getFathomVisitsByDevice
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomByDeviceDto'
+      tags:
+      - Fathom
+  /v2/fathom/visitsByCountry:
+    get:
+      operationId: getFathomVisitsByCountry
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomByCountryDto'
+      tags:
+      - Fathom
+  /v2/fathom/visitsUTMCampaign:
+    get:
+      operationId: getFathomUTMCampaign
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomUTMsDto'
+      tags:
+      - Fathom
+  /v2/fathom/visitsUTMSource:
+    get:
+      operationId: getFathomUTMSource
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomUTMsDto'
+      tags:
+      - Fathom
+  /v2/fathom/visitsUTMMedium:
+    get:
+      operationId: getFathomUTMMedium
+      parameters:
+      - name: origin
+        required: false
+        in: query
+        schema:
+          $ref: '#/components/schemas/FathomRequestOrigin'
+      - name: dateFrom
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateTo
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: dateGrouping
+        required: false
+        in: query
+        schema:
+          enum:
+          - hour
+          - day
+          - month
+          - year
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FathomUTMsDto'
+      tags:
+      - Fathom
+components:
+  schemas:
+    FathomTotalVisitBQDto:
+      type: object
+      properties:
+        name:
+          type: string
+        visits:
+          type: number
+        uniques:
+          type: number
+        pageviews:
+          type: number
+        bounce_rate:
+          type: number
+        avg_duration:
+          type: number
+        date:
+          format: date-time
+          type: string
+      required:
+      - name
+      - visits
+      - uniques
+      - pageviews
+      - bounce_rate
+      - avg_duration
+    FathomDeviceDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        device:
+          type: string
+      required:
+      - visits
+      - device
+    FathomTotalVisitsDto:
+      type: object
+      properties:
+        visits:
+          type: string
+      required:
+      - visits
+    FathomReferrerHostnameDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        hostname:
+          type: string
+      required:
+      - visits
+      - hostname
+    FathomByDeviceDto:
+      type: object
+      properties:
+        devicesArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomDeviceDto'
+      required:
+      - devicesArray
+    FathomByHostDto:
+      type: object
+      properties:
+        referrerHostnameArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomReferrerHostnameDto'
+      required:
+      - referrerHostnameArray
+    FathomTotalVisitsArrayDto:
+      type: object
+      properties:
+        visitsArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomTotalVisitBQDto'
+      required:
+      - visitsArray
+    FathomByCountryDto:
+      type: object
+      properties:
+        countryArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomCountyDto'
+      required:
+      - countryArray
+    FathomUTMDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        name:
+          type: string
+      required:
+      - visits
+      - name
+    FathomCountyDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        countryCode:
+          type: string
+      required:
+      - visits
+      - countryCode
+    FathomUTMsDto:
+      type: object
+      properties:
+        UTMArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomUTMDto'
+      required:
+      - UTMArray
+    FathomRequestOrigin:
+      type: string
+      enum:
+      - RENTAL_PLACE
+      - LOKKI
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

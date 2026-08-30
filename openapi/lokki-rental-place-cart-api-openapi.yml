@@ -1,0 +1,2422 @@
+openapi: 3.2.0
+info:
+  title: Lokki Rental Place Cart API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Rental Place Cart
+paths:
+  /v2/rental-place-cart:
+    get:
+      operationId: getGlobalCart
+      summary: Get Global Cart
+      description: Retrieves the global cart for the current user/session
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      responses:
+        '200':
+          description: Global cart retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalCartDto'
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+    post:
+      operationId: createRentalPlaceGlobalCart
+      summary: Create Global Cart
+      description: Creates a new global cart if none exists
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGlobalCartDto'
+      responses:
+        '201':
+          description: Global cart created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalCartDto'
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+    patch:
+      operationId: updateRentalPlaceGlobalCart
+      summary: Update Global Cart
+      description: Updates the global cart with new information
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGlobalCartDto'
+      responses:
+        '200':
+          description: Global cart updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlobalCartDto'
+        '404':
+          description: Global cart not found
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+    delete:
+      operationId: deleteRentalPlaceGlobalCart
+      summary: Delete Global Cart
+      description: Deletes the entire global cart
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Global cart deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponseDto'
+        '404':
+          description: Global cart not found
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+  /v2/rental-place-cart/assign:
+    post:
+      operationId: assignRentalPlaceGlobalCartToUser
+      summary: Assign Global Cart to User
+      description: Assigns the global cart to the user
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      responses:
+        '200':
+          description: Global cart assigned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponseDto'
+        '201':
+          description: ''
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+  /v2/rental-place-cart/cart/{id}:
+    get:
+      operationId: getRentalPlaceCart
+      summary: Get Cart by ID
+      description: Retrieves a specific cart by its ID
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: id
+        required: true
+        in: path
+        description: Cart ID
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      responses:
+        '200':
+          description: Cart retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '404':
+          description: Cart not found
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+    patch:
+      operationId: updateRentalPlaceCart
+      summary: Update Cart
+      description: Updates a specific cart with new information
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: id
+        required: true
+        in: path
+        description: Cart ID
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCartDto'
+      responses:
+        '200':
+          description: Cart updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '404':
+          description: Cart or global cart not found
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+    delete:
+      operationId: deleteRentalPlaceCart
+      summary: Delete Cart
+      description: Deletes a specific cart from the global cart
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: id
+        required: true
+        in: path
+        description: Cart ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Cart deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponseDto'
+        '404':
+          description: Cart or global cart not found
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+  /v2/rental-place-cart/cart:
+    post:
+      operationId: createRentalPlaceCart
+      summary: Create or Update Cart
+      description: Creates a new cart or updates existing one with the given ID
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCartDto'
+      responses:
+        '201':
+          description: Cart created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+  /v2/rental-place-cart/cart/{id}/validate:
+    post:
+      operationId: validateRentalPlaceCart
+      summary: Cart validation
+      description: Check if all the cart information are correct
+      parameters:
+      - name: x-session-id
+        in: header
+        description: Session ID for guest users
+        required: false
+        schema:
+          type: string
+      - name: id
+        required: true
+        in: path
+        description: Cart ID
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        description: Context of the store
+        schema:
+          default: RENTAL_PLACE
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: platform
+        required: false
+        in: query
+        description: Client platform (device / app) captured for order attribution
+        schema:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateCartResponseDto'
+      security:
+      - bearer: []
+      tags:
+      - Rental Place Cart
+components:
+  schemas:
+    ItemInfos:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the item
+          example: Mountain Bike X2000
+        localizedName:
+          description: Item name resolved per supported locale
+          allOf:
+          - $ref: '#/components/schemas/LocalizedContent'
+        description:
+          type: string
+          description: Detailed localized description of the item
+          example: A high-performance mountain bike suitable for all terrains.
+      required:
+      - name
+      - description
+    ItemPricingTableEntryDurationSpecific:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - specific
+        minutes:
+          type: number
+          description: Duration in minutes
+          example: 1440
+      required:
+      - type
+      - minutes
+    StoreDeliveryFreeSettings:
+      type: object
+      properties:
+        activated:
+          type: boolean
+          description: Indicates if free delivery is activated
+          example: true
+        type:
+          enum:
+          - MINUTES
+          - SUBTOTAL
+          type: string
+          description: Type of condition for free delivery (either minimum minutes or subtotal amount)
+          example: MINUTES
+        value:
+          type: number
+          description: Value corresponding to the type (minutes or subtotal amount)
+          example: 60
+      required:
+      - activated
+      - type
+      - value
+    ItemPriceRule:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        title:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceRule'
+      required:
+      - id
+      - companyId
+      - title
+      - rules
+    CartCustomerField:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+      required:
+      - id
+      - label
+      - value
+    StoreInsuranceTulipDetails:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+          - TULIP
+        status:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+          description: Tulip insurance status for the store
+          example: on_inclusion
+      required:
+      - provider
+      - status
+    ItemStock:
+      type: object
+      properties:
+        availableQuantity:
+          type: number
+          description: Available quantity of the item
+          example: 10
+        totalQuantity:
+          type: number
+          description: Total quantity of the item
+          example: 10
+        isAvailable:
+          type: boolean
+          description: 'Whether the item can be booked for the requested range. Quantities overload 0 as both ''none'' and ''unlimited'' (services, service-backed pack lines), so this is the only unambiguous availability signal. Products: at least one sub-product available. Services: always true. Packs: every line has at least one available option.'
+          example: true
+      required:
+      - availableQuantity
+      - totalQuantity
+      - isAvailable
+    ItemMediaDocuments:
+      type: object
+      properties:
+        url:
+          type: string
+          description: document URLs associated with the item
+          example:
+          - https://example.com/documents/item1.pdf
+          - https://example.com/documents/item2.pdf
+        name:
+          type: string
+          description: Name of the document
+          example: Item Manual
+      required:
+      - url
+      - name
+    CartPriceDetails:
+      type: object
+      properties:
+        total:
+          type: number
+        baseTotal:
+          type: number
+        totalBeforePromoCode:
+          type: number
+        totalBeforeCheckout:
+          type: number
+        baseTotalBeforeCheckout:
+          type: number
+    CartCompanyReviews:
+      type: object
+      properties:
+        google:
+          $ref: '#/components/schemas/CartCompanyGoogleReviews'
+      required:
+      - google
+    ItemPricingDiscount:
+      type: object
+      properties:
+        appliedDiscounts:
+          type: array
+          description: List of discounts applied to the item
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ItemDiscountPeriodic'
+            - $ref: '#/components/schemas/ItemDiscountWeekly'
+        availableDiscounts:
+          type: array
+          description: List of available discounts for the item
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ItemDiscountQuantity'
+      required:
+      - appliedDiscounts
+      - availableDiscounts
+    ItemVerticale:
+      type: object
+      properties:
+        id:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+          description: Identifier of the verticale
+          example: BIKE
+        name:
+          type: string
+          description: Localized name of the verticale
+          example: Bike
+      required:
+      - id
+      - name
+    ItemMediaVideos:
+      type: object
+      properties:
+        youtubeUrls:
+          description: Array of YouTube video URLs associated with the item
+          example:
+          - https://www.youtube.com/watch?v=dQw4w9WgXcQ
+          - https://www.youtube.com/watch?v=sNPnbI1arSE
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      required:
+      - youtubeUrls
+    CartCompanyLocationPoint:
+      type: object
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+      required:
+      - lat
+      - lng
+    RPCartItemPackCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    ItemInsuranceTulipDetails:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+          - TULIP
+        status:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+          description: Tulip insurance status for the item
+          example: on_inclusion_hidden
+      required:
+      - provider
+      - status
+    CartPayment:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - SUCCEEDED
+          - FAILED
+          - CANCELED
+        provider:
+          type: string
+          enum:
+          - STRIPE
+          - ADYEN
+          - ANCV
+        method:
+          type: string
+          enum:
+          - CARD
+          - SEPA
+        amount:
+          type: number
+        amountCaptured:
+          type: number
+          description: Actual amount captured — may differ from amount for providers like ANCV where the payer's balance determines the contribution
+        date:
+          format: date-time
+          type: string
+        externalReference:
+          type: string
+        metadata:
+          type: object
+      required:
+      - id
+      - status
+      - provider
+      - amount
+    CartCompanyInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        profile:
+          $ref: '#/components/schemas/CartCompanyProfile'
+        branding:
+          $ref: '#/components/schemas/CartCompanyBranding'
+        location:
+          $ref: '#/components/schemas/CartCompanyLocation'
+        reviews:
+          $ref: '#/components/schemas/CartCompanyReviews'
+        temporal:
+          $ref: '#/components/schemas/CartCompanyTemporal'
+        pricing:
+          $ref: '#/components/schemas/CartCompanyPricing'
+        modules:
+          $ref: '#/components/schemas/CartCompanyModules'
+      required:
+      - id
+      - slug
+      - profile
+      - branding
+      - location
+      - reviews
+      - temporal
+      - pricing
+      - modules
+    CreateCartDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        type:
+          enum:
+          - LLD
+          - LCD
+          - EVENT
+          type: string
+        rentalPeriod:
+          $ref: '#/components/schemas/CartRentalPeriod'
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/RPCartItemProductDB'
+            - $ref: '#/components/schemas/RPCartItemServiceDB'
+            - $ref: '#/components/schemas/RPCartItemPackDB'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartPayment'
+        delivery:
+          $ref: '#/components/schemas/CartDelivery'
+        marketing:
+          $ref: '#/components/schemas/CartMarketing'
+        legal:
+          $ref: '#/components/schemas/CartLegal'
+        metadata:
+          $ref: '#/components/schemas/CartMetadata'
+      required:
+      - companyId
+      - type
+      - rentalPeriod
+    CartDelivery:
+      type: object
+      properties:
+        departureTrip:
+          $ref: '#/components/schemas/CartDeliveryTrip'
+        returnTrip:
+          $ref: '#/components/schemas/CartDeliveryTrip'
+    CartAttribution:
+      type: object
+      properties:
+        isFromQuickCart:
+          type: boolean
+          description: True when the cart originates from the Quick Cart (panier magique) flow
+        quickCartQuoteRequestId:
+          type: string
+          description: Id of the agency QuoteRequest created alongside this Quick Cart. Carried so the quote can be cancelled when the user converts on their own (self-checkout). Distinct from the order's top-level quoteRequestId, which marks an agency-driven conversion.
+    ItemSettings:
+      type: object
+      properties:
+        visibility:
+          enum:
+          - PUBLIC
+          - RESTRICTED
+          type: string
+          description: Visibility status of the item
+          example: PUBLIC
+      required:
+      - visibility
+    StoreMultipleLocations:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if multiple locations are enabled for this store
+          example: true
+        dropoffRule:
+          enum:
+          - SAME
+          - DIFFERENT
+          type: string
+          description: Controls whether the user can drop-off the products in a different rental point
+          example: DIFFERENT
+      required:
+      - enabled
+      - dropoffRule
+    CartDB:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        context:
+          type: string
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          description: 'Storefront the cart belongs to. A cart is scoped to a (companyId, context) pair: the same loueur has an independent cart on the open marketplace (RENTAL_PLACE) and on its white-label BEL 2.0 store (ONLINE_STORE). Absent on legacy carts — readers treat that as RENTAL_PLACE.'
+        rentalPeriod:
+          $ref: '#/components/schemas/CartRentalPeriod'
+        type:
+          type: string
+          enum:
+          - LLD
+          - LCD
+          - EVENT
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartPayment'
+        delivery:
+          $ref: '#/components/schemas/CartDelivery'
+        marketing:
+          $ref: '#/components/schemas/CartMarketing'
+        legal:
+          $ref: '#/components/schemas/CartLegal'
+        metadata:
+          $ref: '#/components/schemas/CartMetadata'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/RPCartItemProductDB'
+            - $ref: '#/components/schemas/RPCartItemServiceDB'
+            - $ref: '#/components/schemas/RPCartItemPackDB'
+        checkout:
+          $ref: '#/components/schemas/CartCheckout'
+      required:
+      - id
+      - companyId
+      - rentalPeriod
+      - type
+      - createdAt
+      - updatedAt
+      - items
+    StoreCurrency:
+      type: object
+      properties:
+        isoCode:
+          type: string
+          description: Currency code in ISO 4217 format
+          example: EUR
+        symbol:
+          type: string
+          description: Currency symbol
+          example: €
+      required:
+      - isoCode
+      - symbol
+    CartItemInsurancePricing:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Insurance price for the rental period (base price + margin * days)
+        deposit:
+          type: number
+          description: Deposit amount when insurance is active
+        basePerDay:
+          type: number
+          description: Base price per day from insurance (excluding margin)
+        marginPerDay:
+          type: number
+          description: Margin per day charged by the store
+      required:
+      - amount
+      - deposit
+      - basePerDay
+      - marginPerDay
+    RPCartItemPackDB:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: number
+        type:
+          type: string
+          enum:
+          - PACK
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/RPCartItemPackOption'
+        packType:
+          type: string
+          enum:
+          - PRODUCT
+          - CATEGORY
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/RPCartItemPackCategory'
+      required:
+      - id
+      - quantity
+      - type
+      - options
+      - packType
+      - categories
+    CartCompanyBranding:
+      type: object
+      properties:
+        logoUrl:
+          type: string
+    CartCompanyPricing:
+      type: object
+      properties:
+        currency:
+          $ref: '#/components/schemas/StoreCurrency'
+        tax:
+          $ref: '#/components/schemas/StoreTax'
+      required:
+      - currency
+      - tax
+    CartContextInfo:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - ONLINE_STORE
+          - RENTAL_PLACE_B2B
+          - RENTAL_PLACE_LOKKI
+          - BORNE
+        browserTimezone:
+          type: string
+        language:
+          type: string
+        tracking:
+          $ref: '#/components/schemas/CartTracking'
+        platform:
+          type: string
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+      required:
+      - type
+      - browserTimezone
+      - language
+    RPCartItemPackCategoryWithStock:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        stock:
+          $ref: '#/components/schemas/ItemStock'
+      required:
+      - id
+      - value
+    CartCompanyModules:
+      type: object
+      properties:
+        delivery:
+          description: Delivery module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreDelivery'
+        multipleLocations:
+          description: Multiple locations module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreMultipleLocations'
+        rentalPlaceNetwork:
+          description: Lokki.Rent network participation settings
+          allOf:
+          - $ref: '#/components/schemas/CartCompanyRentalPlaceNetwork'
+        stockVisibility:
+          description: Stock visibility module settings
+          allOf:
+          - $ref: '#/components/schemas/CartCompanyStockVisibility'
+        insurance:
+          description: Insurance module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreInsurance'
+      required:
+      - delivery
+      - multipleLocations
+      - rentalPlaceNetwork
+      - stockVisibility
+      - insurance
+    CartContract:
+      type: object
+      properties:
+        isAccepted:
+          type: boolean
+        acceptedAt:
+          format: date-time
+          type: string
+      required:
+      - isAccepted
+    ItemPricingTableEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the price model row
+          example: 61e7b8f9e4b0c8a1d4f3c2b1
+        label:
+          type: string
+          description: Localized duration label (e.g. '1 jour', '1 semaine')
+          example: 1 jour
+        price:
+          type: number
+          description: Price for this duration
+          example: 50
+        duration:
+          description: Raw duration data for client-side formatting
+          oneOf:
+          - $ref: '#/components/schemas/ItemPricingTableEntryDurationRange'
+          - $ref: '#/components/schemas/ItemPricingTableEntryDurationSpecific'
+          - $ref: '#/components/schemas/ItemPricingTableEntryDurationLld'
+          discriminator:
+            propertyName: type
+            mapping:
+              range: '#/components/schemas/ItemPricingTableEntryDurationRange'
+              specific: '#/components/schemas/ItemPricingTableEntryDurationSpecific'
+              LLD: '#/components/schemas/ItemPricingTableEntryDurationLld'
+      required:
+      - id
+      - label
+      - price
+      - duration
+    ItemPricingTable:
+      type: object
+      properties:
+        highSeason:
+          description: High-season pricing rows, ordered by duration
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemPricingTableEntry'
+        lowSeason:
+          description: Low-season pricing rows, ordered by duration. Null when the store has no low-season pricing configured.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ItemPricingTableEntry'
+      required:
+      - highSeason
+      - lowSeason
+    UpdateCartDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        type:
+          enum:
+          - LLD
+          - LCD
+          - EVENT
+          type: string
+        rentalPeriod:
+          $ref: '#/components/schemas/CartRentalPeriod'
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/RPCartItemProductDB'
+            - $ref: '#/components/schemas/RPCartItemServiceDB'
+            - $ref: '#/components/schemas/RPCartItemPackDB'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartPayment'
+        delivery:
+          $ref: '#/components/schemas/CartDelivery'
+        marketing:
+          $ref: '#/components/schemas/CartMarketing'
+        legal:
+          $ref: '#/components/schemas/CartLegal'
+        metadata:
+          $ref: '#/components/schemas/CartMetadata'
+    DeleteResponseDto:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+      - success
+      - message
+    CartAcquisition:
+      type: object
+      properties:
+        campaignid:
+          type: string
+        adgroupid:
+          type: string
+        keyword:
+          type: string
+        device:
+          type: string
+        gclid:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_term:
+          type: string
+        utm_content:
+          type: string
+        utm_campaign:
+          type: string
+        referrer:
+          type: string
+        ae:
+          type: string
+        aesubid0:
+          type: string
+        aesubid1:
+          type: string
+        visitor_id:
+          type: string
+        session_id:
+          type: string
+        fbclid:
+          type: string
+        msclkid:
+          type: string
+    CartCompanyGoogleReviews:
+      type: object
+      properties:
+        rating:
+          type: number
+        reviewCount:
+          type: number
+      required:
+      - rating
+      - reviewCount
+    CartCompanyLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        address:
+          type: string
+        components:
+          $ref: '#/components/schemas/CartCompanyAddressComponents'
+        point:
+          $ref: '#/components/schemas/CartCompanyLocationPoint'
+      required:
+      - id
+      - address
+      - components
+    ItemDiscountQuantity:
+      type: object
+      properties:
+        type:
+          type: string
+          default: QUANTITY
+          enum:
+          - QUANTITY
+        rules:
+          description: Rules for quantity-based discounts
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - type
+      - rules
+    StoreDeliveryRangeSpecificPriceCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+          description: Name of the city
+          example: Paris
+        sublocalityName:
+          type: string
+          description: Name of the sublocality (e.g., neighborhood or district)
+          example: Batignolles
+        zipCode:
+          type: string
+          description: Postal code
+          example: '75017'
+        placeId:
+          type: string
+          description: Google Place ID for the city
+          example: ChIJD7fiBh9u5kcRYJSMaMOCCwQ
+        hasMultiplePostcodeLocalities:
+          type: boolean
+          description: Indicates if the city has multiple postal code localities
+          example: false
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
+    StoreDeliveryRange:
+      type: object
+      properties:
+        min:
+          type: number
+          description: Minimum distance for this delivery range, in kilometers
+          example: 0
+        max:
+          type: number
+          description: Maximum distance for this delivery range, in kilometers
+          example: 5
+        price:
+          type: number
+          description: Base price for deliveries within this range
+          example: 10
+        specificPrices:
+          description: List of specific prices for certain cities within this range
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDeliveryRangeSpecificPrice'
+      required:
+      - min
+      - max
+      - price
+      - specificPrices
+    RPCartItemProductDB:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: number
+        type:
+          type: string
+          enum:
+          - PRODUCT
+        insurance:
+          $ref: '#/components/schemas/CartItemProductInsurance'
+      required:
+      - id
+      - quantity
+      - type
+    CartPrice:
+      type: object
+      properties:
+        includingTaxes:
+          $ref: '#/components/schemas/CartPriceDetails'
+        excludingTaxes:
+          $ref: '#/components/schemas/CartPriceDetails'
+        deposit:
+          type: number
+        insurance:
+          type: number
+          description: Total insurance amount for all items
+        delivery:
+          type: number
+          description: Total delivery amount
+      required:
+      - includingTaxes
+      - excludingTaxes
+      - deposit
+    RPCartItemServiceDB:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: number
+        type:
+          type: string
+          enum:
+          - SERVICE
+      required:
+      - id
+      - quantity
+      - type
+    ItemDeposit:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Deposit amount for the item
+          example: 100
+      required:
+      - amount
+    CartItemProductInsurance:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        provider:
+          type: string
+          enum:
+          - TULIP
+        details:
+          allOf:
+          - $ref: '#/components/schemas/ItemInsuranceTulipDetails'
+        pricing:
+          $ref: '#/components/schemas/CartItemInsurancePricing'
+      required:
+      - enabled
+      - provider
+    CartDeliveryPrice:
+      type: object
+      properties:
+        price:
+          type: number
+        referencePrice:
+          type: number
+      required:
+      - price
+      - referencePrice
+    RPCartItemPackOption:
+      type: object
+      properties:
+        itemId:
+          type: string
+        name:
+          type: string
+        insurance:
+          $ref: '#/components/schemas/CartItemProductInsurance'
+      required:
+      - itemId
+    ItemDiscountPeriodic:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Discount amount applied to the item
+          example: 5
+        amountType:
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+          type: string
+          description: Discount type (amount or percentage)
+          example: PERCENTAGE
+        type:
+          type: string
+          default: PERIODIC
+          enum:
+          - PERIODIC
+        from:
+          format: date-time
+          type:
+          - string
+          - 'null'
+          description: Start date of the discount period (nullable if always applicable)
+          example: '2025-09-01T00:00:00.000Z'
+        to:
+          format: date-time
+          type:
+          - string
+          - 'null'
+          description: End date of the discount period (nullable if always applicable)
+          example: '2025-09-30T23:59:59.000Z'
+        applicableDate:
+          enum:
+          - CREATED_DATE
+          - START_DATE
+          type: string
+          description: Applicable date context for the discount (Creation date or Booking start date)
+          example: CREATED_DATE
+      required:
+      - amount
+      - amountType
+      - type
+      - from
+      - to
+      - applicableDate
+    RPCartItemService:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: number
+        stock:
+          $ref: '#/components/schemas/ItemStock'
+        infos:
+          $ref: '#/components/schemas/ItemInfos'
+        media:
+          $ref: '#/components/schemas/ItemMedia'
+        pricing:
+          $ref: '#/components/schemas/ItemPricing'
+        category:
+          $ref: '#/components/schemas/ItemCategory'
+        settings:
+          description: Settings and configuration for the item
+          allOf:
+          - $ref: '#/components/schemas/ItemSettings'
+        type:
+          type: string
+          enum:
+          - SERVICE
+      required:
+      - id
+      - quantity
+      - stock
+      - infos
+      - media
+      - pricing
+      - category
+      - settings
+      - type
+    CartPromoCode:
+      type: object
+      properties:
+        code:
+          type: string
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        amount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+      required:
+      - code
+      - source
+      - amount
+      - discountType
+    CartDeliveryDestinationRentalPoint:
+      type: object
+      properties:
+        address:
+          type: string
+        components:
+          $ref: '#/components/schemas/CartDeliveryAddressComponents'
+        coordinates:
+          minItems: 2
+          maxItems: 2
+          type: array
+          items:
+            type: number
+        type:
+          type: string
+          enum:
+          - RENTAL_POINT
+        rentalPointId:
+          type: string
+        rentalPointName:
+          type: string
+      required:
+      - address
+      - components
+      - coordinates
+      - type
+      - rentalPointId
+      - rentalPointName
+    CartIdentity:
+      type: object
+      properties:
+        userId:
+          type: string
+        sessionId:
+          type: object
+        details:
+          $ref: '#/components/schemas/CartCustomer'
+    ItemMedia:
+      type: object
+      properties:
+        images:
+          description: Images associated with the item
+          allOf:
+          - $ref: '#/components/schemas/ItemMediaImages'
+        videos:
+          description: Videos associated with the item
+          allOf:
+          - $ref: '#/components/schemas/ItemMediaVideos'
+        documents:
+          description: Documents associated with the item
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemMediaDocuments'
+      required:
+      - images
+      - videos
+      - documents
+    UpdateCartContextInfo:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - ONLINE_STORE
+          - RENTAL_PLACE_B2B
+          - RENTAL_PLACE_LOKKI
+          - BORNE
+        browserTimezone:
+          type: string
+        language:
+          type: string
+        tracking:
+          $ref: '#/components/schemas/CartTracking'
+        platform:
+          type: string
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+    CartDeliveryTrip:
+      type: object
+      properties:
+        price:
+          $ref: '#/components/schemas/CartDeliveryPrice'
+        destination:
+          oneOf:
+          - $ref: '#/components/schemas/CartDeliveryDestinationAddress'
+          - $ref: '#/components/schemas/CartDeliveryDestinationRentalPoint'
+      required:
+      - price
+      - destination
+    ItemDiscountWeekly:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Discount amount applied to the item
+          example: 5
+        amountType:
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+          type: string
+          description: Discount type (amount or percentage)
+          example: PERCENTAGE
+        type:
+          type: string
+          default: WEEKLY
+          enum:
+          - WEEKLY
+        baseAmount:
+          type: number
+          description: Base amount of the discount before applying overlap percentage
+          example: 100
+        overlapPercentage:
+          type: number
+          description: Percentage of overlap between the booking and the price rule period
+          example: 75
+        rule:
+          description: Price rule associated with the weekly discount
+          allOf:
+          - $ref: '#/components/schemas/PriceRule'
+      required:
+      - amount
+      - amountType
+      - type
+      - baseAmount
+      - overlapPercentage
+      - rule
+    StoreTax:
+      type: object
+      properties:
+        type:
+          enum:
+          - INCLUSIVE
+          - EXCLUSIVE
+          type: string
+          description: Type of tax applied to prices (inclusive or exclusive of tax)
+          example: INCLUSIVE
+        value:
+          type: number
+          description: Tax percentage applied to prices
+          example: 20
+        name:
+          type: string
+          description: Name of the tax (e.g., VAT)
+          example: TVA
+      required:
+      - type
+      - value
+      - name
+    ValidateCartResponseDto:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        message:
+          enum:
+          - ITEM_NOT_AVAILABLE
+          - START_DATE_PASSED
+          - LAST_MINUTE
+          - STORE_CLOSED
+          - STORE_NOT_FOUND
+          type:
+          - string
+          - 'null'
+      required:
+      - valid
+      - message
+    RPCartItemProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: number
+        stock:
+          $ref: '#/components/schemas/ItemStock'
+        infos:
+          $ref: '#/components/schemas/ItemInfos'
+        media:
+          $ref: '#/components/schemas/ItemMedia'
+        pricing:
+          $ref: '#/components/schemas/ItemPricing'
+        category:
+          $ref: '#/components/schemas/ItemCategory'
+        settings:
+          description: Settings and configuration for the item
+          allOf:
+          - $ref: '#/components/schemas/ItemSettings'
+        type:
+          type: string
+          enum:
+          - PRODUCT
+        insurance:
+          $ref: '#/components/schemas/CartItemProductInsurance'
+      required:
+      - id
+      - quantity
+      - stock
+      - infos
+      - media
+      - pricing
+      - category
+      - settings
+      - type
+    StoreInsurance:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if insurance is enabled for this store
+          example: true
+        provider:
+          type: string
+          enum:
+          - TULIP
+          description: Insurance provider for this store
+          example: TULIP
+        details:
+          description: Detailed settings for the insurance provider
+          allOf:
+          - $ref: '#/components/schemas/StoreInsuranceTulipDetails'
+      required:
+      - enabled
+      - provider
+      - details
+    CartCompanyStockVisibility:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the store chooses to display available stock quantity on product cards.
+      required:
+      - enabled
+    CartCustomer:
+      type: object
+      properties:
+        companyName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartCustomerField'
+        isNewsletterSubscribe:
+          type: boolean
+        isLokkiNewsletterSubscribe:
+          type: boolean
+        customerRpId:
+          type: string
+        customerRpNewUser:
+          type: boolean
+      required:
+      - companyName
+      - firstName
+      - lastName
+      - email
+      - phone
+      - fields
+      - isNewsletterSubscribe
+      - isLokkiNewsletterSubscribe
+    GlobalCartDto:
+      type: object
+      properties:
+        id:
+          type: string
+        identity:
+          $ref: '#/components/schemas/CartIdentity'
+        context:
+          $ref: '#/components/schemas/CartContextInfo'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        version:
+          type: number
+        carts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cart'
+      required:
+      - id
+      - context
+      - createdAt
+      - updatedAt
+      - version
+      - carts
+    CartRentalPeriod:
+      type: object
+      properties:
+        start:
+          type: string
+          format: date-time
+          example: '2023-12-31T23:59:59.000Z'
+          description: Start date in ISO 8601 format
+        end:
+          type: string
+          format: date-time
+          example: '2023-12-31T23:59:59.000Z'
+          description: End date in ISO 8601 format
+      required:
+      - start
+      - end
+    ItemMediaImages:
+      type: object
+      properties:
+        urls:
+          description: Array of image URLs associated with the item
+          example:
+          - https://example.com/images/item1.jpg
+          - https://example.com/images/item2.jpg
+          type: array
+          items:
+            type: string
+      required:
+      - urls
+    StoreDeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+          description: Price for delivery to the specified cities
+          example: 5
+        cities:
+          description: List of cities with specific delivery prices
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDeliveryRangeSpecificPriceCity'
+      required:
+      - price
+      - cities
+    CreateGlobalCartDto:
+      type: object
+      properties:
+        context:
+          $ref: '#/components/schemas/CartContextInfo'
+        identity:
+          $ref: '#/components/schemas/CartIdentity'
+        carts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDB'
+      required:
+      - context
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CartLegal:
+      type: object
+      properties:
+        contract:
+          $ref: '#/components/schemas/CartContract'
+        insurance:
+          $ref: '#/components/schemas/CartInsurance'
+    CompanyCategoryDiscountRange:
+      type: object
+      properties:
+        discount:
+          type: number
+          description: Discount value for the range
+        discountType:
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          type: string
+          description: Type of discount applied (amount or percentage)
+        rangeFrom:
+          type:
+          - number
+          - 'null'
+          description: Minimum value of the range (Quantity of items)
+        rangeTo:
+          type:
+          - number
+          - 'null'
+          description: Maximum value of the range (Quantity of items)
+        infiniteTo:
+          type: boolean
+          description: Indicates if the range has no upper limit
+      required:
+      - discount
+      - discountType
+      - rangeFrom
+      - rangeTo
+      - infiniteTo
+    CartCompanyRentalPlaceNetwork:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if this company participates in the Lokki.Rent network newsletter
+      required:
+      - enabled
+    CartCheckout:
+      type: object
+      properties:
+        orderId:
+          type: string
+        orderCreatingAt:
+          format: date-time
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - order_created
+          - completed
+          - failed
+        failureReason:
+          type: string
+          enum:
+          - item_not_available
+          - internal_error
+          - prepaid_card_not_accepted
+        context:
+          type: string
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+    StoreDelivery:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if delivery is enabled for this store
+          example: true
+        deliveryOnly:
+          type: boolean
+          description: Indicates if only delivery is allowed for this store
+          example: false
+        ranges:
+          description: List of delivery ranges for this store
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDeliveryRange'
+        excludedCities:
+          description: List of cities excluded from delivery
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDeliveryRangeSpecificPriceCity'
+        freeDelivery:
+          description: Free delivery settings for this store
+          allOf:
+          - $ref: '#/components/schemas/StoreDeliveryFreeSettings'
+        returnDelivery:
+          type: boolean
+          description: Indicates if return delivery is enabled for this store
+          example: false
+      required:
+      - enabled
+      - deliveryOnly
+      - ranges
+      - excludedCities
+      - freeDelivery
+      - returnDelivery
+    UpdateGlobalCartDto:
+      type: object
+      properties:
+        context:
+          $ref: '#/components/schemas/UpdateCartContextInfo'
+        identity:
+          $ref: '#/components/schemas/CartIdentity'
+        carts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartDB'
+    ItemPricingTableEntryDurationRange:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - range
+        minMinutes:
+          type: number
+          description: Minimum duration in minutes
+          example: 0
+        maxMinutes:
+          type: number
+          description: Maximum duration in minutes
+          example: 1440
+      required:
+      - type
+      - minMinutes
+      - maxMinutes
+    CartInsurance:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+      required:
+      - enabled
+    CartDeliveryDestinationAddress:
+      type: object
+      properties:
+        address:
+          type: string
+        components:
+          $ref: '#/components/schemas/CartDeliveryAddressComponents'
+        coordinates:
+          minItems: 2
+          maxItems: 2
+          type: array
+          items:
+            type: number
+        type:
+          type: string
+          enum:
+          - DELIVERY
+      required:
+      - address
+      - components
+      - coordinates
+      - type
+    CartMarketing:
+      type: object
+      properties:
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/CartPromoCode'
+      required:
+      - promoCode
+    ItemCategoryLevel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the category
+          example: 61e7b8f9e4b0c8a1d4f3c2b1
+        name:
+          type: string
+          description: Localized name of the category
+          example: Mountain Bike
+        type:
+          enum:
+          - STANDARD
+          - ACCESSORY
+          type: string
+          description: Type of the category
+          example: STANDARD
+      required:
+      - id
+      - name
+      - type
+    CartCompanyProfile:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+    CartDeliveryAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        additional:
+          type: string
+        locationId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - additional
+      - locationId
+    ItemVat:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: VAT percentage (e.g., 20 for 20%)
+          example: 20
+      required:
+      - amount
+    CartTracking:
+      type: object
+      properties:
+        referrals:
+          type: string
+          enum:
+          - HEXPLO
+          - MOLLOW
+          - HOURRAIL
+          - YOUBOOK
+          - OISE_FUN
+          - OUTDOOR_ACTIVE
+          - GENERATION_VOYAGE
+          - DECATHLON_OUTDOOR
+        acquisition:
+          $ref: '#/components/schemas/CartAcquisition'
+        sessionProperties:
+          type: object
+    ItemCategory:
+      type: object
+      properties:
+        storeItemCategory:
+          description: The store-specific category of the item
+          allOf:
+          - $ref: '#/components/schemas/ItemCategoryLevel'
+        verticale:
+          description: The large category of the item (e.g., BIKE, CAR, BOAT, etc.)
+          allOf:
+          - $ref: '#/components/schemas/ItemVerticale'
+        categoryLevel1:
+          description: The precise category of the item (e.g., Mountain Bike, Road Bike, etc.)
+          allOf:
+          - $ref: '#/components/schemas/ItemCategoryLevel'
+      required:
+      - storeItemCategory
+      - verticale
+      - categoryLevel1
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        context:
+          type: string
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          description: 'Storefront the cart belongs to. A cart is scoped to a (companyId, context) pair: the same loueur has an independent cart on the open marketplace (RENTAL_PLACE) and on its white-label BEL 2.0 store (ONLINE_STORE). Absent on legacy carts — readers treat that as RENTAL_PLACE.'
+        rentalPeriod:
+          $ref: '#/components/schemas/CartRentalPeriod'
+        type:
+          type: string
+          enum:
+          - LLD
+          - LCD
+          - EVENT
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartPayment'
+        delivery:
+          $ref: '#/components/schemas/CartDelivery'
+        marketing:
+          $ref: '#/components/schemas/CartMarketing'
+        legal:
+          $ref: '#/components/schemas/CartLegal'
+        metadata:
+          $ref: '#/components/schemas/CartMetadata'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/RPCartItemProduct'
+            - $ref: '#/components/schemas/RPCartItemService'
+            - $ref: '#/components/schemas/RPCartItemPack'
+        companyInfo:
+          $ref: '#/components/schemas/CartCompanyInfo'
+        price:
+          $ref: '#/components/schemas/CartPrice'
+        checkout:
+          $ref: '#/components/schemas/CartCheckout'
+      required:
+      - id
+      - companyId
+      - rentalPeriod
+      - type
+      - createdAt
+      - updatedAt
+      - items
+      - companyInfo
+      - price
+    RPCartItemPack:
+      type: object
+      properties:
+        id:
+          type: string
+        quantity:
+          type: number
+        stock:
+          $ref: '#/components/schemas/ItemStock'
+        infos:
+          $ref: '#/components/schemas/ItemInfos'
+        media:
+          $ref: '#/components/schemas/ItemMedia'
+        pricing:
+          $ref: '#/components/schemas/ItemPricing'
+        category:
+          $ref: '#/components/schemas/ItemCategory'
+        settings:
+          description: Settings and configuration for the item
+          allOf:
+          - $ref: '#/components/schemas/ItemSettings'
+        type:
+          type: string
+          enum:
+          - PACK
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/RPCartItemPackOption'
+        packType:
+          type: string
+          enum:
+          - PRODUCT
+          - CATEGORY
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/RPCartItemPackCategoryWithStock'
+      required:
+      - id
+      - quantity
+      - stock
+      - infos
+      - media
+      - pricing
+      - category
+      - settings
+      - type
+      - options
+      - packType
+      - categories
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
+    ItemPricing:
+      type: object
+      properties:
+        basis:
+          enum:
+          - RANGE_COMPUTED
+          - LOWEST_PRICE
+          type: string
+          description: Basis used for pricing the item
+          example: LOWEST_PRICE
+        price:
+          type:
+          - number
+          - 'null'
+          description: Rental price of the item (null if no price available)
+          example: 29.99
+        basePrice:
+          type:
+          - number
+          - 'null'
+          description: Base rental price of the item (without discounts, null if no price available)
+          example: 29.99
+        discount:
+          description: Discount applied to the item
+          allOf:
+          - $ref: '#/components/schemas/ItemPricingDiscount'
+        deposit:
+          description: Deposit amount for the item
+          allOf:
+          - $ref: '#/components/schemas/ItemDeposit'
+        vat:
+          description: VAT information for the item (null means store default VAT)
+          allOf:
+          - $ref: '#/components/schemas/ItemVat'
+        pricingTable:
+          description: Full pricing table split by season. Null when the store has disabled the pricing table display.
+          allOf:
+          - $ref: '#/components/schemas/ItemPricingTable'
+        priceRule:
+          description: Full price rule associated with this item (id + title + rules). Null when no price rule is configured.
+          allOf:
+          - $ref: '#/components/schemas/ItemPriceRule'
+      required:
+      - basis
+      - price
+      - basePrice
+      - discount
+      - deposit
+      - vat
+      - pricingTable
+      - priceRule
+    CartCompanyTemporal:
+      type: object
+      properties:
+        timezone:
+          type: string
+      required:
+      - timezone
+    ItemPricingTableEntryDurationLld:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - LLD
+        months:
+          type: number
+          description: Duration in calendar months
+          example: 12
+      required:
+      - type
+      - months
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
+    CartMetadata:
+      type: object
+      properties:
+        note:
+          type: string
+        customerFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartCustomerField'
+        attribution:
+          $ref: '#/components/schemas/CartAttribution'
+    CartCompanyAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

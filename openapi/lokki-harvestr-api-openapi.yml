@@ -1,0 +1,169 @@
+openapi: 3.2.0
+info:
+  title: Lokki Harvestr API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Harvestr
+paths:
+  /v2/harvestr/message:
+    post:
+      operationId: createFeedback
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHarvestrMessageDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HarvestrPostMessageResult'
+      tags:
+      - Harvestr
+components:
+  schemas:
+    HarvestrMessageChannel:
+      type: string
+      enum:
+      - CHROME_WIDGET
+      - FORM
+      - FRESHDESK
+      - HUBSPOT
+      - INTERCOM
+      - MAIL
+      - NOTE
+      - SALESFORCE
+      - SHEET
+      - SLACK
+      - ZENDESK
+    CreateHarvestrMessageSubmitter:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        externalUid:
+          type: string
+      required:
+      - name
+    HarvestrRequesterType:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+    CreateHarvestrMessageDto:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/HarvestrMessageChannel'
+        integrationUrl:
+          type: string
+        integrationId:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        requester:
+          $ref: '#/components/schemas/CreateHarvestrMessageRequester'
+        submitter:
+          $ref: '#/components/schemas/CreateHarvestrMessageSubmitter'
+      required:
+      - title
+      - content
+      - requester
+    CreateHarvestrMessageRequester:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/HarvestrRequesterType'
+        name:
+          type: string
+        email:
+          type: string
+        externalUid:
+          type: string
+      required:
+      - type
+      - name
+    HarvestrPostMessageResult:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/HarvestrMessageChannel'
+        id:
+          type: string
+        clientId:
+          type: string
+        receivedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        integrationUrl:
+          type: string
+        integrationId:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        read:
+          type: boolean
+        updated:
+          type: boolean
+        archived:
+          type: boolean
+        bin:
+          type: boolean
+        assigneeId:
+          type: string
+        requesterId:
+          type: string
+        submitterId:
+          type: string
+        labels:
+          type: array
+          items:
+            type: string
+        code:
+          type: number
+        messageStatus:
+          type: string
+      required:
+      - channel
+      - id
+      - clientId
+      - createdAt
+      - updatedAt
+      - title
+      - content
+      - updated
+      - archived
+      - bin
+      - requesterId
+      - submitterId
+      - labels
+      - code
+      - messageStatus
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

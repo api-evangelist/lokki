@@ -1,0 +1,148 @@
+openapi: 3.2.0
+info:
+  title: Lokki Document State API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Document State
+paths:
+  /v2/document-state/get-attachment-files-preview:
+    put:
+      operationId: getDocumentStateAttachmentFilesPreview
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetProductStateAttachmentPreviewDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentStateProductAttachedFilePreview'
+      tags:
+      - Document State
+  /v2/document-state/upload-attachment-files:
+    post:
+      operationId: uploadDocumentStateAttachmentFiles
+      parameters: []
+      requestBody:
+        required: true
+        description: Upload files
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductStateUploadAttachmentDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentStateProductAttachedFile'
+      tags:
+      - Document State
+components:
+  schemas:
+    DocumentStateProductAttachedFilePreview:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+      - url
+    GetProductStateAttachmentPreviewDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
+      required:
+      - files
+    HistoryAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    ProductStateUploadAttachmentDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        orderId:
+          type: string
+        subProductId:
+          type: string
+        scope:
+          type: string
+          enum:
+          - departure
+          - return
+      required:
+      - files
+      - orderId
+      - subProductId
+      - scope
+    DocumentStateProductAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

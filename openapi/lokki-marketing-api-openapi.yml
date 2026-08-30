@@ -1,0 +1,66 @@
+openapi: 3.2.0
+info:
+  title: Lokki Marketing API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Marketing
+paths:
+  /v2/marketing/concurrent:
+    get:
+      operationId: getConcurrent
+      parameters:
+      - name: address
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: verticales
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: radius
+        required: true
+        in: query
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Marketing
+  /v2/marketing/rp-renters-nb:
+    get:
+      operationId: getRentalPlaceRentersCount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Marketing
+  /v2/marketing/visibility-renters-nb:
+    get:
+      operationId: getVisibilityRentersCount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Marketing
+components:
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

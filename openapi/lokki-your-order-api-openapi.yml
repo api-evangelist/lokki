@@ -1,0 +1,807 @@
+openapi: 3.2.0
+info:
+  title: Lokki Your Order API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Your Order
+paths:
+  /v2/your-order/isSignedDocumentGenerating/{orderId}:
+    get:
+      operationId: isSignedDocumentGenerating
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IsDocumentGeneratingDto'
+      tags:
+      - Your Order
+  /v2/your-order/{slug}/{orderId}:
+    get:
+      operationId: getYourOrder
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YourOrderDto'
+      tags:
+      - Your Order
+  /v2/your-order/signDocument:
+    post:
+      operationId: signDocument
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignDocumentDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order
+  /v2/your-order/signDocumentLLD:
+    post:
+      operationId: signDocumentLLD
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignDocumentLldDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order
+  /v2/your-order/signDocumentState:
+    post:
+      operationId: signDocumentState
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignDocumentDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Your Order
+  /v2/your-order/order/cancel-request/{orderId}:
+    post:
+      operationId: orderCancelRequest
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelOrderInfosDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Your Order
+  /v2/your-order/order/auto-cancel/{orderId}:
+    post:
+      operationId: cancelOrderAuto
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelOrderInfosDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Your Order
+  /v2/your-order/{slug}/{orderId}/promo-code:
+    post:
+      operationId: yourOrderApplyPromoCode
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplyYourOrderPromoCodeDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YourOrderDto'
+      tags:
+      - Your Order
+    delete:
+      operationId: yourOrderRemovePromoCode
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YourOrderDto'
+      tags:
+      - Your Order
+  /v2/your-order/getSignedUrl/{orderId}/{documentId}/{scope}:
+    get:
+      operationId: getSignedUrl
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: documentId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: scope
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YourOrderSignUrlDto'
+      tags:
+      - Your Order
+components:
+  schemas:
+    PointSchema:
+      type: object
+      properties:
+        type:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: number
+      required:
+      - type
+      - coordinates
+    Delivery:
+      type: object
+      properties:
+        status:
+          type: boolean
+        departureAddress:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryAddress'
+        departurePrice:
+          type: number
+        departureReferencePrice:
+          type: number
+        departureDeliveredDate:
+          format: date-time
+          type: string
+        arrivalAddress:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryAddress'
+        arrivalPrice:
+          type: number
+        arrivalReferencePrice:
+          type: number
+        arrivalDeliveredDate:
+          format: date-time
+          type: string
+        price:
+          type: number
+      required:
+      - status
+      - departureAddress
+      - departurePrice
+      - departureReferencePrice
+      - departureDeliveredDate
+      - arrivalAddress
+      - arrivalPrice
+      - arrivalReferencePrice
+      - arrivalDeliveredDate
+    SignDocumentLldDto:
+      type: object
+      properties:
+        orderLldId:
+          type: string
+        documentId:
+          type: string
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - orderLldId
+      - documentId
+      - lang
+    YourOrderItem:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - product
+          - service
+          - pack
+          - custom
+        id:
+          type: string
+        name:
+          type: string
+        number:
+          type: number
+        price:
+          type: number
+        itemName:
+          type: string
+        imageUrl:
+          type: array
+          items:
+            type: string
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
+        priceRuleVariation:
+          allOf:
+          - $ref: '#/components/schemas/PriceRuleVariation'
+        warrantyAmount:
+          type:
+          - number
+          - 'null'
+      required:
+      - type
+      - id
+      - name
+      - number
+      - price
+      - priceRuleVariation
+    YourOrderDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
+      required:
+      - id
+      - name
+      - scope
+    YourOrderQuoteRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        customer:
+          allOf:
+          - $ref: '#/components/schemas/QuoteRequestCustomer'
+      required:
+      - id
+      - customer
+    DeliveryAddress:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        streetName:
+          type: string
+        additional:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        location:
+          $ref: '#/components/schemas/PointSchema'
+        fullAddress:
+          type: string
+      required:
+      - streetNumber
+      - streetName
+      - additional
+      - postalCode
+      - city
+      - country
+      - location
+      - fullAddress
+    YourOrderDocumentAction:
+      type: object
+      properties:
+        documentId:
+          type: string
+      required:
+      - documentId
+    YourOrderActionStateProduct:
+      type: object
+      properties:
+        name:
+          type: string
+        serialNumber:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+        stateInspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateInspectionField'
+        departureFiles:
+          type: array
+          items:
+            type: string
+        arrivalFiles:
+          type: array
+          items:
+            type: string
+      required:
+      - name
+      - serialNumber
+      - departureInfo
+      - arrivalInfo
+      - stateInspectionFields
+      - departureFiles
+      - arrivalFiles
+    ProductPriceRule:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceRule'
+      required:
+      - id
+      - title
+      - rules
+    YourOrderDto:
+      type: object
+      properties:
+        order:
+          $ref: '#/components/schemas/YourOrderOrderInfo'
+        action:
+          allOf:
+          - $ref: '#/components/schemas/YourOrderAction'
+      required:
+      - order
+      - action
+    QuoteRequestCustomer:
+      type: object
+      properties:
+        rentalPlaceUserId:
+          type: string
+          description: Rental place user ID if the customer is a registered user (ObjectId)
+          example: 64b7f8f2e4b0c2a1d5e6f785
+        email:
+          type: string
+          description: Customer email
+          example: john@doe.com
+        phoneNumber:
+          type: string
+          description: Customer phone number
+          example: '+33612345678'
+        firstName:
+          type: string
+          description: Customer first name
+          example: John
+        lastName:
+          type: string
+          description: Customer last name
+          example: Doe
+      required:
+      - rentalPlaceUserId
+      - email
+      - phoneNumber
+    PromoCode:
+      type: object
+      properties:
+        code:
+          type: string
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliedDiscountAmount:
+          type: number
+        applyOnDelivery:
+          type: boolean
+        limitToNewCustomers:
+          type: boolean
+        limitToVerticales:
+          type: array
+          items:
+            type: string
+        limitToCompanies:
+          type: array
+          items:
+            type: string
+      required:
+      - code
+      - source
+      - discountAmount
+      - discountType
+      - applyOnDelivery
+    YourOrderOrderInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - ORDER
+          - PRE_BOOKING
+          - PRE_BOOKING_ADMIN
+          - CANCELED
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderItem'
+        totalTTC:
+          type: number
+        delivery:
+          $ref: '#/components/schemas/Delivery'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderDocument'
+        stateDocuments:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderStateDocumentFromOrder'
+        amountPaid:
+          type: number
+        amountBail:
+          type: number
+        transfers:
+          type: number
+        refunded:
+          type: number
+        transfersRefunded:
+          type: number
+        createdFrom:
+          type: string
+          enum:
+          - DASHBOARD
+          - QUICK_ORDER
+          - ONLINE_STORE
+          - RENTAL_PLACE_B2B
+          - RENTAL_PLACE_LOKKI
+          - BORNE
+          - SKISET
+          - SKIMIUM
+          - UNKNOWN
+          - TEST
+          - ADMIN_IMPORT
+        discount:
+          type: number
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/PromoCode'
+        quoteRequest:
+          allOf:
+          - $ref: '#/components/schemas/YourOrderQuoteRequest'
+      required:
+      - id
+      - type
+      - startDate
+      - endDate
+      - items
+      - totalTTC
+      - delivery
+      - documents
+      - stateDocuments
+      - amountPaid
+      - amountBail
+      - transfers
+      - refunded
+      - transfersRefunded
+      - createdFrom
+    IsDocumentGeneratingDto:
+      type: object
+      properties:
+        isDocumentGenerating:
+          type: boolean
+      required:
+      - isDocumentGenerating
+    CancelOrderInfosDto:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+    YourOrderDocumentState:
+      type: object
+      properties:
+        documentId:
+          type: string
+        name:
+          type: string
+        documentStateProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderActionStateProduct'
+      required:
+      - documentId
+      - name
+      - documentStateProducts
+    YourOrderStateDocumentFromOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
+        status:
+          type: string
+          enum:
+          - PENDING
+          - SUCCESS
+      required:
+      - id
+      - name
+      - scope
+    PriceRuleVariation:
+      type: object
+      properties:
+        rule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        deltaAmount:
+          type: number
+        price:
+          type: number
+      required:
+      - rule
+      - deltaAmount
+      - price
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
+    DocumentStateInspectionField:
+      type: object
+      properties:
+        name:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+      required:
+      - name
+      - departureInfo
+      - arrivalInfo
+    ApplyYourOrderPromoCodeDto:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Marketplace (lokki.rent) promo code to apply to the quote.
+      required:
+      - code
+    YourOrderPaymentAndBail:
+      type: object
+      properties:
+        amount:
+          type: number
+        linkId:
+          type: string
+        disabled:
+          type: boolean
+        isError:
+          type: boolean
+      required:
+      - amount
+      - linkId
+    YourOrderAction:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
+        document:
+          $ref: '#/components/schemas/YourOrderDocumentAction'
+        documentState:
+          $ref: '#/components/schemas/YourOrderDocumentState'
+        payment:
+          $ref: '#/components/schemas/YourOrderPaymentAndBail'
+        bail:
+          $ref: '#/components/schemas/YourOrderPaymentAndBail'
+      required:
+      - type
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
+    SignDocumentDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        documentId:
+          type: string
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+      required:
+      - orderId
+      - documentId
+      - lang
+    YourOrderSignUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    ItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        amount:
+          type: number
+      required:
+      - discountType
+      - amount
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,74 @@
+openapi: 3.2.0
+info:
+  title: Lokki Chaos API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Chaos
+paths:
+  /v2/chaos/not-found:
+    get:
+      operationId: getNotfound
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Chaos
+  /v2/chaos/warning-log:
+    get:
+      operationId: getWarning
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Chaos
+  /v2/chaos/error-thrown:
+    get:
+      operationId: getErrorThrown
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Chaos
+  /v2/chaos/error-log:
+    get:
+      operationId: getErrorLog
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Chaos
+  /v2/chaos/timeout/22:
+    get:
+      operationId: trigger20Timeout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Chaos
+  /v2/chaos/timeout/35:
+    get:
+      operationId: trigger35Timeout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Chaos
+components:
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

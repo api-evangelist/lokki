@@ -1,0 +1,479 @@
+openapi: 3.2.0
+info:
+  title: Lokki Company Signatures API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Company Signatures
+paths:
+  /v2/company-signatures:
+    get:
+      operationId: getManyCompanySignatures
+      parameters:
+      - name: skip
+        required: false
+        in: query
+        description: Number of documents to skip
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of documents to return
+        schema:
+          minimum: 1
+          type: number
+      - name: sort
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: 'Sort order for the results. Use ''__asc'' or ''__desc'' suffix to specify ascending or descending order respectively. Example: ''name__asc'''
+      - name: fields
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Fields to include in the response
+      - name: createdAt.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: createdAt.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: createdAt.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific date
+        schema:
+          type: string
+      - name: createdAt.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific date
+        schema:
+          type: string
+      - name: createdAt.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified dates
+      - name: createdAt.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified dates
+      - name: createdAt.gt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than the specified date
+      - name: createdAt.lt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than the specified date
+      - name: createdAt.gte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than or equal to the specified date
+      - name: createdAt.lte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than or equal to the specified date
+      - name: document__id.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: document__id.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: document__id.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: document__id.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: document__id.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: document__id.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: document__id.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: document__id.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      - name: document__collection.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: document__collection.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: document__collection.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: document__collection.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: document__collection.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: document__collection.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: document__type.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: document__type.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: document__type.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: document__type.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: document__type.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: document__type.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: userId.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: userId.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: userId.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: userId.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: userId.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: userId.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: userId.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: userId.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyCompanySignaturesResponseDto'
+      tags:
+      - Company Signatures
+    post:
+      operationId: createOneCompanySignature
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOneCompanySignatureBodyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanySignature'
+      tags:
+      - Company Signatures
+components:
+  schemas:
+    CompanyDocumentBodyDto:
+      type: object
+      properties:
+        id:
+          type: string
+        internalTitle:
+          type: string
+        collection:
+          type: string
+          enum:
+          - termsAndConditions
+        type:
+          type: string
+          enum:
+          - lokkiPayment
+          - lokkiVisibility
+          - lokkiRent
+      required:
+      - id
+      - internalTitle
+      - collection
+      - type
+    CreateOneCompanySignatureBodyDto:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/CompanyDocumentBodyDto'
+        userId:
+          type: string
+        companyId:
+          type: string
+      required:
+      - document
+      - userId
+      - companyId
+    CompanySignature:
+      type: object
+      properties:
+        companyId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        document:
+          $ref: '#/components/schemas/CompanyDocument'
+        userId:
+          type: string
+        id:
+          type: string
+      required:
+      - companyId
+      - createdAt
+      - document
+      - userId
+      - id
+    CompanyDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        collection:
+          type: string
+          enum:
+          - termsAndConditions
+        internalTitle:
+          type: string
+        type:
+          type: string
+          enum:
+          - lokkiPayment
+          - lokkiVisibility
+          - lokkiRent
+      required:
+      - id
+      - collection
+      - internalTitle
+      - type
+    GetManyCompanySignaturesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanySignature'
+      required:
+      - total
+      - docs
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

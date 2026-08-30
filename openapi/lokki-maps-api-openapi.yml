@@ -1,0 +1,172 @@
+openapi: 3.2.0
+info:
+  title: Lokki Maps API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Maps
+paths:
+  /v2/maps/autosuggestions:
+    get:
+      operationId: getAutosuggestions
+      parameters:
+      - name: searchQuery
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: rankingMode
+        required: true
+        in: query
+        schema:
+          enum:
+          - localities
+          - places
+          type: string
+      - name: locale
+        required: false
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      - name: companyId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: posthogDistinctId
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HereAddressAutosuggestResultDto'
+      tags:
+      - Maps
+  /v2/maps/addresses/{locationId}:
+    get:
+      operationId: getAddressByLocationId
+      parameters:
+      - name: locationId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HereAddressByLocationIdResultDto'
+      tags:
+      - Maps
+components:
+  schemas:
+    HereAddressDto:
+      type: object
+      properties:
+        locationId:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/GeoPoint'
+        addressType:
+          enum:
+          - LOCALITY
+          - AIRPORT
+          - TRAIN_STATION
+          - TRANSIT_STATION
+          - SUBWAY_STATION
+          - HOME_ADDRESS
+          - PLACE
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/HereAddressComponentsDto'
+        distance:
+          type: number
+      required:
+      - coordinates
+      - addressType
+      - address
+    HereAddressAutosuggestResultDto:
+      type: object
+      properties:
+        addressSuggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/HereAddressDto'
+      required:
+      - addressSuggestions
+    HereAddressByLocationIdResultDto:
+      type: object
+      properties:
+        address:
+          description: Address details for the location
+          allOf:
+          - $ref: '#/components/schemas/HereAddressDto'
+      required:
+      - address
+    HereAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - countryCode
+    GeoPoint:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+      - latitude
+      - longitude
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

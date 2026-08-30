@@ -1,0 +1,193 @@
+openapi: 3.2.0
+info:
+  title: Lokki Order Waiting List API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Order Waiting List
+paths:
+  /v2/order-waiting-list/waiting-list-csv:
+    get:
+      operationId: getWaitingListCsv
+      parameters:
+      - name: rentalType
+        required: true
+        in: query
+        schema:
+          enum:
+          - LCD
+          - LLD
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaitingListCsvDto'
+      tags:
+      - Order Waiting List
+  /v2/order-waiting-list/create-order-waiting-list:
+    post:
+      operationId: createOrderWaitingList
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateOrderWaitingListDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderWaitingList'
+      tags:
+      - Order Waiting List
+components:
+  schemas:
+    OrderWaitingListItem:
+      type: object
+      properties:
+        itemType:
+          type: string
+          enum:
+          - PRODUCT
+          - PACK
+          - SERVICE
+        itemId:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - itemType
+      - itemId
+      - name
+      - onlineStoreName
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    OrderWaitingList:
+      type: object
+      properties:
+        id:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        companyId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderWaitingListItem'
+        customer:
+          $ref: '#/components/schemas/OrderWaitingListCustomer'
+        startDate:
+          format: date-time
+          type: string
+        durationInMonths:
+          type: number
+        rank:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - rentalType
+      - companyId
+      - items
+      - customer
+      - startDate
+      - durationInMonths
+      - rank
+      - createdAt
+      - updatedAt
+    WaitingListCsvDto:
+      type: object
+      properties:
+        waitingListOrders:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - waitingListOrders
+    CreateUpdateOrderWaitingListDto:
+      type: object
+      properties:
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        companyId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderWaitingListItem'
+        customer:
+          $ref: '#/components/schemas/OrderWaitingListCustomer'
+        durationInMonths:
+          type: number
+        startDate:
+          format: date-time
+          type: string
+        rank:
+          type: number
+      required:
+      - rentalType
+      - companyId
+      - items
+      - customer
+      - durationInMonths
+      - startDate
+    OrderWaitingListCustomer:
+      type: object
+      properties:
+        companyName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        customerType:
+          type: string
+          enum:
+          - entreprise
+          - individual
+      required:
+      - companyName
+      - firstName
+      - lastName
+      - email
+      - phoneNumber
+      - customerType
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

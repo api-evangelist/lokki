@@ -1,0 +1,208 @@
+openapi: 3.2.0
+info:
+  title: Lokki Product State Model API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Product State Model
+paths:
+  /v2/product-state-model:
+    get:
+      operationId: getProductStateModelByCompanyId
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductStateModel'
+      tags:
+      - Product State Model
+    post:
+      operationId: createProductStateModel
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateProductStateModelDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductStateModel'
+      tags:
+      - Product State Model
+  /v2/product-state-model/{id}:
+    put:
+      operationId: updateProductStateModel
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateProductStateModelDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductStateModel'
+      tags:
+      - Product State Model
+    delete:
+      operationId: deleteProductStateModel
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Product State Model
+components:
+  schemas:
+    ProductStateModelAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductStateModelAnswerOption'
+      required:
+      - id
+      - answerType
+      - options
+    ProductStateModel:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductStateModelField'
+      required:
+      - id
+      - companyId
+      - name
+      - fields
+    CreateUpdateProductStateModelAnswerOptionDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+    CreateUpdateProductStateAnswerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateProductStateModelAnswerOptionDto'
+      required:
+      - answerType
+      - options
+    ProductStateModelAnswerOption:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    ProductStateModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductStateModelAnswer'
+      required:
+      - id
+      - name
+      - answers
+    CreateUpdateProductStateFieldDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateProductStateAnswerDto'
+      required:
+      - name
+      - answers
+    CreateUpdateProductStateModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateProductStateFieldDto'
+      required:
+      - name
+      - fields
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

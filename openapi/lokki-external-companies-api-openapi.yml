@@ -1,0 +1,766 @@
+openapi: 3.2.0
+info:
+  title: Lokki External Companies API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: External Companies
+paths:
+  /v2/external-companies/admin/all:
+    get:
+      operationId: getAllExternalCompanies
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExternalCompany'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/search:
+    get:
+      operationId: searchExternalCompanies
+      parameters:
+      - name: search
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: verticales
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: visible
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: hidden
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: page
+        required: true
+        in: query
+        schema:
+          minimum: -1
+          type: number
+      - name: pageSize
+        required: true
+        in: query
+        schema:
+          minimum: 0
+          maximum: 15
+          type: number
+      - name: claimStatus
+        required: false
+        in: query
+        schema:
+          enum:
+          - NOT_CLAIMED
+          - CLAIM_PENDING
+          - CLAIM_ACCEPTED
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchExternalCompanies'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/search/csv:
+    post:
+      operationId: searchCsvExternalCompanies
+      parameters:
+      - name: search
+        required: true
+        in: query
+        schema:
+          type: string
+      - name: verticales
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: visible
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: hidden
+        required: true
+        in: query
+        schema:
+          type: boolean
+      - name: page
+        required: true
+        in: query
+        schema:
+          minimum: -1
+          type: number
+      - name: pageSize
+        required: true
+        in: query
+        schema:
+          minimum: 0
+          maximum: 15
+          type: number
+      - name: claimStatus
+        required: false
+        in: query
+        schema:
+          enum:
+          - NOT_CLAIMED
+          - CLAIM_PENDING
+          - CLAIM_ACCEPTED
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchExternalCompaniesCsvDto'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/searchNearLatLng:
+    get:
+      operationId: searchExternalCompaniesNearLatLng
+      parameters:
+      - name: lat
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: lng
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: radius
+        required: true
+        in: query
+        schema:
+          type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchExternalCompanies'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/slug/{slug}:
+    get:
+      operationId: getExternalCompanyBySlug
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalCompany'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/slug-exists/{slug}:
+    get:
+      operationId: checkExternalCompanySlug
+      parameters:
+      - name: slug
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: companyId
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - External Companies
+  /v2/external-companies/admin/{id}:
+    get:
+      operationId: getExternalCompanyById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalCompany'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/create:
+    post:
+      operationId: createExternalCompany
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateExternalCompanyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalCompany'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/upload-csv:
+    post:
+      operationId: uploadExternalCompaniesCsv
+      parameters: []
+      requestBody:
+        required: true
+        description: Upload CSV file of new external companies
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - External Companies
+  /v2/external-companies/admin/update/{id}:
+    put:
+      operationId: updateExternalCompany
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateExternalCompanyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalCompany'
+      tags:
+      - External Companies
+  /v2/external-companies/admin/delete/{id}:
+    delete:
+      operationId: deleteExternalCompany
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: deleteUser
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalCompany'
+      tags:
+      - External Companies
+components:
+  schemas:
+    ExternalCompanyClaimData:
+      type: object
+      properties:
+        userId:
+          type: string
+        siret:
+          type: string
+        vatNumber:
+          type: string
+        siretCountry:
+          type: string
+          enum:
+          - FR
+          - BE
+          - CH
+          - DE
+          - NL
+          - ES
+          - PT
+          - IT
+        name:
+          type: string
+        website:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        claimedAt:
+          format: date-time
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - HELP_REQUESTED
+          - ACCEPTED
+        upgradeStatus:
+          type: string
+          enum:
+          - NOT_STARTED
+          - PENDING
+          - FINISHED
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+      required:
+      - userId
+      - siret
+      - siretCountry
+      - name
+      - website
+      - verticales
+      - claimedAt
+      - status
+      - upgradeStatus
+    SearchExternalCompanies:
+      type: object
+      properties:
+        total:
+          type: number
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalCompany'
+      required:
+      - total
+      - companies
+    CreateUpdateExternalCompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        website:
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        googleRating:
+          type: number
+        googleRatingCount:
+          type: number
+        googlePlaceId:
+          type: string
+        pipedrive:
+          type: string
+        hubspot:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        productVerticaleCategoryIds:
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+        visible:
+          type: boolean
+        claimData:
+          allOf:
+          - $ref: '#/components/schemas/CreateUpdateExternalCompanyClaimDataDto'
+      required:
+      - name
+      - slug
+      - website
+      - address
+      - lat
+      - lng
+      - verticales
+      - visible
+    ExternalCompanyPageviewData:
+      type: object
+      properties:
+        visits:
+          type: number
+        uniques:
+          type: number
+        pageviews:
+          type: number
+        bounce_rate:
+          type: number
+        avg_duration:
+          type: number
+        generationDate:
+          format: date-time
+          type: string
+        date_from:
+          format: date-time
+          type: string
+        date_to:
+          format: date-time
+          type: string
+      required:
+      - visits
+      - uniques
+      - pageviews
+      - bounce_rate
+      - avg_duration
+      - generationDate
+      - date_from
+      - date_to
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    ExternalCompany:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        website:
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/ExternalCompanyAddressComponents'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/ExternalCompanyAddressComponents'
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        googleRating:
+          type: number
+        googleRatingCount:
+          type: number
+        googlePlaceId:
+          type: string
+        pipedrive:
+          type: string
+        hubspot:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        productVerticaleCategoryIds:
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+        visible:
+          type: boolean
+        nbRecommendations:
+          type: number
+        claimData:
+          $ref: '#/components/schemas/ExternalCompanyClaimData'
+        pageviewData:
+          $ref: '#/components/schemas/ExternalCompanyPageviewData'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - slug
+      - website
+      - address
+      - lat
+      - lng
+      - verticales
+      - visible
+      - nbRecommendations
+      - createdAt
+      - updatedAt
+    SearchExternalCompaniesCsvDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    CreateUpdateExternalCompanyClaimDataDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        siret:
+          type: string
+        vatNumber:
+          type: string
+        siretCountry:
+          type: string
+          enum:
+          - FR
+          - BE
+          - CH
+          - DE
+          - NL
+          - ES
+          - PT
+          - IT
+        name:
+          type: string
+        website:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        claimedAt:
+          format: date-time
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - HELP_REQUESTED
+          - ACCEPTED
+        upgradeStatus:
+          type: string
+          enum:
+          - NOT_STARTED
+          - PENDING
+          - FINISHED
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+      required:
+      - userId
+      - siret
+      - siretCountry
+      - name
+      - website
+      - verticales
+      - claimedAt
+      - status
+    CreateUpdateExternalCompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    ExternalCompanyAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

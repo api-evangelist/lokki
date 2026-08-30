@@ -1,0 +1,995 @@
+openapi: 3.2.0
+info:
+  title: Lokki Pack API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Pack
+paths:
+  /v2/pack/delete/{id}:
+    delete:
+      operationId: deletePackById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Pack
+  /v2/pack/create-pack:
+    post:
+      operationId: createPack
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePackDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+  /v2/pack/update-pack:
+    put:
+      operationId: updatePack
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdatePackDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+  /v2/pack/duplicate-pack/{packId}:
+    post:
+      operationId: duplicatePackById
+      parameters:
+      - name: packId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Pack
+  /v2/pack/byCompany:
+    get:
+      operationId: getCompanyPacks
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+  /v2/pack/getByCompanyLLD:
+    get:
+      operationId: getCompanyLLDPacks
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+  /v2/pack/byId/{id}:
+    get:
+      operationId: getPackById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+  /v2/pack/byName/{search}:
+    get:
+      operationId: getPacksByName
+      parameters:
+      - name: search
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+  /v2/pack/updateAvailability:
+    put:
+      operationId: updatePackAvailability
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePackAvailabilityDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+  /v2/pack/updateAvailabilityMultiple:
+    put:
+      operationId: updateMultiplePackAvailability
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMultiplePackAvailabilityDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pack'
+      tags:
+      - Pack
+components:
+  schemas:
+    AttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    Pack:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackOption'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackCategory'
+        onlineStoreInformation:
+          $ref: '#/components/schemas/PackOnlineStoreInformation'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        bailAmount:
+          type: number
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProduct:
+          type: boolean
+        productSurveyId:
+          type: string
+        vat:
+          type: number
+        type:
+          enum:
+          - PRODUCT
+          - CATEGORY
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/PackSkisetInfos'
+        isAvailable:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        isRelatedProducts:
+          type: boolean
+        companyId:
+          type: string
+        translationInProgress:
+          type: boolean
+        standardizedNameI18nKeys:
+          type: array
+          items:
+            type: string
+      required:
+      - priceModels
+      - id
+      - name
+      - rentalType
+      - options
+      - categories
+      - onlineStoreInformation
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - rank
+      - bailAmount
+      - relatedProducts
+      - isRelatedProduct
+      - productSurveyId
+      - vat
+      - type
+      - isAvailable
+      - onlineAvailability
+      - isRelatedProducts
+      - companyId
+      - translationInProgress
+      - standardizedNameI18nKeys
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    ProductField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    SubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+    CreateUpdatePackDto:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackOption'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackCategory'
+        onlineStoreInformation:
+          $ref: '#/components/schemas/PackOnlineStoreInformation'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        bailAmount:
+          type: number
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProducts:
+          type: boolean
+        productSurveyId:
+          type: string
+        vat:
+          type: number
+        type:
+          enum:
+          - PRODUCT
+          - CATEGORY
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/PackSkisetInfos'
+        onlineAvailability:
+          type: boolean
+        isAvailable:
+          type: boolean
+        companyId:
+          type: string
+        translationInProgress:
+          type: boolean
+      required:
+      - priceModels
+      - name
+      - rentalType
+      - options
+      - categories
+      - onlineStoreInformation
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - rank
+      - bailAmount
+      - relatedProducts
+      - isRelatedProducts
+      - productSurveyId
+      - vat
+      - type
+      - onlineAvailability
+      - isAvailable
+      - companyId
+    PriceModelRangeDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - minDuration
+      - maxDuration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    PackCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        productModelId:
+          type: string
+        fieldId:
+          type: string
+      required:
+      - id
+      - name
+      - productModelId
+      - fieldId
+    TentativeCategorization:
+      type: object
+      properties:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    ServiceTag:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+    PackOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    ProductPriceRule:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceRule'
+      required:
+      - id
+      - title
+      - rules
+    ServiceField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    PriceModelSpecificDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        duration:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - duration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    UpdatePackAvailabilityDto:
+      type: object
+      properties:
+        packId:
+          type: string
+        available:
+          type: boolean
+      required:
+      - packId
+      - available
+    UpdateMultiplePackAvailabilityDto:
+      type: object
+      properties:
+        packIds:
+          type: array
+          items:
+            type: string
+        available:
+          type: boolean
+      required:
+      - packIds
+      - available
+    ProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+        contractType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    PackSkisetInfos:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+      required:
+      - ids
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+    ItemOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
+    Service:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        companyId:
+          type: string
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          $ref: '#/components/schemas/ItemOnlineStoreInformation'
+        productModel:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTag'
+        isRelatedProducts:
+          type: boolean
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        productSurveyId:
+          type: string
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemAttribute'
+        aiAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemAttribute'
+        hideOnOnlineStore:
+          type: boolean
+        isAssuranceTulip:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
+        vat:
+          type: number
+        translationInProgress:
+          type: boolean
+        tentativeCategorization:
+          $ref: '#/components/schemas/TentativeCategorization'
+      required:
+      - priceModels
+      - id
+      - rentalType
+      - name
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - companyId
+      - rank
+      - isAvailable
+      - onlineStoreInformation
+      - productModel
+      - fields
+      - tags
+      - isRelatedProducts
+      - relatedProducts
+      - productSurveyId
+      - hideOnOnlineStore
+      - isAssuranceTulip
+      - onlineAvailability
+      - printed
+      - vat
+      - translationInProgress
+    Product:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        name:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        id:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductField'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        bailPrice:
+          type: number
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemAttribute'
+        aiAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemAttribute'
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubProduct'
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProduct:
+          type: boolean
+        productSurveyId:
+          type: string
+        productStateId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        vat:
+          type: number
+        insurance:
+          $ref: '#/components/schemas/ProductInsurance'
+        companyId:
+          type: string
+        translationInProgress:
+          type: boolean
+        tentativeCategorization:
+          $ref: '#/components/schemas/TentativeCategorization'
+        priceRule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        isSubProduct:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        displaySubProducts:
+          type: boolean
+        number:
+          type: number
+        inspectionReports:
+          type: boolean
+      required:
+      - priceModels
+      - name
+      - rentalType
+      - id
+      - fields
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - rank
+      - bailPrice
+      - attributes
+      - subProducts
+      - onlineStoreInformation
+      - productModel
+      - relatedProducts
+      - isRelatedProduct
+      - productSurveyId
+      - productStateId
+      - hideOnOnlineStore
+      - vat
+      - insurance
+      - priceRule
+      - isSubProduct
+      - onlineAvailability
+      - displaySubProducts
+      - number
+      - inspectionReports
+    PackOption:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+      required:
+      - name
+      - products
+      - services
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,488 @@
+openapi: 3.2.0
+info:
+  title: Lokki Workshop API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Workshop
+paths:
+  /v2/workshop/products:
+    get:
+      operationId: listWorkshopProducts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopProductList'
+      tags:
+      - Workshop
+  /v2/workshop/product:
+    post:
+      operationId: createWorkshopProduct
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkshopProductDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopProduct'
+      tags:
+      - Workshop
+  /v2/workshop/product/{id}:
+    delete:
+      operationId: deleteWorkshopProduct
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Workshop
+  /v2/workshop/shoppingListItems:
+    get:
+      operationId: listWorkshopShoppingListItems
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopShoppingListDto'
+      tags:
+      - Workshop
+  /v2/workshop/shoppingListItems/byOrder/{id}:
+    get:
+      operationId: listWorkshopShoppingListItemsByOrder
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopShoppingListDto'
+      tags:
+      - Workshop
+  /v2/workshop/shoppingListItem/{id}:
+    put:
+      operationId: updateShoppingListItem
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkshopShoppingListItemDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopShoppingListItem'
+      tags:
+      - Workshop
+    delete:
+      operationId: deleteShoppingListItem
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Workshop
+  /v2/workshop/shoppingListItem:
+    post:
+      operationId: createShoppingListItem
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkshopShoppingListItemDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopShoppingListItem'
+      tags:
+      - Workshop
+  /v2/workshop/quotes:
+    get:
+      operationId: listWorkshopQuotes
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopQuoteList'
+      tags:
+      - Workshop
+  /v2/workshop/quote/{id}/products:
+    put:
+      operationId: updateWorkshopQuoteProducts
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkshopQuoteProductsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Workshop
+  /v2/workshop/quote/{id}:
+    put:
+      operationId: updateWorkshopQuote
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkshopQuoteDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Workshop
+    delete:
+      operationId: deleteWorkshopQuoteProducts
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Workshop
+  /v2/workshop/quote:
+    post:
+      operationId: createWorkshopQuoteProducts
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkshopQuoteDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Workshop
+components:
+  schemas:
+    UpdateWorkshopQuoteProductsDto:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateWorkshopQuoteProductDto'
+      required:
+      - products
+    UpdateWorkshopQuoteDto:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        time:
+          type: number
+      required:
+      - name
+      - category
+      - price
+      - time
+    UpdateWorkshopShoppingListItemDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - NOT_LISTED
+          - TO_ORDER
+          - ORDERED
+          - ARCHIVED
+          - USED
+      required:
+      - status
+    WorkshopQuoteList:
+      type: object
+      properties:
+        quotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopQuote'
+      required:
+      - quotes
+    WorkshopProductList:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopProduct'
+      required:
+      - products
+    WorkshopQuote:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        time:
+          type: number
+        relatedProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopQuoteRelatedProducts'
+        updatedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - companyId
+      - name
+      - category
+      - price
+      - time
+      - relatedProducts
+      - updatedAt
+      - createdAt
+    CreateWorkshopQuoteDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        time:
+          type: number
+      required:
+      - companyId
+      - name
+      - category
+      - price
+      - time
+    WorkshopShoppingListOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        customer:
+          $ref: '#/components/schemas/WorkshopShoppingListOrderCustomer'
+      required:
+      - id
+    WorkshopQuoteRelatedProducts:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: number
+      required:
+      - productId
+      - quantity
+    WorkshopShoppingListOrderCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+      required:
+      - id
+      - lastName
+      - firstName
+    CreateWorkshopProductDto:
+      type: object
+      properties:
+        name:
+          type: string
+        quantity:
+          type: number
+      required:
+      - name
+      - quantity
+    WorkshopProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: number
+        companyId:
+          type: string
+      required:
+      - id
+      - name
+      - quantity
+      - companyId
+    CreateWorkshopShoppingListItemDto:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - NOT_LISTED
+          - TO_ORDER
+          - ORDERED
+          - ARCHIVED
+          - USED
+        workshopOrder:
+          type: string
+        workshopProductId:
+          type: string
+      required:
+      - name
+      - status
+    UpdateWorkshopQuoteProductDto:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: number
+      required:
+      - productId
+      - quantity
+    WorkshopShoppingListItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+          - NOT_LISTED
+          - TO_ORDER
+          - ORDERED
+          - ARCHIVED
+          - USED
+          type: string
+        workshopProductId:
+          type: string
+        workshopOrder:
+          $ref: '#/components/schemas/WorkshopShoppingListOrder'
+        companyId:
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - status
+      - companyId
+      - updatedAt
+      - createdAt
+    WorkshopShoppingListDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopShoppingListItem'
+      required:
+      - items
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

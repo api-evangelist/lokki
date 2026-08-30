@@ -1,0 +1,178 @@
+openapi: 3.2.0
+info:
+  title: Lokki Customer Model API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Customer Model
+paths:
+  /v2/customer-model:
+    post:
+      operationId: bulkCreateCustomerModels
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkCreateCustomerModelsDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Customer Model
+    put:
+      operationId: bulkUpdateCustomerModels
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkUpdateCustomerModelsDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Customer Model
+  /v2/customer-model/all:
+    get:
+      operationId: listCompanyCustomerModel
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerModel'
+      tags:
+      - Customer Model
+  /v2/customer-model/listByCompanyId/{companyId}:
+    get:
+      operationId: listCustomerModels
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerModel'
+      tags:
+      - Customer Model
+components:
+  schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    BulkUpdateCustomerModelsDto:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateCustomerModelDto'
+      required:
+      - models
+    CreateUpdateCustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - value
+    UpdateCustomerModelDto:
+      type: object
+      properties:
+        id:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
+      required:
+      - id
+      - fields
+    CreateCustomerModelDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - entreprise
+          - individual
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
+      required:
+      - type
+      - fields
+    CustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - value
+    CustomerModel:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          enum:
+          - entreprise
+          - individual
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerModelField'
+        companyId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - type
+      - fields
+      - companyId
+      - createdAt
+    BulkCreateCustomerModelsDto:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateCustomerModelDto'
+      required:
+      - models
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,296 @@
+openapi: 3.2.0
+info:
+  title: Lokki Mail API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Mail
+paths:
+  /v2/mail/sendMailOrderEventSessionTimeChange:
+    post:
+      operationId: sendMailOrderEventSessionTimeChange
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMailOrderEventSessionTimeChangeDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Mail
+  /v2/mail/sendWorkshopOrderMail:
+    post:
+      operationId: sendWorkshopOrderMail
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FormDataSendWorkshopMailDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Mail
+  /v2/mail/sendMailStateDocument:
+    post:
+      operationId: sendMailStateDocument
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMailStateDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Mail
+  /v2/mail/orderMailStats/{orderId}:
+    get:
+      operationId: getOrderMailStats
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSentMailDataDto'
+      tags:
+      - Mail
+  /v2/mail/workshopOrderMailStats/{workshopOrderId}:
+    get:
+      operationId: getWorkshopOrderMailStats
+      parameters:
+      - name: workshopOrderId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSentMailDataDto'
+      tags:
+      - Mail
+  /v2/mail/orderEventMailStats/{orderEventId}:
+    get:
+      operationId: getOrderEventMailStats
+      parameters:
+      - name: orderEventId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSentMailDataDto'
+      tags:
+      - Mail
+  /v2/mail/orderLLDMailStats/{orderLLDId}:
+    get:
+      operationId: getOrderLLDMailStats
+      parameters:
+      - name: orderLLDId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderSentMailDataDto'
+      tags:
+      - Mail
+components:
+  schemas:
+    SentMailRecipients:
+      type: object
+      properties:
+        main:
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+      required:
+      - main
+      - cc
+    SentMailDataActionsDto:
+      type: object
+      properties:
+        sign:
+          type: boolean
+        payment:
+          type: boolean
+        bail:
+          type: boolean
+        booster:
+          type: boolean
+      required:
+      - sign
+      - payment
+      - bail
+    SendMailOrderEventSessionTimeChangeDto:
+      type: object
+      properties:
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+        content:
+          type: string
+        sessionId:
+          type: string
+        initialStartDate:
+          type: string
+        initialEndDate:
+          type: string
+      required:
+      - lang
+      - content
+      - sessionId
+      - initialStartDate
+      - initialEndDate
+    SendMailStateDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        to:
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+        stateType:
+          type: string
+      required:
+      - orderId
+      - to
+      - stateType
+    FormDataSendWorkshopMailDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        workshopOrderId:
+          type: string
+        to:
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+        template:
+          type: string
+        object:
+          type: string
+        content:
+          type: string
+        attachedDocumentId:
+          type: string
+        generateDocument:
+          type: string
+        hideDate:
+          type: boolean
+        hideTime:
+          type: boolean
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - files
+      - workshopOrderId
+      - object
+      - content
+      - hideDate
+      - hideTime
+      - lang
+    SentMailDataDto:
+      type: object
+      properties:
+        sentDate:
+          type: string
+        id:
+          type: string
+        object:
+          type: string
+        recipients:
+          $ref: '#/components/schemas/SentMailRecipients'
+        actions:
+          $ref: '#/components/schemas/SentMailDataActionsDto'
+        status:
+          type: string
+          enum:
+          - BOUNCED
+          - NOT_OPENED
+          - OPENED
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - sentDate
+      - id
+      - object
+      - actions
+      - createdAt
+    OrderSentMailDataDto:
+      type: object
+      properties:
+        sentMails:
+          type: array
+          items:
+            $ref: '#/components/schemas/SentMailDataDto'
+      required:
+      - sentMails
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,196 @@
+openapi: 3.2.0
+info:
+  title: Lokki Stripe Connect API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Stripe Connect
+paths:
+  /v2/stripe-connect/create-account-express:
+    post:
+      operationId: createAccountExpress
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StripeCreateAccountDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeAccountUrlDto'
+        '400':
+          description: Stripe rejected the account creation (invalid data or provider failure)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeConnectErrorDto'
+        '409':
+          description: The company already has an active express account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeConnectErrorDto'
+      tags:
+      - Stripe Connect
+  /v2/stripe-connect/login-link/{type}:
+    get:
+      operationId: getLoginStripeLink
+      parameters:
+      - name: type
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeAccountUrlDto'
+      tags:
+      - Stripe Connect
+  /v2/stripe-connect/check-account-status/{type}:
+    get:
+      operationId: checkStripeAccountStatus
+      parameters:
+      - name: type
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Stripe Connect
+  /v2/stripe-connect/disconnect-account/{type}:
+    get:
+      operationId: disconnectStripeAccount
+      parameters:
+      - name: type
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Stripe Connect
+  /v2/stripe-connect/update-account-payment-methods:
+    put:
+      operationId: updateCompanyOnlineStorePaymentMethods
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LokkiPaymentMethods'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Stripe Connect
+components:
+  schemas:
+    StripeConnectErrorCode:
+      type: string
+      enum:
+      - STRIPE_ACCOUNT_ALREADY_ACTIVE
+      - STRIPE_INVALID_PHONE_NUMBER
+      - STRIPE_INVALID_EMAIL
+      - STRIPE_UNSUPPORTED_COUNTRY
+      - STRIPE_INVALID_ACCOUNT_DATA
+      - STRIPE_ACCOUNT_CREATION_FAILED
+    StripeCreateAccountDto:
+      type: object
+      properties:
+        country:
+          type: string
+        type:
+          type: string
+          enum:
+          - ALL
+          - EVENT
+      required:
+      - country
+      - type
+    StripeAccountUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    StripeConnectErrorDto:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/StripeConnectErrorCode'
+        message:
+          type: string
+      required:
+      - error
+      - message
+    LokkiPaymentMethods:
+      type: object
+      properties:
+        card:
+          type: boolean
+        applePay:
+          type: boolean
+        googlePay:
+          type: boolean
+        ancvConnect:
+          type: boolean
+        sepa:
+          type: boolean
+        ideal:
+          type: boolean
+        bancontact:
+          type: boolean
+        giroPay:
+          type: boolean
+        p24:
+          type: boolean
+        blik:
+          type: boolean
+        multibanco:
+          type: boolean
+        eps:
+          type: boolean
+      required:
+      - card
+      - applePay
+      - googlePay
+      - ancvConnect
+      - sepa
+      - ideal
+      - bancontact
+      - giroPay
+      - p24
+      - blik
+      - multibanco
+      - eps
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

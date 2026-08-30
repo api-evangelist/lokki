@@ -1,0 +1,318 @@
+openapi: 3.2.0
+info:
+  title: Lokki Product History API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Product History
+paths:
+  /v2/product-history/last-state-events:
+    post:
+      operationId: getLastStateEventsBySubProductsIds
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLastStateEventsBySubProductsIdsDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateLastEventList'
+      tags:
+      - Product History
+  /v2/product-history/searchEvents:
+    post:
+      operationId: getProductsHistoryEventByIds
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetProductHistoryEventsByIdsDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateLastEventList'
+      tags:
+      - Product History
+  /v2/product-history/update-event:
+    post:
+      operationId: updateProductHistoryEvent
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateProductHistoryEventDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Product History
+  /v2/product-history/update-many-events-for-product:
+    post:
+      operationId: updateManyProductHistoryEventsForProduct
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateManyProductHistoryEventsForProductDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Product History
+  /v2/product-history/delete-event:
+    delete:
+      operationId: deleteProductHistoryEvent
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteProductHistoryEventDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Product History
+components:
+  schemas:
+    StateLastEventList:
+      type: object
+      properties:
+        lastEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/StateLastEvent'
+      required:
+      - lastEvents
+    HistoryInspectionField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionAnswer'
+      required:
+      - id
+      - name
+      - answers
+    EventOptions:
+      type: object
+      properties:
+        unavailable:
+          type: boolean
+      required:
+      - unavailable
+    DeleteProductHistoryEventDto:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductId:
+          type: string
+        eventId:
+          type: string
+      required:
+      - productId
+      - subProductId
+      - eventId
+    GetProductHistoryEventsByIdsDto:
+      type: object
+      properties:
+        productHistoryEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetProductHistoryEventByIdDto'
+      required:
+      - productHistoryEvents
+    StateLastEvent:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductId:
+          type: string
+        note:
+          type: string
+        inspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionField'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
+      required:
+      - productId
+      - subProductId
+      - note
+      - inspectionFields
+      - files
+    HistoryInspectionAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        value:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionOption'
+      required:
+      - id
+      - answerType
+      - value
+      - options
+    CreateUpdateProductHistoryEventDto:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductId:
+          type: string
+        event:
+          $ref: '#/components/schemas/EditProductHistoryEventDto'
+      required:
+      - productId
+      - subProductId
+      - event
+    EditProductHistoryEventDto:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        name:
+          type: string
+        note:
+          type: string
+        options:
+          $ref: '#/components/schemas/EventOptions'
+        unite:
+          type: number
+        orderId:
+          type: string
+        customerId:
+          type: string
+        inspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionField'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
+      required:
+      - id
+      - startDate
+      - name
+      - note
+      - options
+      - unite
+      - orderId
+      - customerId
+    HistoryAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    CreateUpdateManyProductHistoryEventsForProductDto:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductIds:
+          type: array
+          items:
+            type: string
+        event:
+          $ref: '#/components/schemas/EditProductHistoryEventDto'
+      required:
+      - productId
+      - subProductIds
+      - event
+    GetLastStateEventsBySubProductsIdsDto:
+      type: object
+      properties:
+        subProductIds:
+          type: array
+          items:
+            type: string
+      required:
+      - subProductIds
+    HistoryInspectionOption:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    GetProductHistoryEventByIdDto:
+      type: object
+      properties:
+        productHistoryId:
+          type: string
+        eventId:
+          type: string
+      required:
+      - productHistoryId
+      - eventId
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

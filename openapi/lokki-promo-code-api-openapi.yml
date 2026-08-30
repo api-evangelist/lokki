@@ -1,0 +1,484 @@
+openapi: 3.2.0
+info:
+  title: Lokki Promo Code API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Promo Code
+paths:
+  /v2/promo-code/public/{companyId}/{code}:
+    get:
+      operationId: verifyCode
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: code
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: cartItemIds
+        required: false
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: currentTotalPrice
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: orderTotalPrice
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: deliveryPrice
+        required: true
+        in: query
+        schema:
+          type: number
+      - name: orderStartDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: customerRpId
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: context
+        required: false
+        in: query
+        schema:
+          enum:
+          - RENTAL_PLACE
+          - ONLINE_STORE
+          type: string
+      - name: rentalType
+        required: false
+        in: query
+        schema:
+          enum:
+          - LCD
+          - LLD
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoCodeDto'
+      tags:
+      - Promo Code
+  /v2/promo-code/admin:
+    get:
+      operationId: listAdminPromoCodes
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PromoCodeDto'
+      tags:
+      - Promo Code
+    post:
+      operationId: createAdminPromoCode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAdminPromoCodeDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoCodeDto'
+      tags:
+      - Promo Code
+  /v2/promo-code/admin/{id}:
+    put:
+      operationId: updateAdminPromoCode
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePromoCodeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoCodeDto'
+      tags:
+      - Promo Code
+    delete:
+      operationId: deleteAdminPromoCode
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Promo Code
+  /v2/promo-code/company:
+    get:
+      operationId: listCompanyPromoCodes
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PromoCodeDto'
+      tags:
+      - Promo Code
+    post:
+      operationId: createCompanyPromoCode
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompanyPromoCodeDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoCodeDto'
+      tags:
+      - Promo Code
+  /v2/promo-code/company/{id}:
+    put:
+      operationId: updateCompanyPromoCode
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePromoCodeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoCodeDto'
+      tags:
+      - Promo Code
+    delete:
+      operationId: deleteCompanyPromoCode
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Promo Code
+components:
+  schemas:
+    CreateCompanyPromoCodeDto:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 4
+          maxLength: 30
+          pattern: /^([A-Z0-9]*)$/
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        discountAmount:
+          type: number
+          minimum: 0
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        minPrice:
+          type: number
+          minimum: 0
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          type: string
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+        applyOnDelivery:
+          type: boolean
+      required:
+      - code
+      - source
+      - discountType
+      - discountAmount
+      - creationDate
+      - expirationDate
+      - minPrice
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    CreateAdminPromoCodeDto:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 4
+          maxLength: 30
+          pattern: /^LOKKI-([A-Z0-9]*)$/
+        limitToNewCustomers:
+          type: boolean
+        limitToVerticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        limitToCompanies:
+          type: array
+          items:
+            type: string
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        discountAmount:
+          type: number
+          minimum: 0
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        minPrice:
+          type: number
+          minimum: 0
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          type: string
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+        applyOnDelivery:
+          type: boolean
+      required:
+      - code
+      - limitToNewCustomers
+      - limitToVerticales
+      - limitToCompanies
+      - source
+      - discountType
+      - discountAmount
+      - creationDate
+      - expirationDate
+      - minPrice
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    UpdatePromoCodeDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+          type: string
+        applyOnDelivery:
+          type: boolean
+      required:
+      - active
+      - creationDate
+      - expirationDate
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    PromoCodeDto:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        source:
+          enum:
+          - COMPANY
+          - LOKKI
+          type: string
+        active:
+          type: boolean
+        discountAmount:
+          type: number
+        discountType:
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+          type: string
+        amountUsed:
+          type: number
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        minPrice:
+          type: number
+        maxUses:
+          type:
+          - number
+          - 'null'
+        dateCheck:
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+          type: string
+        applyOnDelivery:
+          type: boolean
+        limitToNewCustomers:
+          type: boolean
+        limitToVerticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        limitToCompanies:
+          type: array
+          items:
+            type: string
+        appliedDiscountAmount:
+          type: number
+      required:
+      - id
+      - code
+      - source
+      - active
+      - discountAmount
+      - discountType
+      - amountUsed
+      - creationDate
+      - expirationDate
+      - minPrice
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

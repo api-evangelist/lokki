@@ -1,0 +1,269 @@
+openapi: 3.2.0
+info:
+  title: Lokki Employee API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Employee
+paths:
+  /v2/employee/getAllCompanyEmployees:
+    get:
+      operationId: getMyCompanyEmployees
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Employee
+  /v2/employee/add:
+    post:
+      operationId: addEmployee
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddEmployeeDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEmployee'
+      tags:
+      - Employee
+  /v2/employee/updateAccess/{employeeId}:
+    post:
+      operationId: updateEmployeeAccess
+      parameters:
+      - name: employeeId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmployeeAccessDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEmployee'
+      tags:
+      - Employee
+  /v2/employee/updateInfos/{employeeId}:
+    put:
+      operationId: updateEmployeeInfos
+      parameters:
+      - name: employeeId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmployeeDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyEmployee'
+      tags:
+      - Employee
+  /v2/employee/delete/{employeeId}:
+    delete:
+      operationId: deleteEmployee
+      parameters:
+      - name: employeeId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Employee
+  /v2/employee/public/{userId}/{companyId}:
+    get:
+      operationId: getEmployeeRegistrationInformation
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeRegistrationInfoDto'
+      tags:
+      - Employee
+  /v2/employee/public/validation:
+    post:
+      operationId: validateEmployee
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateEmployeeDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Employee
+components:
+  schemas:
+    EmployeeAccess:
+      type: object
+      properties:
+        clients:
+          type: boolean
+        getNewOrderMails:
+          type: boolean
+        editCatalog:
+          type: boolean
+        addPromo:
+          type: boolean
+        workshop:
+          type: boolean
+        workshopStat:
+          type: boolean
+        marketing:
+          type: boolean
+        statistics:
+          type: boolean
+        cashBook:
+          type: boolean
+        settings:
+          type: boolean
+        bookingDeletion:
+          type: boolean
+    UpdateEmployeeDto:
+      type: object
+      properties:
+        isMonitor:
+          type: boolean
+        imageUrl:
+          type: string
+        isAccountActivated:
+          type: boolean
+    AddEmployeeDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        isMonitor:
+          type: boolean
+      required:
+      - name
+      - email
+      - isMonitor
+    UpdateEmployeeAccessDto:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/EmployeeAccess'
+      required:
+      - access
+    ValidateEmployeeDto:
+      type: object
+      properties:
+        encryptedUserId:
+          type: string
+        encryptedCompanyId:
+          type: string
+        password:
+          type: string
+      required:
+      - encryptedUserId
+      - encryptedCompanyId
+      - password
+    EmployeeRegistrationInfoDto:
+      type: object
+      properties:
+        companyName:
+          type: string
+        newUserName:
+          type: string
+      required:
+      - companyName
+      - newUserName
+    CompanyEmployee:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/EmployeeAccess'
+        userId:
+          type: string
+        isAccountActivated:
+          type: boolean
+        isValidatedByUser:
+          type: boolean
+        isMonitor:
+          type: boolean
+        name:
+          type: string
+        email:
+          type: string
+        imageUrl:
+          type: string
+        lastConnection:
+          format: date-time
+          type: string
+        connectionDates:
+          type: array
+          items:
+            format: date-time
+            type: string
+      required:
+      - access
+      - userId
+      - isAccountActivated
+      - isValidatedByUser
+      - isMonitor
+      - name
+      - email
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

@@ -1,0 +1,785 @@
+openapi: 3.2.0
+info:
+  title: Lokki Login API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Login
+paths:
+  /v2/login/admin/logAs/{companyId}/{userId}:
+    get:
+      operationId: adminLogAs
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserDto'
+      tags:
+      - Login
+  /v2/login/admin/goBackOnAdmin:
+    get:
+      operationId: goBackOnAdmin
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Login
+  /v2/login/check-token-admin:
+    get:
+      operationId: checkTokenAdmin
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Login
+  /v2/login/admin/logAsUserFromRpB2B/{companyId}:
+    get:
+      operationId: logAsUserFromRpB2B
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Login
+  /v2/login/goBackOnRpB2B:
+    get:
+      operationId: goBackOnRpB2B
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Login
+  /v2/login/check-token-rp-b2b:
+    get:
+      operationId: checkTokenRpB2B
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Login
+  /v2/login/checkTokenReconditioner:
+    get:
+      operationId: checkTokenReconditioner
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Login
+  /v2/login/user/login/reconditioner:
+    post:
+      operationId: loginReconditioner
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/user/disconnect/reconditioner:
+    post:
+      operationId: disconnectReconditioner
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/check-token-rental-place:
+    get:
+      operationId: checkTokenRentalPlace
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Login
+  /v2/login/user/login/rental-place:
+    post:
+      operationId: loginRentalPlace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalPlaceUserDto'
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/user/disconnect/rental-place:
+    post:
+      operationId: disconnectRentalPlace
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/user/forgot-password/rental-place:
+    post:
+      operationId: forgotPasswordRentalPlace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Login
+  /v2/login/user/reset-password/rental-place:
+    post:
+      operationId: resetPasswordRentalPlace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalPlaceUserDto'
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/user/login/dashboard:
+    post:
+      operationId: loginDashboard
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserDto'
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/switchCompany/{companyId}:
+    get:
+      operationId: switchCompany
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Login
+  /v2/login/switchTool/{tool}:
+    get:
+      operationId: switchDashboardTool
+      parameters:
+      - name: tool
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserDto'
+      tags:
+      - Login
+  /v2/login/check-token-dashboard:
+    get:
+      operationId: checkTokenDashboard
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckTokenDashboardResponseDto'
+      tags:
+      - Login
+  /v2/login/disconnect:
+    post:
+      operationId: disconnect
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/available-email/{email}:
+    get:
+      operationId: isEmailAvailable
+      parameters:
+      - name: email
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableEmailDto'
+      tags:
+      - Login
+  /v2/login/resend-validation:
+    post:
+      operationId: resendValidation
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendValidationEmailDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Login
+  /v2/login/validate-account:
+    post:
+      operationId: validateAccount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateAccountCodeDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Login
+components:
+  schemas:
+    OrderRP:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        type:
+          type: string
+          enum:
+          - LCD
+          - LLD
+          - Event
+          - LCDRequest
+          - LCDRequestAccepted
+      required:
+      - orderId
+      - type
+    ValidateAccountCodeDto:
+      type: object
+      properties:
+        email:
+          type: string
+        encrypted:
+          type: boolean
+        code:
+          type: string
+        origin:
+          type: string
+          enum:
+          - plg
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - email
+      - encrypted
+      - code
+      - origin
+      - lang
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    LoginUserDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        role:
+          type: string
+        connectTo:
+          enum:
+          - dashboard
+          - lokkit
+          - visibility_on_boarding
+          - visibility
+          - visibility_one
+          - hyperline
+          type: string
+        subscriptionUrl:
+          type: string
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+      required:
+      - userId
+      - role
+      - connectTo
+      - availableTools
+    RentalPlaceUserDto:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/RentalPlaceUserAddressComponents'
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        cguValidationDate:
+          format: date-time
+          type: string
+        orderRelations:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRelation'
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - rental_place_header
+          - rental_place_checkout
+          - rental_place_quote
+          - rental_place_favorites
+          - online_store
+          - sea
+          - unknown
+          type: string
+        createdPlatform:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          - UNKNOWN
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        subscribedToBouge:
+          type: boolean
+        subscribedToBonPlan:
+          type: boolean
+        anonymizationDate:
+          format: date-time
+          type: string
+        anonymizationOrigin:
+          enum:
+          - User
+          - Admin
+          - Inactivity
+          type: string
+        avatar:
+          enum:
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_bird.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_flower_1.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_flower_2.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_hand.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_heart.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_sun.svg
+          type: string
+        signedUpWith:
+          enum:
+          - email
+          - google
+          - apple
+          type: string
+        newsletters:
+          $ref: '#/components/schemas/RentalPlaceUserNewsletters'
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - phone
+      - isAccountActivated
+      - cguValidationDate
+      - orderRelations
+      - createdFrom
+      - createdPlatform
+      - createdAt
+      - subscribedToBouge
+      - subscribedToBonPlan
+      - avatar
+      - signedUpWith
+      - newsletters
+    RentalPlaceUserNewsletters:
+      type: object
+      properties:
+        support:
+          $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
+      required:
+      - support
+    RentalPlaceUserNewslettersSupport:
+      type: object
+      properties:
+        email:
+          type: boolean
+        sms:
+          type: boolean
+        push:
+          type: boolean
+      required:
+      - email
+      - sms
+      - push
+    OrderRelation:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRP'
+        companyId:
+          type: string
+      required:
+      - orders
+      - companyId
+    CheckTokenDashboardResponseDto:
+      type: object
+      properties:
+        isLoggedIn:
+          type: boolean
+        role:
+          type: string
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+        connectTo:
+          type: string
+          enum:
+          - dashboard
+          - lokkit
+          - visibility_on_boarding
+          - visibility
+          - visibility_one
+          - hyperline
+      required:
+      - isLoggedIn
+      - role
+      - connectTo
+    ForgotPasswordDto:
+      type: object
+      properties:
+        email:
+          type: string
+        lang:
+          type: string
+      required:
+      - email
+    ResendValidationEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+        encrypted:
+          type: boolean
+        origin:
+          type: string
+          enum:
+          - plg
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - email
+      - encrypted
+      - origin
+      - lang
+    ResetPasswordDto:
+      type: object
+      properties:
+        token:
+          type: string
+        password:
+          type: string
+      required:
+      - token
+      - password
+    RentalPlaceUserAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+        role:
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+          type: string
+        password:
+          type: string
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    AvailableEmailDto:
+      type: object
+      properties:
+        isAvailable:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+      required:
+      - isAvailable
+      - isAccountActivated
+    LoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        lang:
+          type: string
+      required:
+      - email
+      - password
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

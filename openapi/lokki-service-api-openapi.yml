@@ -1,0 +1,981 @@
+openapi: 3.2.0
+info:
+  title: Lokki Service API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Service
+paths:
+  /v2/service:
+    get:
+      operationId: getManyServices
+      parameters:
+      - name: skip
+        required: false
+        in: query
+        description: Number of documents to skip
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of documents to return
+        schema:
+          minimum: 1
+          type: number
+      - name: sort
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: 'Sort order for the results. Use ''__asc'' or ''__desc'' suffix to specify ascending or descending order respectively. Example: ''name__asc'''
+      - name: fields
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Fields to include in the response
+      - name: id.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: id.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: id.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: id.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: id.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: id.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: id.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: id.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      - name: priceTemplateId.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: priceTemplateId.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: priceTemplateId.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: priceTemplateId.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: priceTemplateId.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: priceTemplateId.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: priceTemplateId.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: priceTemplateId.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      - name: updatedAt.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: updatedAt.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: updatedAt.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific date
+        schema:
+          type: string
+      - name: updatedAt.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific date
+        schema:
+          type: string
+      - name: updatedAt.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified dates
+      - name: updatedAt.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified dates
+      - name: updatedAt.gt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than the specified date
+      - name: updatedAt.lt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than the specified date
+      - name: updatedAt.gte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than or equal to the specified date
+      - name: updatedAt.lte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than or equal to the specified date
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyServicesResponseDto'
+      tags:
+      - Service
+    put:
+      operationId: updateManyServiceByIds
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateManyServicesDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Service
+  /v2/service/create-service:
+    post:
+      operationId: createService
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateServiceDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/update-service:
+    put:
+      operationId: updateService
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateServiceDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/delete/{id}:
+    delete:
+      operationId: deleteServiceById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Service
+  /v2/service/getByCompany:
+    get:
+      operationId: getCompanyServices
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/getByCompanyLLD:
+    get:
+      operationId: getCompanyLLDServices
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/byId/{id}:
+    get:
+      operationId: getServiceById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/byName/{search}:
+    get:
+      operationId: getServicesByName
+      parameters:
+      - name: search
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/byNameLLD/{search}:
+    get:
+      operationId: getLLDServicesByName
+      parameters:
+      - name: search
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/updateAvailability:
+    put:
+      operationId: updateServiceAvailability
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateServiceAvailabilityDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+      tags:
+      - Service
+  /v2/service/duplicate-service/{serviceId}:
+    post:
+      operationId: duplicateServiceById
+      parameters:
+      - name: serviceId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Service
+components:
+  schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    PriceModelSpecificDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        duration:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - duration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    AttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    UpdateManyServicesDto:
+      type: object
+      properties:
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateServiceDto'
+      required:
+      - services
+    CreateUpdateServiceDto:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTag'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProducts:
+          type: boolean
+        productSurveyId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        vat:
+          type: number
+        isAssuranceTulip:
+          type: boolean
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceAttribute'
+        translationInProgress:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
+      required:
+      - priceModels
+      - name
+      - rentalType
+      - fields
+      - tags
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - rank
+      - isAvailable
+      - onlineStoreInformation
+      - productModel
+      - relatedProducts
+      - isRelatedProducts
+      - productSurveyId
+      - hideOnOnlineStore
+      - vat
+      - isAssuranceTulip
+      - onlineAvailability
+      - printed
+    ItemOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    TentativeCategorization:
+      type: object
+      properties:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    ServiceTag:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+    ServiceAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    GetManyServicesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+      required:
+      - total
+      - docs
+    UpdateServiceDto:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTag'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProducts:
+          type: boolean
+        productSurveyId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        vat:
+          type: number
+        isAssuranceTulip:
+          type: boolean
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceAttribute'
+        translationInProgress:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
+      required:
+      - id
+      - onlineStoreInformation
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    Service:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        companyId:
+          type: string
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          $ref: '#/components/schemas/ItemOnlineStoreInformation'
+        productModel:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTag'
+        isRelatedProducts:
+          type: boolean
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        productSurveyId:
+          type: string
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemAttribute'
+        aiAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemAttribute'
+        hideOnOnlineStore:
+          type: boolean
+        isAssuranceTulip:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
+        vat:
+          type: number
+        translationInProgress:
+          type: boolean
+        tentativeCategorization:
+          $ref: '#/components/schemas/TentativeCategorization'
+      required:
+      - priceModels
+      - id
+      - rentalType
+      - name
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - companyId
+      - rank
+      - isAvailable
+      - onlineStoreInformation
+      - productModel
+      - fields
+      - tags
+      - isRelatedProducts
+      - relatedProducts
+      - productSurveyId
+      - hideOnOnlineStore
+      - isAssuranceTulip
+      - onlineAvailability
+      - printed
+      - vat
+      - translationInProgress
+    UpdateServiceAvailabilityDto:
+      type: object
+      properties:
+        id:
+          type: string
+        available:
+          type: boolean
+      required:
+      - id
+      - available
+    ServiceField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    PriceModelRangeDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - minDuration
+      - maxDuration
+      - id
+      - price
+      - priceLowSeason
+      - label
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

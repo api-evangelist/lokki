@@ -1,0 +1,7892 @@
+openapi: 3.2.0
+info:
+  title: Lokki Admin API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Admin
+paths:
+  /v2/admin/search-engine/reindex/{companyId}:
+    post:
+      operationId: reindexCompany
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/search-engine/index/{companyId}:
+    delete:
+      operationId: deindexCompany
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/search-engine/visibility-report/company/{companyId}:
+    get:
+      operationId: getCompanyVisibilityReport
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+  /v2/admin/search-engine/visibility-report/item/{itemId}:
+    get:
+      operationId: getItemVisibilityReport
+      parameters:
+      - name: itemId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+  /v2/admin/company/checkEmail/{email}:
+    get:
+      operationId: getAdminCheckEmailUsed
+      parameters:
+      - name: email
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Admin
+  /v2/admin/company/employees/{id}:
+    get:
+      operationId: getAdminCompanyEmployees
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminCompanyEmployeesDto'
+      tags:
+      - Admin
+  /v2/admin/company/stats/{id}:
+    get:
+      operationId: getAdminCompanyStats
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: startDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: endDate
+        required: true
+        in: query
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminCompanyStatsDto'
+      tags:
+      - Admin
+  /v2/admin/company/getById/{id}:
+    get:
+      operationId: getAdminCompanyById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Admin
+  /v2/admin/company/search:
+    get:
+      operationId: searchCompanies
+      parameters:
+      - name: type
+        required: true
+        in: query
+        schema:
+          enum:
+          - CLIENTS
+          - DEMO
+          - RENTAL_PLACE
+          - ARCHIVED
+          - USER
+          - EXTERNAL_COMPANY
+          - RENTAL_PLACE_USER
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: filters
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchCompanyPaginatedResultDto'
+      tags:
+      - Admin
+  /v2/admin/company/search-light:
+    get:
+      operationId: searchCompaniesLight
+      parameters:
+      - name: type
+        required: true
+        in: query
+        schema:
+          enum:
+          - CLIENTS
+          - DEMO
+          - RENTAL_PLACE
+          - ARCHIVED
+          - USER
+          - EXTERNAL_COMPANY
+          - RENTAL_PLACE_USER
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: filters
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchCompanyListPaginatedResultDto'
+      tags:
+      - Admin
+  /v2/admin/company/search-map:
+    get:
+      operationId: searchCompaniesMap
+      parameters:
+      - name: type
+        required: true
+        in: query
+        schema:
+          enum:
+          - CLIENTS
+          - DEMO
+          - RENTAL_PLACE
+          - ARCHIVED
+          - USER
+          - EXTERNAL_COMPANY
+          - RENTAL_PLACE_USER
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: filters
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchCompanyMapPaginatedResultDto'
+      tags:
+      - Admin
+  /v2/admin/company/search-csv:
+    get:
+      operationId: searchCompaniesCsv
+      parameters:
+      - name: type
+        required: true
+        in: query
+        schema:
+          enum:
+          - CLIENTS
+          - DEMO
+          - RENTAL_PLACE
+          - ARCHIVED
+          - USER
+          - EXTERNAL_COMPANY
+          - RENTAL_PLACE_USER
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: filters
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchCompanyCsvDto'
+      tags:
+      - Admin
+  /v2/admin/company/export-company-catalogue/{companyId}:
+    get:
+      operationId: adminExportCompanyCatalogue
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminDownloadCompanyCatalogueCsvDto'
+      tags:
+      - Admin
+  /v2/admin/company/export-company-packs/{companyId}:
+    get:
+      operationId: adminExportCompanyPacks
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminDownloadCompanyCatalogueCsvDto'
+      tags:
+      - Admin
+  /v2/admin/company/export/workshop-products/{companyId}:
+    get:
+      operationId: adminExportCompanyWorkshopProducts
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminDownloadCompanyCatalogueCsvDto'
+      tags:
+      - Admin
+  /v2/admin/company/export/workshop-quotes/{companyId}:
+    get:
+      operationId: adminExportCompanyWorkshopQuotes
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminDownloadCompanyCatalogueCsvDto'
+      tags:
+      - Admin
+  /v2/admin/company/productModelsWithoutCategory:
+    post:
+      operationId: getProductModelsWithoutVerticaleCategory
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetProductModelsWithoutVerticaleCategoryDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductModelsWithoutVerticaleCategory'
+      tags:
+      - Admin
+  /v2/admin/company/getProductListByProductModelId/{id}:
+    get:
+      operationId: getProductListByProductModelId
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+  /v2/admin/company/setProductModelCategory/{id}:
+    post:
+      operationId: setProductModelVerticaleCategory
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSetProductModelVerticaleDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductModel'
+      tags:
+      - Admin
+  /v2/admin/company/create:
+    post:
+      operationId: adminCreateCompany
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyCreateDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Admin
+  /v2/admin/company/duplicate/{id}:
+    post:
+      operationId: adminDuplicateCompany
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyCreateDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Admin
+  /v2/admin/company/companyAccess/{id}:
+    put:
+      operationId: updateAdminCompanyAccess
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyUpdateAccessDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Admin
+  /v2/admin/company/archive/{id}:
+    put:
+      operationId: adminArchiveCompany
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminArchiveCompanyDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Admin
+  /v2/admin/company/employee/{companyId}/{userId}:
+    put:
+      operationId: adminSetEmployeeAsManager
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: userId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+  /v2/admin/company/ancv/reset/{companyId}:
+    post:
+      operationId: resetAncv
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/upload/{companyId}/{type}:
+    post:
+      operationId: adminUploadCompanyImage
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: type
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: company image
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MultipleFileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/upload-external-logo/{companyId}:
+    post:
+      operationId: adminUploadCompanyExternalLogo
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyUploadExternalLogoDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/use-default-banner/{companyId}:
+    post:
+      operationId: adminUseCompanyDefaultBanner
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyUseDefaultBannerDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/import/catalogue/{companyId}:
+    post:
+      operationId: adminImportCatalogueCSV
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: company products csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminImportCatalogueCSVResult'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminImportCatalogueCSVResult'
+      tags:
+      - Admin
+  /v2/admin/company/upload-packs/{companyId}:
+    post:
+      operationId: adminUploadCompanyPacksCSV
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: company packs csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/remove-tulip/{companyId}:
+    post:
+      operationId: adminRemoveTulipFromCompany
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/import/customers/{companyId}:
+    post:
+      operationId: adminImportCustomersCSV
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: company customers csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUploadCustomersCSVResult'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUploadCustomersCSVResult'
+      tags:
+      - Admin
+  /v2/admin/company/import/bookings/{companyId}:
+    post:
+      operationId: adminImportBookingsCSV
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: company bookings csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminImportBookingsCSVResult'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminImportBookingsCSVResult'
+      tags:
+      - Admin
+  /v2/admin/company/import/workshop-products/{companyId}:
+    post:
+      operationId: adminUploadWorkshopProductsCSV
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: company workshop products csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/import/workshop-quotes/{companyId}:
+    post:
+      operationId: adminUploadWorkshopQuotesCSV
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: company workshop quotes csv
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/upload-fees/{companyId}:
+    post:
+      operationId: updateAdminFees
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyUpdateFeesDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      tags:
+      - Admin
+  /v2/admin/company/stripeId:
+    put:
+      operationId: updateStripeId
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyUpdateStripeIdDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+  /v2/admin/company/csSupportRequested/{companyId}:
+    put:
+      operationId: updateAdminCsSupportRequested
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUpdateCsSupportRequestedDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+  /v2/admin/company/reset-demo/{companyId}:
+    post:
+      operationId: adminResetDemoAccount
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company:
+    delete:
+      operationId: adminDeleteCompany
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyDeleteDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Admin
+  /v2/admin/rental-place-b2b/companies/{id}:
+    get:
+      operationId: getAdminManagingPlacesCompanies
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminRentalPlaceB2BCompaniesDto'
+      tags:
+      - Admin
+  /v2/admin/rental-place-b2b/getById/{id}:
+    get:
+      operationId: getAdminManagingPlaceById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagingPlace'
+      tags:
+      - Admin
+  /v2/admin/rental-place-b2b/search:
+    get:
+      operationId: adminSearchManagingPlaces
+      parameters:
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchRentalPlaceB2BPaginatedResultDto'
+      tags:
+      - Admin
+  /v2/admin/rental-place-b2b/create:
+    post:
+      operationId: adminCreateRentalPlaceB2B
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminRentalPlaceB2BCreateDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagingPlace'
+      tags:
+      - Admin
+  /v2/admin/rental-place-b2b/update/{id}:
+    put:
+      operationId: adminUpdateRentalPlaceB2B
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminRentalPlaceB2BUpdateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagingPlace'
+      tags:
+      - Admin
+  /v2/admin/user:
+    get:
+      operationId: adminGetUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+      tags:
+      - Admin
+  /v2/admin/user/search:
+    get:
+      operationId: adminSearchUsers
+      parameters:
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchUserPaginatedResultDto'
+      tags:
+      - Admin
+  /v2/admin/user/searchWithoutCompany:
+    get:
+      operationId: adminSearchUsersWithoutCompany
+      parameters:
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchUserPaginatedResultDto'
+      tags:
+      - Admin
+  /v2/admin/user/{id}:
+    get:
+      operationId: adminGetUserById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUser'
+      tags:
+      - Admin
+    delete:
+      operationId: adminDeleteUserById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/user/create:
+    post:
+      operationId: adminCreateUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - Admin
+  /v2/admin/user/updateUserIsAccountActivated:
+    put:
+      operationId: adminUpdateUserIsAccountActivated
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAccountActivatedDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/user/updatePassword:
+    put:
+      operationId: adminUpdateUserPassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAccountPasswordDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/user/updateSlackId:
+    put:
+      operationId: adminUpdateUserSlackId
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAccountSlackIdDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/user/updateHubspotId:
+    put:
+      operationId: adminUpdateUserHubspotId
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAccountHubspotIdDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/user/update/{id}:
+    put:
+      operationId: adminUpdateUser
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+      - Admin
+  /v2/admin/demo-account:
+    get:
+      operationId: adminListDemoAccounts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DemoAccount'
+      tags:
+      - Admin
+    post:
+      operationId: adminCreateDemoAccount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateDemoAccountDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemoAccount'
+      tags:
+      - Admin
+  /v2/admin/demo-account/{id}:
+    get:
+      operationId: adminGetDemoAccount
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemoAccount'
+      tags:
+      - Admin
+    put:
+      operationId: adminUpdateDemoAccount
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateDemoAccountDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemoAccount'
+      tags:
+      - Admin
+    delete:
+      operationId: adminDeleteDemoAccount
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemoAccount'
+      tags:
+      - Admin
+  /v2/admin/rental-place-user/search:
+    get:
+      operationId: adminSearchRentalPlaceUsers
+      parameters:
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSearchRentalPlaceUserPaginatedResultDto'
+      tags:
+      - Admin
+  /v2/admin/rental-place-user/{id}:
+    get:
+      operationId: adminGetRentalPlaceUserById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: withOrders
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminRentalPlaceUser'
+      tags:
+      - Admin
+  /v2/admin/rental-place-user/anonymisation/{id}:
+    put:
+      operationId: adminAnonymizeRentalPlaceUser
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Admin
+  /v2/admin/company/subscription/get-available-plans:
+    get:
+      operationId: adminGetAvailableSubscriptionPlans
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminAvailableSubscriptionPlansDto'
+      tags:
+      - Admin
+  /v2/admin/company/subscription/get-hyperline-plan/{planId}:
+    get:
+      operationId: adminGetHyperlinePlan
+      parameters:
+      - name: planId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HyperlinePlan'
+      tags:
+      - Admin
+  /v2/admin/company/subscription/get-available-products:
+    get:
+      operationId: adminGetAvailableSubscriptionProducts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminAvailableSubscriptionProductsDto'
+      tags:
+      - Admin
+  /v2/admin/company/subscription/get-hyperline-product/{productId}:
+    get:
+      operationId: adminGetHyperlineProduct
+      parameters:
+      - name: productId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/HyperlineProductFee'
+                - $ref: '#/components/schemas/HyperlineProductSeat'
+                - $ref: '#/components/schemas/HyperlineProductDynamic'
+                - $ref: '#/components/schemas/HyperlineProductCredit'
+      tags:
+      - Admin
+  /v2/admin/company/subscription/get-available-coupons:
+    get:
+      operationId: adminGetAvailableSubscriptionCoupons
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminAvailableCouponsDto'
+      tags:
+      - Admin
+  /v2/admin/company/subscription/launch-subscription-process:
+    post:
+      operationId: adminCompanyLaunchSubscriptionProcess
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyLaunchSubscriptionProcessDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LaunchSubscriptionProcessResultDto'
+      tags:
+      - Admin
+  /v2/admin/company/subscription/retry-subscription-process:
+    post:
+      operationId: adminCompanyRetrySubscriptionProcess
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCompanyRetryLaunchSubscriptionProcessDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Admin
+  /v2/admin/deepl-glossary:
+    post:
+      operationId: createGlossary
+      parameters: []
+      requestBody:
+        required: true
+        description: Upload a glossary CSV file
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                sourceLang:
+                  type: string
+                targetLang:
+                  type: string
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+    get:
+      operationId: listGlossaries
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlossaryResponseDto'
+      tags:
+      - Admin
+  /v2/admin/deepl-glossary/{glossaryId}:
+    delete:
+      operationId: deleteGlossary
+      parameters:
+      - name: glossaryId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+  /v2/admin/deepl-glossary/{glossaryId}/entries:
+    get:
+      operationId: getGlossaryEntries
+      parameters:
+      - name: glossaryId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Admin
+components:
+  schemas:
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    HyperlineProductPriceConfigurationBulkPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bulk
+        on_tier_incomplete:
+          enum:
+          - pro_rata
+          - pay_in_full
+          - do_not_charge
+          type:
+          - string
+          - 'null'
+        amount:
+          type: number
+        unit_count:
+          type: number
+        to:
+          type:
+          - number
+          - 'null'
+      required:
+      - type
+      - on_tier_incomplete
+      - amount
+      - unit_count
+      - to
+    AdminUserManagingPlace:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isAccountActivated:
+          type: boolean
+      required:
+      - id
+      - name
+      - isAccountActivated
+    DemoAccountProductStateModelFieldAnswer:
+      type: object
+      properties:
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductStateModelFieldAnswerOption'
+      required:
+      - answerType
+      - options
+    CompanyRentalPlaceDescriptionsDto:
+      type: object
+      properties:
+        fr:
+          type: string
+        en:
+          type: string
+      required:
+      - fr
+      - en
+    RentalPlaceStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        borderColor:
+          type: string
+        padding:
+          type: string
+    AdminRentalPlaceB2BCompanyDto:
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        user:
+          $ref: '#/components/schemas/CompanyUser'
+        status:
+          type: string
+      required:
+      - id
+      - slug
+      - name
+      - user
+      - status
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    PeriodicDiscount:
+      type: object
+      properties:
+        _id:
+          type: string
+        discountInPercentage:
+          type: number
+        startDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        endDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        applicableDate:
+          enum:
+          - CREATED_DATE
+          - START_DATE
+          type: string
+        scope:
+          default:
+          - ONLINE_STORE
+          type: array
+          items:
+            type: string
+            enum:
+            - ONLINE_STORE
+            - DASHBOARD
+      required:
+      - _id
+      - discountInPercentage
+      - startDate
+      - endDate
+      - applicableDate
+    RentalPlaceBannerInfo:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        block1:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+        block2:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+        block3:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+      required:
+      - style
+      - block1
+      - block2
+      - block3
+    RentalPlaceTextStyle:
+      type: object
+      properties:
+        color:
+          type: string
+        fontSize:
+          type: string
+        fontWeight:
+          type: string
+        fontStyle:
+          type: string
+    CompanyAdyenCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: adyen
+          enum:
+          - adyen
+        apiKey:
+          type: string
+        merchantAccount:
+          type: string
+        clientKey:
+          type: string
+        liveEndpointUrlPrefix:
+          type: string
+        store:
+          type: string
+      required:
+      - provider
+      - apiKey
+      - merchantAccount
+      - clientKey
+      - liveEndpointUrlPrefix
+      - store
+    AdminCompanyCreateOnlineDelivery:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminCompanyOnlineDeliveryRange'
+        returnDelivery:
+          type: boolean
+      required:
+      - activated
+      - ranges
+      - returnDelivery
+    RentalPlaceSearchBar:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        titleStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        button:
+          $ref: '#/components/schemas/RentalPlaceSearchBarButton'
+      required:
+      - style
+      - titleStyle
+      - button
+    CompanyOrderReminder:
+      type: object
+      properties:
+        emailOneDayBeforeOrderStart:
+          type: boolean
+        emailTemplateId:
+          type:
+          - string
+          - 'null'
+        bailLinkInEmail:
+          type: boolean
+        emailOneDayBeforeOrderEnd:
+          type: boolean
+        emailOnLokkiPayment:
+          type: boolean
+        emailOnFundsTransfer:
+          type: boolean
+        oneDayBeforeOrderEndEmailTemplateId:
+          type:
+          - string
+          - 'null'
+      required:
+      - emailOneDayBeforeOrderStart
+      - emailTemplateId
+      - bailLinkInEmail
+      - emailOneDayBeforeOrderEnd
+      - emailOnLokkiPayment
+      - emailOnFundsTransfer
+      - oneDayBeforeOrderEndEmailTemplateId
+    LocalizedReview:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleReview'
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - reviews
+    HyperlineProductPriceConfigurationBpsPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bps
+        from:
+          type: number
+        to:
+          type:
+          - number
+          - 'null'
+        percentage:
+          type: number
+        per_unit_cap:
+          type: number
+        per_unit_floor:
+          type: number
+        per_unit_fee:
+          type: number
+      required:
+      - type
+      - from
+      - to
+      - percentage
+      - per_unit_cap
+      - per_unit_floor
+      - per_unit_fee
+    CompanyRentalPlaceDto:
+      type: object
+      properties:
+        image:
+          type: string
+        additionalImages:
+          type: array
+          items:
+            type: string
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        showcaseProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyShowcaseProductDto'
+        team:
+          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
+        lokkiComment:
+          type: string
+      required:
+      - image
+      - additionalImages
+      - descriptions
+      - universes
+      - verticales
+      - showcaseProducts
+      - team
+      - lokkiComment
+    ProductModelLLDPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        calendarMonths:
+          type: number
+        id:
+          type: string
+      required:
+      - type
+      - label
+      - calendarMonths
+      - id
+    AdminImportCatalogueCSVResult:
+      type: object
+      properties:
+        createdProducts:
+          type: number
+        updatedProducts:
+          type: number
+        createdServices:
+          type: number
+        updatedServices:
+          type: number
+        skipped:
+          type: array
+          items:
+            $ref: '#/components/schemas/CsvProductSkippedEntry'
+      required:
+      - createdProducts
+      - updatedProducts
+      - createdServices
+      - updatedServices
+      - skipped
+    DemoAccountEventOption:
+      type: object
+      properties:
+        itemId:
+          type: string
+        price:
+          type: number
+      required:
+      - itemId
+      - price
+    CsvCustomerSkippedRow:
+      type: object
+      properties:
+        row:
+          type: number
+        name:
+          type: string
+        reason:
+          enum:
+          - MISSING_NAME
+          - DUPLICATE_IN_CSV
+          - ALREADY_EXISTS
+          - DB_CHECK_ERROR
+          - CREATE_ERROR
+          type: string
+      required:
+      - row
+      - name
+      - reason
+    AncvConnectSettings:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        shopId:
+          type:
+          - string
+          - 'null'
+      required:
+      - activated
+      - shopId
+    RentalPlaceMyShop:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/RentalPlaceText'
+        card:
+          $ref: '#/components/schemas/RentalPlaceMyShopCard'
+      required:
+      - title
+      - card
+    RentalPlaceFooter:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        linkColOne:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkColTwo:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkSocial:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkSocial'
+      required:
+      - style
+      - textStyle
+      - linkColOne
+      - linkColTwo
+      - linkSocial
+    DemoAccountProductStateModelFieldAnswerOption:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    AdminAccountPasswordDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        password:
+          type: string
+      required:
+      - userId
+      - password
+    CompanyUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        lastConnected:
+          format: date-time
+          type: string
+        connectionDates:
+          type: array
+          items:
+            format: date-time
+            type: string
+        isAccountActivated:
+          type: boolean
+        role:
+          type: string
+        signedUpWith:
+          type: string
+          enum:
+          - google
+          - apple
+      required:
+      - name
+      - email
+      - id
+    RentalPlaceInfos:
+      type: object
+      properties:
+        id:
+          type: string
+        owners:
+          type: array
+          items:
+            type: string
+        navBar:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        mainInfo:
+          $ref: '#/components/schemas/RentalPlaceMainInfo'
+        searchBar:
+          $ref: '#/components/schemas/RentalPlaceSearchBar'
+        mainImages:
+          $ref: '#/components/schemas/RentalPlaceMainImages'
+        texts:
+          $ref: '#/components/schemas/RentalPlaceTexts'
+        categoryTitle:
+          $ref: '#/components/schemas/RentalPlaceText'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceCategory'
+        ads:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceAd'
+        blockInfo:
+          $ref: '#/components/schemas/RentalPlaceBlockInfo'
+        bannerInfo:
+          $ref: '#/components/schemas/RentalPlaceBannerInfo'
+        footer:
+          $ref: '#/components/schemas/RentalPlaceFooter'
+        myShop:
+          $ref: '#/components/schemas/RentalPlaceMyShop'
+        metaTitle:
+          type: string
+        metaDescription:
+          type: string
+        customScript:
+          type: string
+      required:
+      - id
+      - owners
+      - navBar
+      - mainInfo
+      - searchBar
+      - mainImages
+      - texts
+      - categoryTitle
+      - categories
+      - ads
+      - blockInfo
+      - bannerInfo
+      - footer
+      - myShop
+      - metaTitle
+      - metaDescription
+      - customScript
+    AvailableHyperlineCouponPercent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - percent
+        discount_percent:
+          type: number
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        expiration_date:
+          type:
+          - string
+          - 'null'
+        redemption_limit:
+          type:
+          - number
+          - 'null'
+        created_at:
+          type: string
+      required:
+      - type
+      - discount_percent
+      - id
+      - name
+      - description
+      - expiration_date
+      - redemption_limit
+      - created_at
+    OrderRP:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        type:
+          type: string
+          enum:
+          - LCD
+          - LLD
+          - Event
+          - LCDRequest
+          - LCDRequestAccepted
+      required:
+      - orderId
+      - type
+    AdminRentalPlaceB2BUpdateDto:
+      type: object
+      properties:
+        maxCompaniesNb:
+          type: number
+      required:
+      - maxCompaniesNb
+    CompanyHyperlineSubscriptionData:
+      type: object
+      properties:
+        isPaidByThirdParty:
+          type: boolean
+        customerId:
+          type: string
+        subscriptionId:
+          type: string
+        usageCustomerId:
+          type:
+          - string
+          - 'null'
+        usageSubscriptionId:
+          type:
+          - string
+          - 'null'
+        subscriptionCheckoutStatus:
+          type:
+          - string
+          - 'null'
+          enum:
+          - PENDING
+          - COMPLETED
+          - FAILED
+      required:
+      - isPaidByThirdParty
+      - customerId
+      - subscriptionId
+      - usageCustomerId
+      - usageSubscriptionId
+      - subscriptionCheckoutStatus
+    HyperlinePlanCommitmentOnce:
+      type: object
+      properties:
+        period:
+          type: string
+      required:
+      - period
+    DemoAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        productModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductModel'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProduct'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountService'
+        packs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountPack'
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountCustomer'
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrder'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountUniverse'
+        productStateModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductStateModel'
+        description:
+          type: string
+        coverImageUrl:
+          type: string
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        cgl:
+          $ref: '#/components/schemas/LocalizedContent'
+        productSurveys:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductSurvey'
+        isTrialAccount:
+          type: boolean
+        isVisibilityOnboarding:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountEvent'
+        orderEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderEvent'
+        orderLLDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderLLD'
+      required:
+      - id
+      - name
+      - verticales
+      - productModels
+      - products
+      - services
+      - packs
+      - customers
+      - orders
+      - universes
+      - productStateModels
+      - description
+      - coverImageUrl
+      - onlineStoreDescription
+      - cgl
+      - productSurveys
+      - isTrialAccount
+      - isVisibilityOnboarding
+      - events
+      - orderEvents
+      - orderLLDs
+    AdminRentalPlaceB2BCreateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        isDemo:
+          type: boolean
+        companyName:
+          type: string
+        groupName:
+          type: string
+        slug:
+          type: string
+        maxCompaniesNb:
+          type: number
+      required:
+      - name
+      - email
+      - password
+      - isDemo
+      - companyName
+      - groupName
+      - slug
+      - maxCompaniesNb
+    DemoAccountProductSurveyField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+        selectAnswers:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - value
+      - type
+      - selectAnswers
+    AdminSearchUserPaginatedResultDto:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminUser'
+        totalCount:
+          type: number
+      required:
+      - users
+      - totalCount
+    RentalPlaceSearchBarButton:
+      type: object
+      properties:
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+      required:
+      - textStyle
+      - style
+    AdminCompanyLaunchSubscriptionProcessSubscriptionDto:
+      type: object
+      properties:
+        subscriptionPlanId:
+          type: string
+        subscriptionStartDate:
+          format: date-time
+          type: string
+        paymentMethodType:
+          type: string
+          enum:
+          - card
+          - direct_debit
+          - direct_debit_ach
+          - direct_debit_bacs
+          - transfer
+          - transfer_automated
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminCompanyLaunchSubscriptionProcessSubscriptionProductDto'
+        coupons:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminCompanyLaunchSubscriptionProcessSubscriptionCouponDto'
+        commitmentInterval:
+          $ref: '#/components/schemas/HyperlinePlanCommitmentInterval'
+      required:
+      - subscriptionPlanId
+      - subscriptionStartDate
+      - paymentMethodType
+      - products
+      - coupons
+    CreateUpdateDemoAccountDto:
+      type: object
+      properties:
+        name:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        productModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductModel'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProduct'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountService'
+        packs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountPack'
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountCustomer'
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrder'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountUniverse'
+        productStateModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductStateModel'
+        description:
+          type: string
+        coverImageUrl:
+          type: string
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        cgl:
+          $ref: '#/components/schemas/LocalizedContent'
+        productSurveys:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductSurvey'
+        isTrialAccount:
+          type: boolean
+        isVisibilityOnboarding:
+          type: boolean
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountEvent'
+        orderEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderEvent'
+        orderLLDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderLLD'
+      required:
+      - name
+      - verticales
+      - productModels
+      - products
+      - services
+      - packs
+      - customers
+      - orders
+      - universes
+      - productStateModels
+      - description
+      - coverImageUrl
+      - onlineStoreDescription
+      - cgl
+      - productSurveys
+      - isTrialAccount
+      - isVisibilityOnboarding
+      - events
+      - orderEvents
+      - orderLLDs
+    RentalPlaceUserAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    SocialMedia:
+      type: object
+      properties:
+        facebook:
+          type: string
+        twitter:
+          type: string
+        instagram:
+          type: string
+        linkedIn:
+          type: string
+        tiktok:
+          type: string
+      required:
+      - facebook
+      - twitter
+      - instagram
+      - linkedIn
+      - tiktok
+    AvailableSubscriptionProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        public_description:
+          type:
+          - string
+          - 'null'
+        type:
+          type: string
+          enum:
+          - flat_fee
+          - seat
+          - dynamic
+          - credit
+      required:
+      - id
+      - name
+      - description
+      - public_description
+      - type
+    HyperlineProductPriceConfigurationPackagedPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - packaged
+        on_bucket_incomplete:
+          enum:
+          - pro_rata
+          - pay_in_full
+          - do_not_charge
+          type: string
+        amount:
+          type: number
+        unit_count:
+          type: number
+        from:
+          type: number
+        to:
+          type:
+          - number
+          - 'null'
+      required:
+      - type
+      - on_bucket_incomplete
+      - amount
+      - unit_count
+      - from
+      - to
+    RentalPlaceMainImagesText:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+        style:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+      required:
+      - value
+      - style
+    TulipSettings:
+      type: object
+      properties:
+        state:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        initialState:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nContent:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+      - i18nName
+      - i18nContent
+      - i18nTitle
+      - displayedOptions
+    Trackers:
+      type: object
+      properties:
+        ga4Id:
+          type:
+          - string
+          - 'null'
+          pattern: ga4Pattern
+        googleAdsId:
+          type:
+          - string
+          - 'null'
+          pattern: googleAdsPattern
+        metaPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: metaPixelPattern
+        tiktokPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: tiktokPixelPattern
+        linkedinPartnerId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinPartnerPattern
+        linkedinConversionId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinConversionPattern
+        lastUpdatedBy:
+          type: string
+        lastUpdatedAt:
+          format: date-time
+          type: string
+    CompanyTrialInfos:
+      type: object
+      properties:
+        productsNumber:
+          type: string
+          enum:
+          - '0'
+          - 1 - 10
+          - 11 - 20
+          - 21 - 50
+          - 51 - 100
+          - 101 - 250
+          - '> 250'
+        trialEndsAt:
+          format: date-time
+          type: string
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          format: date-time
+          type: string
+      required:
+      - trialEndsAt
+    HyperlinePlan:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HyperlinePlanProductFlatFee'
+            - $ref: '#/components/schemas/HyperlinePlanProductSeat'
+            - $ref: '#/components/schemas/HyperlinePlanProductDynamic'
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - products
+      - id
+      - name
+    HyperlineProductSeat:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - seat
+        price_configurations:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HyperlineProductPriceConfigurationVolume'
+            - $ref: '#/components/schemas/HyperlineProductPriceConfigurationPackaged'
+            - $ref: '#/components/schemas/HyperlineProductPriceConfigurationBulk'
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        public_description:
+          type:
+          - string
+          - 'null'
+        properties:
+          type:
+          - object
+          - 'null'
+        custom_properties:
+          type:
+          - object
+          - 'null'
+      required:
+      - type
+      - price_configurations
+      - id
+      - name
+      - description
+      - public_description
+      - properties
+      - custom_properties
+    ExternalCompanyAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    DemoAccountOrderEventPersonInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        pricing:
+          type: string
+        infos:
+          type: object
+        categoryItems:
+          type: object
+      required:
+      - id
+      - name
+      - pricing
+      - infos
+      - categoryItems
+    HyperlineProductPriceConfigurationVolume:
+      type: object
+      properties:
+        billing_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        commitment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        type:
+          type: string
+          enum:
+          - volume
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationVolumePrice'
+        id:
+          type: string
+        currency:
+          type: string
+        country:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+        updated_at:
+          type: string
+      required:
+      - billing_interval
+      - commitment_interval
+      - type
+      - prices
+      - id
+      - currency
+      - country
+      - plan_id
+      - updated_at
+    DemoAccountPack:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductPrice'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountPackOption'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountPackCategory'
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        onlineDescription:
+          type: string
+        depositAmount:
+          type: number
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        packImage:
+          type: string
+        packModelId:
+          type: string
+        type:
+          type: string
+          enum:
+          - PRODUCT
+          - CATEGORY
+        surveyId:
+          type: string
+      required:
+      - id
+      - name
+      - prices
+      - options
+      - categories
+      - relatedProducts
+      - onlineDescription
+      - depositAmount
+      - rentalType
+      - packImage
+      - packModelId
+    RentalPlaceFile:
+      type: object
+      properties:
+        id:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+      required:
+      - filename
+      - url
+    GoogleReview:
+      type: object
+      properties:
+        rating:
+          type: number
+        name:
+          type: string
+        comment:
+          type: string
+        authorPhotoUrl:
+          type:
+          - string
+          - 'null'
+        publishTime:
+          format: date-time
+          type: string
+      required:
+      - rating
+      - name
+      - comment
+      - authorPhotoUrl
+      - publishTime
+    ReservationTime:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - start
+          - end
+        time:
+          type: string
+      required:
+      - id
+      - type
+      - time
+    CompanyAccess:
+      type: object
+      properties:
+        onlineStoreCreateOrder:
+          type: boolean
+        onlineStoreCreateOrderLLD:
+          type: boolean
+        productsUnavailableAfterOrder:
+          type: boolean
+        lcd:
+          type: boolean
+        lld:
+          type: boolean
+        priceExcludingTaxes:
+          type: boolean
+        useSeveralRentalPoints:
+          type: boolean
+        useOnlineStoreContract:
+          type: boolean
+        multipleFundsTransfer:
+          $ref: '#/components/schemas/MultipleFundsTransfer'
+        useOnlineBail:
+          type: boolean
+        lldOnlineBail:
+          type: boolean
+        payOnSite:
+          type: boolean
+        onlineStorePayment:
+          type: boolean
+        assuranceTulipInclusion:
+          type: boolean
+        assuranceTulip:
+          type: boolean
+        onlineStoreSlots:
+          type: boolean
+        lokkiEvent:
+          type: boolean
+        onlineHideHeader:
+          type: boolean
+        rentalPlace:
+          type: boolean
+        advancedStatistics:
+          type: boolean
+        checkoutSoftware:
+          type: string
+          enum:
+          - NONE
+          - G8
+          - SQUARE
+          - SHIFTER
+        lokkiWorkshop:
+          type: boolean
+        onlineStoreStyle:
+          type: string
+          enum:
+          - none
+          - basic
+          - advanced
+        orderAdditionalTime:
+          type: boolean
+        severalRentalPoints:
+          type: boolean
+        customerB2B:
+          type: boolean
+        corporate:
+          type: string
+          enum:
+          - NONE
+          - BMW
+          - BOULANGER
+          - CARREFOUR
+          - DECATHLON
+          - DECATHLON_CANADA
+          - DECATHLON_REUNION
+          - ESPACE_EMERAUDE
+          - LECLERC
+          - MONOPRIX
+          - PELLENC
+          - STATION_BEES
+          - SKISET
+          - SKIMIUM
+          - MWHEEL
+          - NATURA_PRO
+          - MR_BRICOLAGE
+          - CORA
+          - MR_JARDINAGE
+          - CAMARA
+          - NETSKI
+          - SPORT_2000
+        lokkiOffline:
+          type: boolean
+        lokkiPayment:
+          type: boolean
+        onlineStoreVersion:
+          type: string
+          enum:
+          - V1_SUBDOMAIN
+          - V2_RENTALPLACE
+        rentalPlaceNetwork:
+          $ref: '#/components/schemas/RentalPlaceNetwork'
+        rentalPlaceShowBreadcrumb:
+          type: boolean
+        quoteRequests:
+          type: boolean
+      required:
+      - onlineStoreCreateOrder
+      - onlineStoreCreateOrderLLD
+      - productsUnavailableAfterOrder
+      - lcd
+      - lld
+      - priceExcludingTaxes
+      - useSeveralRentalPoints
+      - useOnlineStoreContract
+      - multipleFundsTransfer
+      - useOnlineBail
+      - lldOnlineBail
+      - payOnSite
+      - onlineStorePayment
+      - assuranceTulipInclusion
+      - assuranceTulip
+      - onlineStoreSlots
+      - lokkiEvent
+      - onlineHideHeader
+      - rentalPlace
+      - advancedStatistics
+      - checkoutSoftware
+      - lokkiWorkshop
+      - onlineStoreStyle
+      - orderAdditionalTime
+      - severalRentalPoints
+      - customerB2B
+      - corporate
+      - lokkiOffline
+      - lokkiPayment
+      - onlineStoreVersion
+      - rentalPlaceNetwork
+      - rentalPlaceShowBreadcrumb
+      - quoteRequests
+    AdminSearchRentalPlaceB2BPaginatedResultDto:
+      type: object
+      properties:
+        managingPlaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagingPlace'
+        totalCount:
+          type: number
+      required:
+      - managingPlaces
+      - totalCount
+    EventTag:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - name
+    DemoAccountEventCategoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+      required:
+      - id
+      - price
+    DemoAccountProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductField'
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductPrice'
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        productImage:
+          type: string
+        productModelId:
+          type: string
+        surveyId:
+          type: string
+        number:
+          type: number
+        onlineDescription:
+          type: string
+        depositAmount:
+          type: number
+        insurance:
+          $ref: '#/components/schemas/DemoAccountProductInsurance'
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductAttribute'
+      required:
+      - id
+      - name
+      - fields
+      - prices
+      - relatedProducts
+      - productImage
+      - productModelId
+      - number
+      - onlineDescription
+      - depositAmount
+      - insurance
+      - rentalType
+    DemoAccountProductModel:
+      type: object
+      properties:
+        prices:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/DemoAccountProductModelPriceSpecific'
+            - $ref: '#/components/schemas/DemoAccountProductModelPriceRange'
+            - $ref: '#/components/schemas/DemoAccountProductModelLLDPrice'
+        id:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            type: string
+        model:
+          type: string
+        productVerticale:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+      required:
+      - prices
+      - id
+      - name
+      - fields
+      - productVerticale
+      - rentalType
+    AdminCompanyCreateTrialInfosDto:
+      type: object
+      properties:
+        trialEndsAt:
+          format: date-time
+          type: string
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          type:
+          - string
+          - 'null'
+        productsNumber:
+          type: string
+      required:
+      - trialEndsAt
+      - hasRentalActivity
+      - launchDate
+      - productsNumber
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    DemoAccountOrderLLD:
+      type: object
+      properties:
+        id:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderProduct'
+        addDay:
+          type: number
+        months:
+          type: number
+        timeStart:
+          type: string
+        customerId:
+          type: string
+        delivery:
+          $ref: '#/components/schemas/DemoAccountOrderDelivery'
+        discount:
+          type: number
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderStatus'
+        remark:
+          type: string
+        displayColor:
+          type: string
+      required:
+      - id
+      - products
+      - addDay
+      - months
+      - timeStart
+      - customerId
+      - delivery
+      - discount
+      - status
+      - remark
+      - displayColor
+    AdminAccountHubspotIdDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        hubspotId:
+          type: string
+      required:
+      - userId
+      - hubspotId
+    AdminSetProductModelVerticaleDto:
+      type: object
+      properties:
+        productVerticaleCategory:
+          type: string
+      required:
+      - productVerticaleCategory
+    DemoAccountProductField:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - name
+      - value
+      - isTagged
+    RentalPlaceBlockInfo:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        title:
+          $ref: '#/components/schemas/RentalPlaceText'
+        block1:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+        block2:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+        block3:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+        button:
+          $ref: '#/components/schemas/RentalPlaceBlockButton'
+      required:
+      - style
+      - title
+      - block1
+      - block2
+      - block3
+      - button
+    HyperlineProductPriceConfigurationVolumePrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - volume
+        on_tier_incomplete:
+          enum:
+          - pro_rata
+          - pay_in_full
+          - do_not_charge
+          type:
+          - string
+          - 'null'
+        amount:
+          type: number
+        unit_count:
+          type: number
+        from:
+          type: number
+        to:
+          type:
+          - number
+          - 'null'
+      required:
+      - type
+      - on_tier_incomplete
+      - amount
+      - unit_count
+      - from
+      - to
+    CompanyBailMaxAmount:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        maxAmount:
+          type: number
+      required:
+      - activated
+      - maxAmount
+    CompanyRentalPlaceTeamDto:
+      type: object
+      properties:
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        image:
+          type: string
+        video:
+          type: string
+        teamName:
+          type: string
+      required:
+      - descriptions
+      - image
+      - video
+      - teamName
+    AdminAccountSlackIdDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        slackId:
+          type: string
+      required:
+      - userId
+      - slackId
+    AdminSearchCompanyCsvDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    CompanyCategoryDiscount:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - categoryIds
+      - ranges
+    CompanyMailSender:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    DemoAccountProductPrice:
+      type: object
+      properties:
+        priceId:
+          type: string
+        label:
+          type: string
+        price:
+          type: number
+      required:
+      - priceId
+      - label
+      - price
+    CompanySkisetInfos:
+      type: object
+      properties:
+        id:
+          type: number
+        trademark:
+          type: string
+        resort_id:
+          type: number
+        country_id:
+          type: number
+        member_id:
+          type: number
+        name:
+          type: string
+        member:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+      - id
+      - trademark
+      - resort_id
+      - country_id
+      - member_id
+      - name
+      - member
+      - city
+      - country
+    CompanyDelivery:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+        freeDeliveryActivated:
+          type: boolean
+        freeDeliveryMinimumType:
+          type: string
+          enum:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
+          type: number
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - activated
+      - ranges
+      - deliveryOnly
+      - returnDelivery
+      - freeDeliveryActivated
+      - freeDeliveryMinimumType
+      - freeDeliveryMinimumVal
+      - excludedCities
+    HyperlineProductPriceConfigurationInterval:
+      type: object
+      properties:
+        period:
+          type: string
+          enum:
+          - weeks
+          - months
+          - years
+        count:
+          type: number
+      required:
+      - period
+      - count
+    AdminCompanyCreateDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        isDemo:
+          type: boolean
+        logo:
+          type: string
+        companyName:
+          type: string
+        headerPicture:
+          type: string
+        slug:
+          type: string
+        openTime:
+          type: string
+        closeTime:
+          type: string
+        siret:
+          type: string
+        address:
+          type: string
+        longitude:
+          type: number
+        latitude:
+          type: number
+        phone:
+          type: string
+        defaultCalendarView:
+          type: string
+        catalogToCreate:
+          type: string
+        access:
+          $ref: '#/components/schemas/AdminCompanyCreateAccessDto'
+        demoDate:
+          format: date-time
+          type: string
+        pipedrive:
+          type: string
+        hubspot:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        websiteLink:
+          type: string
+        createTrialInfos:
+          $ref: '#/components/schemas/AdminCompanyCreateTrialInfosDto'
+        userCreatedFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        plgHasRentalActivity:
+          type: boolean
+        promoCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminCreateCompanyPromoCodeDto'
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPoint'
+        onlineDelivery:
+          $ref: '#/components/schemas/AdminCompanyCreateOnlineDelivery'
+        onlineStoreDelivery:
+          $ref: '#/components/schemas/AdminCompanyCreateOnlineStoreDelivery'
+        eventDirectOrder:
+          type: boolean
+        addressComponents:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        accountType:
+          enum:
+          - PLATFORM
+          - VISIBILITY_ONE
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        isActiveTestCompany:
+          type: boolean
+        fromE2E:
+          type: boolean
+      required:
+      - name
+      - email
+      - password
+      - isDemo
+      - companyName
+      - slug
+      - openTime
+      - closeTime
+      - access
+      - verticales
+    HyperlineProductCredit:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - credit
+        price_configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationBundle'
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        public_description:
+          type:
+          - string
+          - 'null'
+        properties:
+          type:
+          - object
+          - 'null'
+        custom_properties:
+          type:
+          - object
+          - 'null'
+      required:
+      - type
+      - price_configurations
+      - id
+      - name
+      - description
+      - public_description
+      - properties
+      - custom_properties
+    AdminCompanyCreateAccessDto:
+      type: object
+      properties:
+        lcd:
+          type: boolean
+        lld:
+          type: boolean
+        lokkiEvent:
+          type: boolean
+        lokkiWorkshop:
+          type: boolean
+        onlineStoreCreateOrder:
+          type: boolean
+        onlineStoreCreateOrderLLD:
+          type: boolean
+        severalRentalPoints:
+          type: boolean
+        lldOnlineBail:
+          type: boolean
+        rentalPlace:
+          type: boolean
+    EventUniverse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+      required:
+      - id
+      - name
+      - imageUrl
+    AdminCompanyListAccessDto:
+      type: object
+      properties:
+        lcd:
+          type: boolean
+        lld:
+          type: boolean
+        lokkiEvent:
+          type: boolean
+        lokkiWorkshop:
+          type: boolean
+        lokkiPayment:
+          type: boolean
+      required:
+      - lcd
+      - lld
+      - lokkiEvent
+      - lokkiWorkshop
+      - lokkiPayment
+    HyperlineProductPriceConfigurationFee:
+      type: object
+      properties:
+        billing_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        commitment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        type:
+          type: string
+          enum:
+          - fee
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationFeePrice'
+        id:
+          type: string
+        currency:
+          type: string
+        country:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+        updated_at:
+          type: string
+      required:
+      - billing_interval
+      - commitment_interval
+      - type
+      - prices
+      - id
+      - currency
+      - country
+      - plan_id
+      - updated_at
+    Company:
+      type: object
+      properties:
+        addressComponents:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        paymentProvider:
+          oneOf:
+          - $ref: '#/components/schemas/CompanyAdyenCredentials'
+          - $ref: '#/components/schemas/CompanyStripeCredentials'
+        paymentProviderEvent:
+          oneOf:
+          - $ref: '#/components/schemas/CompanyAdyenCredentials'
+          - $ref: '#/components/schemas/CompanyStripeCredentials'
+        id:
+          type: string
+        slug:
+          type: string
+        redirectSlugs:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        description:
+          type: string
+        address:
+          type: string
+        addressLatitude:
+          type: string
+        addressLongitude:
+          type: string
+        logoURL:
+          type: string
+        vat:
+          type: number
+        vatName:
+          type: string
+        vatWorkshop:
+          type: number
+        hyperlineTaxRate:
+          type: number
+        generalConditions:
+          $ref: '#/components/schemas/LocalizedContent'
+        generalConditionsLLD:
+          $ref: '#/components/schemas/LocalizedContent'
+        cancellationPolicy:
+          $ref: '#/components/schemas/CancellationPolicyDto'
+        newsletterSubscription:
+          type: boolean
+        onlineStoreConfig:
+          $ref: '#/components/schemas/OnlineStoreConfig'
+        isGeneralConditionsLCDModified:
+          type: boolean
+        isDemo:
+          type: boolean
+        accountStatus:
+          enum:
+          - ACTIVE
+          - DEMO
+          - TRIAL
+          - ARCHIVED
+          type: string
+        accountType:
+          enum:
+          - PLATFORM
+          - VISIBILITY_ONE
+          type: string
+        calendarView:
+          type: string
+        user:
+          $ref: '#/components/schemas/CompanyUser'
+        phoneNumber:
+          type: string
+        companyMailSender:
+          $ref: '#/components/schemas/CompanyMailSender'
+        companyAccess:
+          $ref: '#/components/schemas/CompanyAccess'
+        siret:
+          type: string
+        legalName:
+          type: string
+        headquartersAddress:
+          type: string
+        companyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        group:
+          type: string
+        companyCurrency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        timezone:
+          type: string
+        companyOpinionBooster:
+          $ref: '#/components/schemas/CompanyOpinionBooster'
+        orderReminder:
+          $ref: '#/components/schemas/CompanyOrderReminder'
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPoint'
+        workshopLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopLocation'
+        onlineStoreRentalPointType:
+          enum:
+          - SAME
+          - DIFFERENT
+          type: string
+        partPayment:
+          $ref: '#/components/schemas/PartPayment'
+        partPaymentEvent:
+          $ref: '#/components/schemas/PartPayment'
+        onlineStoreSlots:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
+        timeProductsUnavailableAfterOrder:
+          type: string
+        dayProductsUnavailableAfterOrder:
+          type: number
+        dayType:
+          enum:
+          - full-24h
+          - opening-hours
+          type: string
+        timeProductsUnavailableBeforeOrder:
+          type: string
+        dayProductsUnavailableBeforeOrder:
+          type: number
+        magicSchedule:
+          type: boolean
+        enableQrCode:
+          type: boolean
+        templateEmailIdOnlineStore:
+          type: string
+        rentalPlaceInfos:
+          $ref: '#/components/schemas/CompanyRentalPlaceDto'
+        tulipSettings:
+          $ref: '#/components/schemas/TulipSettings'
+        ancvConnectSettings:
+          $ref: '#/components/schemas/AncvConnectSettings'
+        productStateInfo:
+          $ref: '#/components/schemas/ProductStateInfo'
+        eventCgu:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentCustomFields:
+          $ref: '#/components/schemas/CompanyDocumentCustomFieldsDto'
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+        isArchived:
+          type: boolean
+        hasRentalPlaceOrder:
+          type: boolean
+        lifecycleEvents:
+          $ref: '#/components/schemas/CompanyLifecycleEvents'
+        csInfos:
+          $ref: '#/components/schemas/CompanyCsInfos'
+        squareCredentials:
+          allOf:
+          - $ref: '#/components/schemas/SquareCredentials'
+        googleRating:
+          $ref: '#/components/schemas/GoogleRating'
+        responseDuration:
+          $ref: '#/components/schemas/CompanyResponseDuration'
+        openTime:
+          type: string
+        closeTime:
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CompanySkisetInfos'
+        createdAt:
+          format: date-time
+          type: string
+        documentColor:
+          type: string
+        quickOrderDefaultMode:
+          $ref: '#/components/schemas/CompanyDefaultQuickOrderMode'
+        automaticInternalStartDateAttribution:
+          type: boolean
+        socialMedia:
+          $ref: '#/components/schemas/SocialMedia'
+        offlinePin:
+          type: string
+        internalPaymentMethods:
+          $ref: '#/components/schemas/LokkiPaymentMethods'
+        onlineStorePaymentMethods:
+          $ref: '#/components/schemas/LokkiPaymentMethods'
+        lokkiPaymentTermsConditionsHistory:
+          $ref: '#/components/schemas/LokkiPaymentTermsConditionsHistory'
+        fee:
+          $ref: '#/components/schemas/CompanyGlobalFee'
+        proposedRentalPlaceCommission:
+          $ref: '#/components/schemas/ProposedRentalPlaceCommission'
+        trialInfos:
+          $ref: '#/components/schemas/CompanyTrialInfos'
+        marketing:
+          $ref: '#/components/schemas/MarketingSettings'
+        periodicDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PeriodicDiscount'
+        hasOrders:
+          type: boolean
+      required:
+      - id
+      - slug
+      - redirectSlugs
+      - name
+      - description
+      - address
+      - addressLatitude
+      - addressLongitude
+      - logoURL
+      - vat
+      - vatName
+      - vatWorkshop
+      - hyperlineTaxRate
+      - generalConditions
+      - generalConditionsLLD
+      - cancellationPolicy
+      - newsletterSubscription
+      - onlineStoreConfig
+      - isDemo
+      - accountStatus
+      - accountType
+      - calendarView
+      - user
+      - phoneNumber
+      - companyMailSender
+      - companyAccess
+      - siret
+      - legalName
+      - headquartersAddress
+      - companyBailMaxAmount
+      - companyBailEventMaxAmount
+      - companyBailLLDMaxAmount
+      - internalCompanyBailMaxAmount
+      - internalCompanyBailEventMaxAmount
+      - internalCompanyBailLLDMaxAmount
+      - group
+      - companyCurrency
+      - timezone
+      - companyOpinionBooster
+      - orderReminder
+      - rentalPoints
+      - workshopLocations
+      - onlineStoreRentalPointType
+      - partPayment
+      - partPaymentEvent
+      - onlineStoreSlots
+      - timeProductsUnavailableAfterOrder
+      - dayProductsUnavailableAfterOrder
+      - timeProductsUnavailableBeforeOrder
+      - dayProductsUnavailableBeforeOrder
+      - magicSchedule
+      - enableQrCode
+      - templateEmailIdOnlineStore
+      - rentalPlaceInfos
+      - tulipSettings
+      - ancvConnectSettings
+      - productStateInfo
+      - eventCgu
+      - documentCustomFields
+      - categoryDiscounts
+      - isArchived
+      - squareCredentials
+      - openTime
+      - closeTime
+      - createdAt
+      - documentColor
+      - quickOrderDefaultMode
+      - automaticInternalStartDateAttribution
+      - socialMedia
+      - lokkiPaymentTermsConditionsHistory
+      - fee
+    MarketingSettings:
+      type: object
+      properties:
+        trackers:
+          $ref: '#/components/schemas/Trackers'
+      required:
+      - trackers
+    HyperlineProductPriceConfigurationPackaged:
+      type: object
+      properties:
+        billing_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        commitment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        type:
+          type: string
+          enum:
+          - packaged
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationPackagedPrice'
+        id:
+          type: string
+        currency:
+          type: string
+        country:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+        updated_at:
+          type: string
+      required:
+      - billing_interval
+      - commitment_interval
+      - type
+      - prices
+      - id
+      - currency
+      - country
+      - plan_id
+      - updated_at
+    AdminCompanyRetryLaunchSubscriptionProcessDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        customerEmail:
+          type: string
+        password:
+          type: string
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - companyId
+      - customerEmail
+      - password
+      - lang
+    HyperlineProductPriceConfigurationBulk:
+      type: object
+      properties:
+        billing_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        commitment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        type:
+          type: string
+          enum:
+          - bulk
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationBulkPrice'
+        id:
+          type: string
+        currency:
+          type: string
+        country:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+        updated_at:
+          type: string
+      required:
+      - billing_interval
+      - commitment_interval
+      - type
+      - prices
+      - id
+      - currency
+      - country
+      - plan_id
+      - updated_at
+    AdminUpdateCsSupportRequestedDto:
+      type: object
+      properties:
+        requested:
+          type: boolean
+      required:
+      - requested
+    AdminSearchCompanyMapPaginatedResultDto:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyMap'
+        totalCount:
+          type: number
+      required:
+      - companies
+      - totalCount
+    AdminCompanyListItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        accountType:
+          type: string
+          enum:
+          - PLATFORM
+          - VISIBILITY_ONE
+        user:
+          $ref: '#/components/schemas/AdminCompanyListUserDto'
+        feeRentalPlace:
+          $ref: '#/components/schemas/AdminCompanyListFeeDto'
+        companyAccess:
+          $ref: '#/components/schemas/AdminCompanyListAccessDto'
+        paymentProvider:
+          $ref: '#/components/schemas/AdminCompanyListPaymentProviderDto'
+        hasOrders:
+          type: boolean
+        hasRentalPlaceOrder:
+          type: boolean
+        hasLokkiPayment:
+          type: boolean
+      required:
+      - id
+      - name
+      - accountType
+      - user
+      - feeRentalPlace
+      - companyAccess
+      - hasOrders
+      - hasRentalPlaceOrder
+      - hasLokkiPayment
+    ServiceField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    ManagingPlaceUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      required:
+      - name
+      - email
+    DemoAccountOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderProduct'
+        addDay:
+          type: number
+        time:
+          type: number
+        timeStart:
+          type: string
+        customerId:
+          type: string
+        delivery:
+          $ref: '#/components/schemas/DemoAccountOrderDelivery'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderPayment'
+        discount:
+          type: number
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderStatus'
+        remark:
+          type: string
+        labelCalendar:
+          type: string
+        displayColor:
+          type: string
+        isRequest:
+          type: boolean
+      required:
+      - id
+      - products
+      - addDay
+      - time
+      - timeStart
+      - customerId
+      - delivery
+      - payments
+      - discount
+      - status
+      - remark
+      - labelCalendar
+      - displayColor
+      - isRequest
+    ManagingPlaceCompany:
+      type: object
+      properties:
+        companyId:
+          type: string
+        status:
+          type: string
+      required:
+      - companyId
+      - status
+    RentalPlaceNetworkUpdatedBy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    DemoAccountPackOption:
+      type: object
+      properties:
+        name:
+          type: string
+        products:
+          type: array
+          items:
+            type: string
+        services:
+          type: array
+          items:
+            type: string
+      required:
+      - name
+      - products
+      - services
+    AdminArchiveCompanyDto:
+      type: object
+      properties:
+        archive:
+          type: boolean
+        reason:
+          type: string
+          enum:
+          - CHURN
+          - NO_SIGN
+          - VISIBILITY_ACCOUNT_CREATION
+        scheduledChurnDate:
+          format: date-time
+          type: string
+      required:
+      - archive
+    RentalPlaceMainInfo:
+      type: object
+      properties:
+        font:
+          type: string
+          enum:
+          - DM Sans
+          - MontSerrat
+          - Open Sans
+          - Roboto Condensed
+          - Roboto
+          - PT Sans
+          - Poppins
+          - Lato
+          - Raleway
+          - Ubuntu
+          - Source Sans Pro
+        accentColor:
+          type: string
+        textColor:
+          type: string
+        backgroundColor:
+          type: string
+        favicon:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        logo:
+          $ref: '#/components/schemas/RentalPlaceFile'
+      required:
+      - font
+      - accentColor
+      - textColor
+      - backgroundColor
+      - favicon
+      - logo
+    CsvProductSkippedEntry:
+      type: object
+      properties:
+        name:
+          type: string
+        reason:
+          enum:
+          - INVALID_TYPE
+          - CATEGORY_NOT_FOUND
+          - CREATE_ERROR
+          - UPDATE_ERROR
+          type: string
+      required:
+      - name
+      - reason
+    RentalPlaceBlock:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        style:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+      required:
+      - image
+      - text
+      - style
+    AdminCompanyListUserDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+      required:
+      - id
+      - name
+      - email
+    DemoAccountOrderPayment:
+      type: object
+      properties:
+        paymentMethod:
+          type: string
+      required:
+      - paymentMethod
+    RentalPlaceNetwork:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        updatedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        updatedBy:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceNetworkUpdatedBy'
+      required:
+      - enabled
+      - updatedAt
+      - updatedBy
+    AdminCompanyLaunchSubscriptionProcessDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        hubspot:
+          type: string
+        customer:
+          $ref: '#/components/schemas/AdminCompanyLaunchSubscriptionProcessCustomerDto'
+        subscription:
+          $ref: '#/components/schemas/AdminCompanyLaunchSubscriptionProcessSubscriptionDto'
+        details:
+          $ref: '#/components/schemas/AdminCompanyLaunchSubscriptionProcessDetailsDto'
+        quote:
+          $ref: '#/components/schemas/AdminCompanyLaunchSubscriptionProcessQuoteDto'
+      required:
+      - companyId
+      - hubspot
+      - customer
+      - subscription
+      - details
+      - quote
+    DemoAccountUniverse:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          $ref: '#/components/schemas/LocalizedContent'
+        picture:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - title
+      - picture
+      - productModelIds
+    AdminRentalPlaceB2BCompaniesDto:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminRentalPlaceB2BCompanyDto'
+      required:
+      - companies
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    DemoAccountOrderEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        eventId:
+          type: string
+        customerId:
+          type: string
+        addDay:
+          type: number
+        discount:
+          type: number
+        isRequest:
+          type: boolean
+        personInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountOrderEventPersonInfo'
+      required:
+      - id
+      - eventId
+      - customerId
+      - addDay
+      - discount
+      - isRequest
+      - personInfos
+    DemoAccountProductModelPriceSpecific:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - specific
+        id:
+          type: string
+        time:
+          type: number
+        timeMinutes:
+          type: number
+        label:
+          type: string
+      required:
+      - type
+      - id
+      - time
+      - timeMinutes
+      - label
+    DemoAccountPackCategory:
+      type: object
+      properties:
+        name:
+          type: string
+        productModelId:
+          type: string
+        fieldId:
+          type: string
+      required:
+      - name
+      - productModelId
+      - fieldId
+    HyperlineProductDynamic:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - dynamic
+        price_configurations:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/HyperlineProductPriceConfigurationVolume'
+            - $ref: '#/components/schemas/HyperlineProductPriceConfigurationPackaged'
+            - $ref: '#/components/schemas/HyperlineProductPriceConfigurationBulk'
+            - $ref: '#/components/schemas/HyperlineProductPriceConfigurationBps'
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        public_description:
+          type:
+          - string
+          - 'null'
+        properties:
+          type:
+          - object
+          - 'null'
+        custom_properties:
+          type:
+          - object
+          - 'null'
+      required:
+      - type
+      - price_configurations
+      - id
+      - name
+      - description
+      - public_description
+      - properties
+      - custom_properties
+    ProductAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    HyperlineProductPriceConfigurationBundlePrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - bundle
+        on_tier_incomplete:
+          enum:
+          - pro_rata
+          - pay_in_full
+          - do_not_charge
+          type:
+          - string
+          - 'null'
+        amount:
+          type: number
+        unit_count:
+          type: number
+        to:
+          type:
+          - number
+          - 'null'
+      required:
+      - type
+      - on_tier_incomplete
+      - amount
+      - unit_count
+      - to
+    ProductModelsWithoutVerticaleCategory:
+      type: object
+      properties:
+        total:
+          type: number
+        productModel:
+          allOf:
+          - $ref: '#/components/schemas/ProductModel'
+      required:
+      - total
+      - productModel
+    HyperlineProductFee:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - flat_fee
+        is_available_on_subscription:
+          type: boolean
+        is_available_on_demand:
+          type: boolean
+        price_configurations:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationFee'
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        public_description:
+          type:
+          - string
+          - 'null'
+        properties:
+          type:
+          - object
+          - 'null'
+        custom_properties:
+          type:
+          - object
+          - 'null'
+      required:
+      - type
+      - is_available_on_subscription
+      - is_available_on_demand
+      - price_configurations
+      - id
+      - name
+      - description
+      - public_description
+      - properties
+      - custom_properties
+    AvailableHyperlineCouponAmount:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - amount
+        discount_amount:
+          type: number
+        currency:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        expiration_date:
+          type:
+          - string
+          - 'null'
+        redemption_limit:
+          type:
+          - number
+          - 'null'
+        created_at:
+          type: string
+      required:
+      - type
+      - discount_amount
+      - currency
+      - id
+      - name
+      - description
+      - expiration_date
+      - redemption_limit
+      - created_at
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+        role:
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+          type: string
+        password:
+          type: string
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    HyperlineProductPriceConfigurationFeePrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - fee
+        amount:
+          type: number
+      required:
+      - type
+      - amount
+    AdminAvailableCouponsDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/AvailableHyperlineCouponAmount'
+            - $ref: '#/components/schemas/AvailableHyperlineCouponPercent'
+      required:
+      - data
+    GoogleRating:
+      type: object
+      properties:
+        localizedReviews:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocalizedReview'
+        rating:
+          type: number
+        reviewNb:
+          type: number
+        placeId:
+          type: string
+        mapsUrl:
+          type: string
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - localizedReviews
+      - rating
+      - reviewNb
+      - placeId
+      - mapsUrl
+      - fetchedAt
+    CompanyFee:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - LOKKI_PAYMENT_ISO_STRIPE
+          - LOKKI_PAYMENT
+          - CUSTOM
+          - CUSTOM_BY_PAYMENT
+        percentage:
+          type: number
+        amount:
+          type: number
+        payments:
+          $ref: '#/components/schemas/CompanyFeePayments'
+      required:
+      - type
+      - percentage
+      - amount
+    CompanyRentalPlaceUniversesDto:
+      type: object
+      properties:
+        id:
+          type: string
+        categoryIds:
+          type: array
+          items:
+            type: string
+        pack:
+          type: boolean
+      required:
+      - id
+      - categoryIds
+      - pack
+    RentalPlaceBlockButton:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+      required:
+      - text
+      - style
+    RentalPlaceMyShopCard:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        button:
+          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
+        distance:
+          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
+        title:
+          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
+      required:
+      - style
+      - button
+      - distance
+      - title
+    PartPayment:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        percentage:
+          type: number
+      required:
+      - isActive
+      - percentage
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    ValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    ProductStateInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        displayGeneralConditions:
+          type: boolean
+        legalNotices:
+          type: string
+        numberCreated:
+          type: number
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - displayGeneralConditions
+      - legalNotices
+      - numberCreated
+      - useLegalCompanyInfo
+    CompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
+    LPTermConditionV0102:
+      type: object
+      properties:
+        date:
+          format: date-time
+          type: string
+        fee:
+          $ref: '#/components/schemas/CompanyGlobalFee'
+      required:
+      - date
+      - fee
+    EmployeeAccess:
+      type: object
+      properties:
+        clients:
+          type: boolean
+        getNewOrderMails:
+          type: boolean
+        editCatalog:
+          type: boolean
+        addPromo:
+          type: boolean
+        workshop:
+          type: boolean
+        workshopStat:
+          type: boolean
+        marketing:
+          type: boolean
+        statistics:
+          type: boolean
+        cashBook:
+          type: boolean
+        settings:
+          type: boolean
+        bookingDeletion:
+          type: boolean
+    CompanyCsSupportRequested:
+      type: object
+      properties:
+        requested:
+          type: boolean
+        requestedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - requested
+      - requestedAt
+    DemoAccountService:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        name:
+          type: string
+        productModel:
+          type: string
+        vat:
+          type: number
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        onlineStoreInformation:
+          $ref: '#/components/schemas/ItemOnlineStoreInformation'
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemAttribute'
+      required:
+      - priceModels
+      - rentalType
+      - name
+      - productModel
+      - vat
+      - fields
+      - onlineStoreInformation
+    DemoAccountEventCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountEventCategoryItem'
+      required:
+      - id
+      - name
+      - items
+    AdminCompanyUseDefaultBannerDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    DemoAccountCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        zipCode:
+          type: string
+        deliveryAddress:
+          type: string
+        deliveryZipCode:
+          type: string
+        deliveryCity:
+          type: string
+      required:
+      - id
+      - lastName
+      - firstName
+      - email
+      - phone
+      - zipCode
+      - deliveryAddress
+      - deliveryZipCode
+      - deliveryCity
+    CompanyOnlineStoreSlot:
+      type: object
+      properties:
+        hours:
+          type: number
+        minutes:
+          type: number
+        label:
+          type: string
+        id:
+          type: string
+      required:
+      - hours
+      - minutes
+      - label
+      - id
+    LaunchSubscriptionProcessResultDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+        subscriptionId:
+          type: string
+      required:
+      - customerId
+      - subscriptionId
+    AdminImportBookingsCSVResult:
+      type: object
+      properties:
+        created:
+          type: number
+        skipped:
+          type: array
+          items:
+            $ref: '#/components/schemas/CsvBookingSkippedRow'
+      required:
+      - created
+      - skipped
+    CancellationPolicyDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        onlineRequests:
+          type: boolean
+        automaticRefunds:
+          type: boolean
+        policyType:
+          enum:
+          - FLEXIBLE
+          - MODERATE
+          - STRICT
+          - CUSTOM
+          type: string
+        lastMinuteThreshold:
+          type: number
+          minimum: 0
+        inAdvanceThreshold:
+          type: number
+          minimum: 0
+        lowRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+        midRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+        highRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+      - activated
+      - onlineRequests
+      - automaticRefunds
+      - policyType
+      - lastMinuteThreshold
+      - inAdvanceThreshold
+      - lowRefundRate
+      - midRefundRate
+      - highRefundRate
+    HyperlinePlanCommitmentInterval:
+      type: object
+      properties:
+        period:
+          enum:
+          - days
+          - weeks
+          - months
+          - years
+          type: string
+        count:
+          type: number
+      required:
+      - period
+      - count
+    CompanyEmployee:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/EmployeeAccess'
+        userId:
+          type: string
+        isAccountActivated:
+          type: boolean
+        isValidatedByUser:
+          type: boolean
+        isMonitor:
+          type: boolean
+        name:
+          type: string
+        email:
+          type: string
+        imageUrl:
+          type: string
+        lastConnection:
+          format: date-time
+          type: string
+        connectionDates:
+          type: array
+          items:
+            format: date-time
+            type: string
+      required:
+      - access
+      - userId
+      - isAccountActivated
+      - isValidatedByUser
+      - isMonitor
+      - name
+      - email
+    CompanyDefaultQuickOrderMode:
+      type: object
+      properties:
+        booking:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        bookingUpdate:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        readyToGo:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        return:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        exchange:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        showDelivery:
+          type: boolean
+        showSurvey:
+          type: boolean
+        showUnavailability:
+          type: boolean
+        showUnavailabilityOnUpdate:
+          type: boolean
+      required:
+      - booking
+      - bookingUpdate
+      - readyToGo
+      - return
+      - exchange
+      - showDelivery
+      - showSurvey
+      - showUnavailability
+      - showUnavailabilityOnUpdate
+    AdminCompanyLaunchSubscriptionProcessQuoteDto:
+      type: object
+      properties:
+        comments:
+          type: string
+        terms:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        shouldSendReminder:
+          type: boolean
+      required:
+      - comments
+      - terms
+      - expiresAt
+      - shouldSendReminder
+    CsvBookingSkippedRow:
+      type: object
+      properties:
+        row:
+          type: number
+        customerEmail:
+          type: string
+        reason:
+          enum:
+          - CUSTOMER_NOT_FOUND
+          - PRODUCT_NOT_FOUND
+          - EMPTY_ORDER
+          - CREATE_ERROR
+          type: string
+      required:
+      - row
+      - customerEmail
+      - reason
+    HyperlineProductPriceConfigurationBundle:
+      type: object
+      properties:
+        billing_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        commitment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        type:
+          type: string
+          enum:
+          - bundle
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationBundlePrice'
+        id:
+          type: string
+        currency:
+          type: string
+        country:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+        updated_at:
+          type: string
+      required:
+      - billing_interval
+      - commitment_interval
+      - type
+      - prices
+      - id
+      - currency
+      - country
+      - plan_id
+      - updated_at
+    PriceModelSpecificDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        duration:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - duration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    RentalPlaceMainImages:
+      type: object
+      properties:
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFile'
+        sliderInterval:
+          type: number
+        text:
+          $ref: '#/components/schemas/RentalPlaceMainImagesText'
+      required:
+      - images
+      - sliderInterval
+      - text
+    CompanyShowcaseProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+      required:
+      - id
+      - price
+    AdminSearchRentalPlaceUserPaginatedResultDto:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminRentalPlaceUser'
+        totalCount:
+          type: number
+      required:
+      - users
+      - totalCount
+    HyperlinePlanProductPriceFee:
+      type: object
+      properties:
+        type:
+          type: string
+        amount:
+          type: number
+      required:
+      - type
+      - amount
+    DemoAccountProductModelLLDPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - LLD
+        id:
+          type: string
+        calendarMonths:
+          type: number
+        label:
+          type: string
+      required:
+      - type
+      - id
+      - calendarMonths
+      - label
+    UpdateUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+      required:
+      - name
+      - email
+      - phone
+      - isDemoAccount
+      - isAccountActivated
+      - availableTools
+    AdminCompanyOnlineDeliveryRange:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        price:
+          type: number
+      required:
+      - min
+      - max
+      - price
+    CompanyGlobalFee:
+      type: object
+      properties:
+        rentalPlace:
+          $ref: '#/components/schemas/CompanyFee'
+        global:
+          $ref: '#/components/schemas/CompanyFee'
+        lld:
+          $ref: '#/components/schemas/CompanyFee'
+      required:
+      - rentalPlace
+      - global
+      - lld
+    ReservationRanges:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/ReservationRange'
+        maximum:
+          $ref: '#/components/schemas/ReservationRange'
+      required:
+      - minimum
+      - maximum
+    CompanyStripeCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: stripe
+          enum:
+          - stripe
+        account:
+          type: string
+        type:
+          enum:
+          - EXPRESS
+          - STANDARD
+          type: string
+        status:
+          enum:
+          - ONBOARDING
+          - ACTIVE
+          type: string
+        onboardingDate:
+          format: date-time
+          type: string
+      required:
+      - provider
+      - account
+      - type
+      - status
+    CompanyCsInfos:
+      type: object
+      properties:
+        plan:
+          type: string
+          enum:
+          - NONE
+          - PLAN_A
+          - PLAN_B
+        csSegment:
+          type: string
+          enum:
+          - NONE
+          - CS_SEGMENT_INDEP_OUTDOOR_SUMMER
+          - CS_SEGMENT_INDEP_OUTDOOR_WINTER
+          - CS_SEGMENT_INDEP_OUTDOOR_YEAR
+          - CS_SEGMENT_INDEP_YEAR
+          - CS_SEGMENT_LARGE_CORPORATE
+        pipedrive:
+          type: string
+        hubspot:
+          type: string
+        billing:
+          type: string
+          enum:
+          - NONE
+          - TRANSFER
+          - GOCARDLESS
+          - COMMISSION
+        demoDate:
+          format: date-time
+          type: string
+        archiveReason:
+          type: string
+          enum:
+          - CHURN
+          - NO_SIGN
+          - VISIBILITY_ACCOUNT_CREATION
+        scheduledChurnDate:
+          format: date-time
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        onboarding:
+          $ref: '#/components/schemas/CompanyOnboarding'
+        bankStatement:
+          type: string
+        octobatLink:
+          type: string
+        gocardlessLink:
+          type: string
+        websiteLink:
+          type: string
+        hyperlineSubscriptionData:
+          $ref: '#/components/schemas/CompanyHyperlineSubscriptionData'
+        subscriptionSalesOwnerEmail:
+          type: string
+        firstTransferDate:
+          type: string
+        formationBookedDate:
+          format: date-time
+          type: string
+        plgHasRentalActivity:
+          type: boolean
+        subscriptionShouldSendReminder:
+          type: boolean
+        subscriptionSentDate:
+          format: date-time
+          type: string
+        subscriptionCompletionDate:
+          format: date-time
+          type: string
+        subscriptionExpirationDate:
+          format: date-time
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        csSupportRequested:
+          $ref: '#/components/schemas/CompanyCsSupportRequested'
+      required:
+      - plan
+      - csSegment
+      - pipedrive
+      - hubspot
+      - billing
+      - verticales
+      - bankStatement
+      - octobatLink
+      - gocardlessLink
+      - websiteLink
+      - hyperlineSubscriptionData
+      - subscriptionSalesOwnerEmail
+    RentalPlaceFooterLinkSocial:
+      type: object
+      properties:
+        name:
+          type: string
+        icon:
+          type: string
+        link:
+          type: string
+        id:
+          type: string
+        available:
+          type: boolean
+      required:
+      - name
+      - icon
+      - link
+      - id
+      - available
+    DemoAccountEventPricing:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        amount:
+          type: number
+      required:
+      - id
+      - label
+      - amount
+    AdminCompanyUploadExternalLogoDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    UpdateCompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
+    HyperlineProductPriceConfigurationBps:
+      type: object
+      properties:
+        billing_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        commitment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationInterval'
+          - $ref: '#/components/schemas/HyperlineProductPriceConfigurationOnce'
+        type:
+          type: string
+          enum:
+          - bps
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlineProductPriceConfigurationBpsPrice'
+        id:
+          type: string
+        currency:
+          type: string
+        country:
+          type:
+          - string
+          - 'null'
+        plan_id:
+          type:
+          - string
+          - 'null'
+        updated_at:
+          type: string
+      required:
+      - billing_interval
+      - commitment_interval
+      - type
+      - prices
+      - id
+      - currency
+      - country
+      - plan_id
+      - updated_at
+    CompanyResponseDuration:
+      type: object
+      properties:
+        average:
+          type: number
+        median:
+          type: number
+        min:
+          type: number
+        max:
+          type: number
+        count:
+          type: number
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - average
+      - median
+      - min
+      - max
+      - count
+      - fetchedAt
+    AdminCompanyUpdateFeesDto:
+      type: object
+      properties:
+        rentalPlaceType:
+          type: string
+          enum:
+          - LOKKI_PAYMENT_ISO_STRIPE
+          - LOKKI_PAYMENT
+          - CUSTOM
+          - CUSTOM_BY_PAYMENT
+        rentalPlacePercentage:
+          type: number
+        rentalPlaceAmount:
+          type: number
+        rentalPlacePayments:
+          type: object
+        globalType:
+          type: string
+          enum:
+          - LOKKI_PAYMENT_ISO_STRIPE
+          - LOKKI_PAYMENT
+          - CUSTOM
+          - CUSTOM_BY_PAYMENT
+        globalPercentage:
+          type: number
+        globalAmount:
+          type: number
+        globalPayments:
+          type: object
+        lldType:
+          type: string
+          enum:
+          - LOKKI_PAYMENT_ISO_STRIPE
+          - LOKKI_PAYMENT
+          - CUSTOM
+          - CUSTOM_BY_PAYMENT
+        lldPercentage:
+          type: number
+        lldAmount:
+          type: number
+      required:
+      - rentalPlaceType
+      - rentalPlacePercentage
+      - rentalPlaceAmount
+      - globalType
+      - globalPercentage
+      - globalAmount
+      - lldType
+      - lldPercentage
+      - lldAmount
+    DemoAccountProductStateModelField:
+      type: object
+      properties:
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductStateModelFieldAnswer'
+      required:
+      - name
+      - answers
+    CompanyDocumentCustomFieldsDto:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDocumentCustomField'
+      required:
+      - fields
+    AdminCreateCompanyPromoCodeDto:
+      type: object
+      properties:
+        code:
+          type: string
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        applyOnDelivery:
+          type: boolean
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        minPrice:
+          type: number
+        maxUses:
+          type:
+          - number
+          - 'null'
+        dateCheck:
+          type: string
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+      required:
+      - code
+      - source
+      - discountAmount
+      - discountType
+      - applyOnDelivery
+    AdminCompanyLaunchSubscriptionProcessCustomerDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        currency:
+          type: string
+          enum:
+          - EUR
+          - CHF
+        password:
+          type: string
+        country:
+          type: string
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - name
+      - email
+      - currency
+      - password
+      - country
+      - lang
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    ProductModelPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        hours:
+          type: number
+        minutes:
+          type: number
+        id:
+          type: string
+      required:
+      - type
+      - label
+      - hours
+      - minutes
+      - id
+    DemoAccountProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    RentalPlaceCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
+        image:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+      required:
+      - id
+      - text
+      - image
+      - style
+    DemoAccountEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountEventCategory'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountEventOption'
+        pricing:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountEventPricing'
+        bailAmount:
+          type: number
+        vat:
+          type: number
+        productSurveyId:
+          type: string
+        noEquipment:
+          type: boolean
+        sessionDuration:
+          type: number
+      required:
+      - id
+      - name
+      - description
+      - imageUrl
+      - categories
+      - options
+      - pricing
+      - bailAmount
+      - vat
+      - productSurveyId
+      - noEquipment
+      - sessionDuration
+    GlossaryResponseDto:
+      type: object
+      properties:
+        glossaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/GlossaryDto'
+      required:
+      - glossaries
+    UserList:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      required:
+      - users
+    GlossaryDto:
+      type: object
+      properties:
+        name:
+          type: string
+        entry_count:
+          type: number
+        glossary_id:
+          type: string
+        source_lang:
+          type: string
+        target_lang:
+          type: string
+        creation_time:
+          type: string
+      required:
+      - name
+      - entry_count
+      - glossary_id
+      - source_lang
+      - target_lang
+      - creation_time
+    ItemOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    OnlineStoreConfig:
+      type: object
+      properties:
+        newOnlineStoreDesign:
+          type: boolean
+        customerTextRGPD:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        featuredSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        eventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        openingTimeFrames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingTimeFramesLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        lowSeasonRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        bannerURL:
+          type: array
+          items:
+            type: string
+        featuredIds:
+          type: array
+          items:
+            type: string
+        bannerScroll:
+          type: number
+        reservationRanges:
+          $ref: '#/components/schemas/ReservationRanges'
+        timeLapsBeforeBookingInHours:
+          type: number
+        delivery:
+          $ref: '#/components/schemas/CompanyDelivery'
+        reservationTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationTime'
+        insuranceActivated:
+          type: boolean
+        eventActivated:
+          type: boolean
+        customFeaturedMode:
+          type: boolean
+        hideOnlineStoreLCD:
+          type: boolean
+        hideOnlineStoreLLD:
+          type: boolean
+        displayAddressOnlineStore:
+          type: boolean
+        eventDirectOrder:
+          type: boolean
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+        eventUniverses:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventUniverse'
+        eventUniversesActivated:
+          type: boolean
+        eventUniversesTag:
+          type: string
+        phoneNumber:
+          type: string
+        displayPhoneNumber:
+          type: boolean
+        script:
+          type: string
+        defaultPhoneCode:
+          type: string
+        showPricing:
+          type: boolean
+        showStock:
+          type: boolean
+        lldBilling:
+          type: boolean
+      required:
+      - newOnlineStoreDesign
+      - customerTextRGPD
+      - description
+      - featuredSectionTitle
+      - eventsTitle
+      - openingTimeFrames
+      - openingTimeFramesLowSeason
+      - closedDates
+      - lowSeasonRanges
+      - bannerURL
+      - featuredIds
+      - bannerScroll
+      - reservationRanges
+      - timeLapsBeforeBookingInHours
+      - delivery
+      - reservationTimes
+      - insuranceActivated
+      - eventActivated
+      - customFeaturedMode
+      - hideOnlineStoreLCD
+      - hideOnlineStoreLLD
+      - displayAddressOnlineStore
+      - eventDirectOrder
+      - eventTags
+      - eventUniverses
+      - eventUniversesActivated
+      - eventUniversesTag
+      - phoneNumber
+      - displayPhoneNumber
+      - script
+      - defaultPhoneCode
+      - showPricing
+      - showStock
+      - lldBilling
+    CompanyCategoryDiscountRange:
+      type: object
+      properties:
+        discount:
+          type: number
+          description: Discount value for the range
+        discountType:
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          type: string
+          description: Type of discount applied (amount or percentage)
+        rangeFrom:
+          type:
+          - number
+          - 'null'
+          description: Minimum value of the range (Quantity of items)
+        rangeTo:
+          type:
+          - number
+          - 'null'
+          description: Maximum value of the range (Quantity of items)
+        infiniteTo:
+          type: boolean
+          description: Indicates if the range has no upper limit
+      required:
+      - discount
+      - discountType
+      - rangeFrom
+      - rangeTo
+      - infiniteTo
+    SquareCredentials:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        token:
+          type: string
+        locationId:
+          type: string
+        locationName:
+          type: string
+        refreshToken:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        oAuthState:
+          type: string
+      required:
+      - isActive
+      - token
+      - locationId
+      - locationName
+      - refreshToken
+      - expiresAt
+    AdminCompanyLaunchSubscriptionProcessSubscriptionProductDto:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: number
+        price:
+          type: number
+        repeat:
+          type: string
+          enum:
+          - once
+          - monthly
+          - yearly
+      required:
+      - productId
+      - quantity
+      - price
+      - repeat
+    AdminCompanyDeleteDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+      required:
+      - companyId
+    RentalPoint:
+      type: object
+      properties:
+        addressComponents:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        id:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        name:
+          type: string
+        slug:
+          type: string
+        fullAddress:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - id
+      - lat
+      - lng
+      - name
+      - slug
+      - fullAddress
+      - city
+      - country
+      - address
+      - zipcode
+    CompanyDocumentCustomField:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        fieldValue:
+          type: string
+        id:
+          type: string
+      required:
+      - fieldName
+      - fieldValue
+      - id
+    RentalPlaceFooterLinkCol:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        link:
+          type: string
+        id:
+          type: string
+        isScript:
+          type: boolean
+      required:
+      - text
+      - link
+      - id
+      - isScript
+    ProductModelPriceRange:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        id:
+          type: string
+        timeStartHours:
+          type: number
+        timeStartMinutes:
+          type: number
+        timeEndHours:
+          type: number
+        timeEndMinutes:
+          type: number
+        durationInDays:
+          type: number
+      required:
+      - type
+      - label
+      - id
+      - timeStartHours
+      - timeStartMinutes
+      - timeEndHours
+      - timeEndMinutes
+    DemoAccountProductSurvey:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductSurveyField'
+      required:
+      - id
+      - name
+      - fields
+    AdminAvailableSubscriptionPlansDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableSubscriptionPlan'
+      required:
+      - data
+    OrderRelation:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRP'
+        companyId:
+          type: string
+      required:
+      - orders
+      - companyId
+    MultipleFundsTransfer:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        isFree:
+          type: boolean
+        transferDays:
+          type: array
+          items:
+            type: number
+        activatedDate:
+          format: date-time
+          type: string
+      required:
+      - activated
+    HyperlinePlanProductDynamic:
+      type: object
+      properties:
+        payment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlinePlanCommitmentOnce'
+          - $ref: '#/components/schemas/HyperlinePlanCommitmentInterval'
+        type:
+          type: string
+          enum:
+          - dynamic
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - payment_interval
+      - type
+      - id
+      - name
+    AdminCompanyListPaymentProviderDto:
+      type: object
+      properties:
+        provider:
+          type: string
+        type:
+          type: string
+      required:
+      - provider
+      - type
+    GetProductModelsWithoutVerticaleCategoryDto:
+      type: object
+      properties:
+        companyIds:
+          type: string
+      required:
+      - companyIds
+    DeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - price
+      - cities
+    RentalPlaceText:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        style:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+      required:
+      - text
+      - style
+    DeliveryRange:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        price:
+          type: number
+        specificPrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
+      required:
+      - min
+      - max
+      - price
+      - specificPrices
+    AdminCompanyUpdateAccessDto:
+      type: object
+      properties:
+        companyAccess:
+          $ref: '#/components/schemas/CompanyAccess'
+        csInfos:
+          $ref: '#/components/schemas/CompanyCsInfos'
+        magicSchedule:
+          type: boolean
+        enableQrCode:
+          type: boolean
+        isDemo:
+          type: boolean
+        isDemoChange:
+          type: boolean
+        onlineStoreScript:
+          type: string
+        lldBilling:
+          type: boolean
+        productStateInfo:
+          $ref: '#/components/schemas/ProductStateInfo'
+        rentalPlaceLokkiComment:
+          type: string
+        generalConditionsLLD:
+          $ref: '#/components/schemas/I18nObject'
+        accountStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - DEMO
+          - TRIAL
+          - ARCHIVED
+        accountType:
+          type: string
+          enum:
+          - PLATFORM
+          - VISIBILITY_ONE
+        trialEndsAt:
+          format: date-time
+          type: string
+      required:
+      - companyAccess
+      - csInfos
+      - magicSchedule
+      - enableQrCode
+      - isDemo
+      - isDemoChange
+      - onlineStoreScript
+      - productStateInfo
+      - rentalPlaceLokkiComment
+      - accountStatus
+      - accountType
+    CreateUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        createdFrom:
+          type: string
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          type: string
+          enum:
+          - google
+          - apple
+      required:
+      - name
+      - email
+      - phone
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - availableTools
+    HyperlineProductPriceConfigurationOnce:
+      type: object
+      properties:
+        period:
+          type: string
+          enum:
+          - once
+      required:
+      - period
+    AdminSearchCompanyListPaginatedResultDto:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminCompanyListItemDto'
+        totalCount:
+          type: number
+      required:
+      - companies
+      - totalCount
+    ProductModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    PriceModelRangeDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - minDuration
+      - maxDuration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    DemoAccountOrderProduct:
+      type: object
+      properties:
+        productId:
+          type: string
+        name:
+          type: string
+        number:
+          type: number
+      required:
+      - productId
+      - name
+      - number
+    DemoAccountOrderDelivery:
+      type: object
+      properties:
+        status:
+          type: boolean
+        price:
+          type: number
+      required:
+      - status
+      - price
+    CompanyFeePayment:
+      type: object
+      properties:
+        percentage:
+          type: number
+        amount:
+          type: number
+      required:
+      - percentage
+      - amount
+    CompanyOnboarding:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        visibility:
+          type: boolean
+    RentalPlaceTexts:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/RentalPlaceText'
+        description:
+          $ref: '#/components/schemas/RentalPlaceText'
+      required:
+      - title
+      - description
+    AvailableSubscriptionPlanTrialInterval:
+      type: object
+      properties:
+        period:
+          type: string
+          enum:
+          - days
+          - weeks
+          - months
+          - years
+        count:
+          type: number
+      required:
+      - period
+      - count
+    DemoAccountOrderStatus:
+      type: object
+      properties:
+        category:
+          type: string
+        name:
+          type: string
+      required:
+      - category
+      - name
+    HyperlinePlanProductFlatFee:
+      type: object
+      properties:
+        payment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlinePlanCommitmentOnce'
+          - $ref: '#/components/schemas/HyperlinePlanCommitmentInterval'
+        type:
+          type: string
+          enum:
+          - flat_fee
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/HyperlinePlanProductPriceFee'
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - payment_interval
+      - type
+      - prices
+      - id
+      - name
+    AdminUserCompany:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isEmployee:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        accountType:
+          type: string
+          enum:
+          - PLATFORM
+          - VISIBILITY_ONE
+      required:
+      - id
+      - name
+      - isEmployee
+      - isAccountActivated
+      - accountType
+    AdminCompanyLaunchSubscriptionProcessDetailsDto:
+      type: object
+      properties:
+        formationDate:
+          format: date-time
+          type: string
+        formationDateChoice:
+          type: boolean
+      required:
+      - formationDateChoice
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    CompanyLifecycleEvents:
+      type: object
+      properties:
+        catalogMarkedCompleteAt:
+          format: date-time
+          type: string
+    I18nObject:
+      type: object
+      properties:
+        fr:
+          type: string
+        en:
+          type: string
+      required:
+      - fr
+      - en
+    AdminCompanyListFeeDto:
+      type: object
+      properties:
+        percentage:
+          type: number
+        amount:
+          type: number
+      required:
+      - percentage
+      - amount
+    AdminCompanyLaunchSubscriptionProcessSubscriptionCouponDto:
+      type: object
+      properties:
+        couponId:
+          type: string
+        couponRepeat:
+          type: string
+          enum:
+          - once
+          - forever
+          - custom
+        couponExpireDate:
+          format: date-time
+          type: string
+        applyOnProductIds:
+          type: array
+          items:
+            type: string
+      required:
+      - couponId
+      - couponRepeat
+      - applyOnProductIds
+    AdminDownloadCompanyCatalogueCsvDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    AvailableSubscriptionPlan:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        commitmentInterval:
+          allOf:
+          - $ref: '#/components/schemas/AvailableSubscriptionPlanCommitmentInterval'
+        renewAutomatically:
+          type: boolean
+        trialInterval:
+          allOf:
+          - $ref: '#/components/schemas/AvailableSubscriptionPlanTrialInterval'
+      required:
+      - id
+      - name
+      - description
+      - commitmentInterval
+      - renewAutomatically
+      - trialInterval
+    AdminAccountActivatedDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        activated:
+          type: boolean
+      required:
+      - userId
+      - activated
+    MultipleFileUploadDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+      required:
+      - files
+    DateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - from
+      - to
+    HyperlinePlanProductSeat:
+      type: object
+      properties:
+        payment_interval:
+          oneOf:
+          - $ref: '#/components/schemas/HyperlinePlanCommitmentOnce'
+          - $ref: '#/components/schemas/HyperlinePlanCommitmentInterval'
+        type:
+          type: string
+          enum:
+          - seat
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - payment_interval
+      - type
+      - id
+      - name
+    AdminAvailableSubscriptionProductsDto:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableSubscriptionProduct'
+      required:
+      - data
+    RentalPlaceMyShopCardStyle:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+      required:
+      - style
+      - textStyle
+    AdminRentalPlaceUser:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        adminNote:
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/RentalPlaceUserAddressComponents'
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        cguValidationDate:
+          format: date-time
+          type: string
+        orderRelations:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRelation'
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - rental_place_header
+          - rental_place_checkout
+          - rental_place_quote
+          - rental_place_favorites
+          - online_store
+          - sea
+          - unknown
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        subscribedToBouge:
+          type: boolean
+        subscribedToBonPlan:
+          type: boolean
+        connectionAttempt:
+          type: number
+        ordersCount:
+          type: number
+        validationCode:
+          $ref: '#/components/schemas/ValidationCode'
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - phone
+      - isAccountActivated
+      - cguValidationDate
+      - orderRelations
+      - createdFrom
+      - createdAt
+      - subscribedToBouge
+      - subscribedToBonPlan
+    ProposedRentalPlaceCommission:
+      type: object
+      properties:
+        commissionRate:
+          type: number
+        requiresSignature:
+          type: boolean
+        batchDate:
+          type: string
+      required:
+      - commissionRate
+      - requiresSignature
+      - batchDate
+    AdminCompanyUpdateStripeIdDto:
+      type: object
+      properties:
+        oldStripeId:
+          type: string
+        newStripeId:
+          type: string
+        companyId:
+          type: string
+      required:
+      - oldStripeId
+      - newStripeId
+      - companyId
+    CompanyFeePayments:
+      type: object
+      properties:
+        standard:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        premium:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        uk:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        outOfUkUe:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        ancv:
+          $ref: '#/components/schemas/CompanyFeePayment'
+      required:
+      - standard
+      - premium
+      - uk
+      - outOfUkUe
+      - ancv
+    LokkiPaymentMethods:
+      type: object
+      properties:
+        card:
+          type: boolean
+        applePay:
+          type: boolean
+        googlePay:
+          type: boolean
+        ancvConnect:
+          type: boolean
+        sepa:
+          type: boolean
+        ideal:
+          type: boolean
+        bancontact:
+          type: boolean
+        giroPay:
+          type: boolean
+        p24:
+          type: boolean
+        blik:
+          type: boolean
+        multibanco:
+          type: boolean
+        eps:
+          type: boolean
+      required:
+      - card
+      - applePay
+      - googlePay
+      - ancvConnect
+      - sepa
+      - ideal
+      - bancontact
+      - giroPay
+      - p24
+      - blik
+      - multibanco
+      - eps
+    AdminCompanyCreateOnlineStoreDelivery:
+      type: object
+      properties:
+        status:
+          type: boolean
+        prices:
+          type: array
+          items:
+            type: object
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+      required:
+      - status
+      - deliveryOnly
+      - returnDelivery
+    AdminUserExternalCompany:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        siret:
+          type: string
+        website:
+          type: string
+        claimedAt:
+          format: date-time
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - HELP_REQUESTED
+          - ACCEPTED
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/ExternalCompanyAddressComponents'
+        lat:
+          type: number
+        lng:
+          type: number
+      required:
+      - id
+      - name
+      - siret
+      - website
+      - claimedAt
+      - status
+      - verticales
+      - address
+      - lat
+      - lng
+    ReservationRange:
+      type: object
+      properties:
+        nbHours:
+          type: number
+        activated:
+          type: boolean
+      required:
+      - nbHours
+      - activated
+    CompanyOpinionBooster:
+      type: object
+      properties:
+        googleBusinessLink:
+          type: string
+        activated:
+          type: boolean
+        daysBeforeSend:
+          type: number
+        emailTemplateId:
+          type: string
+      required:
+      - googleBusinessLink
+      - activated
+      - daysBeforeSend
+      - emailTemplateId
+    CompanyMap:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        address:
+          type: string
+        csInfos:
+          $ref: '#/components/schemas/CompanyCsInfos'
+        addressLatitude:
+          type: string
+        addressLongitude:
+          type: string
+        rentalPlace:
+          type: boolean
+        toActivate:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - address
+      - csInfos
+      - addressLatitude
+      - addressLongitude
+      - rentalPlace
+      - toActivate
+    AdminUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        id:
+          type: string
+        lastConnected:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        connectionDates:
+          type: array
+          items:
+            format: date-time
+            type: string
+        connectionAttempt:
+          type: number
+        role:
+          type: string
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminUserCompany'
+        managingPlaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminUserManagingPlace'
+        externalCompanies:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminUserExternalCompany'
+        slackId:
+          type: string
+        hubspotId:
+          type: string
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        createdAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - name
+      - email
+      - phone
+      - id
+      - lastConnected
+      - connectionDates
+      - connectionAttempt
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - companies
+      - managingPlaces
+      - externalCompanies
+      - slackId
+      - hubspotId
+      - availableTools
+      - createdAt
+    DemoAccountProductModelPriceRange:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - range
+        id:
+          type: string
+        timeStartHours:
+          type: number
+        timeStartMinutes:
+          type: number
+        timeEndHours:
+          type: number
+        timeEndMinutes:
+          type: number
+        label:
+          type: string
+        durationInDays:
+          type: number
+      required:
+      - type
+      - id
+      - timeStartHours
+      - timeStartMinutes
+      - timeEndHours
+      - timeEndMinutes
+      - label
+    AvailableSubscriptionPlanCommitmentInterval:
+      type: object
+      properties:
+        period:
+          type: string
+          enum:
+          - days
+          - weeks
+          - months
+          - years
+        count:
+          type: number
+      required:
+      - period
+      - count
+    AdminCompanyEmployeesDto:
+      type: object
+      properties:
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyEmployee'
+      required:
+      - employees
+    ProductModel:
+      type: object
+      properties:
+        prices:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ProductModelPrice'
+            - $ref: '#/components/schemas/ProductModelPriceRange'
+            - $ref: '#/components/schemas/ProductModelLLDPrice'
+        name:
+          type: string
+        id:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelField'
+        stateModelId:
+          type: string
+        model:
+          type: string
+        companyId:
+          type: string
+        productVerticaleCategory:
+          type: string
+      required:
+      - prices
+      - name
+      - id
+      - rentalType
+      - fields
+      - stateModelId
+      - model
+      - companyId
+    DemoAccountProductStateModel:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemoAccountProductStateModelField'
+      required:
+      - id
+      - name
+      - fields
+    AdminUploadCustomersCSVResult:
+      type: object
+      properties:
+        imported:
+          type: number
+        skipped:
+          type: array
+          items:
+            $ref: '#/components/schemas/CsvCustomerSkippedRow'
+        parseWarnings:
+          type: array
+          items:
+            type: string
+      required:
+      - imported
+      - skipped
+      - parseWarnings
+    CompanyDeliveryCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+        sublocalityName:
+          type: string
+        zipCode:
+          type: string
+        placeId:
+          type: string
+        hasMultiplePostcodeLocalities:
+          type: boolean
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
+    AdminCompanyStatsDto:
+      type: object
+      properties:
+        orders:
+          type: number
+        revenue:
+          type: number
+      required:
+      - orders
+      - revenue
+    RentalPlaceAd:
+      type: object
+      properties:
+        id:
+          type: string
+        redirectUrl:
+          type: string
+        image:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
+        button:
+          $ref: '#/components/schemas/RentalPlaceAdButton'
+      required:
+      - id
+      - redirectUrl
+      - image
+      - text
+      - button
+    RentalPlaceAdButton:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+      required:
+      - text
+      - style
+    AdminSearchCompanyPaginatedResultDto:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'
+        totalCount:
+          type: number
+      required:
+      - companies
+      - totalCount
+    WorkshopLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - id
+      - name
+      - city
+      - country
+      - address
+      - zipcode
+    ManagingPlace:
+      type: object
+      properties:
+        id:
+          type: string
+        owners:
+          type: array
+          items:
+            type: string
+        userIds:
+          type: array
+          items:
+            type: string
+        ownerUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagingPlaceUser'
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagingPlaceUser'
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagingPlaceCompany'
+        rentalPlaceId:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        generalConditions:
+          type: string
+        legalMention:
+          type: string
+        termsOfService:
+          type: string
+        dataProtection:
+          type: string
+        cookiePolicy:
+          type: string
+        group:
+          type: string
+        isLive:
+          type: boolean
+        rentalPlaceInfos:
+          $ref: '#/components/schemas/RentalPlaceInfos'
+        maxCompaniesNb:
+          type: number
+      required:
+      - id
+      - owners
+      - userIds
+      - companies
+      - rentalPlaceId
+      - name
+      - url
+      - generalConditions
+      - legalMention
+      - termsOfService
+      - dataProtection
+      - cookiePolicy
+      - group
+      - isLive
+      - maxCompaniesNb
+    LokkiPaymentTermsConditionsHistory:
+      type: object
+      properties:
+        v0101:
+          format: date-time
+          type: string
+        v0102:
+          $ref: '#/components/schemas/LPTermConditionV0102'
+      required:
+      - v0101
+      - v0102
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

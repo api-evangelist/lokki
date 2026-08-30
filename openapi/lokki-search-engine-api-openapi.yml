@@ -1,0 +1,1727 @@
+openapi: 3.2.0
+info:
+  title: Lokki Search Engine API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Search Engine
+paths:
+  /v2/search-engine/search/items:
+    get:
+      operationId: searchEngineSearchItems
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: Free-text query. When set, results are matched and ranked by text relevance (item name, description, verticale label, store name) on top of the geo/filter context.
+        schema:
+          type: string
+      - name: lang
+        required: false
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      - name: geoloc.geoPoint.latitude
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: geoloc.geoPoint.longitude
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: geoloc.radius
+        required: false
+        in: query
+        description: Distance in meters from the geoPoint
+        schema:
+          type: number
+      - name: ranking
+        required: false
+        in: query
+        description: Ranking keys
+        schema:
+          type: string
+      - name: pagination.page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: pagination.hitsPerPage
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: activeFacets
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: categoryKeys
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Verticale scope. Omit (or leave empty) for a free-text / browse search across every verticale.
+      - name: subCategoryIsOption
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: subCategoryKeys
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: "Sub category keys with operator\n\n        format: [<operator>:<ids>, ...]\n\n        examples: [\"in:1,2,3\", \"not:4,5\", \"not:6,7,8\"]"
+      - name: inRangeDelivery
+        required: false
+        in: query
+        description: Filter items that have delivery in range of the geoPoint, must be used with geoPoint and radius
+        schema:
+          type: boolean
+      - name: shopOpen.startDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: shopOpen.endDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: shopOpen.checkOpeningHours
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.checkClosedDates
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.checkForcedSchedules
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.checkMinAndMaxReservationRanges
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.sensitivity
+        required: false
+        in: query
+        description: Sensitivity in hours to adjust the opening hours check
+        schema:
+          type: number
+      - name: dates.startDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: dates.endDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: price.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: price.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: availability.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: availability.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: dateFlexibilityInDays
+        required: false
+        in: query
+        description: Flexible dates window in days (±). When set together with `dates`, the engine also returns items available for the same rental duration shifted by up to ±N days, picking the closest slot to the requested start (ties resolved to the earlier slot).
+        schema:
+          type: number
+      - name: participants.adults
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: participants.children
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsCount.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsCount.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsScore.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsScore.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: freeCancelation
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: deliveryEnabled
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: directOrderLCD
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: directOrderLLD
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: insuranceEnabled
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchEngineSearchItemsResponseDto'
+      tags:
+      - Search Engine
+  /v2/search-engine/search/companies:
+    get:
+      operationId: searchEngineSearchCompanies
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: Free-text query. When set, results are matched and ranked by text relevance (item name, description, verticale label, store name) on top of the geo/filter context.
+        schema:
+          type: string
+      - name: lang
+        required: false
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      - name: geoloc.geoPoint.latitude
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: geoloc.geoPoint.longitude
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: geoloc.radius
+        required: false
+        in: query
+        description: Distance in meters from the geoPoint
+        schema:
+          type: number
+      - name: ranking
+        required: false
+        in: query
+        description: Ranking keys
+        schema:
+          type: string
+      - name: pagination.page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: pagination.hitsPerPage
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: activeFacets
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: categoryKeys
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Verticale scope. Omit (or leave empty) for a free-text / browse search across every verticale.
+      - name: subCategoryIsOption
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: subCategoryKeys
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: "Sub category keys with operator\n\n        format: [<operator>:<ids>, ...]\n\n        examples: [\"in:1,2,3\", \"not:4,5\", \"not:6,7,8\"]"
+      - name: inRangeDelivery
+        required: false
+        in: query
+        description: Filter items that have delivery in range of the geoPoint, must be used with geoPoint and radius
+        schema:
+          type: boolean
+      - name: shopOpen.startDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: shopOpen.endDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: shopOpen.checkOpeningHours
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.checkClosedDates
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.checkForcedSchedules
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.checkMinAndMaxReservationRanges
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: shopOpen.sensitivity
+        required: false
+        in: query
+        description: Sensitivity in hours to adjust the opening hours check
+        schema:
+          type: number
+      - name: dates.startDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: dates.endDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: price.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: price.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: availability.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: availability.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: dateFlexibilityInDays
+        required: false
+        in: query
+        description: Flexible dates window in days (±). When set together with `dates`, the engine also returns items available for the same rental duration shifted by up to ±N days, picking the closest slot to the requested start (ties resolved to the earlier slot).
+        schema:
+          type: number
+      - name: participants.adults
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: participants.children
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsCount.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsCount.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsScore.min
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: googleRatingsScore.max
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: freeCancelation
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: deliveryEnabled
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: directOrderLCD
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: directOrderLLD
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: insuranceEnabled
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: includeReviews
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchEngineSearchCompaniesResponseDto'
+      tags:
+      - Search Engine
+  /v2/search-engine/suggest:
+    get:
+      operationId: searchEngineSuggest
+      parameters:
+      - name: search
+        required: false
+        in: query
+        description: Free-text query typed in the search bar (name, description, verticale, store).
+        schema:
+          type: string
+      - name: lang
+        required: false
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      - name: geoloc.geoPoint.latitude
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: geoloc.geoPoint.longitude
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: geoloc.radius
+        required: false
+        in: query
+        description: Distance in meters from the geoPoint
+        schema:
+          type: number
+      - name: categoryKeys
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Optional verticale scope for the suggestions. Defaults to every verticale.
+      - name: dates.startDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: dates.endDate
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchEngineSuggestResponseDto'
+      tags:
+      - Search Engine
+  /v2/search-engine/sitemap/products:
+    get:
+      operationId: getSitemapProducts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SitemapProductDto'
+      tags:
+      - Search Engine
+components:
+  schemas:
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    SearchEngineSearchCompaniesResponseDto:
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineCompanyDto'
+        nbHits:
+          type: number
+        pagination:
+          $ref: '#/components/schemas/SearchEnginePaginationResponseDto'
+        monitoring:
+          $ref: '#/components/schemas/SearchEngineSearchMonitoringResponseDto'
+      required:
+      - hits
+      - nbHits
+      - pagination
+      - monitoring
+    SearchEngineSuggestResponseDto:
+      type: object
+      properties:
+        items:
+          description: Matched items (products/services/packs), capped. Empty without a geo context.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineSuggestItemDto'
+        stores:
+          description: Stores with the most matching items, capped. Empty without a geo context.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineSuggestStoreDto'
+        categories:
+          description: 'Matched verticales and sub-categories, count-ranked and capped. Catalog-wide: never geo- or date-filtered, so a category can be suggested even when no nearby item carries it.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineSuggestCategoryDto'
+      required:
+      - items
+      - stores
+      - categories
+    SearchEngineLocationDto:
+      type: object
+      properties:
+        point:
+          $ref: '#/components/schemas/GeoPoint'
+        address:
+          type:
+          - string
+          - 'null'
+        addressComponents:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineAddressComponentsDto'
+      required:
+      - point
+      - address
+    SearchEngineSearchItemsResponseDto:
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineItemDto'
+        facets:
+          $ref: '#/components/schemas/SearchEngineSearchItemsFacetsDto'
+        nbHits:
+          type: number
+        pagination:
+          $ref: '#/components/schemas/SearchEnginePaginationResponseDto'
+        monitoring:
+          $ref: '#/components/schemas/SearchEngineSearchMonitoringResponseDto'
+      required:
+      - hits
+      - nbHits
+      - pagination
+      - monitoring
+    CompanyCategoryDiscount:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - categoryIds
+      - ranges
+    SitemapProductDto:
+      type: object
+      properties:
+        companySlug:
+          type: string
+          description: Slug of the product's company — the `:slug` segment of the route
+        itemName:
+          description: Localized product name, slugified per-locale on the front to match the product page canonical
+          allOf:
+          - $ref: '#/components/schemas/LocalizedContent'
+        itemId:
+          type: string
+          description: Product externalId (search index id) — the `:id` segment
+      required:
+      - companySlug
+      - itemName
+      - itemId
+    SearchEngineItemDto:
+      type: object
+      properties:
+        categoryKey:
+          $ref: '#/components/schemas/CategoryKeyEnum'
+        company:
+          $ref: '#/components/schemas/ItemCompanyDetailsDto'
+        initialPrice:
+          type:
+          - number
+          - 'null'
+        price:
+          type:
+          - number
+          - 'null'
+        isLowestPrice:
+          type: boolean
+        appliedDiscountPercentage:
+          type:
+          - number
+          - 'null'
+        quantityAvailable:
+          type:
+          - number
+          - 'null'
+        searchDistance:
+          type:
+          - number
+          - 'null'
+        inDeliveryRange:
+          type:
+          - boolean
+          - 'null'
+        inDeliveryRangeOnly:
+          type:
+          - boolean
+          - 'null'
+        matchedDateRange:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineMatchedDateRangeDto'
+        id:
+          type: string
+        externalId:
+          type: string
+        type:
+          type: string
+          enum:
+          - product
+          - service
+          - pack
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrls:
+          type: array
+          items:
+            type: string
+        categoryLabel:
+          $ref: '#/components/schemas/LocalizedContent'
+        subCategoryKeys:
+          type: array
+          items:
+            type: string
+        subCategoryLabels:
+          $ref: '#/components/schemas/LocalizedSubCategoryLabels'
+        subCategoryLabelText:
+          $ref: '#/components/schemas/LocalizedContent'
+        standardizedNameI18nKeys:
+          type: array
+          items:
+            type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        totalQuantity:
+          type: number
+        insuranceEnabled:
+          type: boolean
+      required:
+      - company
+      - initialPrice
+      - price
+      - isLowestPrice
+      - appliedDiscountPercentage
+      - quantityAvailable
+      - searchDistance
+      - inDeliveryRange
+      - inDeliveryRangeOnly
+      - matchedDateRange
+      - id
+      - externalId
+      - type
+      - name
+      - description
+      - imageUrls
+      - attributes
+      - totalQuantity
+      - insuranceEnabled
+    DiscountFlat:
+      type: object
+      properties:
+        percentage:
+          type: number
+      required:
+      - percentage
+    LocalizedSubCategoryLabels:
+      type: object
+      properties: {}
+    SuggestStoreReviewsDto:
+      type: object
+      properties:
+        score:
+          type:
+          - number
+          - 'null'
+          description: Google rating score (out of 5), or null when the store has no reviews.
+          example: 5
+        count:
+          type:
+          - number
+          - 'null'
+          description: Number of Google reviews, or null when the store has no reviews.
+          example: 38
+      required:
+      - score
+      - count
+    SearchEngineSearchItemsFacetsDto:
+      type: object
+      properties:
+        categoryKey:
+          $ref: '#/components/schemas/SearchEngineStringFacetDto'
+        subCategoryKey:
+          $ref: '#/components/schemas/SearchEngineStringFacetDto'
+        tags:
+          $ref: '#/components/schemas/SearchEngineStringFacetDto'
+        deliveryEnabled:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        insuranceEnabled:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        directOrderLCD:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        directOrderLLD:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        price:
+          $ref: '#/components/schemas/SearchEngineRangeFacetDto'
+        disponibility:
+          $ref: '#/components/schemas/SearchEngineRangeFacetDto'
+      required:
+      - categoryKey
+      - subCategoryKey
+      - tags
+      - deliveryEnabled
+      - insuranceEnabled
+      - directOrderLCD
+      - directOrderLLD
+      - price
+      - disponibility
+    SearchEngineSuggestStoreDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Company (renter) id.
+          example: 6634f1c2a1b2c3d4e5f60123
+        name:
+          type: string
+          description: Store (renter) name.
+          example: RIDE
+        slug:
+          type: string
+          description: Store slug used to build the store link.
+          example: ride-marseille
+        logo:
+          type:
+          - string
+          - 'null'
+          description: Store logo URL, or null when the store has no logo.
+          example: https://bucket-prod.getlokki.com/companies/ride/logo.png
+        verticale:
+          description: Store's dominant verticale among the items that matched the query.
+          allOf:
+          - $ref: '#/components/schemas/SuggestVerticaleDto'
+        city:
+          type:
+          - string
+          - 'null'
+          description: Store's nearest-location city, or null when unavailable.
+          example: Marseille
+        reviews:
+          description: Store review summary.
+          allOf:
+          - $ref: '#/components/schemas/SuggestStoreReviewsDto'
+        matchCount:
+          type: number
+          description: Number of the store's items that matched the query (drives the store ranking).
+          example: 12
+      required:
+      - id
+      - name
+      - slug
+      - logo
+      - verticale
+      - city
+      - reviews
+      - matchCount
+    SuggestItemPricingDto:
+      type: object
+      properties:
+        startingPrice:
+          type:
+          - number
+          - 'null'
+          description: Cheapest base unit price (no dates/availability/discounts applied), or null when the item is un-priceable.
+          example: 89
+      required:
+      - startingPrice
+    StoreInsuranceTulipDetails:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+          - TULIP
+        status:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+          description: Tulip insurance status for the store
+          example: on_inclusion
+      required:
+      - provider
+      - status
+    SearchEngineAddressComponents:
+      type: object
+      properties:
+        streetAddress:
+          type:
+          - string
+          - 'null'
+        addressLocality:
+          type:
+          - string
+          - 'null'
+        postalCode:
+          type:
+          - string
+          - 'null'
+        addressCountry:
+          type:
+          - string
+          - 'null'
+    ClosedDate:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - startDate
+      - endDate
+    SearchEngineMatchedDateRangeDto:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - startDate
+      - endDate
+    SearchEngineSearchMonitoringResponseDto:
+      type: object
+      properties:
+        processTimeMS:
+          type:
+          - number
+          - 'null'
+      required:
+      - processTimeMS
+    SuggestCategoryType:
+      type: string
+      description: Whether this entry is a verticale or a sub-category.
+      enum:
+      - verticale
+      - subCategory
+    SearchEngineCompanyDto:
+      type: object
+      properties:
+        googleReviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineGoogleReviewDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineItemWithoutCompany'
+        allCompanySubCategories:
+          type: array
+          items:
+            type: string
+        closestLocation:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineLocationDto'
+        id:
+          type: string
+        name:
+          type: string
+        geopoint:
+          $ref: '#/components/schemas/GeoPoint'
+        deliveryEnabled:
+          type: boolean
+        deliveryOnly:
+          type: boolean
+        deliveryMaxRange:
+          type: number
+        displayAddressOnlineStore:
+          type: boolean
+        directOrderLCD:
+          type: boolean
+        directOrderLLD:
+          type: boolean
+        insurance:
+          $ref: '#/components/schemas/ItemCompanyInsurance'
+        googleRatingsCount:
+          type: number
+        googleRatingsScore:
+          type: number
+        logo:
+          type: string
+        coverImages:
+          type: array
+          items:
+            type: string
+        slug:
+          type: string
+        currency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        address:
+          type: string
+        freeCancelation:
+          type: boolean
+        lowSeasonDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/LowSeasonDate'
+        minutesBeforeBooking:
+          type: number
+        openingHours:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingHoursLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        discount:
+          $ref: '#/components/schemas/Discount'
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+        timezone:
+          type: string
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineLocation'
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClosedDate'
+        createdAt:
+          format: date-time
+          type: string
+        deliveryMinPrice:
+          type:
+          - number
+          - 'null'
+      required:
+      - items
+      - allCompanySubCategories
+      - closestLocation
+      - id
+      - name
+      - geopoint
+      - deliveryEnabled
+      - deliveryOnly
+      - deliveryMaxRange
+      - displayAddressOnlineStore
+      - directOrderLCD
+      - directOrderLLD
+      - insurance
+      - logo
+      - coverImages
+      - slug
+      - currency
+      - address
+      - freeCancelation
+      - lowSeasonDates
+      - minutesBeforeBooking
+      - openingHours
+      - openingHoursLowSeason
+      - discount
+      - categoryDiscounts
+      - timezone
+      - locations
+      - phoneNumber
+      - closedDates
+    SearchEngineBooleanFacetDto:
+      type: object
+      properties:
+        'true':
+          type: number
+        'false':
+          type: number
+      required:
+      - 'true'
+      - 'false'
+    CategoryKeyEnum:
+      type: string
+      description: Verticale key. The front maps it to an icon.
+      enum:
+      - BIKE
+      - ELECTRIC_BIKE
+      - MOPED
+      - MOTORCYCLE
+      - CAR
+      - SCOOTER
+      - SKI
+      - CLIMBING
+      - SNOWSHOES
+      - SURF
+      - PADDLE
+      - CANOE_KAYAK
+      - BOAT
+      - EVENT
+      - MOTOCULTURE
+      - TOOLING
+    Discount:
+      type: object
+      properties:
+        flatDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountFlat'
+        periodicDiscountsByCurrentDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountPeriodic'
+        periodicDiscountsByStartDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountPeriodic'
+      required:
+      - flatDiscounts
+      - periodicDiscountsByCurrentDate
+      - periodicDiscountsByStartDate
+    LowSeasonDate:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+    DiscountPeriodic:
+      type: object
+      properties:
+        percentage:
+          type: number
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - percentage
+      - startDate
+      - endDate
+    SearchEngineItemWithoutCompany:
+      type: object
+      properties:
+        categoryKey:
+          $ref: '#/components/schemas/CategoryKeyEnum'
+        id:
+          type: string
+        externalId:
+          type: string
+        type:
+          type: string
+          enum:
+          - product
+          - service
+          - pack
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrls:
+          type: array
+          items:
+            type: string
+        categoryLabel:
+          $ref: '#/components/schemas/LocalizedContent'
+        subCategoryKeys:
+          type: array
+          items:
+            type: string
+        subCategoryLabels:
+          $ref: '#/components/schemas/LocalizedSubCategoryLabels'
+        subCategoryLabelText:
+          $ref: '#/components/schemas/LocalizedContent'
+        standardizedNameI18nKeys:
+          type: array
+          items:
+            type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+        totalQuantity:
+          type: number
+        insuranceEnabled:
+          type: boolean
+        initialPrice:
+          type:
+          - number
+          - 'null'
+        price:
+          type:
+          - number
+          - 'null'
+        isLowestPrice:
+          type: boolean
+        appliedDiscountPercentage:
+          type:
+          - number
+          - 'null'
+        quantityAvailable:
+          type:
+          - number
+          - 'null'
+        searchDistance:
+          type:
+          - number
+          - 'null'
+        inDeliveryRange:
+          type:
+          - boolean
+          - 'null'
+        inDeliveryRangeOnly:
+          type:
+          - boolean
+          - 'null'
+        matchedDateRange:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineMatchedDateRangeDto'
+      required:
+      - id
+      - externalId
+      - type
+      - name
+      - description
+      - imageUrls
+      - attributes
+      - totalQuantity
+      - insuranceEnabled
+      - initialPrice
+      - price
+      - isLowestPrice
+      - appliedDiscountPercentage
+      - quantityAvailable
+      - searchDistance
+      - inDeliveryRange
+      - inDeliveryRangeOnly
+      - matchedDateRange
+    SuggestItemStoreDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Store (renter) name.
+          example: RIDE
+        slug:
+          type: string
+          description: Store slug, used to build the store/product link.
+          example: ride-marseille
+        city:
+          type:
+          - string
+          - 'null'
+          description: Store's nearest-location city, or null when unavailable.
+          example: Marseille
+      required:
+      - name
+      - slug
+      - city
+    ItemCompanyInsurance:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        details:
+          $ref: '#/components/schemas/StoreInsuranceTulipDetails'
+      required:
+      - enabled
+      - details
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    Attribute:
+      type: object
+      properties:
+        key:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - key
+      - tags
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    ItemCompanyDetailsDto:
+      type: object
+      properties:
+        allCompanySubCategories:
+          type: array
+          items:
+            type: string
+        closestLocation:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineLocationDto'
+        id:
+          type: string
+        name:
+          type: string
+        geopoint:
+          $ref: '#/components/schemas/GeoPoint'
+        deliveryEnabled:
+          type: boolean
+        deliveryOnly:
+          type: boolean
+        deliveryMaxRange:
+          type: number
+        displayAddressOnlineStore:
+          type: boolean
+        directOrderLCD:
+          type: boolean
+        directOrderLLD:
+          type: boolean
+        insurance:
+          $ref: '#/components/schemas/ItemCompanyInsurance'
+        googleRatingsCount:
+          type: number
+        googleRatingsScore:
+          type: number
+        logo:
+          type: string
+        coverImages:
+          type: array
+          items:
+            type: string
+        slug:
+          type: string
+        currency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        address:
+          type: string
+        freeCancelation:
+          type: boolean
+        lowSeasonDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/LowSeasonDate'
+        minutesBeforeBooking:
+          type: number
+        openingHours:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingHoursLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        discount:
+          $ref: '#/components/schemas/Discount'
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+        timezone:
+          type: string
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineLocation'
+        phoneNumber:
+          type:
+          - string
+          - 'null'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClosedDate'
+        createdAt:
+          format: date-time
+          type: string
+        deliveryMinPrice:
+          type:
+          - number
+          - 'null'
+      required:
+      - allCompanySubCategories
+      - closestLocation
+      - id
+      - name
+      - geopoint
+      - deliveryEnabled
+      - deliveryOnly
+      - deliveryMaxRange
+      - displayAddressOnlineStore
+      - directOrderLCD
+      - directOrderLLD
+      - insurance
+      - logo
+      - coverImages
+      - slug
+      - currency
+      - address
+      - freeCancelation
+      - lowSeasonDates
+      - minutesBeforeBooking
+      - openingHours
+      - openingHoursLowSeason
+      - discount
+      - categoryDiscounts
+      - timezone
+      - locations
+      - phoneNumber
+      - closedDates
+    SearchEngineSuggestCategoryDto:
+      type: object
+      properties:
+        type:
+          example: verticale
+          $ref: '#/components/schemas/SuggestCategoryType'
+        key:
+          type: string
+          description: Canonical key of this (possibly merged) entry — the verticale key (CompanyVerticale) or a representative sub-category key, depending on `type`. The front maps it to an icon.
+          example: MOTORCYCLE
+        keys:
+          description: 'Every underlying key this entry represents: verticale keys for `verticale`, sub-category ids for `subCategory`. Usually `[key]`, but mirrored verticales are merged into one entry (e.g. Bike + Electric Bike → `keys: [''BIKE'', ''ELECTRIC_BIKE'']`), so the front applies all of them on selection and filters both.'
+          example:
+          - MOTORCYCLE
+          type: array
+          items:
+            type: string
+        label:
+          type:
+          - string
+          - 'null'
+          description: Localized label resolved to the requested language, or null when no label is denormalized (front falls back to mapping the key).
+          example: Moto
+        count:
+          type: number
+          description: Number of matched items catalog-wide in this verticale/sub-category (drives ordering; not a local availability count).
+          example: 12
+      required:
+      - type
+      - key
+      - keys
+      - label
+      - count
+    SearchEngineStringFacetDto:
+      type: object
+      properties: {}
+    SearchEngineLocation:
+      type: object
+      properties:
+        point:
+          $ref: '#/components/schemas/GeoPoint'
+        address:
+          type:
+          - string
+          - 'null'
+        addressComponents:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineAddressComponents'
+      required:
+      - point
+      - address
+    SearchEnginePaginationResponseDto:
+      type: object
+      properties:
+        page:
+          type: number
+          minimum: 1
+        hitsPerPage:
+          type: number
+          minimum: 0
+          maximum: 50
+        totalPages:
+          type: number
+          minimum: 1
+      required:
+      - page
+      - hitsPerPage
+      - totalPages
+    SearchEngineGoogleReviewDto:
+      type: object
+      properties:
+        rating:
+          type: number
+        name:
+          type: string
+        comment:
+          type: string
+        authorPhotoUrl:
+          type:
+          - string
+          - 'null'
+        publishTime:
+          format: date-time
+          type: string
+      required:
+      - rating
+      - name
+      - comment
+      - authorPhotoUrl
+      - publishTime
+    CompanyCategoryDiscountRange:
+      type: object
+      properties:
+        discount:
+          type: number
+          description: Discount value for the range
+        discountType:
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          type: string
+          description: Type of discount applied (amount or percentage)
+        rangeFrom:
+          type:
+          - number
+          - 'null'
+          description: Minimum value of the range (Quantity of items)
+        rangeTo:
+          type:
+          - number
+          - 'null'
+          description: Maximum value of the range (Quantity of items)
+        infiniteTo:
+          type: boolean
+          description: Indicates if the range has no upper limit
+      required:
+      - discount
+      - discountType
+      - rangeFrom
+      - rangeTo
+      - infiniteTo
+    SearchEngineRangeFacetDto:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        count:
+          type: number
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineRangeFacetDto'
+      required:
+      - min
+      - max
+      - count
+    SearchEngineAddressComponentsDto:
+      type: object
+      properties:
+        streetAddress:
+          type:
+          - string
+          - 'null'
+        addressLocality:
+          type:
+          - string
+          - 'null'
+        postalCode:
+          type:
+          - string
+          - 'null'
+        addressCountry:
+          type:
+          - string
+          - 'null'
+    SuggestVerticaleDto:
+      type: object
+      properties:
+        key:
+          example: MOTORCYCLE
+          $ref: '#/components/schemas/CategoryKeyEnum'
+        label:
+          type:
+          - string
+          - 'null'
+          description: Localized verticale label (resolved to the requested language, French fallback).
+          example: Moto
+      required:
+      - key
+      - label
+    SearchEngineSuggestItemDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: Item identifier (product/service/pack) used to build the click-through link.
+          example: 6634f1c2a1b2c3d4e5f60789
+        name:
+          type: string
+          description: Item name resolved to the requested language (French fallback).
+          example: Honda NX500 A2
+        image:
+          type:
+          - string
+          - 'null'
+          description: First item image URL, or null when the item has no image.
+          example: https://bucket-prod.getlokki.com/items/nx500.jpg
+        verticale:
+          description: Verticale the item belongs to.
+          allOf:
+          - $ref: '#/components/schemas/SuggestVerticaleDto'
+        store:
+          description: Store (renter) offering the item.
+          allOf:
+          - $ref: '#/components/schemas/SuggestItemStoreDto'
+        pricing:
+          description: Item pricing summary.
+          allOf:
+          - $ref: '#/components/schemas/SuggestItemPricingDto'
+      required:
+      - externalId
+      - name
+      - image
+      - verticale
+      - store
+      - pricing
+    GeoPoint:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+      - latitude
+      - longitude
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

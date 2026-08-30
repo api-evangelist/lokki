@@ -1,0 +1,311 @@
+openapi: 3.2.0
+info:
+  title: Lokki Price Template API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Price Template
+paths:
+  /v2/price-template/has-items:
+    get:
+      operationId: hasPriceTemplateItems
+      parameters:
+      - name: priceTemplateId
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Price Template
+  /v2/price-template/{priceTemplateId}:
+    get:
+      operationId: getOnePriceTemplate
+      parameters:
+      - name: priceTemplateId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceTemplate'
+      tags:
+      - Price Template
+    delete:
+      operationId: deleteOnePriceTemplate
+      parameters:
+      - name: priceTemplateId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Price Template
+    put:
+      operationId: updateOnePriceTemplate
+      parameters:
+      - name: priceTemplateId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOnePriceTemplateDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceTemplate'
+      tags:
+      - Price Template
+  /v2/price-template:
+    get:
+      operationId: getManyPriceTemplates
+      parameters:
+      - name: skip
+        required: false
+        in: query
+        description: Number of documents to skip
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of documents to return
+        schema:
+          minimum: 1
+          type: number
+      - name: sort
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: 'Sort order for the results. Use ''__asc'' or ''__desc'' suffix to specify ascending or descending order respectively. Example: ''name__asc'''
+      - name: fields
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Fields to include in the response
+      - name: id.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: id.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: id.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: id.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: id.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: id.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: id.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: id.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyPriceTemplatesResponseDto'
+      tags:
+      - Price Template
+    post:
+      operationId: createOnePriceTemplate
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOnePriceTemplateDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceTemplate'
+      tags:
+      - Price Template
+components:
+  schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CreateOnePriceTemplateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelPriceRange'
+      required:
+      - name
+      - ranges
+    ProductModelPriceRange:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        id:
+          type: string
+        timeStartHours:
+          type: number
+        timeStartMinutes:
+          type: number
+        timeEndHours:
+          type: number
+        timeEndMinutes:
+          type: number
+        durationInDays:
+          type: number
+      required:
+      - type
+      - label
+      - id
+      - timeStartHours
+      - timeStartMinutes
+      - timeEndHours
+      - timeEndMinutes
+    UpdateOnePriceTemplateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelPriceRange'
+    GetManyPriceTemplatesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceTemplate'
+      required:
+      - total
+      - docs
+    PriceTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelPriceRange'
+      required:
+      - id
+      - companyId
+      - name
+      - ranges
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

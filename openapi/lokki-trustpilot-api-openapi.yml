@@ -1,0 +1,51 @@
+openapi: 3.2.0
+info:
+  title: Lokki Trustpilot API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Trustpilot
+paths:
+  /v2/trustpilot/rating/lokki:
+    get:
+      operationId: getTrustpilotRatingLokki
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrustpilotRating'
+      tags:
+      - Trustpilot
+components:
+  schemas:
+    TrustpilotRating:
+      type: object
+      properties:
+        rating:
+          type: number
+          description: TrustScore, e.g. 4.6
+        reviewNb:
+          type: number
+          description: Total number of reviews behind the TrustScore
+        fetchedAt:
+          format: date-time
+          type: string
+          description: When the rating was last crawled
+      required:
+      - rating
+      - reviewNb
+      - fetchedAt
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

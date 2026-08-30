@@ -1,0 +1,377 @@
+openapi: 3.2.0
+info:
+  title: Lokki Product Verticale Category API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Product Verticale Category
+paths:
+  /v2/product-verticale-category/all:
+    get:
+      operationId: getAllProductVerticaleCategories
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVerticaleCategoryListDto'
+      tags:
+      - Product Verticale Category
+  /v2/product-verticale-category/admin/{id}:
+    get:
+      operationId: getProductVerticaleCategoryById
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVerticaleCategory'
+      tags:
+      - Product Verticale Category
+  /v2/product-verticale-category/verticale/{verticale}:
+    get:
+      operationId: getProductVerticaleCategoriesByVerticale
+      parameters:
+      - name: verticale
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVerticaleCategoryListDto'
+      tags:
+      - Product Verticale Category
+  /v2/product-verticale-category/admin/create:
+    post:
+      operationId: createProductVerticaleCategory
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateProductVerticaleCategoryDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVerticaleCategory'
+      tags:
+      - Product Verticale Category
+  /v2/product-verticale-category/admin/update/{id}:
+    put:
+      operationId: updateProductVerticaleCategory
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateProductVerticaleCategoryDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVerticaleCategory'
+      tags:
+      - Product Verticale Category
+  /v2/product-verticale-category/admin/updateMany:
+    put:
+      operationId: updateManyProductVerticaleCategory
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateManyProductVerticaleCategoryDto'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Product Verticale Category
+  /v2/product-verticale-category/admin/delete/{id}:
+    delete:
+      operationId: deleteProductVerticaleCategory
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVerticaleCategory'
+      tags:
+      - Product Verticale Category
+  /v2/product-verticale-category/company/verticales:
+    get:
+      operationId: getCompanyProductVerticaleCategories
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductVerticaleCategoryListDto'
+      tags:
+      - Product Verticale Category
+components:
+  schemas:
+    UpdateProductVerticaleCategoryDto:
+      type: object
+      properties:
+        name:
+          type: string
+        i18nKey:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        rank:
+          type: number
+        isDefault:
+          type: boolean
+        isOptions:
+          type: boolean
+        hasChildItems:
+          type: boolean
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newAttributes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newName:
+          type:
+          - string
+          - 'null'
+        legacy:
+          type: boolean
+        id:
+          type: string
+      required:
+      - name
+      - i18nKey
+      - verticale
+      - rank
+      - isDefault
+      - isOptions
+      - hasChildItems
+      - id
+    ProductVerticaleCategoryListDto:
+      type: object
+      properties:
+        productVerticaleCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticaleCategory'
+      required:
+      - productVerticaleCategories
+    CreateUpdateProductVerticaleCategoryDto:
+      type: object
+      properties:
+        name:
+          type: string
+        i18nKey:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        rank:
+          type: number
+        isDefault:
+          type: boolean
+        isOptions:
+          type: boolean
+        hasChildItems:
+          type: boolean
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newAttributes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newName:
+          type:
+          - string
+          - 'null'
+        legacy:
+          type: boolean
+      required:
+      - name
+      - i18nKey
+      - verticale
+      - rank
+      - isDefault
+      - isOptions
+      - hasChildItems
+    ProductVerticaleCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        i18nKey:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        rank:
+          type: number
+        isDefault:
+          type: boolean
+        isOptions:
+          type: boolean
+        hasChildItems:
+          type: boolean
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newName:
+          type: string
+        legacy:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - i18nKey
+      - verticale
+      - rank
+      - isDefault
+      - isOptions
+      - hasChildItems
+      - attributes
+      - createdAt
+      - updatedAt
+    UpdateManyProductVerticaleCategoryDto:
+      type: object
+      properties:
+        productVerticaleCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateProductVerticaleCategoryDto'
+      required:
+      - productVerticaleCategories
+    ProductVerticalCategoryAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        mandatory:
+          type: boolean
+      required:
+      - attribute
+      - tags
+      - mandatory
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

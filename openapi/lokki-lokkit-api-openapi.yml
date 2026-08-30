@@ -1,0 +1,366 @@
+openapi: 3.2.0
+info:
+  title: Lokkit API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Lokkit
+paths:
+  /v2/lokkit/signup-form:
+    post:
+      operationId: sendLokkitSignupForm
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LokkitCompleteFormInfosDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkitCreateAccountResultDto'
+        '201':
+          description: ''
+      tags:
+      - Lokkit
+  /v2/lokkit/user-data:
+    get:
+      operationId: getLokkitUserData
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkitUserData'
+      tags:
+      - Lokkit
+    put:
+      operationId: updateLokkitUserData
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLokkiUserDataDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkitUserData'
+      tags:
+      - Lokkit
+  /v2/lokkit/user-data/task:
+    put:
+      operationId: updateLokkitUserDataTask
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLokkitUserDataTaskDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LokkitUserData'
+      tags:
+      - Lokkit
+components:
+  schemas:
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    LokkitCompleteFormInfosDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        verticale:
+          type: string
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+        launchDate:
+          type: string
+        projectDescription:
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - firstName
+      - lastName
+      - email
+      - phone
+      - verticale
+      - launchDate
+      - projectDescription
+      - utmInfos
+      - lang
+    LokkitTask:
+      type: object
+      properties:
+        id:
+          type: string
+        taskId:
+          type: number
+        isCompleted:
+          type: boolean
+      required:
+      - id
+      - taskId
+      - isCompleted
+    UpdateLokkiUserDataDto:
+      type: object
+      properties:
+        launchDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+      required:
+      - launchDate
+      - verticales
+    UpdateLokkitUserDataTaskDto:
+      type: object
+      properties:
+        taskId:
+          type: number
+        isCompleted:
+          type: boolean
+      required:
+      - taskId
+      - isCompleted
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+        role:
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+          type: string
+        password:
+          type: string
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    LokkitUserData:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        launchDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LokkitTask'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - userId
+      - launchDate
+      - verticales
+      - tasks
+      - createdAt
+    LokkitCreateAccountResultDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - user
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

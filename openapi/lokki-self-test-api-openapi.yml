@@ -1,0 +1,357 @@
+openapi: 3.2.0
+info:
+  title: Lokki Self Test API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Self Test
+paths:
+  /v2/self-test/complete-form:
+    post:
+      operationId: sendCompleteSelfTestForm
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelfTestFormDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+      - Self Test
+  /v2/self-test/setup-test-account:
+    post:
+      operationId: selfTestCreateTestAccount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelfTestCreateAccountFormDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SelfTestCreateAccountResultDto'
+        '201':
+          description: ''
+      tags:
+      - Self Test
+components:
+  schemas:
+    SelfTestCreateAccountFormDto:
+      type: object
+      properties:
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        productsNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        companyName:
+          type: string
+        website:
+          type: string
+        replaceForLokki:
+          type: array
+          items:
+            type: string
+        currentSoftware:
+          type: string
+        painPoints:
+          type: array
+          items:
+            type: string
+        featuresToUse:
+          type: array
+          items:
+            type: string
+        comments:
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        companyId:
+          type: string
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+        password:
+          type: string
+          minLength: 8
+          pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
+      required:
+      - hasRentalActivity
+      - launchDate
+      - verticale
+      - productsNumber
+      - firstName
+      - lastName
+      - email
+      - phone
+      - companyName
+      - website
+      - replaceForLokki
+      - currentSoftware
+      - painPoints
+      - featuresToUse
+      - comments
+      - utmInfos
+      - password
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    SelfTestFormDto:
+      type: object
+      properties:
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          type: string
+        verticale:
+          type: string
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+        productsNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        companyName:
+          type: string
+        website:
+          type: string
+        replaceForLokki:
+          type: array
+          items:
+            type: string
+        currentSoftware:
+          type: string
+        painPoints:
+          type: array
+          items:
+            type: string
+        featuresToUse:
+          type: array
+          items:
+            type: string
+        comments:
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        companyId:
+          type: string
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - hasRentalActivity
+      - launchDate
+      - verticale
+      - productsNumber
+      - firstName
+      - lastName
+      - email
+      - phone
+      - companyName
+      - website
+      - replaceForLokki
+      - currentSoftware
+      - painPoints
+      - featuresToUse
+      - comments
+      - utmInfos
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+        role:
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+          type: string
+        password:
+          type: string
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    SelfTestCreateAccountResultDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - user
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

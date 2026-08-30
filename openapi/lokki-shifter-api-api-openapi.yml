@@ -1,0 +1,283 @@
+openapi: 3.2.0
+info:
+  title: Lokki Shifter API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Shifter Api
+paths:
+  /v2/shifter-api/orderToImport:
+    get:
+      operationId: shifterOrderToImport
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointOfSalesOrdersToImport'
+      tags:
+      - Shifter Api
+  /v2/shifter-api/updateOrderShifterId:
+    put:
+      operationId: updateOrderShifterId
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderShifterId'
+      responses:
+        '200':
+          description: ''
+      tags:
+      - Shifter Api
+components:
+  schemas:
+    ShifterIds:
+      type: object
+      properties:
+        lokkiOrderId:
+          type: string
+        shifterOrderId:
+          type: string
+      required:
+      - lokkiOrderId
+      - shifterOrderId
+    PointOfSalesItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        discountAmount:
+          type: number
+      required:
+      - discountType
+      - discountAmount
+    UpdateOrderShifterId:
+      type: object
+      properties:
+        shifterIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShifterIds'
+      required:
+      - shifterIds
+    PointOfSalesOrderWarrantDto:
+      type: object
+      properties:
+        totalAmountTTC:
+          type: number
+        vat:
+          type: number
+        quantity:
+          type: number
+      required:
+      - totalAmountTTC
+      - vat
+      - quantity
+    PointOfSalesOrderPromoCodeDto:
+      type: object
+      properties:
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliesToDelivery:
+          type: boolean
+      required:
+      - discountAmount
+      - discountType
+      - appliesToDelivery
+    PointOfSalesOrdersToImport:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PointOfSalesOrderDto'
+      required:
+      - orders
+    PointOfSalesOrderDeliveryDto:
+      type: object
+      properties:
+        amountTTC:
+          type: number
+        vat:
+          type: number
+      required:
+      - amountTTC
+      - vat
+    PointOfSalesOrderItemDto:
+      type: object
+      properties:
+        quantity:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        name:
+          type: string
+        vat:
+          type: number
+        discount:
+          $ref: '#/components/schemas/PointOfSalesItemDiscount'
+        discountedTotalHT:
+          type: number
+        discountedTotalTTC:
+          type: number
+      required:
+      - quantity
+      - totalTTC
+      - totalHT
+      - name
+      - vat
+    PointOfSalesOrderCustomerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - entreprise
+          - individual
+        email:
+          type: string
+        phone:
+          type: string
+        firstName:
+          type: string
+        companyName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        streetNumber:
+          type: string
+      required:
+      - id
+      - type
+      - email
+      - phone
+      - firstName
+      - companyName
+      - lastName
+      - address
+      - zipCode
+      - city
+      - streetNumber
+    PointOfSalesOrderPaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        paymentMethod:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Autre
+          - Boutique en ligne
+          - Lien de paiement
+        paymentDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+      required:
+      - amount
+      - paymentMethod
+      - paymentDate
+      - id
+    PointOfSalesOrderDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        startDateUtc:
+          format: date-time
+          type: string
+        endDateUtc:
+          format: date-time
+          type: string
+        percentageOfDiscount:
+          type:
+          - number
+          - 'null'
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/PointOfSalesOrderPromoCodeDto'
+        deliveryPrice:
+          allOf:
+          - $ref: '#/components/schemas/PointOfSalesOrderDeliveryDto'
+        description:
+          type: string
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PointOfSalesOrderItemDto'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PointOfSalesOrderPaymentDto'
+        customer:
+          $ref: '#/components/schemas/PointOfSalesOrderCustomerDto'
+        warrant:
+          allOf:
+          - $ref: '#/components/schemas/PointOfSalesOrderWarrantDto'
+        currency:
+          type: string
+        type:
+          type: string
+          enum:
+          - ORDER
+          - EVENT
+      required:
+      - orderId
+      - startDateUtc
+      - endDateUtc
+      - percentageOfDiscount
+      - promoCode
+      - deliveryPrice
+      - description
+      - totalTTC
+      - totalHT
+      - items
+      - payments
+      - customer
+      - warrant
+      - currency
+      - type
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

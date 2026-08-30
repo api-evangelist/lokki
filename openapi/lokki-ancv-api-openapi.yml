@@ -1,0 +1,236 @@
+openapi: 3.2.0
+info:
+  title: Lokki Ancv API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Ancv
+paths:
+  /v2/ancv/qr-code/{preTransactionId}:
+    get:
+      operationId: getAncvPreTransactionQrCode
+      parameters:
+      - name: preTransactionId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Ancv
+  /v2/ancv/transaction/{transactionId}/authenticate:
+    post:
+      operationId: authenticateAncvTransaction
+      parameters:
+      - name: transactionId
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateTransactionBodyDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AncvTransaction'
+      tags:
+      - Ancv
+  /v2/ancv/transaction/{transactionId}:
+    get:
+      operationId: getAncvTransaction
+      parameters:
+      - name: transactionId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AncvTransaction'
+      tags:
+      - Ancv
+components:
+  schemas:
+    AncvPayerAuthorization:
+      type: object
+      properties:
+        number:
+          type: string
+        type:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+        validationDate:
+          type: string
+        holder:
+          type: string
+      required:
+      - number
+      - type
+      - amount
+      - validationDate
+      - holder
+    AncvAmount:
+      type: object
+      properties:
+        total:
+          type: number
+        currency:
+          type: string
+      required:
+      - total
+      - currency
+    AncvOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        paymentId:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+      required:
+      - id
+      - paymentId
+      - amount
+    AncvMerchant:
+      type: object
+      properties:
+        shopId:
+          type: string
+      required:
+      - shopId
+    AncvPayer:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AncvPayerAuthorization'
+      required:
+      - beneficiaryId
+      - amount
+      - authorizations
+    AncvPaymentMethod:
+      type: object
+      properties:
+        captureMode:
+          type: string
+          enum:
+          - NORMAL
+          - DEFERRED
+        captureTerm:
+          type: number
+        captureDate:
+          type: string
+        tspdMode:
+          type: string
+      required:
+      - captureMode
+      - captureTerm
+      - captureDate
+      - tspdMode
+    AncvTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+        state:
+          enum:
+          - CREATED
+          - CANCELLED
+          - PROCESSING
+          - AUTHORIZING
+          - AUTHORIZED
+          - USED
+          - ABORTED
+          - EXPIRED
+          - VALIDATED
+          type: string
+        creationDate:
+          format: date-time
+          type: string
+        updateDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        merchant:
+          $ref: '#/components/schemas/AncvMerchant'
+        order:
+          $ref: '#/components/schemas/AncvOrder'
+        paymentMethod:
+          $ref: '#/components/schemas/AncvPaymentMethod'
+        redirectUrls:
+          $ref: '#/components/schemas/AncvRedirectUrls'
+        payers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AncvPayer'
+      required:
+      - id
+      - state
+      - creationDate
+      - updateDate
+      - expirationDate
+      - merchant
+      - order
+      - paymentMethod
+      - redirectUrls
+    AuthenticateTransactionBodyDto:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        amount:
+          type: number
+        currencyIso:
+          type: string
+      required:
+      - beneficiaryId
+      - amount
+      - currencyIso
+    AncvRedirectUrls:
+      type: object
+      properties:
+        returnUrl:
+          type:
+          - string
+          - 'null'
+        cancelUrl:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

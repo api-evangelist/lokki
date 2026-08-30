@@ -1,0 +1,40 @@
+openapi: 3.2.0
+info:
+  title: Lokki Ahrefs API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: ahrefs
+paths:
+  /v2/ahrefs/monitor:
+    post:
+      operationId: triggerAhrefsMonitoring
+      summary: Run the Ahrefs SEO monitoring check on demand and return the alerts it computed.
+      parameters:
+      - name: projectId
+        required: false
+        in: query
+        description: Override the monitored Ahrefs project — handy for testing against any project.
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - ahrefs
+components:
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

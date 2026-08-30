@@ -1,0 +1,788 @@
+openapi: 3.2.0
+info:
+  title: Lokki Export Csv API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Export Csv
+paths:
+  /v2/export-csv/generate-orders-product-survey-csv:
+    get:
+      operationId: generateOrdersProductSurveyCsv
+      parameters:
+      - name: skip
+        required: false
+        in: query
+        description: Number of documents to skip
+        schema:
+          minimum: 0
+          default: 0
+          type: number
+      - name: limit
+        required: false
+        in: query
+        description: Maximum number of documents to return
+        schema:
+          minimum: 1
+          type: number
+      - name: sort
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: 'Sort order for the results. Use ''__asc'' or ''__desc'' suffix to specify ascending or descending order respectively. Example: ''name__asc'''
+      - name: fields
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Fields to include in the response
+      - name: id.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: id.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: id.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: id.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: id.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: id.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: id.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: id.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      - name: createdAt.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: createdAt.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: createdAt.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific date
+        schema:
+          type: string
+      - name: createdAt.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific date
+        schema:
+          type: string
+      - name: createdAt.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified dates
+      - name: createdAt.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified dates
+      - name: createdAt.gt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than the specified date
+      - name: createdAt.lt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than the specified date
+      - name: createdAt.gte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than or equal to the specified date
+      - name: createdAt.lte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than or equal to the specified date
+      - name: startDate.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: startDate.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: startDate.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific date
+        schema:
+          type: string
+      - name: startDate.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific date
+        schema:
+          type: string
+      - name: startDate.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified dates
+      - name: startDate.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified dates
+      - name: startDate.gt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than the specified date
+      - name: startDate.lt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than the specified date
+      - name: startDate.gte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than or equal to the specified date
+      - name: startDate.lte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than or equal to the specified date
+      - name: endDate.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: endDate.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: endDate.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific date
+        schema:
+          type: string
+      - name: endDate.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific date
+        schema:
+          type: string
+      - name: endDate.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified dates
+      - name: endDate.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified dates
+      - name: endDate.gt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than the specified date
+      - name: endDate.lt
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than the specified date
+      - name: endDate.gte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date greater than or equal to the specified date
+      - name: endDate.lte
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries with a date less than or equal to the specified date
+      - name: customerId.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: customerId.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: customerId.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: customerId.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: customerId.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: customerId.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: customerId.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: customerId.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      - name: status__name.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: status__name.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: status__name.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: status__name.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: status__name.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: status__name.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: status__name.contains
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that contain the specified substring
+      - name: status__name.regex
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match the specified regular expression
+      - name: createdFrom.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: createdFrom.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: createdFrom.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: createdFrom.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: createdFrom.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: createdFrom.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: type.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: type.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: type.equals
+        required: false
+        in: query
+        description: Filter entries that have a specific value
+        schema:
+          type: string
+      - name: type.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not have a specific value
+        schema:
+          type: string
+      - name: type.in
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that match any of the specified values
+      - name: type.notIn
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+        description: Filter entries that do not match any of the specified values
+      - name: inRange.from
+        required: false
+        in: query
+        schema:
+          type: date
+      - name: inRange.to
+        required: false
+        in: query
+        schema:
+          type: date
+      - name: isRequest.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: isRequest.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: isRequest.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific value
+        schema:
+          type: boolean
+      - name: isRequest.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific value
+        schema:
+          type: boolean
+      - name: isRequest.withQuoteRequestPrebooking
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: isEnded.isNull
+        required: false
+        in: query
+        description: Filter entries that have the field as null
+        schema:
+          type: boolean
+      - name: isEnded.exists
+        required: false
+        in: query
+        description: Filter entries that have the field not null
+        schema:
+          type: boolean
+      - name: isEnded.equals
+        required: false
+        in: query
+        description: Filter entries that match a specific value
+        schema:
+          type: boolean
+      - name: isEnded.notEquals
+        required: false
+        in: query
+        description: Filter entries that do not match a specific value
+        schema:
+          type: boolean
+      - name: paymentStatus
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: orderStatus
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: searchProducts
+        required: false
+        in: query
+        schema:
+          type: string
+      - name: withPaymentV2
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - name: productId
+        required: false
+        in: query
+        schema:
+          oneOf:
+          - type: array
+            items:
+              type: string
+          - type: string
+      - name: subProductId
+        required: false
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsvResponse'
+      tags:
+      - Export Csv
+  /v2/export-csv/orderLCD:
+    get:
+      operationId: exportLCDOrdersCSV
+      parameters:
+      - name: language
+        required: true
+        in: query
+        schema:
+          enum:
+          - fr
+          - en
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+      - name: orderStatus
+        required: false
+        in: query
+        description: Status filter applied on screen — an empty value means no filter.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - TODAY
+            - TO_COME
+            - IN_PROGRESS
+            - LATE
+            - ENDED
+            - PASS
+            - PRE_BOOKING
+            - PRE_BOOKING_ADMIN
+            - CANCELED
+            - NOT_PRE_BOOKING
+            - NOT_PRE_BOOKING_ADMIN
+            - NOT_CANCELED
+      - name: inRange.startDate
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: inRange.endDate
+        required: false
+        in: query
+        schema:
+          format: date-time
+          type: string
+      - name: typeNotEquals
+        required: false
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ORDER
+            - PRE_BOOKING
+            - PRE_BOOKING_ADMIN
+            - CANCELED
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      tags:
+      - Export Csv
+components:
+  schemas:
+    CsvResponse:
+      type: object
+      properties:
+        csv:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csv
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

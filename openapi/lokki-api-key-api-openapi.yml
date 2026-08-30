@@ -1,0 +1,139 @@
+openapi: 3.2.0
+info:
+  title: Lokki Api Key API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Api Key
+paths:
+  /v2/api-key/createG8ApiKey:
+    post:
+      operationId: createG8ApiKey
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiKeyDto'
+      tags:
+      - Api Key
+  /v2/api-key/getG8ApiKey:
+    get:
+      operationId: getG8ApiKey
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiKeyDto'
+      tags:
+      - Api Key
+  /v2/api-key/createShifterApiKey:
+    post:
+      operationId: createShifterApiKey
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiKeyDto'
+      tags:
+      - Api Key
+  /v2/api-key/getShifterApiKey:
+    get:
+      operationId: getShifterApiKey
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiKeyDto'
+      tags:
+      - Api Key
+  /v2/api-key/createPartnerApiKey:
+    post:
+      operationId: createPartnerApiKey
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeyParams'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiKeyDto'
+      tags:
+      - Api Key
+components:
+  schemas:
+    GetApiKeyDto:
+      type: object
+      properties:
+        apikey:
+          type:
+          - string
+          - 'null'
+      required:
+      - apikey
+    CreateApiKeyParams:
+      type: object
+      properties:
+        generalScope:
+          type: string
+          enum:
+          - G8
+          - SHEETS
+          - MAKE
+          - ESTEREL_COTE_AZUR
+          - SHIFTER
+          - LA_TRACE
+          - RAILEE
+          - YOUBOOK
+          - OISE_FUN
+          - OUTDOOR_ACTIVE
+          - GENERATION_VOYAGE
+          - DECATHLON_OUTDOOR
+        scopes:
+          type: array
+          items:
+            type: string
+            enum:
+            - G8
+            - SHEETS
+            - MAKE
+            - ESTEREL_COTE_AZUR
+            - SHIFTER
+            - LA_TRACE
+            - RAILEE
+            - YOUBOOK
+            - OISE_FUN
+            - OUTDOOR_ACTIVE
+            - GENERATION_VOYAGE
+            - DECATHLON_OUTDOOR
+      required:
+      - generalScope
+      - scopes
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

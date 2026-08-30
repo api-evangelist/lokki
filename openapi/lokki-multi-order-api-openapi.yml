@@ -1,0 +1,114 @@
+openapi: 3.2.0
+info:
+  title: Lokki Multi Order API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Multi Order
+paths:
+  /v2/multi-order/byOrderId/{id}:
+    get:
+      operationId: multiOrderByOrderId
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiOrderDto'
+      tags:
+      - Multi Order
+  /v2/multi-order/create:
+    post:
+      operationId: createMultiOrder
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMultiOrderDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiOrderDto'
+      tags:
+      - Multi Order
+  /v2/multi-order/addOrder/{id}:
+    put:
+      operationId: addOrderToMultiOrder
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewOrderMultiOrderDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Multi Order
+components:
+  schemas:
+    MultiOrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+        orderIds:
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - orderIds
+      - createdAt
+    NewOrderMultiOrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    NewMultiOrderDto:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+      required:
+      - ids
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

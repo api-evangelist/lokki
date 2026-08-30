@@ -1,0 +1,50 @@
+openapi: 3.2.0
+info:
+  title: Lokki Company Payout API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Company Payout
+paths:
+  /v2/company-payout/related-transactions-csv/{payoutId}:
+    get:
+      operationId: getPayoutRelatedTransactionsCsv
+      parameters:
+      - name: payoutId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsCsvDto'
+      tags:
+      - Company Payout
+components:
+  schemas:
+    TransactionsCsvDto:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - transactions
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token

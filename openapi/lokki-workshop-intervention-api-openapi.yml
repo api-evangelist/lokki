@@ -1,0 +1,134 @@
+openapi: 3.2.0
+info:
+  title: Lokki Workshop Intervention API
+  description: The main API powering the Lokki Dashboard and Online Store
+  version: '2.0'
+  contact: {}
+servers: []
+security:
+- x-access-token: []
+tags:
+- name: Workshop Intervention
+paths:
+  /v2/workshop-intervention:
+    post:
+      operationId: createWorkshopIntervention
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateWorkshopInterventionDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+      - Workshop Intervention
+    get:
+      operationId: getWorkshopInterventionByCompanyId
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopInterventionDto'
+      tags:
+      - Workshop Intervention
+    put:
+      operationId: updateWorkshopIntervention
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUpdateWorkshopInterventionDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopInterventionDto'
+      tags:
+      - Workshop Intervention
+  /v2/workshop-intervention/{companyId}:
+    get:
+      operationId: getWorkshopInterventionByCompanyIdPublic
+      parameters:
+      - name: companyId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkshopInterventionDto'
+      tags:
+      - Workshop Intervention
+components:
+  schemas:
+    WorkshopInterventionField:
+      type: object
+      properties:
+        shortCode:
+          type: string
+        label:
+          type: string
+        activated:
+          type: boolean
+      required:
+      - shortCode
+      - label
+      - activated
+    WorkshopInterventionDto:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopInterventionField'
+        createdDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - fields
+      - createdDate
+    CreateUpdateWorkshopInterventionDto:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopInterventionFieldDto'
+      required:
+      - fields
+    WorkshopInterventionFieldDto:
+      type: object
+      properties:
+        shortCode:
+          type: string
+        label:
+          type: string
+        activated:
+          type: boolean
+      required:
+      - shortCode
+      - label
+      - activated
+  securitySchemes:
+    x-access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: apiKey
+      in: header
+      name: x-access-token
