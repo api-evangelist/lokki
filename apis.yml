@@ -1220,34 +1220,6 @@ apis:
     url: errors/lokki-problem-types.yml
   - type: Documentation
     url: https://prod.api.eu-west-3.lokki.rent/v2/api
-- aid: lokki:lokki-on-boarding-api
-  name: Lokki On Boarding API
-  description: The On Boarding API from Lokki — 4 operation(s) for on boarding.
-  humanURL: https://docs.getlokki.com/api-reference/getting-started
-  baseURL: https://prod.api.eu-west-3.lokki.rent
-  tags:
-  - Onboarding
-  tags_raw:
-  - On Boarding
-  properties:
-  - type: OpenAPI
-    url: openapi/lokki-on-boarding-api-openapi.yml
-  - type: Documentation
-    url: https://docs.getlokki.com/
-  - type: APIReference
-    url: https://docs.getlokki.com/api-reference/getting-started
-  - type: GettingStarted
-    url: https://docs.getlokki.com/api-reference/getting-started
-  - type: Authentication
-    url: https://docs.getlokki.com/api-reference/authentication
-  - type: Deprecation
-    url: https://docs.getlokki.com/api-reference/stores/deprecations
-  - type: DataModel
-    url: data-model/lokki-data-model.yml
-  - type: ErrorCatalog
-    url: errors/lokki-problem-types.yml
-  - type: Documentation
-    url: https://prod.api.eu-west-3.lokki.rent/v2/api
 - aid: lokki:lokki-online-store-api
   name: Lokki Online Store API
   description: The Online Store API from Lokki — 34 operation(s) for online store.
@@ -2615,6 +2587,32 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/lokki-your-order-event-api-openapi.yml
+  - type: Documentation
+    url: https://docs.getlokki.com/
+  - type: APIReference
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: GettingStarted
+    url: https://docs.getlokki.com/api-reference/getting-started
+  - type: Authentication
+    url: https://docs.getlokki.com/api-reference/authentication
+  - type: Deprecation
+    url: https://docs.getlokki.com/api-reference/stores/deprecations
+  - type: DataModel
+    url: data-model/lokki-data-model.yml
+  - type: ErrorCatalog
+    url: errors/lokki-problem-types.yml
+  - type: Documentation
+    url: https://prod.api.eu-west-3.lokki.rent/v2/api
+- aid: lokki:lokki-onboarding-api
+  name: Lokki Onboarding API
+  description: The Onboarding API from Lokki — 4 operation(s) for onboarding.
+  humanURL: https://docs.getlokki.com/api-reference/getting-started
+  baseURL: https://prod.api.eu-west-3.lokki.rent
+  tags:
+  - Onboarding
+  properties:
+  - type: OpenAPI
+    url: openapi/lokki-onboarding-api-openapi.yml
   - type: Documentation
     url: https://docs.getlokki.com/
   - type: APIReference
