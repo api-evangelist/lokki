@@ -310,6 +310,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Booking
+  tags_raw:
   - Bookings
   properties:
   - type: OpenAPI
@@ -626,6 +628,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Documents
+  tags_raw:
   - Document
   properties:
   - type: OpenAPI
@@ -966,6 +970,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Invoices
+  tags_raw:
   - Invoice
   properties:
   - type: OpenAPI
@@ -1486,6 +1492,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Payments
+  tags_raw:
   - Payment
   properties:
   - type: OpenAPI
@@ -1985,6 +1993,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Services
+  tags_raw:
   - Service
   properties:
   - type: OpenAPI
@@ -2427,6 +2437,8 @@ apis:
   humanURL: https://docs.getlokki.com/api-reference/getting-started
   baseURL: https://prod.api.eu-west-3.lokki.rent
   tags:
+  - Workshops
+  tags_raw:
   - Workshop
   properties:
   - type: OpenAPI
