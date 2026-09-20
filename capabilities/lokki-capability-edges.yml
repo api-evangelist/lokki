@@ -1,0 +1,138 @@
+slug: lokki
+provider: Lokki
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Automotive & Mobility
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 12
+edges:
+- tag: Customer
+  spec_file: lokki-customer-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.85
+  evidence: POST /v2/customer createCustomer; GET /v2/customer/email/{email} getCustomerByEmail; schemas
+    Customer, CreateUpdateCustomerDto, PaginatedCustomersDto
+  reason: Full CRUD and lookup over customer records including identity checks by email and CSV export
+    — customer master data management for the rental business.
+- tag: Promo Code
+  spec_file: lokki-promo-code-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.85
+  evidence: verifyCode; createCompanyPromoCode; PromoCodeDto
+  reason: Creation, maintenance and redemption-time verification of promotional discount codes for company
+    and admin scopes — squarely Discount & Promotion Management.
+- tag: Api Key V2
+  spec_file: lokki-api-key-v2-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.78
+  evidence: POST /v2/api-key-v2  postOneApiKeyV2; schemas ApiKeyV2Scope, ApiKeyV2Settings
+  reason: Full CRUD lifecycle of scoped API keys — issuance and stewardship of integration credentials
+    for external consumers of the platform API.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: Delivery
+  spec_file: lokki-delivery-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.75
+  evidence: GET /v2/delivery/getDeliveryDistance/{lat}/{lng}; updateDeliveryJourney; updateDeliveryStopDelivered;
+    schemas Delivery, PointSchema
+  reason: Operations plan and execute delivery journeys with stops, distances, per-stop delivered status
+    and driver mail-outs for rental equipment — last-mile transport/logistics execution.
+- tag: Invoice
+  spec_file: lokki-invoice-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.75
+  evidence: 'GET /v2/invoice/subscription getSubscriptionInvoices; schemas: SubscriptionInvoice, GetSubscriptionInvoicesResponseDto'
+  reason: Retrieves the tenant's SaaS subscription invoices and Lokki payment invoices, which is statement/invoice
+    access on a recurring-revenue model. Read-only retrieval rather than invoice generation, so not higher
+    than 0.75.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: Price Rules
+  spec_file: lokki-price-rules-api-openapi.yml
+  capability_id: BC-440
+  capability_id_l1: BC-440
+  capability_name: Pricing Management
+  confidence: 0.75
+  evidence: POST /v2/price-rules createPriceRule; schemas PriceRulesDto, PriceRuleDate, ItemPriceRule,
+    PriceRule
+  reason: CRUD over company price rules (date-based, per-item) is price setting/structure management.
+    L1 pricing is clear; the evidence does not distinguish price list maintenance from discount/promotion
+    rules, so no L2 is asserted.
+- tag: Quote Request
+  spec_file: lokki-quote-request-api-openapi.yml
+  capability_id: BC-410.40
+  capability_id_l1: BC-410
+  capability_name: Quote & Configuration Management
+  confidence: 0.75
+  evidence: postOneQuoteRequestPublic; cancelQuoteRequestPrivate; QuoteRequestOrderInfo
+  reason: Public capture and back-office lifecycle (retrieve, patch, cancel) of customer quote requests
+    for rental orders — quotation handling within the sales process. Mapped to Quote & Configuration Management;
+    some chance the intended sub-capability is opportunity handling.
+- tag: Api Key
+  spec_file: lokki-api-key-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.72
+  evidence: POST /v2/api-key/createG8ApiKey; POST /v2/api-key/createPartnerApiKey  createPartnerApiKey
+  reason: Issuance and retrieval of API keys for integration partners is developer credential management
+    on the platform's API ecosystem.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: Fathom
+  spec_file: lokki-fathom-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: getFathomUTMCampaign, getFathomUTMSource, getFathomUTMMedium, getFathomVisitsByCountry; schemas
+    FathomTotalVisitsDto, FathomReferrerHostnameDto
+  reason: Web analytics read-outs — site visits by host, device and country plus UTM campaign/source/medium
+    attribution. That is digital marketing performance measurement of the online store, not product telemetry
+    of a software feature.
+- tag: Pack
+  spec_file: lokki-pack-api-openapi.yml
+  capability_id: BC-820.40
+  capability_id_l1: BC-820
+  capability_name: Product Configuration & Variant Management
+  confidence: 0.7
+  evidence: POST /v2/pack/create-pack createPack; schemas Pack, PackCategory, CreateUpdatePackDto, ProductPriceRule,
+    SubProduct
+  reason: Packs are bundles of rental products with categories, price models and availability — this is
+    product bundle/variant configuration in the catalogue. Not a mobility-specific capability; the generic
+    product configuration capability fits the operations.
+- tag: User
+  spec_file: lokki-user-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: GET /v2/user/myAccess getMyAccess; PUT /v2/user/update/password/companyUser updateCompanyUserPassword;
+    schema EmployeeAccess
+  reason: Operations manage the authenticated user's own profile, access rights and credentials for company
+    users — identity and access administration rather than HR employee records.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: ahrefs
+  spec_file: lokki-ahrefs-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: Run the Ahrefs SEO monitoring check on demand and return the alerts it computed.
+  reason: Single operation triggers an SEO monitoring check against Ahrefs, which is a digital marketing
+    (SEO/web) activity rather than any rental business function.
