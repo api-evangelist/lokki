@@ -29,6 +29,8 @@ paths:
                 $ref: '#/components/schemas/Event'
       tags:
       - Session Event
+      summary: Create event
+      x-summary-source: derived
   /v2/session-event/duplicate/{eventId}:
     post:
       operationId: duplicateEvent
@@ -47,6 +49,8 @@ paths:
                 $ref: '#/components/schemas/Event'
       tags:
       - Session Event
+      summary: Duplicate event
+      x-summary-source: derived
   /v2/session-event/event/{eventId}:
     put:
       operationId: updateEvent
@@ -67,6 +71,8 @@ paths:
           description: ''
       tags:
       - Session Event
+      summary: Update event
+      x-summary-source: derived
     get:
       operationId: getEvent
       parameters:
@@ -84,6 +90,8 @@ paths:
                 $ref: '#/components/schemas/Event'
       tags:
       - Session Event
+      summary: Get event
+      x-summary-source: derived
   /v2/session-event/delete-event/{eventId}:
     delete:
       operationId: deleteEvent
@@ -98,6 +106,8 @@ paths:
           description: ''
       tags:
       - Session Event
+      summary: Delete event
+      x-summary-source: derived
   /v2/session-event/onlineStoreEvent/{companyId}/{eventId}:
     get:
       operationId: getOnlineStoreEvent
@@ -133,6 +143,8 @@ paths:
                 $ref: '#/components/schemas/EventOnlineStore'
       tags:
       - Session Event
+      summary: Get online store event
+      x-summary-source: derived
   /v2/session-event/events:
     get:
       operationId: getEvents
@@ -148,6 +160,8 @@ paths:
                   $ref: '#/components/schemas/Event'
       tags:
       - Session Event
+      summary: Get events
+      x-summary-source: derived
   /v2/session-event/createSession:
     post:
       operationId: createSession
@@ -163,6 +177,8 @@ paths:
           description: ''
       tags:
       - Session Event
+      summary: Create session
+      x-summary-source: derived
   /v2/session-event/check-update-session-time/{sessionId}:
     put:
       operationId: checkUpdateSessionTime
@@ -187,6 +203,8 @@ paths:
                 $ref: '#/components/schemas/CheckSessionEventUpdateTimeUnavailability'
       tags:
       - Session Event
+      summary: Check update session time
+      x-summary-source: derived
   /v2/session-event/updateSession/{sessionId}:
     put:
       operationId: updateSession
@@ -207,6 +225,8 @@ paths:
           description: ''
       tags:
       - Session Event
+      summary: Update session
+      x-summary-source: derived
   /v2/session-event/deleteSession/{sessionId}/{eventId}:
     delete:
       operationId: deleteSession
@@ -226,6 +246,8 @@ paths:
           description: ''
       tags:
       - Session Event
+      summary: Delete session
+      x-summary-source: derived
   /v2/session-event/getUpcomingSessions/{page}:
     get:
       operationId: getUpcomingSessions
@@ -256,6 +278,8 @@ paths:
                 $ref: '#/components/schemas/UpcomingSessionPaginationDto'
       tags:
       - Session Event
+      summary: Get upcoming sessions
+      x-summary-source: derived
   /v2/session-event/getUpcomingSessions:
     get:
       operationId: getAllUpcomingSessions
@@ -281,6 +305,8 @@ paths:
                 $ref: '#/components/schemas/UpcomingSessionPaginationDto'
       tags:
       - Session Event
+      summary: Get all upcoming sessions
+      x-summary-source: derived
   /v2/session-event/getSession/{sessionId}:
     get:
       operationId: getSession
@@ -299,6 +325,8 @@ paths:
                 $ref: '#/components/schemas/SessionEvent'
       tags:
       - Session Event
+      summary: Get session
+      x-summary-source: derived
   /v2/session-event/getSessionStartDateGte/{eventId}/{startDate}:
     get:
       operationId: getSessionStartDateGte
@@ -325,6 +353,8 @@ paths:
                   $ref: '#/components/schemas/SessionEvent'
       tags:
       - Session Event
+      summary: Get session start date gte
+      x-summary-source: derived
   /v2/session-event/getAvailableSessions/{eventId}:
     get:
       operationId: getAvailableSessions
@@ -345,6 +375,8 @@ paths:
                   $ref: '#/components/schemas/AvailableSessionEventDto'
       tags:
       - Session Event
+      summary: Get available sessions
+      x-summary-source: derived
   /v2/session-event/sessionAvailableProducts/{sessionId}/{orderEventId}:
     get:
       operationId: getSessionAvailableProducts
@@ -370,6 +402,8 @@ paths:
                   $ref: '#/components/schemas/AvailableCategoryEvent'
       tags:
       - Session Event
+      summary: Get session available products
+      x-summary-source: derived
   /v2/session-event/onlineStoreSessionAvailableProducts/{companyId}/{sessionId}:
     get:
       operationId: getOnlineStoreSessionAvailableProducts
@@ -395,6 +429,8 @@ paths:
                   $ref: '#/components/schemas/AvailableCategoryEvent'
       tags:
       - Session Event
+      summary: Get online store session available products
+      x-summary-source: derived
   /v2/session-event/getEnrichedSessionsPagination/{eventId}:
     get:
       operationId: getEnrichedSessionsPagination
@@ -426,6 +462,8 @@ paths:
                 $ref: '#/components/schemas/EnrichedSessionsPaginationDto'
       tags:
       - Session Event
+      summary: Get enriched sessions pagination
+      x-summary-source: derived
   /v2/session-event/getEventOrderInfo/{eventId}:
     get:
       operationId: getEventOrderInfo
@@ -444,6 +482,8 @@ paths:
                 $ref: '#/components/schemas/EventOrderInfoDto'
       tags:
       - Session Event
+      summary: Get event order info
+      x-summary-source: derived
   /v2/session-event/firstAvailableSessionDate/{companyId}/{eventId}:
     get:
       operationId: getFirstAvailableSessionDate
@@ -467,71 +507,158 @@ paths:
                 $ref: '#/components/schemas/GetFirstAvailableSessionResponseDto'
       tags:
       - Session Event
+      summary: Get first available session date
+      x-summary-source: derived
 components:
   schemas:
-    SessionRecurring:
+    AvailableProductEvent:
       type: object
       properties:
+        id:
+          type: string
         type:
           type: string
           enum:
-          - ONCE
-          - EVERYDAY
-          - EVERYWEEKDAY
-          - EVERYWEEK
-          - CUSTOM
-        days:
+          - SERVICE
+          - PRODUCT
+        name:
+          type: string
+        productImage:
           type: array
           items:
-            type: number
-        interval:
+            type: string
+        price:
           type: number
-        intervalType:
-          type: string
-          enum:
-          - DAY
-          - WEEK
-          - MONTH
-        endsAt:
-          format: date-time
-          type: string
-        endsInAYear:
-          type: boolean
+        vat:
+          type: number
+        nbSelected:
+          type: number
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableItemEvent'
       required:
+      - id
       - type
-      - days
-      - interval
-      - intervalType
-      - endsAt
-      - endsInAYear
-    EventOrderInfoDto:
+      - name
+      - productImage
+      - price
+      - vat
+      - nbSelected
+      - subProducts
+    SessionEvent:
       type: object
       properties:
-        sessionNumber:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        slotNumber:
           type: number
-        finishedSessionNumber:
+        minimumSlotNumber:
           type: number
-        orderNumber:
-          type: number
-        turnover:
-          type: number
-        percentageSlotBook:
-          type: number
+        companyId:
+          type: string
+        monitors:
+          type: array
+          items:
+            type: string
+        event:
+          allOf:
+          - $ref: '#/components/schemas/Event'
+      required:
+      - id
+      - startDate
+      - endDate
+      - slotNumber
+      - minimumSlotNumber
+      - companyId
+      - monitors
+      - event
+    CreateUpdateEventDto:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
         imageUrl:
           type: array
           items:
             type: string
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
+        sessionEvents:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CreateUpdateEventSessionEventDto'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateEventCategoryDto'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateEventOptionDto'
+        pricing:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateEventPricingDto'
+        bailAmount:
+          type: number
+        vat:
+          type: number
+        productSurveyId:
+          type: string
+        surveyOptional:
+          type: boolean
+        imageToDeleteArray:
+          type: array
+          items:
+            type: string
+        tagValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagValue'
+        noEquipment:
+          type: boolean
+        onlineAvailability:
+          type: boolean
       required:
-      - sessionNumber
-      - finishedSessionNumber
-      - orderNumber
-      - turnover
-      - percentageSlotBook
-      - imageUrl
       - name
-    CreateUpdateEventOptionDto:
+      - description
+      - imageUrl
+      - sessionEvents
+      - categories
+      - options
+      - pricing
+      - bailAmount
+      - vat
+      - productSurveyId
+      - surveyOptional
+      - imageToDeleteArray
+      - tagValues
+      - noEquipment
+      - onlineAvailability
+    CreateUpdateSessionEventDto:
+      type: object
+      properties:
+        sessionEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateEventSessionEventDto'
+        eventId:
+          type: string
+        timezone:
+          type: string
+      required:
+      - sessionEvents
+      - eventId
+    Item:
       type: object
       properties:
         itemId:
@@ -547,6 +674,208 @@ components:
       - itemId
       - type
       - price
+    CheckSessionEventUpdateTimeUnavailability:
+      type: object
+      properties:
+        unavailableProducts:
+          type: array
+          items:
+            type: string
+        customerNames:
+          type: array
+          items:
+            type: string
+      required:
+      - unavailableProducts
+      - customerNames
+    GetFirstAvailableSessionResponseDto:
+      type: object
+      properties:
+        firstSessionDate:
+          type: string
+      required:
+      - firstSessionDate
+    AvailableOptionEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          enum:
+          - SERVICE
+          - PRODUCT
+          type: string
+        name:
+          type: string
+        productImage:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        vat:
+          type: number
+        nbSelected:
+          type: number
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableItemEvent'
+      required:
+      - id
+      - type
+      - name
+      - productImage
+      - price
+      - vat
+      - nbSelected
+      - subProducts
+    Category:
+      type: object
+      properties:
+        item:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        name:
+          type: string
+        id:
+          type: string
+      required:
+      - item
+      - name
+      - id
+    CreateUpdateEventItemDto:
+      type: object
+      properties:
+        itemId:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        price:
+          type: number
+      required:
+      - itemId
+      - type
+      - price
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    EventOption:
+      type: object
+      properties:
+        itemId:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        price:
+          type: number
+      required:
+      - itemId
+      - type
+      - price
+    UpcomingSessionEventDto:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        slotNumber:
+          type: number
+        minimumSlotNumber:
+          type: number
+        companyId:
+          type: string
+        event:
+          allOf:
+          - $ref: '#/components/schemas/Event'
+        availableSlots:
+          type: number
+        monitors:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - startDate
+      - endDate
+      - slotNumber
+      - minimumSlotNumber
+      - companyId
+      - event
+      - availableSlots
+      - monitors
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+    AvailableCategoryEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableProductEvent'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableOptionEvent'
+        isOption:
+          type: boolean
+      required:
+      - id
+      - name
+      - products
+      - options
+      - isOption
+    SessionEventOnlineStore:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        slotNumber:
+          type: number
+        availableSlots:
+          type: number
+        minimumSlotNumber:
+          type: number
+      required:
+      - id
+      - startDate
+      - endDate
+      - slotNumber
+      - availableSlots
+      - minimumSlotNumber
     AvailableItemEvent:
       type: object
       properties:
@@ -608,34 +937,74 @@ components:
       - event
       - availableSlots
       - monitors
-    UpcomingSessionPaginationDto:
+    CreateUpdateEventPricingDto:
       type: object
       properties:
-        sessions:
+        label:
+          type: string
+        amount:
+          type: number
+        id:
+          type: string
+      required:
+      - label
+      - amount
+      - id
+    CreateUpdateEventSessionEventDto:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        slotNumber:
+          type: number
+        minimumSlotNumber:
+          type: number
+        recurring:
+          $ref: '#/components/schemas/SessionRecurring'
+        monitors:
           type: array
           items:
-            $ref: '#/components/schemas/UpcomingSessionEventDto'
-        totalCount:
-          type: number
+            type: string
       required:
-      - sessions
-      - totalCount
-    EventOption:
+      - id
+      - startDate
+      - endDate
+      - slotNumber
+      - minimumSlotNumber
+      - monitors
+    EventOrderInfoDto:
       type: object
       properties:
-        itemId:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        price:
+        sessionNumber:
           type: number
+        finishedSessionNumber:
+          type: number
+        orderNumber:
+          type: number
+        turnover:
+          type: number
+        percentageSlotBook:
+          type: number
+        imageUrl:
+          type: array
+          items:
+            type: string
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
       required:
-      - itemId
-      - type
-      - price
+      - sessionNumber
+      - finishedSessionNumber
+      - orderNumber
+      - turnover
+      - percentageSlotBook
+      - imageUrl
+      - name
     EnrichedSession:
       type: object
       properties:
@@ -669,6 +1038,41 @@ components:
       - percentageSlotBook
       - numberOfOrder
       - numberOfRequests
+    SessionRecurring:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - ONCE
+          - EVERYDAY
+          - EVERYWEEKDAY
+          - EVERYWEEK
+          - CUSTOM
+        days:
+          type: array
+          items:
+            type: number
+        interval:
+          type: number
+        intervalType:
+          type: string
+          enum:
+          - DAY
+          - WEEK
+          - MONTH
+        endsAt:
+          format: date-time
+          type: string
+        endsInAYear:
+          type: boolean
+      required:
+      - type
+      - days
+      - interval
+      - intervalType
+      - endsAt
+      - endsInAYear
     EnrichedSessionsPaginationDto:
       type: object
       properties:
@@ -681,200 +1085,19 @@ components:
       required:
       - sessions
       - totalCount
-    Category:
+    UpcomingSessionPaginationDto:
       type: object
       properties:
-        item:
+        sessions:
           type: array
           items:
-            $ref: '#/components/schemas/Item'
-        name:
-          type: string
-        id:
-          type: string
-      required:
-      - item
-      - name
-      - id
-    CreateUpdateSessionEventDto:
-      type: object
-      properties:
-        sessionEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateEventSessionEventDto'
-        eventId:
-          type: string
-        timezone:
-          type: string
-      required:
-      - sessionEvents
-      - eventId
-    SessionEvent:
-      type: object
-      properties:
-        id:
-          type: string
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        slotNumber:
-          type: number
-        minimumSlotNumber:
-          type: number
-        companyId:
-          type: string
-        monitors:
-          type: array
-          items:
-            type: string
-        event:
-          allOf:
-          - $ref: '#/components/schemas/Event'
-      required:
-      - id
-      - startDate
-      - endDate
-      - slotNumber
-      - minimumSlotNumber
-      - companyId
-      - monitors
-      - event
-    SessionEventOnlineStore:
-      type: object
-      properties:
-        id:
-          type: string
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        slotNumber:
-          type: number
-        availableSlots:
-          type: number
-        minimumSlotNumber:
+            $ref: '#/components/schemas/UpcomingSessionEventDto'
+        totalCount:
           type: number
       required:
-      - id
-      - startDate
-      - endDate
-      - slotNumber
-      - availableSlots
-      - minimumSlotNumber
-    AvailableProductEvent:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        name:
-          type: string
-        productImage:
-          type: array
-          items:
-            type: string
-        price:
-          type: number
-        vat:
-          type: number
-        nbSelected:
-          type: number
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableItemEvent'
-      required:
-      - id
-      - type
-      - name
-      - productImage
-      - price
-      - vat
-      - nbSelected
-      - subProducts
-    CreateUpdateEventCategoryDto:
-      type: object
-      properties:
-        item:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateEventItemDto'
-        name:
-          type: string
-        id:
-          type: string
-      required:
-      - item
-      - name
-      - id
-    GetFirstAvailableSessionResponseDto:
-      type: object
-      properties:
-        firstSessionDate:
-          type: string
-      required:
-      - firstSessionDate
-    CreateUpdateEventPricingDto:
-      type: object
-      properties:
-        label:
-          type: string
-        amount:
-          type: number
-        id:
-          type: string
-      required:
-      - label
-      - amount
-      - id
-    AvailableCategoryEvent:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableProductEvent'
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableOptionEvent'
-        isOption:
-          type: boolean
-      required:
-      - id
-      - name
-      - products
-      - options
-      - isOption
-    CheckSessionEventUpdateTimeUnavailability:
-      type: object
-      properties:
-        unavailableProducts:
-          type: array
-          items:
-            type: string
-        customerNames:
-          type: array
-          items:
-            type: string
-      required:
-      - unavailableProducts
-      - customerNames
-    CreateUpdateEventItemDto:
+      - sessions
+      - totalCount
+    CreateUpdateEventOptionDto:
       type: object
       properties:
         itemId:
@@ -890,25 +1113,71 @@ components:
       - itemId
       - type
       - price
-    TagValue:
+    EventOnlineStore:
       type: object
       properties:
         id:
           type: string
-        value:
+        description:
           $ref: '#/components/schemas/LocalizedContent'
-        activated:
-          type: boolean
-        universeId:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        sessionEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionEventOnlineStore'
+        sessionEventsNb:
+          type: number
+        pricing:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pricing'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventOption'
+        bailAmount:
+          type: number
+        createdDate:
+          format: date-time
           type: string
+        productSurveyId:
+          type: string
+        surveyOptional:
+          type: boolean
+        vat:
+          type: number
+        tagValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagValue'
+        noEquipment:
+          type: boolean
       required:
       - id
-      - value
-      - activated
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
+      - description
+      - name
+      - imageUrl
+      - sessionEvents
+      - sessionEventsNb
+      - pricing
+      - categories
+      - options
+      - bailAmount
+      - createdDate
+      - productSurveyId
+      - surveyOptional
+      - vat
+      - tagValues
+      - noEquipment
     Event:
       type: object
       properties:
@@ -977,82 +1246,6 @@ components:
       - createdDate
       - noEquipment
       - onlineAvailability
-    NotAvailableRange:
-      type: object
-      properties:
-        from:
-          format: date-time
-          type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
-    CreateUpdateEventSessionEventDto:
-      type: object
-      properties:
-        id:
-          type: string
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        slotNumber:
-          type: number
-        minimumSlotNumber:
-          type: number
-        recurring:
-          $ref: '#/components/schemas/SessionRecurring'
-        monitors:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - startDate
-      - endDate
-      - slotNumber
-      - minimumSlotNumber
-      - monitors
-    UpcomingSessionEventDto:
-      type: object
-      properties:
-        id:
-          type: string
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        slotNumber:
-          type: number
-        minimumSlotNumber:
-          type: number
-        companyId:
-          type: string
-        event:
-          allOf:
-          - $ref: '#/components/schemas/Event'
-        availableSlots:
-          type: number
-        monitors:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - startDate
-      - endDate
-      - slotNumber
-      - minimumSlotNumber
-      - companyId
-      - event
-      - availableSlots
-      - monitors
     Pricing:
       type: object
       properties:
@@ -1066,187 +1259,36 @@ components:
       - label
       - amount
       - id
-    EventOnlineStore:
+    CreateUpdateEventCategoryDto:
+      type: object
+      properties:
+        item:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateEventItemDto'
+        name:
+          type: string
+        id:
+          type: string
+      required:
+      - item
+      - name
+      - id
+    TagValue:
       type: object
       properties:
         id:
           type: string
-        description:
+        value:
           $ref: '#/components/schemas/LocalizedContent'
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        sessionEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/SessionEventOnlineStore'
-        sessionEventsNb:
-          type: number
-        pricing:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pricing'
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventOption'
-        bailAmount:
-          type: number
-        createdDate:
-          format: date-time
-          type: string
-        productSurveyId:
-          type: string
-        surveyOptional:
+        activated:
           type: boolean
-        vat:
-          type: number
-        tagValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagValue'
-        noEquipment:
-          type: boolean
+        universeId:
+          type: string
       required:
       - id
-      - description
-      - name
-      - imageUrl
-      - sessionEvents
-      - sessionEventsNb
-      - pricing
-      - categories
-      - options
-      - bailAmount
-      - createdDate
-      - productSurveyId
-      - surveyOptional
-      - vat
-      - tagValues
-      - noEquipment
-    CreateUpdateEventDto:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        sessionEvents:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CreateUpdateEventSessionEventDto'
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateEventCategoryDto'
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateEventOptionDto'
-        pricing:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateEventPricingDto'
-        bailAmount:
-          type: number
-        vat:
-          type: number
-        productSurveyId:
-          type: string
-        surveyOptional:
-          type: boolean
-        imageToDeleteArray:
-          type: array
-          items:
-            type: string
-        tagValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagValue'
-        noEquipment:
-          type: boolean
-        onlineAvailability:
-          type: boolean
-      required:
-      - name
-      - description
-      - imageUrl
-      - sessionEvents
-      - categories
-      - options
-      - pricing
-      - bailAmount
-      - vat
-      - productSurveyId
-      - surveyOptional
-      - imageToDeleteArray
-      - tagValues
-      - noEquipment
-      - onlineAvailability
-    Item:
-      type: object
-      properties:
-        itemId:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        price:
-          type: number
-      required:
-      - itemId
-      - type
-      - price
-    AvailableOptionEvent:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          enum:
-          - SERVICE
-          - PRODUCT
-          type: string
-        name:
-          type: string
-        productImage:
-          type: array
-          items:
-            type: string
-        price:
-          type: number
-        vat:
-          type: number
-        nbSelected:
-          type: number
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailableItemEvent'
-      required:
-      - id
-      - type
-      - name
-      - productImage
-      - price
-      - vat
-      - nbSelected
-      - subProducts
+      - value
+      - activated
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -33,6 +33,8 @@ paths:
                 $ref: '#/components/schemas/LoginUserDto'
       tags:
       - Login
+      summary: Admin log as
+      x-summary-source: derived
   /v2/login/admin/goBackOnAdmin:
     get:
       operationId: goBackOnAdmin
@@ -42,6 +44,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Go back on admin
+      x-summary-source: derived
   /v2/login/check-token-admin:
     get:
       operationId: checkTokenAdmin
@@ -55,6 +59,8 @@ paths:
                 type: boolean
       tags:
       - Login
+      summary: Check token admin
+      x-summary-source: derived
   /v2/login/admin/logAsUserFromRpB2B/{companyId}:
     get:
       operationId: logAsUserFromRpB2B
@@ -69,6 +75,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Log as user from rp B2 B
+      x-summary-source: derived
   /v2/login/goBackOnRpB2B:
     get:
       operationId: goBackOnRpB2B
@@ -78,6 +86,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Go back on rp B2 B
+      x-summary-source: derived
   /v2/login/check-token-rp-b2b:
     get:
       operationId: checkTokenRpB2B
@@ -91,6 +101,8 @@ paths:
                 type: boolean
       tags:
       - Login
+      summary: Check token rp B2 B
+      x-summary-source: derived
   /v2/login/checkTokenReconditioner:
     get:
       operationId: checkTokenReconditioner
@@ -104,6 +116,8 @@ paths:
                 type: boolean
       tags:
       - Login
+      summary: Check token reconditioner
+      x-summary-source: derived
   /v2/login/user/login/reconditioner:
     post:
       operationId: loginReconditioner
@@ -125,6 +139,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Login reconditioner
+      x-summary-source: derived
   /v2/login/user/disconnect/reconditioner:
     post:
       operationId: disconnectReconditioner
@@ -140,6 +156,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Disconnect reconditioner
+      x-summary-source: derived
   /v2/login/check-token-rental-place:
     get:
       operationId: checkTokenRentalPlace
@@ -153,6 +171,8 @@ paths:
                 type: boolean
       tags:
       - Login
+      summary: Check token rental place
+      x-summary-source: derived
   /v2/login/user/login/rental-place:
     post:
       operationId: loginRentalPlace
@@ -174,6 +194,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Login rental place
+      x-summary-source: derived
   /v2/login/user/disconnect/rental-place:
     post:
       operationId: disconnectRentalPlace
@@ -189,6 +211,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Disconnect rental place
+      x-summary-source: derived
   /v2/login/user/forgot-password/rental-place:
     post:
       operationId: forgotPasswordRentalPlace
@@ -208,6 +232,8 @@ paths:
                 type: boolean
       tags:
       - Login
+      summary: Forgot password rental place
+      x-summary-source: derived
   /v2/login/user/reset-password/rental-place:
     post:
       operationId: resetPasswordRentalPlace
@@ -229,6 +255,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Reset password rental place
+      x-summary-source: derived
   /v2/login/user/login/dashboard:
     post:
       operationId: loginDashboard
@@ -250,6 +278,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Login dashboard
+      x-summary-source: derived
   /v2/login/switchCompany/{companyId}:
     get:
       operationId: switchCompany
@@ -264,6 +294,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Switch company
+      x-summary-source: derived
   /v2/login/switchTool/{tool}:
     get:
       operationId: switchDashboardTool
@@ -282,6 +314,8 @@ paths:
                 $ref: '#/components/schemas/LoginUserDto'
       tags:
       - Login
+      summary: Switch dashboard tool
+      x-summary-source: derived
   /v2/login/check-token-dashboard:
     get:
       operationId: checkTokenDashboard
@@ -295,6 +329,8 @@ paths:
                 $ref: '#/components/schemas/CheckTokenDashboardResponseDto'
       tags:
       - Login
+      summary: Check token dashboard
+      x-summary-source: derived
   /v2/login/disconnect:
     post:
       operationId: disconnect
@@ -304,6 +340,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Disconnect
+      x-summary-source: derived
   /v2/login/available-email/{email}:
     get:
       operationId: isEmailAvailable
@@ -322,6 +360,8 @@ paths:
                 $ref: '#/components/schemas/AvailableEmailDto'
       tags:
       - Login
+      summary: Is email available
+      x-summary-source: derived
   /v2/login/resend-validation:
     post:
       operationId: resendValidation
@@ -337,6 +377,8 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Resend validation
+      x-summary-source: derived
   /v2/login/validate-account:
     post:
       operationId: validateAccount
@@ -352,100 +394,10 @@ paths:
           description: ''
       tags:
       - Login
+      summary: Validate account
+      x-summary-source: derived
 components:
   schemas:
-    OrderRP:
-      type: object
-      properties:
-        orderId:
-          type: string
-        customerId:
-          type: string
-        type:
-          type: string
-          enum:
-          - LCD
-          - LLD
-          - Event
-          - LCDRequest
-          - LCDRequestAccepted
-      required:
-      - orderId
-      - type
-    ValidateAccountCodeDto:
-      type: object
-      properties:
-        email:
-          type: string
-        encrypted:
-          type: boolean
-        code:
-          type: string
-        origin:
-          type: string
-          enum:
-          - plg
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-      required:
-      - email
-      - encrypted
-      - code
-      - origin
-      - lang
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    LoginUserDto:
-      type: object
-      properties:
-        userId:
-          type: string
-        role:
-          type: string
-        connectTo:
-          enum:
-          - dashboard
-          - lokkit
-          - visibility_on_boarding
-          - visibility
-          - visibility_one
-          - hyperline
-          type: string
-        subscriptionUrl:
-          type: string
-        availableTools:
-          type: array
-          items:
-            type: string
-            enum:
-            - dashboard
-            - lokkit
-            - visibility
-            - visibility_one
-            - reconditioning
-      required:
-      - userId
-      - role
-      - connectTo
-      - availableTools
     RentalPlaceUserDto:
       type: object
       properties:
@@ -554,72 +506,6 @@ components:
       - avatar
       - signedUpWith
       - newsletters
-    RentalPlaceUserNewsletters:
-      type: object
-      properties:
-        support:
-          $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
-      required:
-      - support
-    RentalPlaceUserNewslettersSupport:
-      type: object
-      properties:
-        email:
-          type: boolean
-        sms:
-          type: boolean
-        push:
-          type: boolean
-      required:
-      - email
-      - sms
-      - push
-    OrderRelation:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderRP'
-        companyId:
-          type: string
-      required:
-      - orders
-      - companyId
-    CheckTokenDashboardResponseDto:
-      type: object
-      properties:
-        isLoggedIn:
-          type: boolean
-        role:
-          type: string
-          enum:
-          - user
-          - manager
-          - admin
-          - reconditioner
-        connectTo:
-          type: string
-          enum:
-          - dashboard
-          - lokkit
-          - visibility_on_boarding
-          - visibility
-          - visibility_one
-          - hyperline
-      required:
-      - isLoggedIn
-      - role
-      - connectTo
-    ForgotPasswordDto:
-      type: object
-      properties:
-        email:
-          type: string
-        lang:
-          type: string
-      required:
-      - email
     ResendValidationEmailDto:
       type: object
       properties:
@@ -647,6 +533,47 @@ components:
       - encrypted
       - origin
       - lang
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    ValidateAccountCodeDto:
+      type: object
+      properties:
+        email:
+          type: string
+        encrypted:
+          type: boolean
+        code:
+          type: string
+        origin:
+          type: string
+          enum:
+          - plg
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - email
+      - encrypted
+      - code
+      - origin
+      - lang
     ResetPasswordDto:
       type: object
       properties:
@@ -657,6 +584,81 @@ components:
       required:
       - token
       - password
+    LoginUserDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        role:
+          type: string
+        connectTo:
+          enum:
+          - dashboard
+          - lokkit
+          - visibility_on_boarding
+          - visibility
+          - visibility_one
+          - hyperline
+          type: string
+        subscriptionUrl:
+          type: string
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+      required:
+      - userId
+      - role
+      - connectTo
+      - availableTools
+    LoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        lang:
+          type: string
+      required:
+      - email
+      - password
+    OrderRelation:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRP'
+        companyId:
+          type: string
+      required:
+      - orders
+      - companyId
+    OrderRP:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        type:
+          type: string
+          enum:
+          - LCD
+          - LLD
+          - Event
+          - LCDRequest
+          - LCDRequestAccepted
+      required:
+      - orderId
+      - type
     RentalPlaceUserAddressComponents:
       type: object
       properties:
@@ -682,6 +684,45 @@ components:
       - administrativeAreaLevel1
       - administrativeAreaLevel2
       - country
+    RentalPlaceUserNewsletters:
+      type: object
+      properties:
+        support:
+          $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
+      required:
+      - support
+    RentalPlaceUserNewslettersSupport:
+      type: object
+      properties:
+        email:
+          type: boolean
+        sms:
+          type: boolean
+        push:
+          type: boolean
+      required:
+      - email
+      - sms
+      - push
+    AvailableEmailDto:
+      type: object
+      properties:
+        isAvailable:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+      required:
+      - isAvailable
+      - isAccountActivated
+    ForgotPasswordDto:
+      type: object
+      properties:
+        email:
+          type: string
+        lang:
+          type: string
+      required:
+      - email
     User:
       type: object
       properties:
@@ -754,28 +795,31 @@ components:
       - createdAt
       - connectionAttempt
       - availableTools
-    AvailableEmailDto:
+    CheckTokenDashboardResponseDto:
       type: object
       properties:
-        isAvailable:
+        isLoggedIn:
           type: boolean
-        isAccountActivated:
-          type: boolean
+        role:
+          type: string
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+        connectTo:
+          type: string
+          enum:
+          - dashboard
+          - lokkit
+          - visibility_on_boarding
+          - visibility
+          - visibility_one
+          - hyperline
       required:
-      - isAvailable
-      - isAccountActivated
-    LoginDto:
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-        lang:
-          type: string
-      required:
-      - email
-      - password
+      - isLoggedIn
+      - role
+      - connectTo
   securitySchemes:
     x-access-token:
       scheme: bearer

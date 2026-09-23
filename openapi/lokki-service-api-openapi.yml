@@ -270,6 +270,8 @@ paths:
                 $ref: '#/components/schemas/GetManyServicesResponseDto'
       tags:
       - Service
+      summary: Get many services
+      x-summary-source: derived
     put:
       operationId: updateManyServiceByIds
       parameters: []
@@ -284,6 +286,8 @@ paths:
           description: ''
       tags:
       - Service
+      summary: Update many service by ids
+      x-summary-source: derived
   /v2/service/create-service:
     post:
       operationId: createService
@@ -303,6 +307,8 @@ paths:
                 $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Create service
+      x-summary-source: derived
   /v2/service/update-service:
     put:
       operationId: updateService
@@ -322,6 +328,8 @@ paths:
                 $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Update service
+      x-summary-source: derived
   /v2/service/delete/{id}:
     delete:
       operationId: deleteServiceById
@@ -340,6 +348,8 @@ paths:
                 type: object
       tags:
       - Service
+      summary: Delete service by id
+      x-summary-source: derived
   /v2/service/getByCompany:
     get:
       operationId: getCompanyServices
@@ -355,6 +365,8 @@ paths:
                   $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Get company services
+      x-summary-source: derived
   /v2/service/getByCompanyLLD:
     get:
       operationId: getCompanyLLDServices
@@ -370,6 +382,8 @@ paths:
                   $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Get company LLD services
+      x-summary-source: derived
   /v2/service/byId/{id}:
     get:
       operationId: getServiceById
@@ -388,6 +402,8 @@ paths:
                 $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Get service by id
+      x-summary-source: derived
   /v2/service/byName/{search}:
     get:
       operationId: getServicesByName
@@ -408,6 +424,8 @@ paths:
                   $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Get services by name
+      x-summary-source: derived
   /v2/service/byNameLLD/{search}:
     get:
       operationId: getLLDServicesByName
@@ -428,6 +446,8 @@ paths:
                   $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Get LLD services by name
+      x-summary-source: derived
   /v2/service/updateAvailability:
     put:
       operationId: updateServiceAvailability
@@ -447,6 +467,8 @@ paths:
                 $ref: '#/components/schemas/Service'
       tags:
       - Service
+      summary: Update service availability
+      x-summary-source: derived
   /v2/service/duplicate-service/{serviceId}:
     post:
       operationId: duplicateServiceById
@@ -465,12 +487,10 @@ paths:
                 type: object
       tags:
       - Service
+      summary: Duplicate service by id
+      x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
     PriceModelSpecificDuration:
       type: object
       properties:
@@ -500,33 +520,56 @@ components:
       - price
       - priceLowSeason
       - label
-    AttachedFile:
+    ServiceAttribute:
       type: object
       properties:
-        name:
+        attribute:
           type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
-          type: string
+        tags:
+          type: array
+          items:
+            type: string
       required:
-      - name
-      - key
-      - size
-      - type
-    PriceModelLLDDuration:
+      - attribute
+      - tags
+    GetManyServicesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+      required:
+      - total
+      - docs
+    UpdateServiceAvailabilityDto:
+      type: object
+      properties:
+        id:
+          type: string
+        available:
+          type: boolean
+      required:
+      - id
+      - available
+    PriceModelRangeDuration:
       type: object
       properties:
         type:
           type: string
-          default: LLD
+          default: range
           enum:
-          - LLD
-        calendarMonths:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
           type: number
         id:
           type: string
@@ -542,20 +585,135 @@ components:
           $ref: '#/components/schemas/LocalizedContent'
       required:
       - type
-      - calendarMonths
+      - minDuration
+      - maxDuration
       - id
       - price
       - priceLowSeason
       - label
-    UpdateManyServicesDto:
+    TentativeCategorization:
       type: object
       properties:
-        services:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    ServiceField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
           type: array
           items:
-            $ref: '#/components/schemas/UpdateServiceDto'
+            type: string
       required:
-      - services
+      - attribute
+      - tags
+    UpdateServiceDto:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTag'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProducts:
+          type: boolean
+        productSurveyId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        vat:
+          type: number
+        isAssuranceTulip:
+          type: boolean
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceAttribute'
+        translationInProgress:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
+      required:
+      - id
+      - onlineStoreInformation
     CreateUpdateServiceDto:
       type: object
       properties:
@@ -655,160 +813,15 @@ components:
       - isAssuranceTulip
       - onlineAvailability
       - printed
-    ItemOnlineStoreInformation:
+    UpdateManyServicesDto:
       type: object
       properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateServiceDto'
       required:
-      - name
-      - description
-    TentativeCategorization:
-      type: object
-      properties:
-        subcategoryName:
-          type:
-          - string
-          - 'null'
-        verticalName:
-          type:
-          - string
-          - 'null'
-      required:
-      - subcategoryName
-      - verticalName
-    ServiceTag:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-      required:
-      - name
-      - value
-    ServiceAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    GetManyServicesResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
-      required:
-      - total
-      - docs
-    UpdateServiceDto:
-      type: object
-      properties:
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        id:
-          type: string
-        name:
-          type: string
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceField'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTag'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
-          type: string
-        attachedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachedFile'
-        rank:
-          type: number
-        isAvailable:
-          type: boolean
-        onlineStoreInformation:
-          type: object
-          properties:
-            name:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-            description:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-        productModel:
-          type: string
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isRelatedProducts:
-          type: boolean
-        productSurveyId:
-          type: string
-        hideOnOnlineStore:
-          type: boolean
-        vat:
-          type: number
-        isAssuranceTulip:
-          type: boolean
-        verticalCategoryId:
-          type: string
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceAttribute'
-        translationInProgress:
-          type: boolean
-        onlineAvailability:
-          type: boolean
-        printed:
-          type: boolean
-      required:
-      - id
-      - onlineStoreInformation
-    ItemAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
+      - services
     Service:
       type: object
       properties:
@@ -912,45 +925,33 @@ components:
       - printed
       - vat
       - translationInProgress
-    UpdateServiceAvailabilityDto:
+    AttachedFile:
       type: object
       properties:
-        id:
-          type: string
-        available:
-          type: boolean
-      required:
-      - id
-      - available
-    ServiceField:
-      type: object
-      properties:
-        id:
-          type: string
         name:
           type: string
-        value:
+        key:
           type: string
-        isTagged:
-          type: boolean
+        size:
+          type: number
+        type:
+          type: string
+        uid:
+          type: string
       required:
-      - id
       - name
-      - value
-      - isTagged
-    PriceModelRangeDuration:
+      - key
+      - size
+      - type
+    PriceModelLLDDuration:
       type: object
       properties:
         type:
           type: string
-          default: range
+          default: LLD
           enum:
-          - range
-        minDuration:
-          type: number
-        maxDuration:
-          type: number
-        durationInDays:
+          - LLD
+        calendarMonths:
           type: number
         id:
           type: string
@@ -966,12 +967,35 @@ components:
           $ref: '#/components/schemas/LocalizedContent'
       required:
       - type
-      - minDuration
-      - maxDuration
+      - calendarMonths
       - id
       - price
       - priceLowSeason
       - label
+    ServiceTag:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    ItemOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/CatalogueOverviewDto'
       tags:
       - Catalogue
+      summary: Get catalogue overview
+      x-summary-source: derived
   /v2/catalogue/update-item-order:
     post:
       operationId: updateItemOrder
@@ -38,6 +40,8 @@ paths:
           description: ''
       tags:
       - Catalogue
+      summary: Update item order
+      x-summary-source: derived
   /v2/catalogue/generation/item-translations:
     post:
       operationId: generateItemTranslations
@@ -53,6 +57,8 @@ paths:
           description: ''
       tags:
       - Catalogue
+      summary: Generate item translations
+      x-summary-source: derived
   /v2/catalogue/predictions/categories:
     get:
       operationId: getCategoryPredictions
@@ -71,6 +77,8 @@ paths:
                 $ref: '#/components/schemas/ProductVerticaleCategoryListDto'
       tags:
       - Catalogue
+      summary: Get category predictions
+      x-summary-source: derived
   /v2/catalogue/generation/product-description:
     post:
       operationId: generateProductDescription
@@ -90,8 +98,99 @@ paths:
                 $ref: '#/components/schemas/ProductDescriptionProposalDto'
       tags:
       - Catalogue
+      summary: Generate product description
+      x-summary-source: derived
 components:
   schemas:
+    ProductVerticaleCategoryListDto:
+      type: object
+      properties:
+        productVerticaleCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticaleCategory'
+      required:
+      - productVerticaleCategories
+    CatalogueOverviewDto:
+      type: object
+      properties:
+        lcd:
+          $ref: '#/components/schemas/CatalogueBodyDto'
+        lld:
+          $ref: '#/components/schemas/CatalogueBodyDto'
+      required:
+      - lcd
+      - lld
+    CatalogueSubProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        serialNumber:
+          type: string
+        isAvailable:
+          type: boolean
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - notAvailableRanges
+    GenerateItemTranslationsDto:
+      type: object
+      properties:
+        itemId:
+          type: string
+        itemType:
+          enum:
+          - PRODUCT
+          - SERVICE
+          - PACK
+          type: string
+      required:
+      - itemId
+      - itemType
+    GenerateProductDescriptionDto:
+      type: object
+      properties:
+        language:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+        product:
+          $ref: '#/components/schemas/GenerateProductDto'
+      required:
+      - language
+      - product
+    CataloguePackCategoryDto:
+      type: object
+      properties:
+        packs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogueItemDto'
+      required:
+      - packs
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
     ProductDescriptionProposalDto:
       type: object
       properties:
@@ -111,51 +210,130 @@ components:
       required:
       - description
       - language
-    GenerateItemTranslationsDto:
+    ItemToUpdateOrderDto:
       type: object
       properties:
-        itemId:
+        id:
           type: string
-        itemType:
+        type:
+          type: string
           enum:
           - PRODUCT
           - SERVICE
           - PACK
-          type: string
+        rank:
+          type: number
       required:
-      - itemId
-      - itemType
-    CatalogueOverviewDto:
+      - id
+      - type
+      - rank
+    ProductAttributeDto:
       type: object
       properties:
-        lcd:
-          $ref: '#/components/schemas/CatalogueBodyDto'
-        lld:
-          $ref: '#/components/schemas/CatalogueBodyDto'
-      required:
-      - lcd
-      - lld
-    NotAvailableRange:
-      type: object
-      properties:
-        from:
-          format: date-time
+        attribute:
           type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
-    ProductVerticaleCategoryListDto:
-      type: object
-      properties:
-        productVerticaleCategories:
+        tags:
           type: array
           items:
-            $ref: '#/components/schemas/ProductVerticaleCategory'
+            type: string
       required:
-      - productVerticaleCategories
+      - attribute
+      - tags
+    CatalogueItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - PRODUCT
+          - SERVICE
+          - PACK_CATEGORY
+          - PACK_PRODUCT
+        name:
+          type: string
+        hasInsurance:
+          type: boolean
+        isAvailable:
+          type: boolean
+        quantity:
+          type: number
+        imageUrl:
+          type: string
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogueSubProductDto'
+        displaySubProducts:
+          type: boolean
+        translationInProgress:
+          type: boolean
+        verticalCategoryId:
+          type: string
+      required:
+      - id
+      - type
+      - name
+      - imageUrl
+      - displaySubProducts
+    CatalogueCategoryDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CatalogueItemDto'
+      required:
+      - id
+      - name
+      - items
+    ProductVerticalCategoryAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        mandatory:
+          type: boolean
+      required:
+      - attribute
+      - tags
+      - mandatory
+    GenerateProductDto:
+      type: object
+      properties:
+        name:
+          type: string
+        vertical:
+          type: string
+        category:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductAttributeDto'
+      required:
+      - name
+      - vertical
+      - category
+      - attributes
+    UpdateItemOrderDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemToUpdateOrderDto'
+      required:
+      - items
     CatalogueBodyDto:
       type: object
       properties:
@@ -168,22 +346,6 @@ components:
       required:
       - packCategory
       - categories
-    CatalogueSubProductDto:
-      type: object
-      properties:
-        id:
-          type: string
-        serialNumber:
-          type: string
-        isAvailable:
-          type: boolean
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-      required:
-      - id
-      - notAvailableRanges
     ProductVerticaleCategory:
       type: object
       properties:
@@ -250,158 +412,6 @@ components:
       - attributes
       - createdAt
       - updatedAt
-    ProductAttributeDto:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    ProductVerticalCategoryAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        mandatory:
-          type: boolean
-      required:
-      - attribute
-      - tags
-      - mandatory
-    GenerateProductDto:
-      type: object
-      properties:
-        name:
-          type: string
-        vertical:
-          type: string
-        category:
-          type: string
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttributeDto'
-      required:
-      - name
-      - vertical
-      - category
-      - attributes
-    ItemToUpdateOrderDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - PRODUCT
-          - SERVICE
-          - PACK
-        rank:
-          type: number
-      required:
-      - id
-      - type
-      - rank
-    CatalogueItemDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - PRODUCT
-          - SERVICE
-          - PACK_CATEGORY
-          - PACK_PRODUCT
-        name:
-          type: string
-        hasInsurance:
-          type: boolean
-        isAvailable:
-          type: boolean
-        quantity:
-          type: number
-        imageUrl:
-          type: string
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CatalogueSubProductDto'
-        displaySubProducts:
-          type: boolean
-        translationInProgress:
-          type: boolean
-        verticalCategoryId:
-          type: string
-      required:
-      - id
-      - type
-      - name
-      - imageUrl
-      - displaySubProducts
-    CataloguePackCategoryDto:
-      type: object
-      properties:
-        packs:
-          type: array
-          items:
-            $ref: '#/components/schemas/CatalogueItemDto'
-      required:
-      - packs
-    GenerateProductDescriptionDto:
-      type: object
-      properties:
-        language:
-          enum:
-          - fr
-          - en
-          - nl
-          - de
-          - it
-          - pt
-          - es
-          - pl
-          type: string
-        product:
-          $ref: '#/components/schemas/GenerateProductDto'
-      required:
-      - language
-      - product
-    UpdateItemOrderDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemToUpdateOrderDto'
-      required:
-      - items
-    CatalogueCategoryDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CatalogueItemDto'
-      required:
-      - id
-      - name
-      - items
   securitySchemes:
     x-access-token:
       scheme: bearer

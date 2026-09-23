@@ -28,6 +28,8 @@ paths:
                 $ref: '#/components/schemas/SubProduct'
       tags:
       - Sub Products
+      summary: Get one sub product
+      x-summary-source: derived
     patch:
       operationId: patchOneSubProduct
       parameters:
@@ -51,6 +53,8 @@ paths:
                 $ref: '#/components/schemas/SubProduct'
       tags:
       - Sub Products
+      summary: Patch one sub product
+      x-summary-source: derived
   /v2/sub-products:
     patch:
       operationId: bulkPatchSubProducts
@@ -72,6 +76,8 @@ paths:
                   $ref: '#/components/schemas/SubProduct'
       tags:
       - Sub Products
+      summary: Bulk patch sub products
+      x-summary-source: derived
 components:
   schemas:
     BulkPatchSubProductDto:
@@ -95,15 +101,6 @@ components:
           type: string
       required:
       - id
-    BulkPatchSubProductsDto:
-      type: object
-      properties:
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkPatchSubProductDto'
-      required:
-      - subProducts
     NotAvailableRange:
       type: object
       properties:
@@ -116,23 +113,15 @@ components:
       required:
       - from
       - to
-    PatchSubProductsDto:
+    BulkPatchSubProductsDto:
       type: object
       properties:
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        isAvailable:
-          type: boolean
-        notAvailableRanges:
+        subProducts:
           type: array
           items:
-            $ref: '#/components/schemas/NotAvailableRange'
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
+            $ref: '#/components/schemas/BulkPatchSubProductDto'
+      required:
+      - subProducts
     SubProduct:
       type: object
       properties:
@@ -160,6 +149,23 @@ components:
       - archive
       - externalQrCode
       - notAvailableRanges
+    PatchSubProductsDto:
+      type: object
+      properties:
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        isAvailable:
+          type: boolean
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

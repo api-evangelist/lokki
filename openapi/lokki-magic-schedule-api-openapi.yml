@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/MagicScheduleOptimizeDto'
       tags:
       - Magic Schedule
+      summary: Trigger magic schedule optimization
+      x-summary-source: derived
     get:
       operationId: getMagicScheduleOptimizationState
       parameters: []
@@ -36,6 +38,8 @@ paths:
                 - $ref: '#/components/schemas/MagicScheduleCompanyStateDto'
       tags:
       - Magic Schedule
+      summary: Get magic schedule optimization state
+      x-summary-source: derived
   /v2/magic-schedule/company/occupancy:
     get:
       operationId: getMagicScheduleOccupancy
@@ -49,8 +53,18 @@ paths:
                 $ref: '#/components/schemas/MagicScheduleCompanyOccupancyDto'
       tags:
       - Magic Schedule
+      summary: Get magic schedule occupancy
+      x-summary-source: derived
 components:
   schemas:
+    MagicScheduleOptimizeDto:
+      type: object
+      properties:
+        jobId:
+          type: string
+          example: optimize-company-1234567890
+      required:
+      - jobId
     MagicScheduleCompanyStateDto:
       type: object
       properties:
@@ -71,14 +85,6 @@ components:
       - status
       - progress
       - error
-    MagicScheduleOptimizeDto:
-      type: object
-      properties:
-        jobId:
-          type: string
-          example: optimize-company-1234567890
-      required:
-      - jobId
     MagicScheduleCompanyOccupancyDto:
       type: object
       properties:

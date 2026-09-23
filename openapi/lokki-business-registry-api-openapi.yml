@@ -42,6 +42,8 @@ paths:
                 $ref: '#/components/schemas/BusinessInformation'
       tags:
       - Business Registry
+      summary: Get business information
+      x-summary-source: derived
 components:
   schemas:
     BusinessInformation:

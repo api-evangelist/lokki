@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/PointOfSalesOrdersToImport'
       tags:
       - Shifter Api
+      summary: Shifter order to import
+      x-summary-source: derived
   /v2/shifter-api/updateOrderShifterId:
     put:
       operationId: updateOrderShifterId
@@ -38,179 +40,10 @@ paths:
           description: ''
       tags:
       - Shifter Api
+      summary: Update order shifter id
+      x-summary-source: derived
 components:
   schemas:
-    ShifterIds:
-      type: object
-      properties:
-        lokkiOrderId:
-          type: string
-        shifterOrderId:
-          type: string
-      required:
-      - lokkiOrderId
-      - shifterOrderId
-    PointOfSalesItemDiscount:
-      type: object
-      properties:
-        discountType:
-          type: string
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-        discountAmount:
-          type: number
-      required:
-      - discountType
-      - discountAmount
-    UpdateOrderShifterId:
-      type: object
-      properties:
-        shifterIds:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShifterIds'
-      required:
-      - shifterIds
-    PointOfSalesOrderWarrantDto:
-      type: object
-      properties:
-        totalAmountTTC:
-          type: number
-        vat:
-          type: number
-        quantity:
-          type: number
-      required:
-      - totalAmountTTC
-      - vat
-      - quantity
-    PointOfSalesOrderPromoCodeDto:
-      type: object
-      properties:
-        discountAmount:
-          type: number
-        discountType:
-          type: string
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-        appliesToDelivery:
-          type: boolean
-      required:
-      - discountAmount
-      - discountType
-      - appliesToDelivery
-    PointOfSalesOrdersToImport:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/PointOfSalesOrderDto'
-      required:
-      - orders
-    PointOfSalesOrderDeliveryDto:
-      type: object
-      properties:
-        amountTTC:
-          type: number
-        vat:
-          type: number
-      required:
-      - amountTTC
-      - vat
-    PointOfSalesOrderItemDto:
-      type: object
-      properties:
-        quantity:
-          type: number
-        totalTTC:
-          type: number
-        totalHT:
-          type: number
-        name:
-          type: string
-        vat:
-          type: number
-        discount:
-          $ref: '#/components/schemas/PointOfSalesItemDiscount'
-        discountedTotalHT:
-          type: number
-        discountedTotalTTC:
-          type: number
-      required:
-      - quantity
-      - totalTTC
-      - totalHT
-      - name
-      - vat
-    PointOfSalesOrderCustomerDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - entreprise
-          - individual
-        email:
-          type: string
-        phone:
-          type: string
-        firstName:
-          type: string
-        companyName:
-          type: string
-        lastName:
-          type: string
-        address:
-          type: string
-        zipCode:
-          type: string
-        city:
-          type: string
-        streetNumber:
-          type: string
-      required:
-      - id
-      - type
-      - email
-      - phone
-      - firstName
-      - companyName
-      - lastName
-      - address
-      - zipCode
-      - city
-      - streetNumber
-    PointOfSalesOrderPaymentDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        paymentMethod:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Autre
-          - Boutique en ligne
-          - Lien de paiement
-        paymentDate:
-          format: date-time
-          type: string
-        id:
-          type: string
-      required:
-      - amount
-      - paymentMethod
-      - paymentDate
-      - id
     PointOfSalesOrderDto:
       type: object
       properties:
@@ -274,6 +107,177 @@ components:
       - warrant
       - currency
       - type
+    PointOfSalesOrderPaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        paymentMethod:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Autre
+          - Boutique en ligne
+          - Lien de paiement
+        paymentDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+      required:
+      - amount
+      - paymentMethod
+      - paymentDate
+      - id
+    UpdateOrderShifterId:
+      type: object
+      properties:
+        shifterIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShifterIds'
+      required:
+      - shifterIds
+    PointOfSalesOrderItemDto:
+      type: object
+      properties:
+        quantity:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        name:
+          type: string
+        vat:
+          type: number
+        discount:
+          $ref: '#/components/schemas/PointOfSalesItemDiscount'
+        discountedTotalHT:
+          type: number
+        discountedTotalTTC:
+          type: number
+      required:
+      - quantity
+      - totalTTC
+      - totalHT
+      - name
+      - vat
+    PointOfSalesItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        discountAmount:
+          type: number
+      required:
+      - discountType
+      - discountAmount
+    PointOfSalesOrderWarrantDto:
+      type: object
+      properties:
+        totalAmountTTC:
+          type: number
+        vat:
+          type: number
+        quantity:
+          type: number
+      required:
+      - totalAmountTTC
+      - vat
+      - quantity
+    PointOfSalesOrdersToImport:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PointOfSalesOrderDto'
+      required:
+      - orders
+    ShifterIds:
+      type: object
+      properties:
+        lokkiOrderId:
+          type: string
+        shifterOrderId:
+          type: string
+      required:
+      - lokkiOrderId
+      - shifterOrderId
+    PointOfSalesOrderCustomerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - entreprise
+          - individual
+        email:
+          type: string
+        phone:
+          type: string
+        firstName:
+          type: string
+        companyName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        streetNumber:
+          type: string
+      required:
+      - id
+      - type
+      - email
+      - phone
+      - firstName
+      - companyName
+      - lastName
+      - address
+      - zipCode
+      - city
+      - streetNumber
+    PointOfSalesOrderDeliveryDto:
+      type: object
+      properties:
+        amountTTC:
+          type: number
+        vat:
+          type: number
+      required:
+      - amountTTC
+      - vat
+    PointOfSalesOrderPromoCodeDto:
+      type: object
+      properties:
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliesToDelivery:
+          type: boolean
+      required:
+      - discountAmount
+      - discountType
+      - appliesToDelivery
   securitySchemes:
     x-access-token:
       scheme: bearer

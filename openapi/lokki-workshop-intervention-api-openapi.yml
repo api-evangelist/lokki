@@ -25,6 +25,8 @@ paths:
           description: ''
       tags:
       - Workshop Intervention
+      summary: Create workshop intervention
+      x-summary-source: derived
     get:
       operationId: getWorkshopInterventionByCompanyId
       parameters: []
@@ -37,6 +39,8 @@ paths:
                 $ref: '#/components/schemas/WorkshopInterventionDto'
       tags:
       - Workshop Intervention
+      summary: Get workshop intervention by company id
+      x-summary-source: derived
     put:
       operationId: updateWorkshopIntervention
       parameters: []
@@ -55,6 +59,8 @@ paths:
                 $ref: '#/components/schemas/WorkshopInterventionDto'
       tags:
       - Workshop Intervention
+      summary: Update workshop intervention
+      x-summary-source: derived
   /v2/workshop-intervention/{companyId}:
     get:
       operationId: getWorkshopInterventionByCompanyIdPublic
@@ -73,9 +79,11 @@ paths:
                 $ref: '#/components/schemas/WorkshopInterventionDto'
       tags:
       - Workshop Intervention
+      summary: Get workshop intervention by company id public
+      x-summary-source: derived
 components:
   schemas:
-    WorkshopInterventionField:
+    WorkshopInterventionFieldDto:
       type: object
       properties:
         shortCode:
@@ -112,7 +120,7 @@ components:
             $ref: '#/components/schemas/WorkshopInterventionFieldDto'
       required:
       - fields
-    WorkshopInterventionFieldDto:
+    WorkshopInterventionField:
       type: object
       properties:
         shortCode:

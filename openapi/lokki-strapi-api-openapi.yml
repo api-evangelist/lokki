@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/StrapiImportStatus'
       tags:
       - Strapi
+      summary: Get import status
+      x-summary-source: derived
   /v2/strapi/upload-glossary-words:
     post:
       operationId: adminUploadGlossaryWordsCSV
@@ -39,6 +41,8 @@ paths:
           description: ''
       tags:
       - Strapi
+      summary: Admin upload glossary words CSV
+      x-summary-source: derived
   /v2/strapi/cities:
     get:
       operationId: exportStrapiCitiesCsv
@@ -75,6 +79,8 @@ paths:
                 $ref: '#/components/schemas/GetExportStrapiCitiesDto'
       tags:
       - Strapi
+      summary: Export strapi cities csv
+      x-summary-source: derived
   /v2/strapi/upload-cities:
     post:
       operationId: adminUploadCitiesCSV
@@ -91,6 +97,8 @@ paths:
           description: ''
       tags:
       - Strapi
+      summary: Admin upload cities CSV
+      x-summary-source: derived
   /v2/strapi/discover-pages:
     get:
       operationId: exportStrapiDiscoverPagesCsv
@@ -144,6 +152,8 @@ paths:
                 $ref: '#/components/schemas/GetExportStrapiDiscoverPagesDto'
       tags:
       - Strapi
+      summary: Export strapi discover pages csv
+      x-summary-source: derived
   /v2/strapi/export-activity-city-pages:
     get:
       operationId: exportStrapiActivityCityPagesCsv
@@ -172,6 +182,8 @@ paths:
                 $ref: '#/components/schemas/GetExportStrapiActivityCityPagesDto'
       tags:
       - Strapi
+      summary: Export strapi activity city pages csv
+      x-summary-source: derived
   /v2/strapi/upload-discover-pages:
     post:
       operationId: adminUploadDiscoverPagesCSV
@@ -188,6 +200,8 @@ paths:
           description: ''
       tags:
       - Strapi
+      summary: Admin upload discover pages CSV
+      x-summary-source: derived
   /v2/strapi/upload-activity-city-pages:
     post:
       operationId: adminUploadActivityCitiesCSV
@@ -204,6 +218,8 @@ paths:
           description: ''
       tags:
       - Strapi
+      summary: Admin upload activity cities CSV
+      x-summary-source: derived
   /v2/strapi/discover-pages-aggregate:
     get:
       operationId: getStrapiDiscoverPagesDataAggregate
@@ -231,6 +247,8 @@ paths:
                 $ref: '#/components/schemas/DiscoverPageAggregate'
       tags:
       - Strapi
+      summary: Get strapi discover pages data aggregate
+      x-summary-source: derived
   /v2/strapi/update-lokki-categories:
     post:
       operationId: updateStrapiLokkiCategories
@@ -240,6 +258,8 @@ paths:
           description: ''
       tags:
       - Strapi
+      summary: Update strapi lokki categories
+      x-summary-source: derived
   /v2/strapi/cleanup-obsolete-lokki-categories:
     post:
       operationId: cleanupObsoleteStrapiLokkiCategories
@@ -259,6 +279,8 @@ paths:
                 $ref: '#/components/schemas/CleanupObsoleteCategoriesResponseDto'
       tags:
       - Strapi
+      summary: Cleanup obsolete strapi lokki categories
+      x-summary-source: derived
 components:
   schemas:
     StrapiOrphanCategory:
@@ -271,7 +293,7 @@ components:
       required:
       - id
       - name
-    GetExportStrapiCitiesDto:
+    DiscoverPageAggregate:
       type: object
       properties:
         csvData:
@@ -282,6 +304,32 @@ components:
               type: string
       required:
       - csvData
+    CleanupObsoleteStrapiLokkiBodyDto:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+      required:
+      - dryRun
+    GetExportStrapiActivityCityPagesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
     CleanupObsoleteCategoriesResponseDto:
       type: object
       properties:
@@ -297,33 +345,7 @@ components:
       - dryRun
       - verticales
       - orphanCategories
-    CleanupObsoleteStrapiLokkiBodyDto:
-      type: object
-      properties:
-        dryRun:
-          type: boolean
-      required:
-      - dryRun
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-      - file
-    GetExportStrapiActivityCityPagesDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    GetExportStrapiDiscoverPagesDto:
+    GetExportStrapiCitiesDto:
       type: object
       properties:
         csvData:
@@ -369,7 +391,7 @@ components:
       - importStep
       - importStartedAt
       - importEndedAt
-    DiscoverPageAggregate:
+    GetExportStrapiDiscoverPagesDto:
       type: object
       properties:
         csvData:

@@ -13,7 +13,7 @@ paths:
   /v2/ahrefs/monitor:
     post:
       operationId: triggerAhrefsMonitoring
-      summary: Run the Ahrefs SEO monitoring check on demand and return the alerts it computed.
+      summary: Run the Ahrefs SEO monitoring check on demand and return the alerts it computed
       parameters:
       - name: projectId
         required: false

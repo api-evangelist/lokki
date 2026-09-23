@@ -25,6 +25,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Order events
+      x-summary-source: derived
   /v2/order-event/id/{orderId}:
     get:
       operationId: orderEvent
@@ -43,6 +45,8 @@ paths:
                 type: object
       tags:
       - Order Event
+      summary: Order event
+      x-summary-source: derived
   /v2/order-event/byCustomer/{customerId}:
     get:
       operationId: orderEventsByCustomer
@@ -63,6 +67,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Order events by customer
+      x-summary-source: derived
   /v2/order-event/orderEventsInfoByCustomerId/{customerId}/{year}:
     get:
       operationId: orderEventsInfoByCustomerId
@@ -90,6 +96,8 @@ paths:
                 $ref: '#/components/schemas/OrdersInfoForCustomerDto'
       tags:
       - Order Event
+      summary: Order events info by customer id
+      x-summary-source: derived
   /v2/order-event/listOrderEventsByCustomerIdPaginated:
     get:
       operationId: listOrderEventsByCustomerIdPaginated
@@ -127,6 +135,8 @@ paths:
                 $ref: '#/components/schemas/ListPaginatedOrderEventsDto'
       tags:
       - Order Event
+      summary: List order events by customer id paginated
+      x-summary-source: derived
   /v2/order-event/upcoming:
     get:
       operationId: upcomingOrderEvents
@@ -142,6 +152,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Upcoming order events
+      x-summary-source: derived
   /v2/order-event/bySession/{sessionId}:
     get:
       operationId: sessionOrderEvents
@@ -162,6 +174,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Session order events
+      x-summary-source: derived
   /v2/order-event/getOrderEventsInDateRange/{startDate}/{endDate}:
     get:
       operationId: orderEventsInDateRange
@@ -189,6 +203,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Order events in date range
+      x-summary-source: derived
   /v2/order-event/getOrderEventRequestsInDateRange/{startDate}/{endDate}:
     get:
       operationId: orderEventRequestsInDateRange
@@ -216,6 +232,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Order event requests in date range
+      x-summary-source: derived
   /v2/order-event/searchOrderEventsPaginated:
     get:
       operationId: searchOrderEventsFilter
@@ -335,6 +353,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedOrderEventsDto'
       tags:
       - Order Event
+      summary: Search order events filter
+      x-summary-source: derived
   /v2/order-event/listCsv:
     get:
       operationId: getOrderEventsCsv
@@ -454,6 +474,8 @@ paths:
                 $ref: '#/components/schemas/OrdersCsvDto'
       tags:
       - Order Event
+      summary: Get order events csv
+      x-summary-source: derived
   /v2/order-event/listPaymentCsv:
     get:
       operationId: getOrderEventsPaymentCsv
@@ -573,6 +595,8 @@ paths:
                 $ref: '#/components/schemas/OrdersCsvDto'
       tags:
       - Order Event
+      summary: Get order events payment csv
+      x-summary-source: derived
   /v2/order-event/getPaymentInfoByDateRange:
     get:
       operationId: getPaymentInfoOrderEventsByDateRange
@@ -692,6 +716,8 @@ paths:
                 $ref: '#/components/schemas/PaymentInfoDto'
       tags:
       - Order Event
+      summary: Get payment info order events by date range
+      x-summary-source: derived
   /v2/order-event/getNotPaidOrderEventsPaginated:
     get:
       operationId: getNotPaidOrderEventsPaginated
@@ -811,6 +837,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedOrderEventsDto'
       tags:
       - Order Event
+      summary: Get not paid order events paginated
+      x-summary-source: derived
   /v2/order-event/getOrderEventDocumentsByDateRange:
     get:
       operationId: getOrderEventDocumentsByDateRange
@@ -930,6 +958,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedDocumentsByOrderEventsDto'
       tags:
       - Order Event
+      summary: Get order event documents by date range
+      x-summary-source: derived
   /v2/order-event/orderRequest/all:
     get:
       operationId: orderEventRequests
@@ -945,6 +975,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Order event requests
+      x-summary-source: derived
   /v2/order-event/orderRequest/number:
     get:
       operationId: orderEventRequestsNumber
@@ -958,6 +990,8 @@ paths:
                 type: number
       tags:
       - Order Event
+      summary: Order event requests number
+      x-summary-source: derived
   /v2/order-event/orderRequest/paginated:
     get:
       operationId: orderEventRequestsPaginated
@@ -983,6 +1017,8 @@ paths:
                   $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Order event requests paginated
+      x-summary-source: derived
   /v2/order-event/countOrderEventsWaitingRequests:
     get:
       operationId: countOrderEventsWaitingRequests
@@ -996,6 +1032,8 @@ paths:
                 type: number
       tags:
       - Order Event
+      summary: Count order events waiting requests
+      x-summary-source: derived
   /v2/order-event/orderRequest/paginatedWithMessages:
     get:
       operationId: orderEventRequestsPaginatedWithMessages
@@ -1019,6 +1057,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedOrderEventsList'
       tags:
       - Order Event
+      summary: Order event requests paginated with messages
+      x-summary-source: derived
   /v2/order-event/messages/clear/{orderEventId}:
     post:
       operationId: clearOrderEventMessages
@@ -1033,6 +1073,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Clear order event messages
+      x-summary-source: derived
   /v2/order-event/updateOrderEventRemark/{orderEventId}:
     put:
       operationId: updateOrderEventRemark
@@ -1053,6 +1095,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Update order event remark
+      x-summary-source: derived
   /v2/order-event/updateOrderEventStatus/{orderEventId}:
     put:
       operationId: updateOrderEventStatus
@@ -1073,6 +1117,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Update order event status
+      x-summary-source: derived
   /v2/order-event/updateEventOrdersG8Status:
     put:
       operationId: updateEventOrdersG8Status
@@ -1088,6 +1134,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Update event orders G8 status
+      x-summary-source: derived
   /v2/order-event/updateEventOrderShifterStatus:
     put:
       operationId: updateEventOrderShifterStatus
@@ -1103,6 +1151,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Update event order shifter status
+      x-summary-source: derived
   /v2/order-event:
     post:
       operationId: createOrderEvent
@@ -1122,6 +1172,8 @@ paths:
                 $ref: '#/components/schemas/OrderEvent'
       tags:
       - Order Event
+      summary: Create order event
+      x-summary-source: derived
     put:
       operationId: updateOrderEvent
       parameters: []
@@ -1140,6 +1192,8 @@ paths:
                 type: object
       tags:
       - Order Event
+      summary: Update order event
+      x-summary-source: derived
   /v2/order-event/email:
     post:
       operationId: sendEmailOrderEvent
@@ -1155,6 +1209,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Send email order event
+      x-summary-source: derived
   /v2/order-event/orderEventRequestToOrder:
     post:
       operationId: orderEventRequestToOrder
@@ -1174,6 +1230,8 @@ paths:
                 type: object
       tags:
       - Order Event
+      summary: Order event request to order
+      x-summary-source: derived
   /v2/order-event/emails/{orderEventId}/cancelation:
     post:
       operationId: sendOrderEventCancelationEmail
@@ -1194,6 +1252,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Send order event cancelation email
+      x-summary-source: derived
   /v2/order-event/{orderEventId}:
     delete:
       operationId: deleteOrderEvent
@@ -1208,6 +1268,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Delete order event
+      x-summary-source: derived
     get:
       operationId: getPaymentsAndBails
       parameters:
@@ -1225,6 +1287,8 @@ paths:
                 $ref: '#/components/schemas/PaymentAndBailDto'
       tags:
       - Order Event
+      summary: Get payments and bails
+      x-summary-source: derived
   /v2/order-event/createStateDocument:
     post:
       operationId: createStateDocumentOrderEvent
@@ -1244,6 +1308,8 @@ paths:
                 $ref: '#/components/schemas/OrderEventDocumentState'
       tags:
       - Order Event
+      summary: Create state document order event
+      x-summary-source: derived
   /v2/order-event/isDocumentStateGenerating/{orderEventId}:
     get:
       operationId: isEventDocumentStateGenerating
@@ -1262,6 +1328,8 @@ paths:
                 $ref: '#/components/schemas/IsDocumentStateGeneratingDto'
       tags:
       - Order Event
+      summary: Is event document state generating
+      x-summary-source: derived
   /v2/order-event/removeStateDocument:
     post:
       operationId: removeStateDocumentOrderEvent
@@ -1277,6 +1345,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Remove state document order event
+      x-summary-source: derived
   /v2/order-event/createDocument:
     post:
       operationId: createDocumentOrderEvent
@@ -1296,6 +1366,8 @@ paths:
                 $ref: '#/components/schemas/OrderEventDocument'
       tags:
       - Order Event
+      summary: Create document order event
+      x-summary-source: derived
   /v2/order-event/removeDocument:
     post:
       operationId: removeDocumentOrderEvent
@@ -1311,6 +1383,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Remove document order event
+      x-summary-source: derived
   /v2/order-event/getSignedUrl/{orderEventId}/{documentId}/{scope}:
     get:
       operationId: getSignedUrlOrderEvent
@@ -1339,6 +1413,8 @@ paths:
                 type: string
       tags:
       - Order Event
+      summary: Get signed url order event
+      x-summary-source: derived
   /v2/order-event/deletePermanently/{orderEventId}:
     delete:
       operationId: deleteOrderEventPermanently
@@ -1353,6 +1429,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Delete order event permanently
+      x-summary-source: derived
   /v2/order-event/attachFile/{orderEventId}:
     put:
       operationId: attachOrderEventFiles
@@ -1378,6 +1456,8 @@ paths:
                 type: object
       tags:
       - Order Event
+      summary: Attach order event files
+      x-summary-source: derived
   /v2/order-event/download-attachment/{key}:
     get:
       operationId: downloadEventAttachment
@@ -1396,6 +1476,8 @@ paths:
                 type: string
       tags:
       - Order Event
+      summary: Download event attachment
+      x-summary-source: derived
   /v2/order-event/deleteAttachment/{orderEventId}/{key}:
     put:
       operationId: deleteEventAttachment
@@ -1419,6 +1501,8 @@ paths:
                 type: object
       tags:
       - Order Event
+      summary: Delete event attachment
+      x-summary-source: derived
   /v2/order-event/generateStateDocument:
     post:
       operationId: generateOrderEventStateDocument
@@ -1438,6 +1522,8 @@ paths:
                 $ref: '#/components/schemas/OrderEventDocumentState'
       tags:
       - Order Event
+      summary: Generate order event state document
+      x-summary-source: derived
   /v2/order-event/getPaginatedPaidPaymentsByDateRange:
     get:
       operationId: getPaginatedPaidPaymentsByDateRange
@@ -1557,6 +1643,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedPaymentsWithOrderDto'
       tags:
       - Order Event
+      summary: Get paginated paid payments by date range
+      x-summary-source: derived
   /v2/order-event/admin/listLokkiPaymentOrderEventTransactions:
     get:
       operationId: listLokkiPaymentOrderEventTransactions
@@ -1599,6 +1687,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedLokkiPaymentOrderEventTransactionInfos'
       tags:
       - Order Event
+      summary: List lokki payment order event transactions
+      x-summary-source: derived
   /v2/order-event/cancelTerminalCheckout/{checkoutId}:
     get:
       operationId: cancelTerminalCheckout
@@ -1613,6 +1703,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Cancel terminal checkout
+      x-summary-source: derived
   /v2/order-event/getTerminalCheckout/{orderEventId}/{checkoutId}:
     get:
       operationId: getTerminalCheckoutOrderEvent
@@ -1636,6 +1728,8 @@ paths:
                 $ref: '#/components/schemas/TerminalCheckoutResponseDto'
       tags:
       - Order Event
+      summary: Get terminal checkout order event
+      x-summary-source: derived
   /v2/order-event/createTerminalCheckout:
     post:
       operationId: createTerminalCheckoutOrderEvent
@@ -1655,6 +1749,8 @@ paths:
                 $ref: '#/components/schemas/TerminalCheckoutResponseDto'
       tags:
       - Order Event
+      summary: Create terminal checkout order event
+      x-summary-source: derived
   /v2/order-event/createSquarePayment:
     post:
       operationId: createSquarePaymentOrderEvent
@@ -1670,6 +1766,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Create square payment order event
+      x-summary-source: derived
   /v2/order-event/{orderEventId}/bail:
     post:
       operationId: createBail
@@ -1694,6 +1792,8 @@ paths:
                 $ref: '#/components/schemas/OrderEventBail'
       tags:
       - Order Event
+      summary: Create bail
+      x-summary-source: derived
   /v2/order-event/{orderEventId}/bail/{bailId}/capture:
     put:
       operationId: captureBail
@@ -1719,6 +1819,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Capture bail
+      x-summary-source: derived
   /v2/order-event/{orderEventId}/bail/{bailId}:
     delete:
       operationId: deleteBail
@@ -1738,6 +1840,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Delete bail
+      x-summary-source: derived
   /v2/order-event/{orderEventId}/payment:
     post:
       operationId: createPayment
@@ -1762,6 +1866,8 @@ paths:
                 $ref: '#/components/schemas/OrderEventPayment'
       tags:
       - Order Event
+      summary: Create payment
+      x-summary-source: derived
   /v2/order-event/{orderEventId}/refund:
     post:
       operationId: orderEventRefundPayment
@@ -1782,6 +1888,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Order event refund payment
+      x-summary-source: derived
   /v2/order-event/{orderEventId}/batch-refunds:
     post:
       operationId: orderEventBatchRefundPayment
@@ -1802,6 +1910,8 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Order event batch refund payment
+      x-summary-source: derived
   /v2/order-event/{orderEventId}/payment/{paymentId}:
     delete:
       operationId: deletePayment
@@ -1821,8 +1931,800 @@ paths:
           description: ''
       tags:
       - Order Event
+      summary: Delete payment
+      x-summary-source: derived
 components:
   schemas:
+    PaymentAndBailDto:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventPayment'
+        bails:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventBail'
+      required:
+      - payments
+      - bails
+    SessionEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        slotNumber:
+          type: number
+        minimumSlotNumber:
+          type: number
+        companyId:
+          type: string
+        monitors:
+          type: array
+          items:
+            type: string
+        event:
+          allOf:
+          - $ref: '#/components/schemas/Event'
+      required:
+      - id
+      - startDate
+      - endDate
+      - slotNumber
+      - minimumSlotNumber
+      - companyId
+      - monitors
+      - event
+    OrderEventPerson:
+      type: object
+      properties:
+        name:
+          type: string
+        pricing:
+          type: string
+        infos:
+          type: object
+        categoryItems:
+          type: object
+      required:
+      - name
+      - pricing
+      - infos
+      - categoryItems
+    EventOption:
+      type: object
+      properties:
+        itemId:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        price:
+          type: number
+      required:
+      - itemId
+      - type
+      - price
+    PersonInfosDto:
+      type: object
+      properties:
+        name:
+          type: string
+        pricing:
+          type: string
+        infos:
+          type: object
+        categoryItems:
+          type: object
+      required:
+      - name
+      - pricing
+      - infos
+      - categoryItems
+    OrderEventProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        name:
+          type: string
+        price:
+          type: number
+        vat:
+          type: number
+        productImage:
+          type: array
+          items:
+            type: string
+        nbSelected:
+          type: number
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventSubProduct'
+      required:
+      - id
+      - type
+      - name
+      - price
+      - vat
+      - productImage
+      - nbSelected
+      - subProducts
+    CaptureBailDto:
+      type: object
+      properties:
+        toCapture:
+          type: number
+      required:
+      - toCapture
+    OrderEventPaymentRefund:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: number
+        date:
+          format: date-time
+          type: string
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Empreinte bancaire
+          - Lien d'empreinte bancaire
+          - Autre
+          - Square Terminal
+        reason:
+          type: string
+          enum:
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
+      required:
+      - id
+      - amount
+      - date
+      - method
+      - reason
+    TerminalCheckoutResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+      required:
+      - id
+      - status
+    CustomerFieldsDto:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+      required:
+      - id
+      - label
+      - value
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        companyName:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        zipCode:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerField'
+        companyId:
+          type: string
+        deliveryAddress:
+          type: string
+        deliveryZipCode:
+          type: string
+        deliveryCity:
+          type: string
+        isNewsletterSubscribe:
+          type: boolean
+        isLokkiNewsletterSubscribe:
+          type: boolean
+        customerImage:
+          type: string
+        type:
+          enum:
+          - entreprise
+          - individual
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CustomerSkisetInfos'
+        tulipInfos:
+          $ref: '#/components/schemas/TulipInfos'
+        createdAt:
+          format: date-time
+          type: string
+        remark:
+          type: string
+        customerRpId:
+          type: string
+        hidden:
+          type: boolean
+        createdFrom:
+          enum:
+          - DASHBOARD
+          - ONLINE_STORE
+          - RENTAL_PLACE_LOKKI
+          type: string
+      required:
+      - id
+      - firstName
+      - lastName
+      - companyName
+      - phone
+      - email
+      - zipCode
+      - fields
+      - companyId
+      - deliveryAddress
+      - deliveryZipCode
+      - deliveryCity
+      - isNewsletterSubscribe
+      - isLokkiNewsletterSubscribe
+      - customerImage
+      - type
+      - createdAt
+      - hidden
+      - createdFrom
+    DocumentStateProduct:
+      type: object
+      properties:
+        previousFiles:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/DocumentStateProductAttachedFile'
+            - $ref: '#/components/schemas/DocumentStateProductAttachedFilePreview'
+        files:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/DocumentStateProductAttachedFile'
+            - $ref: '#/components/schemas/DocumentStateProductAttachedFilePreview'
+        id:
+          type: string
+        name:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+        subProduct:
+          $ref: '#/components/schemas/SubProduct'
+        inspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionField'
+        previousInspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionField'
+        stateInspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateInspectionField'
+      required:
+      - previousFiles
+      - files
+      - id
+      - name
+      - departureInfo
+      - arrivalInfo
+      - subProduct
+      - inspectionFields
+      - previousInspectionFields
+      - stateInspectionFields
+    GenerateNewStateDocumentDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        scope:
+          enum:
+          - DEPART
+          - RETOUR
+          type: string
+        generateStateSubProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateNewStateSubProductDto'
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+      required:
+      - orderId
+      - scope
+      - generateStateSubProducts
+      - lang
+    DocumentStateInspectionField:
+      type: object
+      properties:
+        name:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+      required:
+      - name
+      - departureInfo
+      - arrivalInfo
+    PaginatedOrderEventsList:
+      type: object
+      properties:
+        total:
+          type: number
+        orderEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEvent'
+      required:
+      - total
+      - orderEvents
+    PromoCodeDto:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        source:
+          enum:
+          - COMPANY
+          - LOKKI
+          type: string
+        active:
+          type: boolean
+        discountAmount:
+          type: number
+        discountType:
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+          type: string
+        amountUsed:
+          type: number
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        minPrice:
+          type: number
+        maxUses:
+          type:
+          - number
+          - 'null'
+        dateCheck:
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+          type: string
+        applyOnDelivery:
+          type: boolean
+        limitToNewCustomers:
+          type: boolean
+        limitToVerticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        limitToCompanies:
+          type: array
+          items:
+            type: string
+        appliedDiscountAmount:
+          type: number
+      required:
+      - id
+      - code
+      - source
+      - active
+      - discountAmount
+      - discountType
+      - amountUsed
+      - creationDate
+      - expirationDate
+      - minPrice
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    DocumentStateProductAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    GenerateNewStateProductFieldDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateNewStateProductAnswerDto'
+      required:
+      - id
+      - name
+      - answers
+    LokkiPaymentTransactionInfoOrderEvent:
+      type: object
+      properties:
+        from:
+          type: string
+          default: orderEvent
+          enum:
+          - orderEvent
+        orderEventId:
+          type: string
+        date:
+          type: string
+        paymentIntentId:
+          type: string
+        type:
+          type: string
+          enum:
+          - BAIL
+          - PAYMENT
+        origin:
+          type: string
+        companyName:
+          type: string
+        companyId:
+          type: string
+        amount:
+          type: number
+        applicationFeeTTC:
+          type: number
+        applicationFeeTVA:
+          type: number
+        applicationFeeHT:
+          type: number
+        stripeFee:
+          type: number
+        amountPaid:
+          type: number
+        paymentType:
+          type: string
+          enum:
+          - card
+          - Google-Pay
+          - Apple-Pay
+        cardBrand:
+          type: string
+        cardBrandProduct:
+          type: string
+        countryCode:
+          type: string
+        cardType:
+          type: string
+        used3DS:
+          type: boolean
+        lokkiFeeRuleApplied:
+          type: string
+        invoiceNumber:
+          type: string
+        renterPaymentDate:
+          type: string
+      required:
+      - from
+      - orderEventId
+      - date
+      - paymentIntentId
+      - type
+      - origin
+      - companyName
+      - companyId
+      - amount
+      - applicationFeeTTC
+      - applicationFeeTVA
+      - applicationFeeHT
+      - stripeFee
+      - amountPaid
+      - paymentType
+      - cardBrand
+      - cardBrandProduct
+      - countryCode
+      - cardType
+      - used3DS
+      - lokkiFeeRuleApplied
+    ReservationInfosDto:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderStatusDto'
+        priceOverrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceOverrideDto'
+        discount:
+          type: number
+        infos:
+          type: string
+        label:
+          type: string
+        color:
+          type: string
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/PromoCodeDto'
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+      required:
+      - id
+      - status
+      - priceOverrides
+      - discount
+      - infos
+      - label
+      - color
+    PaginatedDocumentsByOrderEventsDto:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentByOrderEvent'
+        totalCount:
+          type: number
+      required:
+      - documents
+      - totalCount
+    OrderMessageQuestion:
+      type: object
+      properties:
+        type:
+          type: string
+          default: QUESTION
+          enum:
+          - QUESTION
+        message:
+          type: string
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        solved:
+          type: boolean
+      required:
+      - type
+      - message
+      - id
+      - date
+      - solved
+    Item:
+      type: object
+      properties:
+        itemId:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        price:
+          type: number
+      required:
+      - itemId
+      - type
+      - price
+    DocumentStateProductAttachedFilePreview:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+      - url
+    OrderEventDocumentStateEventsId:
+      type: object
+      properties:
+        eventId:
+          type: string
+        productsHistoryId:
+          type: string
+      required:
+      - eventId
+      - productsHistoryId
+    GenerateStateSubProductAttachedFileDto:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    ShifterInfo:
+      type: object
+      properties:
+        shifterId:
+          type: string
+        status:
+          type: string
+          enum:
+          - IMPORTED
+          - TO_IMPORT
+          - NONE
+        importedDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - shifterId
+      - status
+      - importedDate
+    OrderEventDocument:
+      type: object
+      properties:
+        documentModelId:
+          type: string
+        id:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        key:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
+        comment:
+          type: string
+        status:
+          enum:
+          - TO_GENERATE
+          - GENERATED
+          - PENDING
+          type: string
+        createdDate:
+          format: date-time
+          type: string
+      required:
+      - documentModelId
+      - id
+      - isEmailSend
+      - isSigned
+      - key
+      - name
+      - link
+      - comment
+      - status
+      - createdDate
+    OrderStatusDto:
+      type: object
+      properties:
+        id:
+          type: string
+        statusId:
+          type: string
+        color:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+      required:
+      - id
+      - statusId
+      - color
+      - name
+      - category
     CustomerOrderEventDto:
       type: object
       properties:
@@ -1864,6 +2766,48 @@ components:
       - isNewsletterSubscribe
       - isLokkiNewsletterSubscribe
       - customerImage
+    CreateSquarePaymentDto:
+      type: object
+      properties:
+        paymentId:
+          type: string
+        orderEventId:
+          type: string
+      required:
+      - paymentId
+      - orderEventId
+    StripeExpressPaymentMethodDetail:
+      type: object
+      properties:
+        cardType:
+          type: string
+          enum:
+          - standard
+          - premium
+        type:
+          type: string
+          enum:
+          - card
+          - Google-Pay
+          - Apple-Pay
+        brand:
+          type: string
+        brandProduct:
+          type: string
+        countryCode:
+          type: string
+        used3DS:
+          type: boolean
+        feeValues:
+          type: object
+      required:
+      - cardType
+      - type
+      - brand
+      - brandProduct
+      - countryCode
+      - used3DS
+      - feeValues
     HistoryInspectionField:
       type: object
       properties:
@@ -1879,389 +2823,125 @@ components:
       - id
       - name
       - answers
-    ReservationInfosDto:
+    UpdateOrderEventStatusDto:
       type: object
       properties:
-        id:
-          type:
-          - string
-          - 'null'
         status:
           type: array
           items:
-            $ref: '#/components/schemas/OrderStatusDto'
-        priceOverrides:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceOverrideDto'
-        discount:
-          type: number
-        infos:
-          type: string
-        label:
-          type: string
-        color:
-          type: string
-        promoCode:
-          allOf:
-          - $ref: '#/components/schemas/PromoCodeDto'
-        attachedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachedFile'
+            $ref: '#/components/schemas/OrderEventStatus'
       required:
-      - id
       - status
-      - priceOverrides
-      - discount
-      - infos
-      - label
-      - color
-    CreateTerminalCheckoutDto:
-      type: object
-      properties:
-        orderId:
-          type: string
-        amount:
-          type: number
-        deviceId:
-          type: string
-      required:
-      - orderId
-      - amount
-      - deviceId
-    DocumentByOrderEvent:
+    PriceOverrideDto:
       type: object
       properties:
         id:
-          type: string
-        name:
-          type: string
-        customerName:
-          type: string
-        documentModelId:
-          type: string
-        createdDate:
-          format: date-time
-          type: string
-        isEmailSend:
-          type: boolean
-        isSigned:
-          type: boolean
-        key:
-          type: string
-        orderEventId:
-          type: string
-        orderEventStartDate:
-          format: date-time
-          type: string
-        orderEventEndDate:
-          format: date-time
-          type: string
-        orderEventUpdatedAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - name
-      - customerName
-      - documentModelId
-      - createdDate
-      - isEmailSend
-      - isSigned
-      - key
-      - orderEventId
-      - orderEventStartDate
-      - orderEventEndDate
-      - orderEventUpdatedAt
-    CreateSquarePaymentDto:
-      type: object
-      properties:
-        paymentId:
-          type: string
-        orderEventId:
-          type: string
-      required:
-      - paymentId
-      - orderEventId
-    ShifterInfo:
-      type: object
-      properties:
-        shifterId:
-          type: string
-        status:
-          type: string
-          enum:
-          - IMPORTED
-          - TO_IMPORT
-          - NONE
-        importedDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - shifterId
-      - status
-      - importedDate
-    GenerateNewStateDocumentDto:
-      type: object
-      properties:
-        orderId:
-          type: string
-        scope:
-          enum:
-          - DEPART
-          - RETOUR
-          type: string
-        generateStateSubProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateNewStateSubProductDto'
-        lang:
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-          type: string
-      required:
-      - orderId
-      - scope
-      - generateStateSubProducts
-      - lang
-    OrderStatusDto:
-      type: object
-      properties:
-        id:
-          type: string
-        statusId:
-          type: string
-        color:
-          type: string
-        name:
-          type: string
-        category:
-          type: string
-      required:
-      - id
-      - statusId
-      - color
-      - name
-      - category
-    TulipInfos:
-      type: object
-      properties:
-        address:
-          type: string
-        zipcode:
-          type: string
-        city:
-          type: string
-        managerFirstName:
-          type: string
-        managerLastName:
-          type: string
-        sirenNumber:
-          type: string
-      required:
-      - address
-      - zipcode
-      - city
-      - managerFirstName
-      - managerLastName
-      - sirenNumber
-    GenerateNewStateSubProductDto:
-      type: object
-      properties:
-        productModelId:
-          type: string
-        productId:
-          type: string
-        subProductId:
-          type: string
-        name:
-          type: string
-        serialNumber:
-          type: string
-        previousNote:
-          type: string
-        note:
-          type: string
-        previousInspectionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateNewStateProductFieldDto'
-        inspectionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateNewStateProductFieldDto'
-        previousFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateStateSubProductAttachedFileDto'
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateStateSubProductAttachedFileDto'
-      required:
-      - productModelId
-      - productId
-      - subProductId
-      - name
-      - serialNumber
-      - previousNote
-      - note
-      - previousInspectionFields
-      - inspectionFields
-      - previousFiles
-      - files
-    GenerateNewStateProductFieldDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        answers:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateNewStateProductAnswerDto'
-      required:
-      - id
-      - name
-      - answers
-    PaginatedLokkiPaymentOrderEventTransactionInfos:
-      type: object
-      properties:
-        totalPages:
-          type: number
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/LokkiPaymentTransactionInfoOrderEvent'
-      required:
-      - totalPages
-      - data
-    ListPaginatedOrderEventsDto:
-      type: object
-      properties:
-        orderEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEvent'
-        totalEventCount:
-          type: number
-      required:
-      - orderEvents
-      - totalEventCount
-    DocumentStateProductAttachedFilePreview:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        url:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-      - url
-    GenerateNewStateProductOptionDto:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-      required:
-      - id
-      - value
-    PaymentAndBailDto:
-      type: object
-      properties:
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventPayment'
-        bails:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventBail'
-      required:
-      - payments
-      - bails
-    OrderEventProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        name:
           type: string
         price:
           type: number
-        vat:
-          type: number
-        productImage:
-          type: array
-          items:
-            type: string
-        nbSelected:
-          type: number
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventSubProduct'
       required:
       - id
-      - type
-      - name
       - price
-      - vat
-      - productImage
-      - nbSelected
-      - subProducts
-    OrderUploadFilesDto:
+    BailWithOrderDto:
       type: object
       properties:
-        files:
-          type: array
-          items:
-            type: string
-            format: binary
-        sizes:
-          type: array
-          items:
-            type: number
-        names:
-          type: array
-          items:
-            type: string
-        types:
-          type: array
-          items:
-            type: string
+        type:
+          type: string
+          default: bail
+          enum:
+          - bail
+        bail:
+          $ref: '#/components/schemas/OrderEventBail'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        orderEvent:
+          $ref: '#/components/schemas/OrderEvent'
       required:
-      - files
-      - sizes
-      - names
-      - types
+      - type
+      - bail
+    OrderEventPayment:
+      type: object
+      properties:
+        id:
+          type: string
+        isExpress:
+          type: boolean
+        paymentMethodDetails:
+          $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
+        paymentDate:
+          format: date-time
+          type: string
+        initialAmount:
+          type: number
+        amount:
+          type: number
+        status:
+          enum:
+          - waiting
+          - pending
+          - paid
+          type: string
+        link:
+          type: string
+        paymentIntentId:
+          type: string
+        isEmailSent:
+          type: boolean
+        method:
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Empreinte bancaire
+          - Lien d'empreinte bancaire
+          - Autre
+          - Square Terminal
+          type: string
+        companyId:
+          type: string
+        orderEventId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventPaymentRefund'
+        fees:
+          $ref: '#/components/schemas/PaymentFees'
+        stripeStatus:
+          enum:
+          - pending
+          - error
+          - success
+          - canceled
+          type: string
+        adyenPaymentData:
+          type: string
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
+      required:
+      - id
+      - isExpress
+      - initialAmount
+      - amount
+      - status
+      - isEmailSent
+      - method
+      - companyId
+      - orderEventId
+      - createdAt
+      - isPartPayment
+      - refunds
+      - fees
     CreateUpdateOrderEventDto:
       type: object
       properties:
@@ -2318,6 +2998,526 @@ components:
       - sessionId
       - reservation
       - isRequest
+    EmailTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        object:
+          $ref: '#/components/schemas/LocalizedContent'
+        content:
+          $ref: '#/components/schemas/LocalizedContent'
+        companyId:
+          type: string
+        documents:
+          $ref: '#/components/schemas/EmailTemplateDocument'
+        documentState:
+          $ref: '#/components/schemas/EmailTemplateDocument'
+        payment:
+          type: number
+        bail:
+          type: number
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - type
+      - object
+      - content
+      - companyId
+      - payment
+      - bail
+      - hideTime
+      - hideDate
+      - createdAt
+    CreateBailDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        paymentIntentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - waiting
+          - pending
+          - captured
+          - canceled
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Empreinte bancaire
+          - Lien d'empreinte bancaire
+          - Autre
+          - Square Terminal
+        paymentMethodDetails:
+          $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
+        paymentDate:
+          format: date-time
+          type: string
+        isEmailSent:
+          type: boolean
+        cancelReason:
+          type: string
+          enum:
+          - CANCELED
+          - REQUIRES_ACTION
+          - REQUIRES_CONFIRMATION
+          - REQUIRES_PAYMENT_METHOD
+          - UNKNOWN
+        isExpress:
+          type: boolean
+        fees:
+          $ref: '#/components/schemas/PaymentFees'
+      required:
+      - amount
+      - method
+      - isExpress
+    TulipInfos:
+      type: object
+      properties:
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
+      required:
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
+    DocumentByOrderEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        customerName:
+          type: string
+        documentModelId:
+          type: string
+        createdDate:
+          format: date-time
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        key:
+          type: string
+        orderEventId:
+          type: string
+        orderEventStartDate:
+          format: date-time
+          type: string
+        orderEventEndDate:
+          format: date-time
+          type: string
+        orderEventUpdatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - customerName
+      - documentModelId
+      - createdDate
+      - isEmailSend
+      - isSigned
+      - key
+      - orderEventId
+      - orderEventStartDate
+      - orderEventEndDate
+      - orderEventUpdatedAt
+    OrderEventBatchRefundDto:
+      type: object
+      properties:
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventRefundPaymentDto'
+      required:
+      - refunds
+    PaymentWithOrderDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: payment
+          enum:
+          - payment
+        payment:
+          $ref: '#/components/schemas/OrderEventPayment'
+        customer:
+          $ref: '#/components/schemas/Customer'
+        orderEvent:
+          $ref: '#/components/schemas/OrderEvent'
+      required:
+      - type
+      - payment
+    ListPaginatedOrderEventsDto:
+      type: object
+      properties:
+        orderEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEvent'
+        totalEventCount:
+          type: number
+      required:
+      - orderEvents
+      - totalEventCount
+    OrderMessageCancel:
+      type: object
+      properties:
+        type:
+          type: string
+          default: CANCEL
+          enum:
+          - CANCEL
+        message:
+          type: string
+        id:
+          type: string
+        date:
+          format: date-time
+          type: string
+        solved:
+          type: boolean
+      required:
+      - type
+      - message
+      - id
+      - date
+      - solved
+    OrderEventStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        category:
+          type: string
+        name:
+          type: string
+        color:
+          type: string
+        statusId:
+          type: string
+      required:
+      - id
+      - category
+      - name
+      - color
+      - statusId
+    EmailTemplateDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        method:
+          type: string
+      required:
+      - id
+      - method
+    HistoryInspectionAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        value:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionOption'
+      required:
+      - id
+      - answerType
+      - value
+      - options
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        sessionEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionEvent'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventOption'
+        pricing:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pricing'
+        bailAmount:
+          type: number
+        productSurveyId:
+          type: string
+        surveyOptional:
+          type: boolean
+        vat:
+          type: number
+        tagValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagValue'
+        createdDate:
+          format: date-time
+          type: string
+        noEquipment:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+      required:
+      - id
+      - companyId
+      - name
+      - description
+      - imageUrl
+      - sessionEvents
+      - categories
+      - options
+      - pricing
+      - bailAmount
+      - productSurveyId
+      - surveyOptional
+      - vat
+      - tagValues
+      - createdDate
+      - noEquipment
+      - onlineAvailability
+    PaginatedLokkiPaymentOrderEventTransactionInfos:
+      type: object
+      properties:
+        totalPages:
+          type: number
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LokkiPaymentTransactionInfoOrderEvent'
+      required:
+      - totalPages
+      - data
+    AttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    OrdersInfoForCustomerDto:
+      type: object
+      properties:
+        totalTTC:
+          type: number
+        totalCount:
+          type: number
+      required:
+      - totalTTC
+      - totalCount
+    HistoryInspectionOption:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    PaymentsInfo:
+      type: object
+      properties:
+        method:
+          type: string
+        amount:
+          type: number
+      required:
+      - method
+      - amount
+    GenerateNewStateProductAnswerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        value:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateNewStateProductOptionDto'
+      required:
+      - id
+      - answerType
+      - value
+      - options
+    UpdateG8Status:
+      type: object
+      properties:
+        orderId:
+          type: string
+        status:
+          enum:
+          - IMPORTED
+          - TO_IMPORT
+          - NONE
+          type: string
+      required:
+      - orderId
+      - status
+    FormDataSendMailDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        orderId:
+          type: string
+        to:
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+        template:
+          type: string
+        object:
+          type: string
+        content:
+          type: string
+        i18nContent:
+          type: string
+        attachedDocumentId:
+          type: string
+        attachedDocumentStateId:
+          type: string
+        generateDocument:
+          type: string
+        generateDocumentState:
+          type: string
+        sendPaymentLinks:
+          type: boolean
+        generatePaymentLink:
+          type: string
+        generateBailLink:
+          type: string
+        generateSubscriptionLink:
+          type: string
+        hideDate:
+          type: boolean
+        hideTime:
+          type: boolean
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+      required:
+      - files
+      - orderId
+      - object
+      - content
+      - sendPaymentLinks
+      - generatePaymentLink
+      - generateBailLink
+      - generateSubscriptionLink
+      - hideDate
+      - hideTime
+      - lang
+    Category:
+      type: object
+      properties:
+        item:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        name:
+          type: string
+        id:
+          type: string
+      required:
+      - item
+      - name
+      - id
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
     OrderEventOption:
       type: object
       properties:
@@ -2353,6 +3553,233 @@ components:
       - productImage
       - nbSelected
       - subProducts
+    GenerateNewStateProductOptionDto:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    RemoveStateDocumentOrderEventDto:
+      type: object
+      properties:
+        orderEventId:
+          type: string
+        documentId:
+          type: string
+      required:
+      - orderEventId
+      - documentId
+    PaymentInfoDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentsInfo'
+      required:
+      - totalCount
+      - totalTTC
+      - totalHT
+      - payments
+    SendMailDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        to:
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+        template:
+          $ref: '#/components/schemas/EmailTemplate'
+        object:
+          type: string
+        content:
+          type: string
+        attachedDocumentId:
+          type: string
+        attachedDocumentStateId:
+          type: string
+        generateDocument:
+          $ref: '#/components/schemas/GenerateDocument'
+        generateDocumentState:
+          $ref: '#/components/schemas/GenerateDocument'
+        sendPaymentLinks:
+          type: boolean
+        generatePaymentLink:
+          $ref: '#/components/schemas/GeneratePaymentLink'
+        generateBailLink:
+          $ref: '#/components/schemas/GeneratePaymentLink'
+        generateSubscriptionLink:
+          $ref: '#/components/schemas/GeneratePaymentLink'
+        hideDate:
+          type: boolean
+        hideTime:
+          type: boolean
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+      required:
+      - orderId
+      - object
+      - content
+      - sendPaymentLinks
+      - generatePaymentLink
+      - generateBailLink
+      - generateSubscriptionLink
+      - hideDate
+      - hideTime
+      - lang
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+    PaginatedOrderEventsDto:
+      type: object
+      properties:
+        orderEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEvent'
+        totalCount:
+          type: number
+      required:
+      - orderEvents
+      - totalCount
+    CreateStateDocumentOrderEventDto:
+      type: object
+      properties:
+        orderEventId:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DEPART
+          - RETOUR
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentStateProduct'
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - orderEventId
+      - scope
+      - products
+      - lang
+    GenerateNewStateSubProductDto:
+      type: object
+      properties:
+        productModelId:
+          type: string
+        productId:
+          type: string
+        subProductId:
+          type: string
+        name:
+          type: string
+        serialNumber:
+          type: string
+        previousNote:
+          type: string
+        note:
+          type: string
+        previousInspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateNewStateProductFieldDto'
+        inspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateNewStateProductFieldDto'
+        previousFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateStateSubProductAttachedFileDto'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenerateStateSubProductAttachedFileDto'
+      required:
+      - productModelId
+      - productId
+      - subProductId
+      - name
+      - serialNumber
+      - previousNote
+      - note
+      - previousInspectionFields
+      - inspectionFields
+      - previousFiles
+      - files
+    EventOptionsDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        nbSelected:
+          type: number
+        vat:
+          type: number
+      required:
+      - id
+      - type
+      - nbSelected
+      - vat
+    TagValue:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+        activated:
+          type: boolean
+        universeId:
+          type: string
+      required:
+      - id
+      - value
+      - activated
     OrderEventBail:
       type: object
       properties:
@@ -2444,6 +3871,86 @@ components:
       - fees
       - cancelReason
       - isExpress
+    CreatePaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        isExpress:
+          type: boolean
+        fees:
+          $ref: '#/components/schemas/PaymentFees'
+        initialAmount:
+          type: number
+        paymentIntentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - waiting
+          - pending
+          - paid
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Empreinte bancaire
+          - Lien d'empreinte bancaire
+          - Autre
+          - Square Terminal
+        paymentDate:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        isEmailSent:
+          type: boolean
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventPaymentRefund'
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
+        paymentMethodDetails:
+          $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
+      required:
+      - amount
+      - isExpress
+      - method
+    SquarePaymentInfo:
+      type: object
+      properties:
+        squarePaymentId:
+          type: string
+        squareOrderId:
+          type: string
+      required:
+      - squarePaymentId
+      - squareOrderId
+    GeneratePaymentLink:
+      type: object
+      properties:
+        amount:
+          type: number
+        generate:
+          type: boolean
+      required:
+      - amount
+      - generate
+    UpdateOrderEventRemarkDto:
+      type: object
+      properties:
+        remark:
+          type: string
+      required:
+      - remark
     PaymentFees:
       type: object
       properties:
@@ -2458,75 +3965,43 @@ components:
       required:
       - applicationFee
       - stripeFee
-    RpTracking:
+    CreateTerminalCheckoutDto:
       type: object
       properties:
-        campaignid:
+        orderId:
           type: string
-        adgroupid:
+        amount:
+          type: number
+        deviceId:
           type: string
-        keyword:
-          type: string
-        device:
-          type: string
-        gclid:
-          type: string
-        utm_source:
-          type: string
-        utm_medium:
-          type: string
-        utm_term:
-          type: string
-        utm_content:
-          type: string
-        utm_campaign:
-          type: string
-        referrer:
-          type: string
-        ae:
-          type: string
-        aesubid0:
-          type: string
-        aesubid1:
-          type: string
-        visitor_id:
-          type: string
-        session_id:
-          type: string
-        fbclid:
-          type: string
-        msclkid:
-          type: string
-        pre_booking_created_from:
-          type: string
-          enum:
-          - manual
-        platform:
-          type: string
-          enum:
-          - DESKTOP_BROWSER
-          - MOBILE_BROWSER
-          - MOBILE_APP
-    G8Info:
-      type: object
-      properties:
-        g8Id:
-          type: string
-        status:
-          type: string
-          enum:
-          - IMPORTED
-          - TO_IMPORT
-          - NONE
-        importedDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
       required:
-      - g8Id
-      - status
-      - importedDate
+      - orderId
+      - amount
+      - deviceId
+    CustomerField:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    OrdersCsvDto:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - orders
     RemoveDocumentOrderEventDto:
       type: object
       properties:
@@ -2537,22 +4012,6 @@ components:
       required:
       - orderEventId
       - documentId
-    UpdateOrderEventStatusDto:
-      type: object
-      properties:
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventStatus'
-      required:
-      - status
-    UpdateOrderEventRemarkDto:
-      type: object
-      properties:
-        remark:
-          type: string
-      required:
-      - remark
     OrderEventPricings:
       type: object
       properties:
@@ -2569,231 +4028,18 @@ components:
       - amount
       - initialAmount
       - id
-    CustomerSkisetInfos:
-      type: object
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-      required:
-      - customerId
-    EmailTemplate:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-        object:
-          $ref: '#/components/schemas/LocalizedContent'
-        content:
-          $ref: '#/components/schemas/LocalizedContent'
-        companyId:
-          type: string
-        documents:
-          $ref: '#/components/schemas/EmailTemplateDocument'
-        documentState:
-          $ref: '#/components/schemas/EmailTemplateDocument'
-        payment:
-          type: number
-        bail:
-          type: number
-        hideTime:
-          type: boolean
-        hideDate:
-          type: boolean
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - type
-      - object
-      - content
-      - companyId
-      - payment
-      - bail
-      - hideTime
-      - hideDate
-      - createdAt
-    SubProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        isAvailable:
-          type: boolean
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-      required:
-      - id
-      - isAvailable
-      - printed
-      - serialNumber
-      - archive
-      - externalQrCode
-      - notAvailableRanges
-    SquarePaymentInfo:
-      type: object
-      properties:
-        squarePaymentId:
-          type: string
-        squareOrderId:
-          type: string
-      required:
-      - squarePaymentId
-      - squareOrderId
-    LokkiPaymentTransactionInfoOrderEvent:
+    NotAvailableRange:
       type: object
       properties:
         from:
+          format: date-time
           type: string
-          default: orderEvent
-          enum:
-          - orderEvent
-        orderEventId:
-          type: string
-        date:
-          type: string
-        paymentIntentId:
-          type: string
-        type:
-          type: string
-          enum:
-          - BAIL
-          - PAYMENT
-        origin:
-          type: string
-        companyName:
-          type: string
-        companyId:
-          type: string
-        amount:
-          type: number
-        applicationFeeTTC:
-          type: number
-        applicationFeeTVA:
-          type: number
-        applicationFeeHT:
-          type: number
-        stripeFee:
-          type: number
-        amountPaid:
-          type: number
-        paymentType:
-          type: string
-          enum:
-          - card
-          - Google-Pay
-          - Apple-Pay
-        cardBrand:
-          type: string
-        cardBrandProduct:
-          type: string
-        countryCode:
-          type: string
-        cardType:
-          type: string
-        used3DS:
-          type: boolean
-        lokkiFeeRuleApplied:
-          type: string
-        invoiceNumber:
-          type: string
-        renterPaymentDate:
+        to:
+          format: date-time
           type: string
       required:
       - from
-      - orderEventId
-      - date
-      - paymentIntentId
-      - type
-      - origin
-      - companyName
-      - companyId
-      - amount
-      - applicationFeeTTC
-      - applicationFeeTVA
-      - applicationFeeHT
-      - stripeFee
-      - amountPaid
-      - paymentType
-      - cardBrand
-      - cardBrandProduct
-      - countryCode
-      - cardType
-      - used3DS
-      - lokkiFeeRuleApplied
-    OrderEventSubProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        available:
-          type: boolean
-        serialNumber:
-          type: string
-        status:
-          type: string
-          enum:
-          - WAITING
-          - USED
-          - ENDED
-      required:
-      - id
-      - available
-      - serialNumber
-      - status
-    HistoryInspectionOption:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-      required:
-      - id
-      - value
-    PaymentsInfo:
-      type: object
-      properties:
-        method:
-          type: string
-        amount:
-          type: number
-      required:
-      - method
-      - amount
-    EventOptionsDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        nbSelected:
-          type: number
-        vat:
-          type: number
-      required:
-      - id
-      - type
-      - nbSelected
-      - vat
+      - to
     OrderEvent:
       type: object
       properties:
@@ -2963,998 +4209,6 @@ components:
       - available
       - isCanceled
       - createdFrom
-    GeneratePaymentLink:
-      type: object
-      properties:
-        amount:
-          type: number
-        generate:
-          type: boolean
-      required:
-      - amount
-      - generate
-    TerminalCheckoutResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-      required:
-      - id
-      - status
-    TagValue:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-        activated:
-          type: boolean
-        universeId:
-          type: string
-      required:
-      - id
-      - value
-      - activated
-    OrderEventRefundPaymentDto:
-      type: object
-      properties:
-        id:
-          type: string
-        amount:
-          type: number
-        date:
-          format: date-time
-          type: string
-        paymentId:
-          type: string
-        method:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Empreinte bancaire
-          - Lien d'empreinte bancaire
-          - Autre
-          - Square Terminal
-        reason:
-          type: string
-          enum:
-          - DUPLICATE
-          - FRAUDULENT
-          - REQUESTED_BY_CUSTOMER
-          - OTHER
-      required:
-      - id
-      - amount
-      - date
-      - method
-      - reason
-    PaginatedOrderEventsDto:
-      type: object
-      properties:
-        orderEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEvent'
-        totalCount:
-          type: number
-      required:
-      - orderEvents
-      - totalCount
-    DocumentStateProduct:
-      type: object
-      properties:
-        previousFiles:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/DocumentStateProductAttachedFile'
-            - $ref: '#/components/schemas/DocumentStateProductAttachedFilePreview'
-        files:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/DocumentStateProductAttachedFile'
-            - $ref: '#/components/schemas/DocumentStateProductAttachedFilePreview'
-        id:
-          type: string
-        name:
-          type: string
-        departureInfo:
-          type: string
-        arrivalInfo:
-          type: string
-        subProduct:
-          $ref: '#/components/schemas/SubProduct'
-        inspectionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryInspectionField'
-        previousInspectionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryInspectionField'
-        stateInspectionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentStateInspectionField'
-      required:
-      - previousFiles
-      - files
-      - id
-      - name
-      - departureInfo
-      - arrivalInfo
-      - subProduct
-      - inspectionFields
-      - previousInspectionFields
-      - stateInspectionFields
-    PaymentInfoDto:
-      type: object
-      properties:
-        totalCount:
-          type: number
-        totalTTC:
-          type: number
-        totalHT:
-          type: number
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentsInfo'
-      required:
-      - totalCount
-      - totalTTC
-      - totalHT
-      - payments
-    PriceOverrideDto:
-      type: object
-      properties:
-        id:
-          type: string
-        price:
-          type: number
-      required:
-      - id
-      - price
-    AttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-    UpdateG8Status:
-      type: object
-      properties:
-        orderId:
-          type: string
-        status:
-          enum:
-          - IMPORTED
-          - TO_IMPORT
-          - NONE
-          type: string
-      required:
-      - orderId
-      - status
-    IsDocumentStateGeneratingDto:
-      type: object
-      properties:
-        isDocumentStateGenerating:
-          type: boolean
-      required:
-      - isDocumentStateGenerating
-    CreateBailDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        paymentIntentId:
-          type: string
-        status:
-          type: string
-          enum:
-          - waiting
-          - pending
-          - captured
-          - canceled
-        method:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Empreinte bancaire
-          - Lien d'empreinte bancaire
-          - Autre
-          - Square Terminal
-        paymentMethodDetails:
-          $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
-        paymentDate:
-          format: date-time
-          type: string
-        isEmailSent:
-          type: boolean
-        cancelReason:
-          type: string
-          enum:
-          - CANCELED
-          - REQUIRES_ACTION
-          - REQUIRES_CONFIRMATION
-          - REQUIRES_PAYMENT_METHOD
-          - UNKNOWN
-        isExpress:
-          type: boolean
-        fees:
-          $ref: '#/components/schemas/PaymentFees'
-      required:
-      - amount
-      - method
-      - isExpress
-    CustomerField:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
-    OrderEventStatus:
-      type: object
-      properties:
-        id:
-          type: string
-        category:
-          type: string
-        name:
-          type: string
-        color:
-          type: string
-        statusId:
-          type: string
-      required:
-      - id
-      - category
-      - name
-      - color
-      - statusId
-    FormDataSendMailDto:
-      type: object
-      properties:
-        files:
-          type: array
-          items:
-            type: string
-            format: binary
-        orderId:
-          type: string
-        to:
-          type: string
-        cc:
-          type: array
-          items:
-            type: string
-        template:
-          type: string
-        object:
-          type: string
-        content:
-          type: string
-        i18nContent:
-          type: string
-        attachedDocumentId:
-          type: string
-        attachedDocumentStateId:
-          type: string
-        generateDocument:
-          type: string
-        generateDocumentState:
-          type: string
-        sendPaymentLinks:
-          type: boolean
-        generatePaymentLink:
-          type: string
-        generateBailLink:
-          type: string
-        generateSubscriptionLink:
-          type: string
-        hideDate:
-          type: boolean
-        hideTime:
-          type: boolean
-        lang:
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-          type: string
-      required:
-      - files
-      - orderId
-      - object
-      - content
-      - sendPaymentLinks
-      - generatePaymentLink
-      - generateBailLink
-      - generateSubscriptionLink
-      - hideDate
-      - hideTime
-      - lang
-    OrderEventDocument:
-      type: object
-      properties:
-        documentModelId:
-          type: string
-        id:
-          type: string
-        isEmailSend:
-          type: boolean
-        isSigned:
-          type: boolean
-        key:
-          type: string
-        name:
-          type: string
-        link:
-          type: string
-        comment:
-          type: string
-        status:
-          enum:
-          - TO_GENERATE
-          - GENERATED
-          - PENDING
-          type: string
-        createdDate:
-          format: date-time
-          type: string
-      required:
-      - documentModelId
-      - id
-      - isEmailSend
-      - isSigned
-      - key
-      - name
-      - link
-      - comment
-      - status
-      - createdDate
-    EventOption:
-      type: object
-      properties:
-        itemId:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        price:
-          type: number
-      required:
-      - itemId
-      - type
-      - price
-    OrderEventPerson:
-      type: object
-      properties:
-        name:
-          type: string
-        pricing:
-          type: string
-        infos:
-          type: object
-        categoryItems:
-          type: object
-      required:
-      - name
-      - pricing
-      - infos
-      - categoryItems
-    CreateStateDocumentOrderEventDto:
-      type: object
-      properties:
-        orderEventId:
-          type: string
-        scope:
-          type: string
-          enum:
-          - DEPART
-          - RETOUR
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentStateProduct'
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-      required:
-      - orderEventId
-      - scope
-      - products
-      - lang
-    OrderMessageQuestion:
-      type: object
-      properties:
-        type:
-          type: string
-          default: QUESTION
-          enum:
-          - QUESTION
-        message:
-          type: string
-        id:
-          type: string
-        date:
-          format: date-time
-          type: string
-        solved:
-          type: boolean
-      required:
-      - type
-      - message
-      - id
-      - date
-      - solved
-    SessionEvent:
-      type: object
-      properties:
-        id:
-          type: string
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        slotNumber:
-          type: number
-        minimumSlotNumber:
-          type: number
-        companyId:
-          type: string
-        monitors:
-          type: array
-          items:
-            type: string
-        event:
-          allOf:
-          - $ref: '#/components/schemas/Event'
-      required:
-      - id
-      - startDate
-      - endDate
-      - slotNumber
-      - minimumSlotNumber
-      - companyId
-      - monitors
-      - event
-    BailWithOrderDto:
-      type: object
-      properties:
-        type:
-          type: string
-          default: bail
-          enum:
-          - bail
-        bail:
-          $ref: '#/components/schemas/OrderEventBail'
-        customer:
-          $ref: '#/components/schemas/Customer'
-        orderEvent:
-          $ref: '#/components/schemas/OrderEvent'
-      required:
-      - type
-      - bail
-    GenerateDocument:
-      type: object
-      properties:
-        id:
-          type: string
-        method:
-          type: string
-          enum:
-          - signature
-          - pdf
-        content:
-          type: object
-      required:
-      - id
-      - method
-      - content
-    Customer:
-      type: object
-      properties:
-        id:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        companyName:
-          type: string
-        phone:
-          type: string
-        email:
-          type: string
-        zipCode:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerField'
-        companyId:
-          type: string
-        deliveryAddress:
-          type: string
-        deliveryZipCode:
-          type: string
-        deliveryCity:
-          type: string
-        isNewsletterSubscribe:
-          type: boolean
-        isLokkiNewsletterSubscribe:
-          type: boolean
-        customerImage:
-          type: string
-        type:
-          enum:
-          - entreprise
-          - individual
-          type: string
-        skisetInfos:
-          $ref: '#/components/schemas/CustomerSkisetInfos'
-        tulipInfos:
-          $ref: '#/components/schemas/TulipInfos'
-        createdAt:
-          format: date-time
-          type: string
-        remark:
-          type: string
-        customerRpId:
-          type: string
-        hidden:
-          type: boolean
-        createdFrom:
-          enum:
-          - DASHBOARD
-          - ONLINE_STORE
-          - RENTAL_PLACE_LOKKI
-          type: string
-      required:
-      - id
-      - firstName
-      - lastName
-      - companyName
-      - phone
-      - email
-      - zipCode
-      - fields
-      - companyId
-      - deliveryAddress
-      - deliveryZipCode
-      - deliveryCity
-      - isNewsletterSubscribe
-      - isLokkiNewsletterSubscribe
-      - customerImage
-      - type
-      - createdAt
-      - hidden
-      - createdFrom
-    DocumentStateProductAttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    Event:
-      type: object
-      properties:
-        id:
-          type: string
-        companyId:
-          type: string
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        sessionEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/SessionEvent'
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventOption'
-        pricing:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pricing'
-        bailAmount:
-          type: number
-        productSurveyId:
-          type: string
-        surveyOptional:
-          type: boolean
-        vat:
-          type: number
-        tagValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagValue'
-        createdDate:
-          format: date-time
-          type: string
-        noEquipment:
-          type: boolean
-        onlineAvailability:
-          type: boolean
-      required:
-      - id
-      - companyId
-      - name
-      - description
-      - imageUrl
-      - sessionEvents
-      - categories
-      - options
-      - pricing
-      - bailAmount
-      - productSurveyId
-      - surveyOptional
-      - vat
-      - tagValues
-      - createdDate
-      - noEquipment
-      - onlineAvailability
-    Pricing:
-      type: object
-      properties:
-        label:
-          type: string
-        amount:
-          type: number
-        id:
-          type: string
-      required:
-      - label
-      - amount
-      - id
-    OrderEventPaymentRefund:
-      type: object
-      properties:
-        id:
-          type: string
-        amount:
-          type: number
-        date:
-          format: date-time
-          type: string
-        method:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Empreinte bancaire
-          - Lien d'empreinte bancaire
-          - Autre
-          - Square Terminal
-        reason:
-          type: string
-          enum:
-          - DUPLICATE
-          - FRAUDULENT
-          - REQUESTED_BY_CUSTOMER
-          - OTHER
-      required:
-      - id
-      - amount
-      - date
-      - method
-      - reason
-    OrderMessageCancel:
-      type: object
-      properties:
-        type:
-          type: string
-          default: CANCEL
-          enum:
-          - CANCEL
-        message:
-          type: string
-        id:
-          type: string
-        date:
-          format: date-time
-          type: string
-        solved:
-          type: boolean
-      required:
-      - type
-      - message
-      - id
-      - date
-      - solved
-    Item:
-      type: object
-      properties:
-        itemId:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        price:
-          type: number
-      required:
-      - itemId
-      - type
-      - price
-    OrdersCsvDto:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - orders
-    GenerateNewStateProductAnswerDto:
-      type: object
-      properties:
-        id:
-          type: string
-        answerType:
-          type: string
-          enum:
-          - OPEN_FIELD
-          - UNIQUE_CHOICE
-          - MULTIPLE_CHOICE
-          - ODOMETER
-        value:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/GenerateNewStateProductOptionDto'
-      required:
-      - id
-      - answerType
-      - value
-      - options
-    OrderEventBatchRefundDto:
-      type: object
-      properties:
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventRefundPaymentDto'
-      required:
-      - refunds
-    OrdersInfoForCustomerDto:
-      type: object
-      properties:
-        totalTTC:
-          type: number
-        totalCount:
-          type: number
-      required:
-      - totalTTC
-      - totalCount
-    PaginatedDocumentsByOrderEventsDto:
-      type: object
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentByOrderEvent'
-        totalCount:
-          type: number
-      required:
-      - documents
-      - totalCount
-    StripeExpressPaymentMethodDetail:
-      type: object
-      properties:
-        cardType:
-          type: string
-          enum:
-          - standard
-          - premium
-        type:
-          type: string
-          enum:
-          - card
-          - Google-Pay
-          - Apple-Pay
-        brand:
-          type: string
-        brandProduct:
-          type: string
-        countryCode:
-          type: string
-        used3DS:
-          type: boolean
-        feeValues:
-          type: object
-      required:
-      - cardType
-      - type
-      - brand
-      - brandProduct
-      - countryCode
-      - used3DS
-      - feeValues
-    RemoveStateDocumentOrderEventDto:
-      type: object
-      properties:
-        orderEventId:
-          type: string
-        documentId:
-          type: string
-      required:
-      - orderEventId
-      - documentId
-    GenerateStateSubProductAttachedFileDto:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        url:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-    Category:
-      type: object
-      properties:
-        item:
-          type: array
-          items:
-            $ref: '#/components/schemas/Item'
-        name:
-          type: string
-        id:
-          type: string
-      required:
-      - item
-      - name
-      - id
-    PaginatedOrderEventsList:
-      type: object
-      properties:
-        total:
-          type: number
-        orderEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEvent'
-      required:
-      - total
-      - orderEvents
-    PaginatedPaymentsWithOrderDto:
-      type: object
-      properties:
-        payments:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PaymentWithOrderDto'
-            - $ref: '#/components/schemas/BailWithOrderDto'
-        totalCount:
-          type: number
-      required:
-      - payments
-      - totalCount
-    CustomerFieldsDto:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-      required:
-      - id
-      - label
-      - value
-    PersonInfosDto:
-      type: object
-      properties:
-        name:
-          type: string
-        pricing:
-          type: string
-        infos:
-          type: object
-        categoryItems:
-          type: object
-      required:
-      - name
-      - pricing
-      - infos
-      - categoryItems
     OrderEventDocumentState:
       type: object
       properties:
@@ -4003,151 +4257,40 @@ components:
       - comment
       - status
       - createdDate
-    CaptureBailDto:
+    G8Info:
       type: object
       properties:
-        toCapture:
-          type: number
-      required:
-      - toCapture
-    SendMailDto:
-      type: object
-      properties:
-        orderId:
+        g8Id:
           type: string
-        to:
+        status:
           type: string
-        cc:
-          type: array
-          items:
-            type: string
-        template:
-          $ref: '#/components/schemas/EmailTemplate'
-        object:
-          type: string
-        content:
-          type: string
-        attachedDocumentId:
-          type: string
-        attachedDocumentStateId:
-          type: string
-        generateDocument:
-          $ref: '#/components/schemas/GenerateDocument'
-        generateDocumentState:
-          $ref: '#/components/schemas/GenerateDocument'
-        sendPaymentLinks:
-          type: boolean
-        generatePaymentLink:
-          $ref: '#/components/schemas/GeneratePaymentLink'
-        generateBailLink:
-          $ref: '#/components/schemas/GeneratePaymentLink'
-        generateSubscriptionLink:
-          $ref: '#/components/schemas/GeneratePaymentLink'
-        hideDate:
-          type: boolean
-        hideTime:
-          type: boolean
-        lang:
           enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-          type: string
-      required:
-      - orderId
-      - object
-      - content
-      - sendPaymentLinks
-      - generatePaymentLink
-      - generateBailLink
-      - generateSubscriptionLink
-      - hideDate
-      - hideTime
-      - lang
-    OrderEventDocumentStateEventsId:
-      type: object
-      properties:
-        eventId:
-          type: string
-        productsHistoryId:
-          type: string
-      required:
-      - eventId
-      - productsHistoryId
-    EmailTemplateDocument:
-      type: object
-      properties:
-        id:
-          type: string
-        method:
-          type: string
-      required:
-      - id
-      - method
-    PaymentWithOrderDto:
-      type: object
-      properties:
-        type:
-          type: string
-          default: payment
-          enum:
-          - payment
-        payment:
-          $ref: '#/components/schemas/OrderEventPayment'
-        customer:
-          $ref: '#/components/schemas/Customer'
-        orderEvent:
-          $ref: '#/components/schemas/OrderEvent'
-      required:
-      - type
-      - payment
-    DocumentStateInspectionField:
-      type: object
-      properties:
-        name:
-          type: string
-        departureInfo:
-          type: string
-        arrivalInfo:
-          type: string
-      required:
-      - name
-      - departureInfo
-      - arrivalInfo
-    OrderEventPayment:
-      type: object
-      properties:
-        id:
-          type: string
-        isExpress:
-          type: boolean
-        paymentMethodDetails:
-          $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
-        paymentDate:
+          - IMPORTED
+          - TO_IMPORT
+          - NONE
+        importedDate:
           format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - g8Id
+      - status
+      - importedDate
+    OrderEventRefundPaymentDto:
+      type: object
+      properties:
+        id:
           type: string
-        initialAmount:
-          type: number
         amount:
           type: number
-        status:
-          enum:
-          - waiting
-          - pending
-          - paid
+        date:
+          format: date-time
           type: string
-        link:
+        paymentId:
           type: string
-        paymentIntentId:
-          type: string
-        isEmailSent:
-          type: boolean
         method:
+          type: string
           enum:
           - Carte bleue
           - Espèces
@@ -4160,168 +4303,19 @@ components:
           - Lien d'empreinte bancaire
           - Autre
           - Square Terminal
+        reason:
           type: string
-        companyId:
-          type: string
-        orderEventId:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        isPartPayment:
-          type: boolean
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventPaymentRefund'
-        fees:
-          $ref: '#/components/schemas/PaymentFees'
-        stripeStatus:
           enum:
-          - pending
-          - error
-          - success
-          - canceled
-          type: string
-        adyenPaymentData:
-          type: string
-        squareInfo:
-          allOf:
-          - $ref: '#/components/schemas/SquarePaymentInfo'
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
       required:
       - id
-      - isExpress
-      - initialAmount
       - amount
-      - status
-      - isEmailSent
+      - date
       - method
-      - companyId
-      - orderEventId
-      - createdAt
-      - isPartPayment
-      - refunds
-      - fees
-    NotAvailableRange:
-      type: object
-      properties:
-        from:
-          format: date-time
-          type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
-    PromoCodeDto:
-      type: object
-      properties:
-        id:
-          type: string
-        code:
-          type: string
-        source:
-          enum:
-          - COMPANY
-          - LOKKI
-          type: string
-        active:
-          type: boolean
-        discountAmount:
-          type: number
-        discountType:
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-          type: string
-        amountUsed:
-          type: number
-        creationDate:
-          format: date-time
-          type: string
-        expirationDate:
-          format: date-time
-          type: string
-        minPrice:
-          type: number
-        maxUses:
-          type:
-          - number
-          - 'null'
-        dateCheck:
-          enum:
-          - CREATION_DATE
-          - ORDER_DATE
-          type: string
-        applyOnDelivery:
-          type: boolean
-        limitToNewCustomers:
-          type: boolean
-        limitToVerticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        limitToCompanies:
-          type: array
-          items:
-            type: string
-        appliedDiscountAmount:
-          type: number
-      required:
-      - id
-      - code
-      - source
-      - active
-      - discountAmount
-      - discountType
-      - amountUsed
-      - creationDate
-      - expirationDate
-      - minPrice
-      - maxUses
-      - dateCheck
-      - applyOnDelivery
-    HistoryInspectionAnswer:
-      type: object
-      properties:
-        id:
-          type: string
-        answerType:
-          type: string
-          enum:
-          - OPEN_FIELD
-          - UNIQUE_CHOICE
-          - MULTIPLE_CHOICE
-          - ODOMETER
-        value:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryInspectionOption'
-      required:
-      - id
-      - answerType
-      - value
-      - options
+      - reason
     CreateDocumentOrderEventDto:
       type: object
       properties:
@@ -4351,59 +4345,177 @@ components:
       - documentModelId
       - documentComment
       - lang
-    CreatePaymentDto:
+    PaginatedPaymentsWithOrderDto:
       type: object
       properties:
-        amount:
+        payments:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PaymentWithOrderDto'
+            - $ref: '#/components/schemas/BailWithOrderDto'
+        totalCount:
           type: number
-        isExpress:
+      required:
+      - payments
+      - totalCount
+    OrderUploadFilesDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        sizes:
+          type: array
+          items:
+            type: number
+        names:
+          type: array
+          items:
+            type: string
+        types:
+          type: array
+          items:
+            type: string
+      required:
+      - files
+      - sizes
+      - names
+      - types
+    SubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
           type: boolean
-        fees:
-          $ref: '#/components/schemas/PaymentFees'
-        initialAmount:
-          type: number
-        paymentIntentId:
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+    OrderEventSubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        available:
+          type: boolean
+        serialNumber:
           type: string
         status:
           type: string
           enum:
-          - waiting
-          - pending
-          - paid
+          - WAITING
+          - USED
+          - ENDED
+      required:
+      - id
+      - available
+      - serialNumber
+      - status
+    IsDocumentStateGeneratingDto:
+      type: object
+      properties:
+        isDocumentStateGenerating:
+          type: boolean
+      required:
+      - isDocumentStateGenerating
+    RpTracking:
+      type: object
+      properties:
+        campaignid:
+          type: string
+        adgroupid:
+          type: string
+        keyword:
+          type: string
+        device:
+          type: string
+        gclid:
+          type: string
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_term:
+          type: string
+        utm_content:
+          type: string
+        utm_campaign:
+          type: string
+        referrer:
+          type: string
+        ae:
+          type: string
+        aesubid0:
+          type: string
+        aesubid1:
+          type: string
+        visitor_id:
+          type: string
+        session_id:
+          type: string
+        fbclid:
+          type: string
+        msclkid:
+          type: string
+        pre_booking_created_from:
+          type: string
+          enum:
+          - manual
+        platform:
+          type: string
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+    GenerateDocument:
+      type: object
+      properties:
+        id:
+          type: string
         method:
           type: string
           enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Empreinte bancaire
-          - Lien d'empreinte bancaire
-          - Autre
-          - Square Terminal
-        paymentDate:
-          format: date-time
-          type: string
-        isPartPayment:
-          type: boolean
-        isEmailSent:
-          type: boolean
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventPaymentRefund'
-        squareInfo:
-          allOf:
-          - $ref: '#/components/schemas/SquarePaymentInfo'
-        paymentMethodDetails:
-          $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
+          - signature
+          - pdf
+        content:
+          type: object
       required:
-      - amount
-      - isExpress
+      - id
       - method
+      - content
+    Pricing:
+      type: object
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        id:
+          type: string
+      required:
+      - label
+      - amount
+      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

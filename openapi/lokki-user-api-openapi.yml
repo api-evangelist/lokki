@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/User'
       tags:
       - User
+      summary: Get me
+      x-summary-source: derived
   /v2/user/myAccess:
     get:
       operationId: getMyAccess
@@ -36,6 +38,8 @@ paths:
                 $ref: '#/components/schemas/EmployeeAccess'
       tags:
       - User
+      summary: Get my access
+      x-summary-source: derived
   /v2/user/createTokenMeltingSpot:
     get:
       operationId: createTokenMeltingSpot
@@ -54,6 +58,8 @@ paths:
                 type: string
       tags:
       - User
+      summary: Create token melting spot
+      x-summary-source: derived
   /v2/user/uploadUserImg:
     post:
       operationId: uploadUserImg
@@ -74,6 +80,8 @@ paths:
                 type: object
       tags:
       - User
+      summary: Upload user img
+      x-summary-source: derived
   /v2/user/update/me:
     put:
       operationId: updateMe
@@ -93,6 +101,8 @@ paths:
                 $ref: '#/components/schemas/User'
       tags:
       - User
+      summary: Update me
+      x-summary-source: derived
   /v2/user/update/companyUser:
     put:
       operationId: updateCompanyUser
@@ -112,6 +122,8 @@ paths:
                 $ref: '#/components/schemas/User'
       tags:
       - User
+      summary: Update company user
+      x-summary-source: derived
   /v2/user/update/password/companyUser:
     put:
       operationId: updateCompanyUserPassword
@@ -131,8 +143,49 @@ paths:
                 $ref: '#/components/schemas/User'
       tags:
       - User
+      summary: Update company user password
+      x-summary-source: derived
 components:
   schemas:
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    UpdateUserPasswordDto:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      required:
+      - oldPassword
+      - newPassword
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    UpdateCompanyUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      required:
+      - name
+      - email
     EmployeeAccess:
       type: object
       properties:
@@ -158,17 +211,6 @@ components:
           type: boolean
         bookingDeletion:
           type: boolean
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
     UpdateMeDto:
       type: object
       properties:
@@ -182,24 +224,6 @@ components:
       - name
       - email
       - phone
-    UpdateCompanyUserDto:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-      required:
-      - name
-      - email
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-      - file
     User:
       type: object
       properties:
@@ -272,16 +296,6 @@ components:
       - createdAt
       - connectionAttempt
       - availableTools
-    UpdateUserPasswordDto:
-      type: object
-      properties:
-        oldPassword:
-          type: string
-        newPassword:
-          type: string
-      required:
-      - oldPassword
-      - newPassword
   securitySchemes:
     x-access-token:
       scheme: bearer

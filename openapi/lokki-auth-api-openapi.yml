@@ -76,6 +76,8 @@ paths:
                 $ref: '#/components/schemas/getThirdPartyAuthentificationUrlResponseDto'
       tags:
       - Auth
+      summary: Get third party authentification url
+      x-summary-source: derived
 components:
   schemas:
     getThirdPartyAuthentificationUrlResponseDto:

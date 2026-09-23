@@ -270,6 +270,8 @@ paths:
                 $ref: '#/components/schemas/GetManyCustomersResponseDto'
       tags:
       - Customer
+      summary: Get many customers
+      x-summary-source: derived
   /v2/customer:
     post:
       operationId: createCustomer
@@ -289,6 +291,8 @@ paths:
                 $ref: '#/components/schemas/Customer'
       tags:
       - Customer
+      summary: Create customer
+      x-summary-source: derived
     get:
       operationId: listCustomers
       parameters:
@@ -327,6 +331,8 @@ paths:
                 $ref: '#/components/schemas/PaginatedCustomersDto'
       tags:
       - Customer
+      summary: List customers
+      x-summary-source: derived
   /v2/customer/{customerId}:
     put:
       operationId: updateCustomer
@@ -351,6 +357,8 @@ paths:
                 $ref: '#/components/schemas/Customer'
       tags:
       - Customer
+      summary: Update customer
+      x-summary-source: derived
     delete:
       operationId: deleteCustomer
       parameters:
@@ -364,6 +372,8 @@ paths:
           description: ''
       tags:
       - Customer
+      summary: Delete customer
+      x-summary-source: derived
     get:
       operationId: getCustomerById
       parameters:
@@ -383,6 +393,8 @@ paths:
                 $ref: '#/components/schemas/Customer'
       tags:
       - Customer
+      summary: Get customer by id
+      x-summary-source: derived
   /v2/customer/csv:
     get:
       operationId: getCustomerCsv
@@ -396,6 +408,8 @@ paths:
                 $ref: '#/components/schemas/CustomersCsvDto'
       tags:
       - Customer
+      summary: Get customer csv
+      x-summary-source: derived
   /v2/customer/listSelectCustomers:
     get:
       operationId: listSelectCustomers
@@ -416,6 +430,8 @@ paths:
                   $ref: '#/components/schemas/Customer'
       tags:
       - Customer
+      summary: List select customers
+      x-summary-source: derived
   /v2/customer/email/{email}:
     get:
       operationId: getCustomerByEmail
@@ -434,6 +450,8 @@ paths:
                 type: object
       tags:
       - Customer
+      summary: Get customer by email
+      x-summary-source: derived
   /v2/customer/verifyCustomerInDb/{email}/{id}:
     get:
       operationId: verifyCustomerInDb
@@ -457,6 +475,8 @@ paths:
                 type: boolean
       tags:
       - Customer
+      summary: Verify customer in db
+      x-summary-source: derived
   /v2/customer/company-newsletter/{id}:
     patch:
       operationId: updateCustomerCompanyNewsletter
@@ -477,12 +497,140 @@ paths:
           description: ''
       tags:
       - Customer
+      summary: Update customer company newsletter
+      x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
+    CustomerField:
       type: object
-      additionalProperties:
-        type: string
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    CreateUpdateCustomerDto:
+      type: object
+      properties:
+        lastName:
+          type: string
+        firstName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        zipCode:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerFieldDto'
+        deliveryAddress:
+          type: string
+        deliveryZipCode:
+          type: string
+        deliveryCity:
+          type: string
+        companyName:
+          type: string
+        isNewsletterSubscribe:
+          type: boolean
+        isLokkiNewsletterSubscribe:
+          type: boolean
+        customerImage:
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CustomerSkisetInfos'
+        tulipInfos:
+          $ref: '#/components/schemas/TulipInfos'
+        remark:
+          type: string
+        customerRpId:
+          type: string
+        hidden:
+          type: boolean
+        createdFrom:
+          enum:
+          - DASHBOARD
+          - ONLINE_STORE
+          - RENTAL_PLACE_LOKKI
+          type: string
+      required:
+      - lastName
+      - firstName
+      - email
+      - phone
+      - fields
+      - companyName
+      - isNewsletterSubscribe
+      - isLokkiNewsletterSubscribe
+      - customerImage
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+    CustomersCsvDto:
+      type: object
+      properties:
+        customers:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - customers
+    CustomerFieldDto:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    GetManyCustomersResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+      required:
+      - total
+      - docs
+    PaginatedCustomersDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+      required:
+      - totalCount
+      - customers
     TulipInfos:
       type: object
       properties:
@@ -505,42 +653,6 @@ components:
       - managerFirstName
       - managerLastName
       - sirenNumber
-    CustomerFieldDto:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
-    PaginatedCustomersDto:
-      type: object
-      properties:
-        totalCount:
-          type: number
-        customers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-      required:
-      - totalCount
-      - customers
-    CustomersCsvDto:
-      type: object
-      properties:
-        customers:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - customers
     Customer:
       type: object
       properties:
@@ -620,15 +732,6 @@ components:
       - createdAt
       - hidden
       - createdFrom
-    CustomerSkisetInfos:
-      type: object
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-      required:
-      - customerId
     CustomerCompanyNewsletterUpdateDto:
       type: object
       properties:
@@ -636,91 +739,10 @@ components:
           type: boolean
       required:
       - subscribed
-    CreateUpdateCustomerDto:
+    LocalizedContent:
       type: object
-      properties:
-        lastName:
-          type: string
-        firstName:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        zipCode:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerFieldDto'
-        deliveryAddress:
-          type: string
-        deliveryZipCode:
-          type: string
-        deliveryCity:
-          type: string
-        companyName:
-          type: string
-        isNewsletterSubscribe:
-          type: boolean
-        isLokkiNewsletterSubscribe:
-          type: boolean
-        customerImage:
-          type: string
-        skisetInfos:
-          $ref: '#/components/schemas/CustomerSkisetInfos'
-        tulipInfos:
-          $ref: '#/components/schemas/TulipInfos'
-        remark:
-          type: string
-        customerRpId:
-          type: string
-        hidden:
-          type: boolean
-        createdFrom:
-          enum:
-          - DASHBOARD
-          - ONLINE_STORE
-          - RENTAL_PLACE_LOKKI
-          type: string
-      required:
-      - lastName
-      - firstName
-      - email
-      - phone
-      - fields
-      - companyName
-      - isNewsletterSubscribe
-      - isLokkiNewsletterSubscribe
-      - customerImage
-    CustomerField:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
-    GetManyCustomersResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-      required:
-      - total
-      - docs
+      additionalProperties:
+        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

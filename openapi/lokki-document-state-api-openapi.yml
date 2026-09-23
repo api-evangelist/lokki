@@ -31,6 +31,8 @@ paths:
                   $ref: '#/components/schemas/DocumentStateProductAttachedFilePreview'
       tags:
       - Document State
+      summary: Get document state attachment files preview
+      x-summary-source: derived
   /v2/document-state/upload-attachment-files:
     post:
       operationId: uploadDocumentStateAttachmentFiles
@@ -53,9 +55,11 @@ paths:
                   $ref: '#/components/schemas/DocumentStateProductAttachedFile'
       tags:
       - Document State
+      summary: Upload document state attachment files
+      x-summary-source: derived
 components:
   schemas:
-    DocumentStateProductAttachedFilePreview:
+    DocumentStateProductAttachedFile:
       type: object
       properties:
         name:
@@ -66,14 +70,11 @@ components:
           type: number
         type:
           type: string
-        url:
-          type: string
       required:
       - name
       - key
       - size
       - type
-      - url
     GetProductStateAttachmentPreviewDto:
       type: object
       properties:
@@ -101,6 +102,25 @@ components:
       - key
       - size
       - type
+    DocumentStateProductAttachedFilePreview:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+      - url
     ProductStateUploadAttachmentDto:
       type: object
       properties:
@@ -123,22 +143,6 @@ components:
       - orderId
       - subProductId
       - scope
-    DocumentStateProductAttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
   securitySchemes:
     x-access-token:
       scheme: bearer

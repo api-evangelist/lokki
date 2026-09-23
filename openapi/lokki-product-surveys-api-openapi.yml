@@ -28,6 +28,8 @@ paths:
                 $ref: '#/components/schemas/ProductSurvey'
       tags:
       - Product Surveys
+      summary: Get one product survey
+      x-summary-source: derived
     put:
       operationId: updateProductSurvey
       parameters:
@@ -51,6 +53,8 @@ paths:
                 type: object
       tags:
       - Product Surveys
+      summary: Update product survey
+      x-summary-source: derived
     delete:
       operationId: deleteOneProductSurvey
       parameters:
@@ -64,6 +68,8 @@ paths:
           description: ''
       tags:
       - Product Surveys
+      summary: Delete one product survey
+      x-summary-source: derived
   /v2/product-surveys:
     get:
       operationId: getManyProductSurveys
@@ -86,6 +92,8 @@ paths:
                   $ref: '#/components/schemas/ProductSurvey'
       tags:
       - Product Surveys
+      summary: Get many product surveys
+      x-summary-source: derived
     post:
       operationId: createProductSurvey
       parameters: []
@@ -104,9 +112,11 @@ paths:
                 type: object
       tags:
       - Product Surveys
+      summary: Create product survey
+      x-summary-source: derived
 components:
   schemas:
-    UpdateProductSurveyDto:
+    CreateProductSurveyDto:
       type: object
       properties:
         name:
@@ -114,10 +124,33 @@ components:
         fields:
           type: array
           items:
-            $ref: '#/components/schemas/UpdateProductSurveyFieldDto'
+            $ref: '#/components/schemas/CreateProductSurveyFieldDto'
       required:
       - name
       - fields
+    ProductSurveyField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - MULTIPLE_SELECT
+          - DOCUMENT
+        selectAnswers:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - value
+      - type
+      - selectAnswers
     UpdateProductSurveyFieldDto:
       type: object
       properties:
@@ -143,41 +176,6 @@ components:
       - value
       - type
       - selectAnswers
-    ProductSurveyField:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-        type:
-          type: string
-          enum:
-          - TEXT
-          - SELECT
-          - MULTIPLE_SELECT
-          - DOCUMENT
-        selectAnswers:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - value
-      - type
-      - selectAnswers
-    CreateProductSurveyDto:
-      type: object
-      properties:
-        name:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateProductSurveyFieldDto'
-      required:
-      - name
-      - fields
     CreateProductSurveyFieldDto:
       type: object
       properties:
@@ -220,6 +218,18 @@ components:
       - name
       - fields
       - createdAt
+    UpdateProductSurveyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateProductSurveyFieldDto'
+      required:
+      - name
+      - fields
   securitySchemes:
     x-access-token:
       scheme: bearer

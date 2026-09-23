@@ -53,6 +53,8 @@ paths:
                 $ref: '#/components/schemas/DeliveryPriceResponseDto'
       tags:
       - Order Deliveries
+      summary: Get delivery price
+      x-summary-source: derived
 components:
   schemas:
     DeliveryPriceResponseDto:

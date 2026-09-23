@@ -31,6 +31,8 @@ paths:
                 $ref: '#/components/schemas/WaitingListCsvDto'
       tags:
       - Order Waiting List
+      summary: Get waiting list csv
+      x-summary-source: derived
   /v2/order-waiting-list/create-order-waiting-list:
     post:
       operationId: createOrderWaitingList
@@ -50,32 +52,40 @@ paths:
                 $ref: '#/components/schemas/OrderWaitingList'
       tags:
       - Order Waiting List
+      summary: Create order waiting list
+      x-summary-source: derived
 components:
   schemas:
-    OrderWaitingListItem:
+    CreateUpdateOrderWaitingListDto:
       type: object
       properties:
-        itemType:
+        rentalType:
           type: string
           enum:
-          - PRODUCT
-          - PACK
-          - SERVICE
-        itemId:
+          - LCD
+          - LLD
+        companyId:
           type: string
-        name:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderWaitingListItem'
+        customer:
+          $ref: '#/components/schemas/OrderWaitingListCustomer'
+        durationInMonths:
+          type: number
+        startDate:
+          format: date-time
           type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
+        rank:
+          type: number
       required:
-      - itemType
-      - itemId
-      - name
-      - onlineStoreName
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
+      - rentalType
+      - companyId
+      - items
+      - customer
+      - durationInMonths
+      - startDate
     OrderWaitingList:
       type: object
       properties:
@@ -129,36 +139,26 @@ components:
               type: string
       required:
       - waitingListOrders
-    CreateUpdateOrderWaitingListDto:
+    OrderWaitingListItem:
       type: object
       properties:
-        rentalType:
+        itemType:
           type: string
           enum:
-          - LCD
-          - LLD
-        companyId:
+          - PRODUCT
+          - PACK
+          - SERVICE
+        itemId:
           type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderWaitingListItem'
-        customer:
-          $ref: '#/components/schemas/OrderWaitingListCustomer'
-        durationInMonths:
-          type: number
-        startDate:
-          format: date-time
+        name:
           type: string
-        rank:
-          type: number
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
       required:
-      - rentalType
-      - companyId
-      - items
-      - customer
-      - durationInMonths
-      - startDate
+      - itemType
+      - itemId
+      - name
+      - onlineStoreName
     OrderWaitingListCustomer:
       type: object
       properties:
@@ -184,6 +184,10 @@ components:
       - email
       - phoneNumber
       - customerType
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

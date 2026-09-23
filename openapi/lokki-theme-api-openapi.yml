@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/CompanyTheme'
       tags:
       - Theme
+      summary: Get company theme
+      x-summary-source: derived
     put:
       operationId: updateCompanyTheme
       parameters: []
@@ -41,31 +43,26 @@ paths:
                 $ref: '#/components/schemas/CompanyTheme'
       tags:
       - Theme
+      summary: Update company theme
+      x-summary-source: derived
 components:
   schemas:
-    ThemeButtonStyle:
+    ThemeTextStyle:
       type: object
       properties:
-        backgroundColor:
+        color:
           type: string
-        borderRadius:
+        fontSize:
           type: string
-        padding:
+        fontWeight:
+          type: string
+        fontStyle:
           type: string
       required:
-      - backgroundColor
-      - borderRadius
-      - padding
-    ThemeButton:
-      type: object
-      properties:
-        textStyle:
-          $ref: '#/components/schemas/ThemeTextStyle'
-        style:
-          $ref: '#/components/schemas/ThemeButtonStyle'
-      required:
-      - textStyle
-      - style
+      - color
+      - fontSize
+      - fontWeight
+      - fontStyle
     ThemeMainStyles:
       type: object
       properties:
@@ -79,16 +76,13 @@ components:
       - radius
       - backgroundColor
       - fontFamily
-    ThemeBlockColor:
+    ThemeTitle:
       type: object
       properties:
-        color:
-          type: string
-        backgroundColor:
-          type: string
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
       required:
-      - color
-      - backgroundColor
+      - style
     CompanyTheme:
       type: object
       properties:
@@ -141,13 +135,39 @@ components:
       - textColor
       - danger
       - header
-    ThemeTitle:
+    ThemeButton:
       type: object
       properties:
-        style:
+        textStyle:
           $ref: '#/components/schemas/ThemeTextStyle'
+        style:
+          $ref: '#/components/schemas/ThemeButtonStyle'
       required:
+      - textStyle
       - style
+    ThemeBlockColor:
+      type: object
+      properties:
+        color:
+          type: string
+        backgroundColor:
+          type: string
+      required:
+      - color
+      - backgroundColor
+    ThemeButtonStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        padding:
+          type: string
+      required:
+      - backgroundColor
+      - borderRadius
+      - padding
     ThemeCompanyName:
       type: object
       properties:
@@ -155,22 +175,6 @@ components:
           $ref: '#/components/schemas/ThemeTextStyle'
       required:
       - style
-    ThemeTextStyle:
-      type: object
-      properties:
-        color:
-          type: string
-        fontSize:
-          type: string
-        fontWeight:
-          type: string
-        fontStyle:
-          type: string
-      required:
-      - color
-      - fontSize
-      - fontWeight
-      - fontStyle
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -28,6 +28,8 @@ paths:
                 $ref: '#/components/schemas/TulipGetCitiesResponse'
       tags:
       - Tulip V2
+      summary: Tulip get cities by zipcode
+      x-summary-source: derived
 components:
   schemas:
     TulipGetCitiesResponse:

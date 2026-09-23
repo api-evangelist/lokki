@@ -28,6 +28,8 @@ paths:
                 type: string
       tags:
       - Document
+      summary: Download document
+      x-summary-source: derived
   /v2/document/multiDownload:
     get:
       operationId: downloadMultipleDocuments
@@ -50,6 +52,8 @@ paths:
                   type: string
       tags:
       - Document
+      summary: Download multiple documents
+      x-summary-source: derived
   /v2/document/uploadDocumentsForItemDescription:
     post:
       operationId: uploadDocumentForItemDescription
@@ -66,6 +70,8 @@ paths:
           description: ''
       tags:
       - Document
+      summary: Upload document for item description
+      x-summary-source: derived
   /v2/document/{key}:
     delete:
       operationId: deleteDocument
@@ -80,6 +86,8 @@ paths:
           description: ''
       tags:
       - Document
+      summary: Delete document
+      x-summary-source: derived
 components:
   schemas:
     OrderUploadFilesDto:

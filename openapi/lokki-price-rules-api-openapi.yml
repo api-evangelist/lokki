@@ -25,6 +25,8 @@ paths:
                   $ref: '#/components/schemas/ItemPriceRule'
       tags:
       - Price Rules
+      summary: List company price rules
+      x-summary-source: derived
     post:
       operationId: createPriceRule
       parameters: []
@@ -43,6 +45,8 @@ paths:
                 $ref: '#/components/schemas/ItemPriceRule'
       tags:
       - Price Rules
+      summary: Create price rule
+      x-summary-source: derived
   /v2/price-rules/{id}:
     put:
       operationId: updatePriceRule
@@ -67,6 +71,8 @@ paths:
                 $ref: '#/components/schemas/ItemPriceRule'
       tags:
       - Price Rules
+      summary: Update price rule
+      x-summary-source: derived
     delete:
       operationId: deletePriceRule
       parameters:
@@ -80,6 +86,8 @@ paths:
           description: ''
       tags:
       - Price Rules
+      summary: Delete price rule
+      x-summary-source: derived
 components:
   schemas:
     CreatePriceRulesDto:
@@ -89,16 +97,6 @@ components:
           $ref: '#/components/schemas/PriceRulesDto'
       required:
       - rule
-    PriceRuleDate:
-      type: object
-      properties:
-        day:
-          type: number
-        time:
-          type: string
-      required:
-      - day
-      - time
     PriceRulesDto:
       type: object
       properties:
@@ -111,6 +109,16 @@ components:
       required:
       - title
       - rules
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
     ItemPriceRule:
       type: object
       properties:

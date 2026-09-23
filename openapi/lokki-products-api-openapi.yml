@@ -28,6 +28,8 @@ paths:
                 type: object
       tags:
       - Products
+      summary: Delete product by id
+      x-summary-source: derived
   /v2/products/create-product:
     post:
       operationId: createProduct
@@ -47,6 +49,8 @@ paths:
                 $ref: '#/components/schemas/Product'
       tags:
       - Products
+      summary: Create product
+      x-summary-source: derived
   /v2/products/unarchive-subproduct/{productId}/{subProductId}:
     post:
       operationId: unarchiveSubProduct
@@ -66,6 +70,8 @@ paths:
           description: ''
       tags:
       - Products
+      summary: Unarchive sub product
+      x-summary-source: derived
   /v2/products/byId/{id}:
     get:
       operationId: getProductById
@@ -84,6 +90,8 @@ paths:
                 $ref: '#/components/schemas/Product'
       tags:
       - Products
+      summary: Get product by id
+      x-summary-source: derived
   /v2/products/subProduct/{subProductId}:
     get:
       operationId: getSubProductById
@@ -102,6 +110,8 @@ paths:
                 $ref: '#/components/schemas/GetSubProductIdResponse'
       tags:
       - Products
+      summary: Get sub product by id
+      x-summary-source: derived
   /v2/products/subProductsByProductName/{name}/{startDate}/{endDate}:
     get:
       operationId: getSubProductsByProductName
@@ -139,6 +149,8 @@ paths:
                   $ref: '#/components/schemas/GetSubProductIdResponse'
       tags:
       - Products
+      summary: Get sub products by product name
+      x-summary-source: derived
   /v2/products/bySerialNumber/{serialNumber}/{startDate}/{endDate}:
     get:
       operationId: getSubProductsBySerialNumber
@@ -176,6 +188,8 @@ paths:
                   $ref: '#/components/schemas/GetSubProductIdResponse'
       tags:
       - Products
+      summary: Get sub products by serial number
+      x-summary-source: derived
   /v2/products/subProduct/qrCode/{qrCodeValue}:
     get:
       operationId: getSubProductByExternalQrCode
@@ -194,6 +208,8 @@ paths:
                 $ref: '#/components/schemas/GetSubProductIdResponse'
       tags:
       - Products
+      summary: Get sub product by external qr code
+      x-summary-source: derived
   /v2/products/getByCompany:
     get:
       operationId: getCompanyProducts
@@ -209,6 +225,8 @@ paths:
                   $ref: '#/components/schemas/Product'
       tags:
       - Products
+      summary: Get company products
+      x-summary-source: derived
   /v2/products/getByCompanyLLD:
     get:
       operationId: getCompanyLLDProducts
@@ -224,6 +242,8 @@ paths:
                   $ref: '#/components/schemas/Product'
       tags:
       - Products
+      summary: Get company LLD products
+      x-summary-source: derived
   /v2/products/productModels:
     get:
       operationId: getCompanyProductModels
@@ -237,6 +257,8 @@ paths:
                 $ref: '#/components/schemas/ProductModelList'
       tags:
       - Products
+      summary: Get company product models
+      x-summary-source: derived
   /v2/products/managingPlace/productModels:
     get:
       operationId: getManagingPlaceProductModels
@@ -250,6 +272,8 @@ paths:
                 $ref: '#/components/schemas/GetByManagingPlaceProductModelsDto'
       tags:
       - Products
+      summary: Get managing place product models
+      x-summary-source: derived
   /v2/products/admin/byProductCategory/{productCategoryId}:
     get:
       operationId: getProductModelsByVerticaleCategory
@@ -268,6 +292,8 @@ paths:
                 $ref: '#/components/schemas/ProductModelList'
       tags:
       - Products
+      summary: Get product models by verticale category
+      x-summary-source: derived
   /v2/products/create-product-model:
     post:
       operationId: createProductModel
@@ -287,6 +313,8 @@ paths:
                 $ref: '#/components/schemas/ProductModelDto'
       tags:
       - Products
+      summary: Create product model
+      x-summary-source: derived
   /v2/products/delete-product-model/{productModelId}:
     delete:
       operationId: deleteProductModel
@@ -301,6 +329,8 @@ paths:
           description: ''
       tags:
       - Products
+      summary: Delete product model
+      x-summary-source: derived
   /v2/products/duplicate-product-model/{productModelId}:
     post:
       operationId: duplicateProductModel
@@ -319,6 +349,8 @@ paths:
                 type: object
       tags:
       - Products
+      summary: Duplicate product model
+      x-summary-source: derived
   /v2/products/duplicate-product/{productId}:
     post:
       operationId: duplicateProductById
@@ -337,6 +369,8 @@ paths:
                 type: object
       tags:
       - Products
+      summary: Duplicate product by id
+      x-summary-source: derived
   /v2/products/update-product-model:
     post:
       operationId: updateProductModel
@@ -356,6 +390,8 @@ paths:
                 $ref: '#/components/schemas/ProductModel'
       tags:
       - Products
+      summary: Update product model
+      x-summary-source: derived
   /v2/products/byProductModelId/{id}:
     get:
       operationId: getProductsByProductModel
@@ -374,6 +410,8 @@ paths:
                 $ref: '#/components/schemas/ProductList'
       tags:
       - Products
+      summary: Get products by product model
+      x-summary-source: derived
   /v2/products/productModelById/{id}:
     get:
       operationId: getProductModelByProductModelId
@@ -392,6 +430,8 @@ paths:
                 $ref: '#/components/schemas/ProductModelDto'
       tags:
       - Products
+      summary: Get product model by product model id
+      x-summary-source: derived
   /v2/products/product-models:
     get:
       operationId: listCompanyProductModels
@@ -407,6 +447,8 @@ paths:
                   $ref: '#/components/schemas/ProductModelDto'
       tags:
       - Products
+      summary: List company product models
+      x-summary-source: derived
   /v2/products/getProductsInsuranceInfo:
     get:
       operationId: getProductsInsuranceInfo
@@ -442,6 +484,8 @@ paths:
                 $ref: '#/components/schemas/GetTulipProductInsuranceInfoResponseDto'
       tags:
       - Products
+      summary: Get products insurance info
+      x-summary-source: derived
   /v2/products/enriched-infos/{productId}/{rentalType}:
     get:
       operationId: getEnrichedInfosByProductId
@@ -465,6 +509,8 @@ paths:
                 $ref: '#/components/schemas/EnrichedProductInfo'
       tags:
       - Products
+      summary: Get enriched infos by product id
+      x-summary-source: derived
   /v2/products/itemsQrCodePdf:
     post:
       operationId: getItemsQrCodePDF
@@ -484,6 +530,8 @@ paths:
                 $ref: '#/components/schemas/QrCodePdfDto'
       tags:
       - Products
+      summary: Get items qr code PDF
+      x-summary-source: derived
   /v2/products/sendLokkiQrCodePdf:
     post:
       operationId: sendQrCodePdfToLokki
@@ -499,6 +547,8 @@ paths:
           description: ''
       tags:
       - Products
+      summary: Send qr code pdf to lokki
+      x-summary-source: derived
   /v2/products/qrcodePdf:
     post:
       operationId: getSubProductQrCodePDF
@@ -518,6 +568,8 @@ paths:
                 $ref: '#/components/schemas/QrCodePdfDto'
       tags:
       - Products
+      summary: Get sub product qr code PDF
+      x-summary-source: derived
   /v2/products/subProductWithoutEvents:
     post:
       operationId: getSubProductsWithoutEventHistory
@@ -539,6 +591,8 @@ paths:
                   type: string
       tags:
       - Products
+      summary: Get sub products without event history
+      x-summary-source: derived
   /v2/products/tulip/{lokkiProductId}:
     get:
       operationId: getTulipProduct
@@ -557,6 +611,8 @@ paths:
                 $ref: '#/components/schemas/TulipProduct'
       tags:
       - Products
+      summary: Get tulip product
+      x-summary-source: derived
   /v2/products/tulip/register/{productId}:
     post:
       operationId: registerTulipProduct
@@ -581,6 +637,8 @@ paths:
                 $ref: '#/components/schemas/TulipProduct'
       tags:
       - Products
+      summary: Register tulip product
+      x-summary-source: derived
   /v2/products/tulip/softDelete/{productId}:
     post:
       operationId: softDeleteTulipProduct
@@ -595,6 +653,8 @@ paths:
           description: ''
       tags:
       - Products
+      summary: Soft delete tulip product
+      x-summary-source: derived
   /v2/products/updateCategoryAvailability:
     put:
       operationId: updateProductCategoryAvailability
@@ -616,6 +676,8 @@ paths:
                   type: object
       tags:
       - Products
+      summary: Update product category availability
+      x-summary-source: derived
   /v2/products/setUnavailabilityDates/{rentalType}/{productId}/{subProductId}:
     post:
       operationId: setProductUnavailabilityDates
@@ -650,6 +712,8 @@ paths:
                 $ref: '#/components/schemas/SetProductUnavailabilityDatesResponseDto'
       tags:
       - Products
+      summary: Set product unavailability dates
+      x-summary-source: derived
   /v2/products/{id}:
     patch:
       operationId: patchOneProduct
@@ -674,6 +738,8 @@ paths:
                 $ref: '#/components/schemas/Product'
       tags:
       - Products
+      summary: Patch one product
+      x-summary-source: derived
     put:
       operationId: putOneProduct
       parameters:
@@ -697,6 +763,8 @@ paths:
                 $ref: '#/components/schemas/Product'
       tags:
       - Products
+      summary: Put one product
+      x-summary-source: derived
   /v2/products:
     patch:
       operationId: patchManyProduct
@@ -725,37 +793,22 @@ paths:
                   $ref: '#/components/schemas/Product'
       tags:
       - Products
+      summary: Patch many product
+      x-summary-source: derived
 components:
   schemas:
-    EnrichedSubProductHistoryEventCustomer:
+    QrCodeItemsDto:
       type: object
       properties:
-        companyName:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-      required:
-      - companyName
-      - firstName
-      - lastName
-    HistoryInspectionField:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        answers:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/HistoryInspectionAnswer'
+            oneOf:
+            - $ref: '#/components/schemas/QrCodeItemsProductInfoDto'
+            - $ref: '#/components/schemas/QrCodeItemsServiceInfoDto'
       required:
-      - id
-      - name
-      - answers
-    AttachedFile:
+      - items
+    HistoryAttachedFile:
       type: object
       properties:
         name:
@@ -766,190 +819,69 @@ components:
           type: number
         type:
           type: string
-        uid:
+        url:
           type: string
       required:
       - name
       - key
       - size
       - type
-    PriceModelLLDDuration:
+    HistoryInspectionOption:
       type: object
       properties:
-        type:
-          type: string
-          default: LLD
-          enum:
-          - LLD
-        calendarMonths:
-          type: number
         id:
           type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
       required:
-      - type
-      - calendarMonths
       - id
-      - price
-      - priceLowSeason
-      - label
-    PutProductDto:
+      - value
+    PackProduct:
       type: object
       properties:
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        name:
-          type: string
+        depositAmount:
+          type: number
         rentalType:
           type: string
           enum:
           - LCD
           - LLD
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductField'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
+        id:
           type: string
-        attachedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachedFile'
-        rank:
-          type: number
-        bailPrice:
-          type: number
-        onlineStoreInformation:
-          type: object
-          properties:
-            name:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-            description:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-        priceRule:
-          allOf:
-          - $ref: '#/components/schemas/ProductPriceRule'
-        productModel:
+        name:
           type: string
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isRelatedProduct:
-          type: boolean
-        productSurveyId:
-          type: string
-        productStateId:
-          type: string
-        hideOnOnlineStore:
-          type: boolean
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductAttribute'
-        vat:
-          type: number
-        insurance:
-          $ref: '#/components/schemas/ProductInsurance'
-        isSubProduct:
-          type: boolean
-        onlineAvailability:
-          type: boolean
-        displaySubProducts:
-          type: boolean
-        number:
-          type: number
-        inspectionReports:
-          type: boolean
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
         subProducts:
           type: array
           items:
-            $ref: '#/components/schemas/SubProductDto'
-        verticalCategoryId:
+            $ref: '#/components/schemas/OrderSubProduct'
+        uuid:
           type: string
-        translationInProgress:
-          type: boolean
+        surveyId:
+          type: string
+        type:
+          type: string
+          enum:
+          - product
+          - service
+        productImage:
+          type: array
+          items:
+            type: string
       required:
-      - priceModels
-      - name
+      - depositAmount
       - rentalType
-      - fields
-      - imageUrl
-      - videoLink
-      - attachedFiles
-      - rank
-      - bailPrice
-      - onlineStoreInformation
-      - priceRule
-      - productModel
-      - relatedProducts
-      - isRelatedProduct
-      - productSurveyId
-      - productStateId
-      - hideOnOnlineStore
-      - attributes
-      - vat
-      - insurance
-      - isSubProduct
-      - onlineAvailability
-      - displaySubProducts
-      - number
-      - inspectionReports
+      - id
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
       - subProducts
-    EnrichedProductInfo:
-      type: object
-      properties:
-        turnover:
-          type: number
-        profitability:
-          type: number
-        orderNumber:
-          type: number
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnrichedSubProductInfo'
-      required:
-      - turnover
-      - profitability
-      - orderNumber
-      - subProducts
-    QrCodeSubInfoDto:
-      type: object
-      properties:
-        productName:
-          type: string
-        serialNumber:
-          type: string
-        productId:
-          type: string
-        subProductId:
-          type: string
-      required:
-      - productName
-      - serialNumber
-      - productId
-      - subProductId
+      - uuid
+      - type
+      - productImage
     PatchProductDto:
       type: object
       properties:
@@ -1019,80 +951,6 @@ components:
           type: number
         onlineAvailability:
           type: boolean
-    CreateUpdateProductModelLLDPriceDto:
-      type: object
-      properties:
-        type:
-          type: string
-        id:
-          type: string
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        calendarMonths:
-          type: number
-      required:
-      - type
-      - label
-      - calendarMonths
-    GetSubProductsWithoutEvent:
-      type: object
-      properties:
-        productId:
-          type: string
-        eventName:
-          type: string
-      required:
-      - productId
-      - eventName
-    SetProductUnavailabilityDatesResponseDto:
-      type: object
-      properties:
-        modifiedOrders:
-          type: array
-          items:
-            $ref: '#/components/schemas/SetProductUnavailabilityDatesOrderInfoDto'
-        erroredOrders:
-          type: array
-          items:
-            $ref: '#/components/schemas/SetProductUnavailabilityDatesOrderInfoDto'
-        inprogressOrders:
-          type: array
-          items:
-            $ref: '#/components/schemas/SetProductUnavailabilityDatesOrderInfoDto'
-      required:
-      - modifiedOrders
-      - erroredOrders
-      - inprogressOrders
-    CustomerSkisetInfos:
-      type: object
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-      required:
-      - customerId
-    ProductModelList:
-      type: object
-      properties:
-        productModels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductModel'
-      required:
-      - productModels
-    ItemAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
     ProductField:
       type: object
       properties:
@@ -1109,554 +967,66 @@ components:
       - name
       - value
       - isTagged
-    HistoryAttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        url:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-    ProductModelField:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-      required:
-      - id
-      - value
-    SubProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        isAvailable:
-          type: boolean
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-      required:
-      - id
-      - isAvailable
-      - printed
-      - serialNumber
-      - archive
-      - externalQrCode
-      - notAvailableRanges
-    QrCodeItemsServiceInfoDto:
-      type: object
-      properties:
-        type:
-          type: string
-          default: service
-          enum:
-          - service
-        itemId:
-          type: string
-        name:
-          type: string
-      required:
-      - type
-      - itemId
-      - name
-    CreateUpdateProductModelPriceDto:
-      type: object
-      properties:
-        type:
-          type: string
-        id:
-          type: string
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        time:
-          type: number
-        timeMinutes:
-          type: number
-      required:
-      - type
-      - label
-      - time
-      - timeMinutes
-    CustomerField:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
-    PriceModelRangeDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: range
-          enum:
-          - range
-        minDuration:
-          type: number
-        maxDuration:
-          type: number
-        durationInDays:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - minDuration
-      - maxDuration
-      - id
-      - price
-      - priceLowSeason
-      - label
-    QrCodeItemsProductInfoDto:
-      type: object
-      properties:
-        type:
-          type: string
-          default: product
-          enum:
-          - product
-        itemId:
-          type: string
-        name:
-          type: string
-        subProductId:
-          type: string
-        serialNumber:
-          type: string
-      required:
-      - type
-      - itemId
-      - name
-      - subProductId
-      - serialNumber
-    TulipInfos:
-      type: object
-      properties:
-        address:
-          type: string
-        zipcode:
-          type: string
-        city:
-          type: string
-        managerFirstName:
-          type: string
-        managerLastName:
-          type: string
-        sirenNumber:
-          type: string
-      required:
-      - address
-      - zipcode
-      - city
-      - managerFirstName
-      - managerLastName
-      - sirenNumber
-    EventOptions:
-      type: object
-      properties:
-        unavailable:
-          type: boolean
-      required:
-      - unavailable
-    ProductModelsByCompany:
-      type: object
-      properties:
-        companyId:
-          type: string
-        productModels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductModel'
-      required:
-      - companyId
-      - productModels
-    TentativeCategorization:
-      type: object
-      properties:
-        subcategoryName:
-          type:
-          - string
-          - 'null'
-        verticalName:
-          type:
-          - string
-          - 'null'
-      required:
-      - subcategoryName
-      - verticalName
-    OrderPackCategory:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-      required:
-      - id
-      - value
-    ProductModelLLDPrice:
-      type: object
-      properties:
-        type:
-          type: string
-          default: LLD
-          enum:
-          - LLD
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        calendarMonths:
-          type: number
-        id:
-          type: string
-      required:
-      - type
-      - label
-      - calendarMonths
-      - id
-    QrCodeSubsDto:
-      type: object
-      properties:
-        subInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/QrCodeSubInfoDto'
-      required:
-      - subInfo
-    GetTulipProductInsuranceInfoResponseDto:
-      type: object
-      properties:
-        productsInsuranceInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductInsuranceInfo'
-        isProductAllowForInsurance:
-          type: boolean
-      required:
-      - productsInsuranceInfo
-      - isProductAllowForInsurance
-    QrCodePdfDto:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url
-    ProductPriceRule:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceRule'
-      required:
-      - id
-      - title
-      - rules
-    ProductList:
-      type: object
-      properties:
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-      required:
-      - products
-    SubProductDto:
-      type: object
-      properties:
-        id:
-          type: string
-        isAvailable:
-          type: boolean
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-      required:
-      - isAvailable
-      - printed
-      - serialNumber
-      - archive
-      - externalQrCode
-      - notAvailableRanges
-    CreateProductModelDto:
+    ProductModelDto:
       type: object
       properties:
         prices:
           type: array
           items:
             oneOf:
-            - $ref: '#/components/schemas/CreateUpdateProductModelPriceDto'
-            - $ref: '#/components/schemas/CreateUpdateProductModelPriceRangeDto'
-            - $ref: '#/components/schemas/CreateUpdateProductModelLLDPriceDto'
+            - $ref: '#/components/schemas/ProductModelPrice'
+            - $ref: '#/components/schemas/ProductModelPriceRange'
+            - $ref: '#/components/schemas/ProductModelLLDPrice'
         name:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        id:
           type: string
         fields:
           type: array
           items:
-            type: string
-        stateModelId:
-          type: string
+            $ref: '#/components/schemas/ProductModelField'
         model:
           type: string
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-      required:
-      - prices
-      - name
-      - fields
-      - model
-      - rentalType
-    GetByManagingPlaceProductModelsDto:
-      type: object
-      properties:
-        productModelsByCompany:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductModelsByCompany'
-      required:
-      - productModelsByCompany
-    GetSubProductIdResponse:
-      type: object
-      properties:
-        product:
-          $ref: '#/components/schemas/Product'
-        subProduct:
-          $ref: '#/components/schemas/SubProduct'
-      required:
-      - product
-      - subProduct
-    ProductInsuranceInfo:
-      type: object
-      properties:
-        id:
-          type: string
-        tulipProductId:
-          type: string
-        totalTulipPrice:
-          type: number
-        margin:
-          type: number
-        bailAmountWithInsurance:
-          type: number
-        bailAmountWithoutInsurance:
-          type: number
-        tulipContractOptionType:
-          type: string
-          enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-      required:
-      - id
-      - tulipProductId
-      - totalTulipPrice
-      - margin
-      - bailAmountWithInsurance
-      - bailAmountWithoutInsurance
-      - tulipContractOptionType
-    PackProduct:
-      type: object
-      properties:
-        depositAmount:
-          type: number
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        id:
-          type: string
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        onlineStoreDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderSubProduct'
-        uuid:
-          type: string
-        surveyId:
-          type: string
-        type:
-          type: string
-          enum:
-          - product
-          - service
-        productImage:
-          type: array
-          items:
-            type: string
-      required:
-      - depositAmount
-      - rentalType
-      - id
-      - name
-      - onlineStoreName
-      - onlineStoreDescription
-      - subProducts
-      - uuid
-      - type
-      - productImage
-    UpdateProductCategoryAvailabilityDto:
-      type: object
-      properties:
-        id:
-          type: string
-        available:
-          type: boolean
-      required:
-      - id
-      - available
-    EnrichedSubProductHistoryEvent:
-      type: object
-      properties:
-        customer:
-          allOf:
-          - $ref: '#/components/schemas/EnrichedSubProductHistoryEventCustomer'
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        note:
-          type: string
-        inspectionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryInspectionField'
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryAttachedFile'
-        unite:
-          type: number
-        orderId:
-          type: string
-        customerId:
-          type: string
-        options:
-          $ref: '#/components/schemas/EventOptions'
-      required:
-      - customer
-      - startDate
-      - id
-      - name
-      - note
-      - inspectionFields
-      - files
-      - unite
-      - orderId
-      - customerId
-      - options
-    HistoryInspectionOption:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-      required:
-      - id
-      - value
-    UpdateProductModelDto:
-      type: object
-      properties:
-        prices:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/CreateUpdateProductModelPriceDto'
-            - $ref: '#/components/schemas/CreateUpdateProductModelPriceRangeDto'
-            - $ref: '#/components/schemas/CreateUpdateProductModelLLDPriceDto'
-        id:
-          type: string
-        name:
-          type: string
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateProductModelFieldDto'
         stateModelId:
-          type: string
-        model:
           type: string
         companyId:
           type: string
       required:
       - prices
-      - id
       - name
       - rentalType
+      - id
       - fields
       - model
+      - stateModelId
       - companyId
+    ProductModelPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        hours:
+          type: number
+        minutes:
+          type: number
+        id:
+          type: string
+      required:
+      - type
+      - label
+      - hours
+      - minutes
+      - id
     Product:
       type: object
       properties:
@@ -1782,117 +1152,103 @@ components:
       - displaySubProducts
       - number
       - inspectionReports
-    ProductModelDto:
+    ProductPriceRule:
       type: object
       properties:
-        prices:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/ProductModelPrice'
-            - $ref: '#/components/schemas/ProductModelPriceRange'
-            - $ref: '#/components/schemas/ProductModelLLDPrice'
-        name:
-          type: string
-        rentalType:
-          enum:
-          - LCD
-          - LLD
-          type: string
         id:
           type: string
-        fields:
+        title:
+          type: string
+        rules:
           type: array
           items:
-            $ref: '#/components/schemas/ProductModelField'
-        model:
-          type: string
-        stateModelId:
-          type: string
-        companyId:
-          type: string
+            $ref: '#/components/schemas/PriceRule'
       required:
-      - prices
-      - name
-      - rentalType
       - id
-      - fields
-      - model
-      - stateModelId
-      - companyId
-    OrderProduct:
+      - title
+      - rules
+    PriceRuleVariation:
       type: object
       properties:
-        depositAmount:
+        rule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        deltaAmount:
           type: number
-        id:
-          type: string
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        onlineStoreDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        numberSelected:
-          type: number
-        productImage:
-          type: array
-          items:
-            type: string
         price:
           type: number
-        priceLabelToDisplay:
+      required:
+      - rule
+      - deltaAmount
+      - price
+    ItemDiscount:
+      type: object
+      properties:
+        discountType:
           type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        amount:
+          type: number
+      required:
+      - discountType
+      - amount
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateProductCategoryAvailabilityDto:
+      type: object
+      properties:
+        id:
+          type: string
+        available:
+          type: boolean
+      required:
+      - id
+      - available
+    ItemOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    EnrichedProductInfo:
+      type: object
+      properties:
+        turnover:
+          type: number
+        profitability:
+          type: number
+        orderNumber:
+          type: number
         subProducts:
           type: array
           items:
-            $ref: '#/components/schemas/OrderSubProduct'
-        isDeleted:
-          type: boolean
-        vat:
-          type: number
-        priceRuleVariation:
-          allOf:
-          - $ref: '#/components/schemas/PriceRuleVariation'
-        discount:
-          $ref: '#/components/schemas/ItemDiscount'
-        initialUnitPrice:
-          type: number
-        insurance:
-          $ref: '#/components/schemas/ProductInsurance'
-        surveyId:
-          type: string
-        requestAnswers:
-          type: array
-          items:
-            type: object
-        attachedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachedFile'
+            $ref: '#/components/schemas/EnrichedSubProductInfo'
       required:
-      - depositAmount
-      - id
-      - rentalType
-      - name
-      - onlineStoreName
-      - onlineStoreDescription
-      - numberSelected
-      - productImage
-      - price
-      - priceLabelToDisplay
+      - turnover
+      - profitability
+      - orderNumber
       - subProducts
-      - isDeleted
-      - vat
-      - priceRuleVariation
-      - discount
-      - initialUnitPrice
-      - insurance
+    CustomerField:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
     PriceModelSpecificDuration:
       type: object
       properties:
@@ -1922,36 +1278,31 @@ components:
       - price
       - priceLowSeason
       - label
-    EnrichedSubProductInfo:
+    QrCodeItemsServiceInfoDto:
       type: object
       properties:
-        id:
+        type:
           type: string
-        serialNumber:
+          default: service
+          enum:
+          - service
+        itemId:
           type: string
-        isAvailable:
-          type: boolean
-        archive:
-          type: boolean
-        turnover:
-          type: number
-        orderNumber:
-          type: number
-        rentedHours:
-          type: number
-        events:
+        name:
+          type: string
+      required:
+      - type
+      - itemId
+      - name
+    GetByManagingPlaceProductModelsDto:
+      type: object
+      properties:
+        productModelsByCompany:
           type: array
           items:
-            $ref: '#/components/schemas/EnrichedSubProductHistoryEvent'
+            $ref: '#/components/schemas/ProductModelsByCompany'
       required:
-      - id
-      - serialNumber
-      - isAvailable
-      - archive
-      - turnover
-      - orderNumber
-      - rentedHours
-      - events
+      - productModelsByCompany
     UpdateProductModelFieldDto:
       type: object
       properties:
@@ -1961,18 +1312,97 @@ components:
           type: string
       required:
       - value
-    QrCodeItemsDto:
+    TulipProductData:
       type: object
       properties:
-        items:
+        lokkiProductId:
+          type: string
+        product_subtype:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        tulipContractOptionType:
+          type: string
+        monthly_margin:
+          type: number
+      required:
+      - lokkiProductId
+      - product_subtype
+      - brand
+      - model
+      - tulipContractOptionType
+      - monthly_margin
+    ProductModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
           type: array
           items:
-            oneOf:
-            - $ref: '#/components/schemas/QrCodeItemsProductInfoDto'
-            - $ref: '#/components/schemas/QrCodeItemsServiceInfoDto'
+            type: string
       required:
-      - items
-    CreateUpdateProductModelPriceRangeDto:
+      - attribute
+      - tags
+    PriceModelRangeDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - minDuration
+      - maxDuration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    CreateUpdateProductModelLLDPriceDto:
       type: object
       properties:
         type:
@@ -1981,168 +1411,24 @@ components:
           type: string
         label:
           $ref: '#/components/schemas/LocalizedContent'
-        timeStartHours:
-          type: number
-        timeStartMinutes:
-          type: number
-        timeEndHours:
-          type: number
-        timeEndMinutes:
-          type: number
-        isTimeFrame:
-          type: boolean
-        durationInDays:
+        calendarMonths:
           type: number
       required:
       - type
       - label
-      - timeStartHours
-      - timeStartMinutes
-      - timeEndHours
-      - timeEndMinutes
-      - isTimeFrame
-    PriceRuleVariation:
+      - calendarMonths
+    ProductAttribute:
       type: object
       properties:
-        rule:
-          allOf:
-          - $ref: '#/components/schemas/ProductPriceRule'
-        deltaAmount:
-          type: number
-        price:
-          type: number
-      required:
-      - rule
-      - deltaAmount
-      - price
-    OrderSubProduct:
-      type: object
-      properties:
-        id:
+        attribute:
           type: string
-        isAvailable:
-          type: boolean
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        status:
-          type: string
-          enum:
-          - WAITING
-          - USED
-          - ENDED
-        returnDate:
-          format: date-time
-          type: string
-        answers:
-          type: object
-      required:
-      - id
-      - isAvailable
-      - printed
-      - serialNumber
-      - archive
-      - externalQrCode
-      - status
-    PriceRule:
-      type: object
-      properties:
-        _id:
-          type: string
-        startDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        endDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        type:
-          type: string
-          enum:
-          - in
-          - include
-          - overlap
-        variation:
-          type: number
-      required:
-      - startDate
-      - endDate
-      - type
-      - variation
-    OrderPack:
-      type: object
-      properties:
-        depositAmount:
-          type: number
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        id:
-          type: string
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        onlineStoreDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        numberSelected:
-          type: number
-        packId:
-          type: string
-        packImage:
+        tags:
           type: array
           items:
             type: string
-        price:
-          type: number
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackProduct'
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderPackCategory'
-        vat:
-          type: number
-        discount:
-          $ref: '#/components/schemas/ItemDiscount'
-        initialUnitPrice:
-          type: number
-        type:
-          type: string
-          enum:
-          - PRODUCT
-          - CATEGORY
-        surveyId:
-          type: string
-        answers:
-          type: object
-        priceRuleVariation:
-          allOf:
-          - $ref: '#/components/schemas/PriceRuleVariation'
       required:
-      - depositAmount
-      - rentalType
-      - id
-      - name
-      - onlineStoreName
-      - onlineStoreDescription
-      - numberSelected
-      - packId
-      - packImage
-      - price
-      - products
-      - categories
-      - vat
-      - discount
-      - initialUnitPrice
-      - type
-      - priceRuleVariation
+      - attribute
+      - tags
     Customer:
       type: object
       properties:
@@ -2222,32 +1508,130 @@ components:
       - createdAt
       - hidden
       - createdFrom
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    ProductModelPrice:
+    GetTulipProductInsuranceInfoResponseDto:
       type: object
       properties:
-        type:
-          type: string
-          default: specific
-          enum:
-          - specific
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        hours:
-          type: number
-        minutes:
-          type: number
-        id:
-          type: string
+        productsInsuranceInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductInsuranceInfo'
+        isProductAllowForInsurance:
+          type: boolean
       required:
-      - type
-      - label
-      - hours
-      - minutes
-      - id
+      - productsInsuranceInfo
+      - isProductAllowForInsurance
+    TulipProduct:
+      type: object
+      properties:
+        product_id:
+          type: string
+        uid:
+          type: string
+        title:
+          type: string
+        product_type:
+          type: string
+        description:
+          type: string
+        value_excl:
+          type: number
+        documents:
+          type: array
+          items:
+            type: string
+        created_date:
+          type: string
+        updated_date:
+          type: string
+        purchased_date:
+          type: string
+        data:
+          $ref: '#/components/schemas/TulipProductData'
+      required:
+      - product_id
+      - uid
+      - title
+      - product_type
+      - description
+      - value_excl
+      - documents
+      - created_date
+      - updated_date
+      - purchased_date
+      - data
+    GetSubProductIdResponse:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/Product'
+        subProduct:
+          $ref: '#/components/schemas/SubProduct'
+      required:
+      - product
+      - subProduct
+    SetProductUnavailabilityDatesResponseDto:
+      type: object
+      properties:
+        modifiedOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/SetProductUnavailabilityDatesOrderInfoDto'
+        erroredOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/SetProductUnavailabilityDatesOrderInfoDto'
+        inprogressOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/SetProductUnavailabilityDatesOrderInfoDto'
+      required:
+      - modifiedOrders
+      - erroredOrders
+      - inprogressOrders
+    SetProductUnavailabilityDatesBodyDto:
+      type: object
+      properties:
+        startDate:
+          type: string
+        endDate:
+          type: string
+        preview:
+          type: boolean
+      required:
+      - startDate
+      - endDate
+      - preview
+    CreateProductModelDto:
+      type: object
+      properties:
+        prices:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CreateUpdateProductModelPriceDto'
+            - $ref: '#/components/schemas/CreateUpdateProductModelPriceRangeDto'
+            - $ref: '#/components/schemas/CreateUpdateProductModelLLDPriceDto'
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            type: string
+        stateModelId:
+          type: string
+        model:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+      required:
+      - prices
+      - name
+      - fields
+      - model
+      - rentalType
     SetProductUnavailabilityDatesOrderInfoDto:
       type: object
       properties:
@@ -2276,18 +1660,926 @@ components:
       - customer
       - products
       - packs
-    ProductAttribute:
+    HistoryInspectionField:
       type: object
       properties:
-        attribute:
+        id:
           type: string
-        tags:
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionAnswer'
+      required:
+      - id
+      - name
+      - answers
+    PutProductDto:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        name:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductField'
+        imageUrl:
           type: array
           items:
             type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        bailPrice:
+          type: number
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        priceRule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProduct:
+          type: boolean
+        productSurveyId:
+          type: string
+        productStateId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductAttribute'
+        vat:
+          type: number
+        insurance:
+          $ref: '#/components/schemas/ProductInsurance'
+        isSubProduct:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        displaySubProducts:
+          type: boolean
+        number:
+          type: number
+        inspectionReports:
+          type: boolean
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubProductDto'
+        verticalCategoryId:
+          type: string
+        translationInProgress:
+          type: boolean
       required:
-      - attribute
-      - tags
+      - priceModels
+      - name
+      - rentalType
+      - fields
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - rank
+      - bailPrice
+      - onlineStoreInformation
+      - priceRule
+      - productModel
+      - relatedProducts
+      - isRelatedProduct
+      - productSurveyId
+      - productStateId
+      - hideOnOnlineStore
+      - attributes
+      - vat
+      - insurance
+      - isSubProduct
+      - onlineAvailability
+      - displaySubProducts
+      - number
+      - inspectionReports
+      - subProducts
+    ProductModelList:
+      type: object
+      properties:
+        productModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModel'
+      required:
+      - productModels
+    UpdateProductModelDto:
+      type: object
+      properties:
+        prices:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CreateUpdateProductModelPriceDto'
+            - $ref: '#/components/schemas/CreateUpdateProductModelPriceRangeDto'
+            - $ref: '#/components/schemas/CreateUpdateProductModelLLDPriceDto'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateProductModelFieldDto'
+        stateModelId:
+          type: string
+        model:
+          type: string
+        companyId:
+          type: string
+      required:
+      - prices
+      - id
+      - name
+      - rentalType
+      - fields
+      - model
+      - companyId
+    ProductModelLLDPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        calendarMonths:
+          type: number
+        id:
+          type: string
+      required:
+      - type
+      - label
+      - calendarMonths
+      - id
+    OrderPackCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    ProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+        contractType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    OrderProduct:
+      type: object
+      properties:
+        depositAmount:
+          type: number
+        id:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        numberSelected:
+          type: number
+        productImage:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        priceLabelToDisplay:
+          type: string
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderSubProduct'
+        isDeleted:
+          type: boolean
+        vat:
+          type: number
+        priceRuleVariation:
+          allOf:
+          - $ref: '#/components/schemas/PriceRuleVariation'
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
+        initialUnitPrice:
+          type: number
+        insurance:
+          $ref: '#/components/schemas/ProductInsurance'
+        surveyId:
+          type: string
+        requestAnswers:
+          type: array
+          items:
+            type: object
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+      required:
+      - depositAmount
+      - id
+      - rentalType
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
+      - numberSelected
+      - productImage
+      - price
+      - priceLabelToDisplay
+      - subProducts
+      - isDeleted
+      - vat
+      - priceRuleVariation
+      - discount
+      - initialUnitPrice
+      - insurance
+    QrCodeSubInfoDto:
+      type: object
+      properties:
+        productName:
+          type: string
+        serialNumber:
+          type: string
+        productId:
+          type: string
+        subProductId:
+          type: string
+      required:
+      - productName
+      - serialNumber
+      - productId
+      - subProductId
+    SendQrCodePdfToLokkiDto:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        pdfUrl:
+          type: string
+        itemAmount:
+          type: number
+      required:
+      - name
+      - address
+      - zipCode
+      - city
+      - country
+      - pdfUrl
+      - itemAmount
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+    EnrichedSubProductInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        serialNumber:
+          type: string
+        isAvailable:
+          type: boolean
+        archive:
+          type: boolean
+        turnover:
+          type: number
+        orderNumber:
+          type: number
+        rentedHours:
+          type: number
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnrichedSubProductHistoryEvent'
+      required:
+      - id
+      - serialNumber
+      - isAvailable
+      - archive
+      - turnover
+      - orderNumber
+      - rentedHours
+      - events
+    EnrichedSubProductHistoryEvent:
+      type: object
+      properties:
+        customer:
+          allOf:
+          - $ref: '#/components/schemas/EnrichedSubProductHistoryEventCustomer'
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        note:
+          type: string
+        inspectionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionField'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
+        unite:
+          type: number
+        orderId:
+          type: string
+        customerId:
+          type: string
+        options:
+          $ref: '#/components/schemas/EventOptions'
+      required:
+      - customer
+      - startDate
+      - id
+      - name
+      - note
+      - inspectionFields
+      - files
+      - unite
+      - orderId
+      - customerId
+      - options
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
+    SubProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+    QrCodePdfDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    TentativeCategorization:
+      type: object
+      properties:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    TulipInfos:
+      type: object
+      properties:
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
+      required:
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
+    ProductModelsByCompany:
+      type: object
+      properties:
+        companyId:
+          type: string
+        productModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModel'
+      required:
+      - companyId
+      - productModels
+    EnrichedSubProductHistoryEventCustomer:
+      type: object
+      properties:
+        companyName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+      - companyName
+      - firstName
+      - lastName
+    SubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+    QrCodeItemsProductInfoDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: product
+          enum:
+          - product
+        itemId:
+          type: string
+        name:
+          type: string
+        subProductId:
+          type: string
+        serialNumber:
+          type: string
+      required:
+      - type
+      - itemId
+      - name
+      - subProductId
+      - serialNumber
+    OrderSubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        status:
+          type: string
+          enum:
+          - WAITING
+          - USED
+          - ENDED
+        returnDate:
+          format: date-time
+          type: string
+        answers:
+          type: object
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - status
+    ProductList:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+      required:
+      - products
+    ProductModelPriceRange:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        id:
+          type: string
+        timeStartHours:
+          type: number
+        timeStartMinutes:
+          type: number
+        timeEndHours:
+          type: number
+        timeEndMinutes:
+          type: number
+        durationInDays:
+          type: number
+      required:
+      - type
+      - label
+      - id
+      - timeStartHours
+      - timeStartMinutes
+      - timeEndHours
+      - timeEndMinutes
+    CreateUpdateProductModelPriceRangeDto:
+      type: object
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        timeStartHours:
+          type: number
+        timeStartMinutes:
+          type: number
+        timeEndHours:
+          type: number
+        timeEndMinutes:
+          type: number
+        isTimeFrame:
+          type: boolean
+        durationInDays:
+          type: number
+      required:
+      - type
+      - label
+      - timeStartHours
+      - timeStartMinutes
+      - timeEndHours
+      - timeEndMinutes
+      - isTimeFrame
+    ProductInsuranceInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        tulipProductId:
+          type: string
+        totalTulipPrice:
+          type: number
+        margin:
+          type: number
+        bailAmountWithInsurance:
+          type: number
+        bailAmountWithoutInsurance:
+          type: number
+        tulipContractOptionType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - id
+      - tulipProductId
+      - totalTulipPrice
+      - margin
+      - bailAmountWithInsurance
+      - bailAmountWithoutInsurance
+      - tulipContractOptionType
+    HistoryInspectionAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        value:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionOption'
+      required:
+      - id
+      - answerType
+      - value
+      - options
+    EventOptions:
+      type: object
+      properties:
+        unavailable:
+          type: boolean
+      required:
+      - unavailable
+    OrderPack:
+      type: object
+      properties:
+        depositAmount:
+          type: number
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        id:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        numberSelected:
+          type: number
+        packId:
+          type: string
+        packImage:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackProduct'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPackCategory'
+        vat:
+          type: number
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
+        initialUnitPrice:
+          type: number
+        type:
+          type: string
+          enum:
+          - PRODUCT
+          - CATEGORY
+        surveyId:
+          type: string
+        answers:
+          type: object
+        priceRuleVariation:
+          allOf:
+          - $ref: '#/components/schemas/PriceRuleVariation'
+      required:
+      - depositAmount
+      - rentalType
+      - id
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
+      - numberSelected
+      - packId
+      - packImage
+      - price
+      - products
+      - categories
+      - vat
+      - discount
+      - initialUnitPrice
+      - type
+      - priceRuleVariation
+    GetSubProductsWithoutEvent:
+      type: object
+      properties:
+        productId:
+          type: string
+        eventName:
+          type: string
+      required:
+      - productId
+      - eventName
+    AttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    CreateUpdateProductModelPriceDto:
+      type: object
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        time:
+          type: number
+        timeMinutes:
+          type: number
+      required:
+      - type
+      - label
+      - time
+      - timeMinutes
+    QrCodeSubsDto:
+      type: object
+      properties:
+        subInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/QrCodeSubInfoDto'
+      required:
+      - subInfo
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
     ProductModel:
       type: object
       properties:
@@ -2442,152 +2734,6 @@ components:
       - displaySubProducts
       - number
       - inspectionReports
-    NotAvailableRange:
-      type: object
-      properties:
-        from:
-          format: date-time
-          type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
-    ItemOnlineStoreInformation:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - name
-      - description
-    HistoryInspectionAnswer:
-      type: object
-      properties:
-        id:
-          type: string
-        answerType:
-          type: string
-          enum:
-          - OPEN_FIELD
-          - UNIQUE_CHOICE
-          - MULTIPLE_CHOICE
-          - ODOMETER
-        value:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryInspectionOption'
-      required:
-      - id
-      - answerType
-      - value
-      - options
-    TulipProduct:
-      type: object
-      properties:
-        product_id:
-          type: string
-        uid:
-          type: string
-        title:
-          type: string
-        product_type:
-          type: string
-        description:
-          type: string
-        value_excl:
-          type: number
-        documents:
-          type: array
-          items:
-            type: string
-        created_date:
-          type: string
-        updated_date:
-          type: string
-        purchased_date:
-          type: string
-        data:
-          $ref: '#/components/schemas/TulipProductData'
-      required:
-      - product_id
-      - uid
-      - title
-      - product_type
-      - description
-      - value_excl
-      - documents
-      - created_date
-      - updated_date
-      - purchased_date
-      - data
-    PriceRuleDate:
-      type: object
-      properties:
-        day:
-          type: number
-        time:
-          type: string
-      required:
-      - day
-      - time
-    TulipProductData:
-      type: object
-      properties:
-        lokkiProductId:
-          type: string
-        product_subtype:
-          type: string
-        brand:
-          type: string
-        model:
-          type: string
-        tulipContractOptionType:
-          type: string
-        monthly_margin:
-          type: number
-      required:
-      - lokkiProductId
-      - product_subtype
-      - brand
-      - model
-      - tulipContractOptionType
-      - monthly_margin
-    ProductModelPriceRange:
-      type: object
-      properties:
-        type:
-          type: string
-          default: range
-          enum:
-          - range
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        id:
-          type: string
-        timeStartHours:
-          type: number
-        timeStartMinutes:
-          type: number
-        timeEndHours:
-          type: number
-        timeEndMinutes:
-          type: number
-        durationInDays:
-          type: number
-      required:
-      - type
-      - label
-      - id
-      - timeStartHours
-      - timeStartMinutes
-      - timeEndHours
-      - timeEndMinutes
     RegisterTulipProductDto:
       type: object
       properties:
@@ -2612,82 +2758,6 @@ components:
       - productType
       - averageHTPurchasePrice
       - productSubtype
-    SendQrCodePdfToLokkiDto:
-      type: object
-      properties:
-        name:
-          type: string
-        address:
-          type: string
-        zipCode:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        pdfUrl:
-          type: string
-        itemAmount:
-          type: number
-      required:
-      - name
-      - address
-      - zipCode
-      - city
-      - country
-      - pdfUrl
-      - itemAmount
-    ProductInsurance:
-      type: object
-      properties:
-        isActivated:
-          type: boolean
-        tulipProductId:
-          type: string
-        averagePurchasePrice:
-          type: number
-        margin:
-          type: number
-        sum:
-          type: number
-        contractType:
-          type: string
-          enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-      required:
-      - isActivated
-      - tulipProductId
-      - averagePurchasePrice
-      - margin
-      - sum
-    SetProductUnavailabilityDatesBodyDto:
-      type: object
-      properties:
-        startDate:
-          type: string
-        endDate:
-          type: string
-        preview:
-          type: boolean
-      required:
-      - startDate
-      - endDate
-      - preview
-    ItemDiscount:
-      type: object
-      properties:
-        discountType:
-          type: string
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-        amount:
-          type: number
-      required:
-      - discountType
-      - amount
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -38,6 +38,8 @@ paths:
                 type: object
       tags:
       - Marketing
+      summary: Get concurrent
+      x-summary-source: derived
   /v2/marketing/rp-renters-nb:
     get:
       operationId: getRentalPlaceRentersCount
@@ -47,6 +49,8 @@ paths:
           description: ''
       tags:
       - Marketing
+      summary: Get rental place renters count
+      x-summary-source: derived
   /v2/marketing/visibility-renters-nb:
     get:
       operationId: getVisibilityRentersCount
@@ -56,6 +60,8 @@ paths:
           description: ''
       tags:
       - Marketing
+      summary: Get visibility renters count
+      x-summary-source: derived
 components:
   securitySchemes:
     x-access-token:

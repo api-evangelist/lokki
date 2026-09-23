@@ -38,6 +38,8 @@ paths:
                 type: object
       tags:
       - Webhook
+      summary: Handle hyperline webhook
+      x-summary-source: derived
 components:
   securitySchemes:
     x-access-token:

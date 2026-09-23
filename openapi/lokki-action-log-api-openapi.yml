@@ -77,6 +77,8 @@ paths:
                 $ref: '#/components/schemas/ActionLogsPage'
       tags:
       - Action Log
+      summary: Get action logs
+      x-summary-source: derived
   /v2/action-log/admin/history:
     get:
       operationId: getActionLogHistory
@@ -124,6 +126,8 @@ paths:
                 $ref: '#/components/schemas/ActionLogHistoryPage'
       tags:
       - Action Log
+      summary: Get action log history
+      x-summary-source: derived
   /v2/action-log/admin/revert:
     post:
       operationId: revertActionLogChange
@@ -143,81 +147,10 @@ paths:
                 $ref: '#/components/schemas/RevertActionLogChangeResult'
       tags:
       - Action Log
+      summary: Revert action log change
+      x-summary-source: derived
 components:
   schemas:
-    ActionLogHistoryPage:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionLogHistoryEntry'
-        hasNextPage:
-          type: boolean
-      required:
-      - entries
-      - hasNextPage
-    ActionLogSource:
-      type: string
-      enum:
-      - DECORATOR
-      - AUTO
-    RevertActionLogChangeDto:
-      type: object
-      properties:
-        actionLogId:
-          type: string
-        collectionName:
-          type: string
-        documentId:
-          type: string
-      required:
-      - actionLogId
-      - collectionName
-      - documentId
-    ActionLogEntryChange:
-      type: object
-      properties:
-        operation:
-          $ref: '#/components/schemas/ActionLogOperation'
-        diff:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        collectionName:
-          type: string
-        documentId:
-          type: string
-        truncated:
-          type: boolean
-      required:
-      - operation
-      - diff
-      - collectionName
-      - documentId
-      - truncated
-    ActionLogsPage:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionLogEntry'
-        hasNextPage:
-          type: boolean
-      required:
-      - entries
-      - hasNextPage
-    RevertActionLogChangeResult:
-      type: object
-      properties:
-        revertedFields:
-          type: array
-          items:
-            type: string
-      required:
-      - revertedFields
     ActionLogEntry:
       type: object
       properties:
@@ -271,27 +204,52 @@ components:
       - companyId
       - companyName
       - actor
-    ActionLogActorType:
-      type: string
-      enum:
-      - OWNER
-      - EMPLOYEE
-      - ADMIN
-      - ADMIN_IMPERSONATING
-      - SYSTEM
-      - UNKNOWN
-    ActionLogOperation:
-      type: string
-      enum:
-      - create
-      - update
-      - delete
+    ActionLogEntryChange:
+      type: object
+      properties:
+        operation:
+          $ref: '#/components/schemas/ActionLogOperation'
+        diff:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        collectionName:
+          type: string
+        documentId:
+          type: string
+        truncated:
+          type: boolean
+      required:
+      - operation
+      - diff
+      - collectionName
+      - documentId
+      - truncated
+    RevertActionLogChangeDto:
+      type: object
+      properties:
+        actionLogId:
+          type: string
+        collectionName:
+          type: string
+        documentId:
+          type: string
+      required:
+      - actionLogId
+      - collectionName
+      - documentId
     ActionLogSystemSource:
       type: string
       enum:
       - STRIPE_WEBHOOK
       - PAYOUT_GENERATION
       - PAYMENT_CAPTURE
+    ActionLogSource:
+      type: string
+      enum:
+      - DECORATOR
+      - AUTO
     ActionLogHistoryEntry:
       type: object
       properties:
@@ -360,6 +318,54 @@ components:
       - name
       - impersonatorUserId
       - impersonatorEmail
+    ActionLogOperation:
+      type: string
+      enum:
+      - create
+      - update
+      - delete
+    ActionLogsPage:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionLogEntry'
+        hasNextPage:
+          type: boolean
+      required:
+      - entries
+      - hasNextPage
+    RevertActionLogChangeResult:
+      type: object
+      properties:
+        revertedFields:
+          type: array
+          items:
+            type: string
+      required:
+      - revertedFields
+    ActionLogActorType:
+      type: string
+      enum:
+      - OWNER
+      - EMPLOYEE
+      - ADMIN
+      - ADMIN_IMPERSONATING
+      - SYSTEM
+      - UNKNOWN
+    ActionLogHistoryPage:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionLogHistoryEntry'
+        hasNextPage:
+          type: boolean
+      required:
+      - entries
+      - hasNextPage
   securitySchemes:
     x-access-token:
       scheme: bearer

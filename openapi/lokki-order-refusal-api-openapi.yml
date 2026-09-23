@@ -29,6 +29,8 @@ paths:
                 type: object
       tags:
       - Order Refusal
+      summary: Create order refusal
+      x-summary-source: derived
 components:
   schemas:
     CreateOrderRefusalDto:

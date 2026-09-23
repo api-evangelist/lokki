@@ -19,6 +19,8 @@ paths:
           description: ''
       tags:
       - Chaos
+      summary: Get notfound
+      x-summary-source: derived
   /v2/chaos/warning-log:
     get:
       operationId: getWarning
@@ -28,6 +30,8 @@ paths:
           description: ''
       tags:
       - Chaos
+      summary: Get warning
+      x-summary-source: derived
   /v2/chaos/error-thrown:
     get:
       operationId: getErrorThrown
@@ -37,6 +41,8 @@ paths:
           description: ''
       tags:
       - Chaos
+      summary: Get error thrown
+      x-summary-source: derived
   /v2/chaos/error-log:
     get:
       operationId: getErrorLog
@@ -46,6 +52,8 @@ paths:
           description: ''
       tags:
       - Chaos
+      summary: Get error log
+      x-summary-source: derived
   /v2/chaos/timeout/22:
     get:
       operationId: trigger20Timeout
@@ -55,6 +63,8 @@ paths:
           description: ''
       tags:
       - Chaos
+      summary: Trigger20 timeout
+      x-summary-source: derived
   /v2/chaos/timeout/35:
     get:
       operationId: trigger35Timeout
@@ -64,6 +74,8 @@ paths:
           description: ''
       tags:
       - Chaos
+      summary: Trigger35 timeout
+      x-summary-source: derived
 components:
   securitySchemes:
     x-access-token:

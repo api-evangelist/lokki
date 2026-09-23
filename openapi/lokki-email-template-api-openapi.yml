@@ -25,6 +25,8 @@ paths:
                   $ref: '#/components/schemas/EmailTemplate'
       tags:
       - Email Template
+      summary: Get email templates by company
+      x-summary-source: derived
   /v2/email-template/byId/{id}:
     get:
       operationId: getEmailTemplateById
@@ -43,6 +45,8 @@ paths:
                 $ref: '#/components/schemas/EmailTemplate'
       tags:
       - Email Template
+      summary: Get email template by id
+      x-summary-source: derived
     delete:
       operationId: deleteEmailTemplateById
       parameters:
@@ -56,6 +60,8 @@ paths:
           description: ''
       tags:
       - Email Template
+      summary: Delete email template by id
+      x-summary-source: derived
   /v2/email-template:
     post:
       operationId: createEmailTemplate
@@ -75,6 +81,8 @@ paths:
                 $ref: '#/components/schemas/EmailTemplate'
       tags:
       - Email Template
+      summary: Create email template
+      x-summary-source: derived
   /v2/email-template/{templateId}:
     put:
       operationId: updateEmailTemplate
@@ -99,42 +107,10 @@ paths:
                 $ref: '#/components/schemas/EmailTemplate'
       tags:
       - Email Template
+      summary: Update email template
+      x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    UpdateEmailTemplateDto:
-      type: object
-      properties:
-        id:
-          type: string
-        companyId:
-          type: string
-        type:
-          type: string
-        object:
-          $ref: '#/components/schemas/LocalizedContent'
-        content:
-          $ref: '#/components/schemas/LocalizedContent'
-        documentState:
-          type: object
-        documents:
-          type: object
-        payment:
-          type: number
-        bail:
-          type: number
-        hideTime:
-          type: boolean
-        hideDate:
-          type: boolean
-      required:
-      - companyId
-      - type
-      - object
-      - content
     CreateEmailTemplateDto:
       type: object
       properties:
@@ -214,6 +190,40 @@ components:
       required:
       - id
       - method
+    UpdateEmailTemplateDto:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        type:
+          type: string
+        object:
+          $ref: '#/components/schemas/LocalizedContent'
+        content:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentState:
+          type: object
+        documents:
+          type: object
+        payment:
+          type: number
+        bail:
+          type: number
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+      required:
+      - companyId
+      - type
+      - object
+      - content
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

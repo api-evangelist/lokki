@@ -41,6 +41,8 @@ paths:
                 $ref: '#/components/schemas/StripeConnectErrorDto'
       tags:
       - Stripe Connect
+      summary: Create account express
+      x-summary-source: derived
   /v2/stripe-connect/login-link/{type}:
     get:
       operationId: getLoginStripeLink
@@ -59,6 +61,8 @@ paths:
                 $ref: '#/components/schemas/StripeAccountUrlDto'
       tags:
       - Stripe Connect
+      summary: Get login stripe link
+      x-summary-source: derived
   /v2/stripe-connect/check-account-status/{type}:
     get:
       operationId: checkStripeAccountStatus
@@ -77,6 +81,8 @@ paths:
                 type: boolean
       tags:
       - Stripe Connect
+      summary: Check stripe account status
+      x-summary-source: derived
   /v2/stripe-connect/disconnect-account/{type}:
     get:
       operationId: disconnectStripeAccount
@@ -91,6 +97,8 @@ paths:
           description: ''
       tags:
       - Stripe Connect
+      summary: Disconnect stripe account
+      x-summary-source: derived
   /v2/stripe-connect/update-account-payment-methods:
     put:
       operationId: updateCompanyOnlineStorePaymentMethods
@@ -106,17 +114,10 @@ paths:
           description: ''
       tags:
       - Stripe Connect
+      summary: Update company online store payment methods
+      x-summary-source: derived
 components:
   schemas:
-    StripeConnectErrorCode:
-      type: string
-      enum:
-      - STRIPE_ACCOUNT_ALREADY_ACTIVE
-      - STRIPE_INVALID_PHONE_NUMBER
-      - STRIPE_INVALID_EMAIL
-      - STRIPE_UNSUPPORTED_COUNTRY
-      - STRIPE_INVALID_ACCOUNT_DATA
-      - STRIPE_ACCOUNT_CREATION_FAILED
     StripeCreateAccountDto:
       type: object
       properties:
@@ -130,23 +131,15 @@ components:
       required:
       - country
       - type
-    StripeAccountUrlDto:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url
-    StripeConnectErrorDto:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/StripeConnectErrorCode'
-        message:
-          type: string
-      required:
-      - error
-      - message
+    StripeConnectErrorCode:
+      type: string
+      enum:
+      - STRIPE_ACCOUNT_ALREADY_ACTIVE
+      - STRIPE_INVALID_PHONE_NUMBER
+      - STRIPE_INVALID_EMAIL
+      - STRIPE_UNSUPPORTED_COUNTRY
+      - STRIPE_INVALID_ACCOUNT_DATA
+      - STRIPE_ACCOUNT_CREATION_FAILED
     LokkiPaymentMethods:
       type: object
       properties:
@@ -187,6 +180,23 @@ components:
       - blik
       - multibanco
       - eps
+    StripeAccountUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    StripeConnectErrorDto:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/StripeConnectErrorCode'
+        message:
+          type: string
+      required:
+      - error
+      - message
   securitySchemes:
     x-access-token:
       scheme: bearer

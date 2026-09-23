@@ -50,6 +50,8 @@ paths:
                 $ref: '#/components/schemas/FathomTotalVisitsDto'
       tags:
       - Fathom
+      summary: Get fathom total visits
+      x-summary-source: derived
   /v2/fathom/bq/aggregation:
     get:
       operationId: queryFathomAggregationBQ
@@ -90,6 +92,8 @@ paths:
                 $ref: '#/components/schemas/FathomTotalVisitsArrayDto'
       tags:
       - Fathom
+      summary: Query fathom aggregation BQ
+      x-summary-source: derived
   /v2/fathom/visitsByHost:
     get:
       operationId: getFathomVisitsByHost
@@ -130,6 +134,8 @@ paths:
                 $ref: '#/components/schemas/FathomByHostDto'
       tags:
       - Fathom
+      summary: Get fathom visits by host
+      x-summary-source: derived
   /v2/fathom/visitsByDevice:
     get:
       operationId: getFathomVisitsByDevice
@@ -170,6 +176,8 @@ paths:
                 $ref: '#/components/schemas/FathomByDeviceDto'
       tags:
       - Fathom
+      summary: Get fathom visits by device
+      x-summary-source: derived
   /v2/fathom/visitsByCountry:
     get:
       operationId: getFathomVisitsByCountry
@@ -210,6 +218,8 @@ paths:
                 $ref: '#/components/schemas/FathomByCountryDto'
       tags:
       - Fathom
+      summary: Get fathom visits by country
+      x-summary-source: derived
   /v2/fathom/visitsUTMCampaign:
     get:
       operationId: getFathomUTMCampaign
@@ -250,6 +260,8 @@ paths:
                 $ref: '#/components/schemas/FathomUTMsDto'
       tags:
       - Fathom
+      summary: Get fathom UTM campaign
+      x-summary-source: derived
   /v2/fathom/visitsUTMSource:
     get:
       operationId: getFathomUTMSource
@@ -290,6 +302,8 @@ paths:
                 $ref: '#/components/schemas/FathomUTMsDto'
       tags:
       - Fathom
+      summary: Get fathom UTM source
+      x-summary-source: derived
   /v2/fathom/visitsUTMMedium:
     get:
       operationId: getFathomUTMMedium
@@ -330,8 +344,102 @@ paths:
                 $ref: '#/components/schemas/FathomUTMsDto'
       tags:
       - Fathom
+      summary: Get fathom UTM medium
+      x-summary-source: derived
 components:
   schemas:
+    FathomDeviceDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        device:
+          type: string
+      required:
+      - visits
+      - device
+    FathomUTMDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        name:
+          type: string
+      required:
+      - visits
+      - name
+    FathomTotalVisitsArrayDto:
+      type: object
+      properties:
+        visitsArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomTotalVisitBQDto'
+      required:
+      - visitsArray
+    FathomByHostDto:
+      type: object
+      properties:
+        referrerHostnameArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomReferrerHostnameDto'
+      required:
+      - referrerHostnameArray
+    FathomReferrerHostnameDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        hostname:
+          type: string
+      required:
+      - visits
+      - hostname
+    FathomCountyDto:
+      type: object
+      properties:
+        visits:
+          type: string
+        countryCode:
+          type: string
+      required:
+      - visits
+      - countryCode
+    FathomUTMsDto:
+      type: object
+      properties:
+        UTMArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomUTMDto'
+      required:
+      - UTMArray
+    FathomByDeviceDto:
+      type: object
+      properties:
+        devicesArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomDeviceDto'
+      required:
+      - devicesArray
+    FathomTotalVisitsDto:
+      type: object
+      properties:
+        visits:
+          type: string
+      required:
+      - visits
+    FathomByCountryDto:
+      type: object
+      properties:
+        countryArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomCountyDto'
+      required:
+      - countryArray
     FathomTotalVisitBQDto:
       type: object
       properties:
@@ -357,98 +465,6 @@ components:
       - pageviews
       - bounce_rate
       - avg_duration
-    FathomDeviceDto:
-      type: object
-      properties:
-        visits:
-          type: string
-        device:
-          type: string
-      required:
-      - visits
-      - device
-    FathomTotalVisitsDto:
-      type: object
-      properties:
-        visits:
-          type: string
-      required:
-      - visits
-    FathomReferrerHostnameDto:
-      type: object
-      properties:
-        visits:
-          type: string
-        hostname:
-          type: string
-      required:
-      - visits
-      - hostname
-    FathomByDeviceDto:
-      type: object
-      properties:
-        devicesArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomDeviceDto'
-      required:
-      - devicesArray
-    FathomByHostDto:
-      type: object
-      properties:
-        referrerHostnameArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomReferrerHostnameDto'
-      required:
-      - referrerHostnameArray
-    FathomTotalVisitsArrayDto:
-      type: object
-      properties:
-        visitsArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomTotalVisitBQDto'
-      required:
-      - visitsArray
-    FathomByCountryDto:
-      type: object
-      properties:
-        countryArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomCountyDto'
-      required:
-      - countryArray
-    FathomUTMDto:
-      type: object
-      properties:
-        visits:
-          type: string
-        name:
-          type: string
-      required:
-      - visits
-      - name
-    FathomCountyDto:
-      type: object
-      properties:
-        visits:
-          type: string
-        countryCode:
-          type: string
-      required:
-      - visits
-      - countryCode
-    FathomUTMsDto:
-      type: object
-      properties:
-        UTMArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomUTMDto'
-      required:
-      - UTMArray
     FathomRequestOrigin:
       type: string
       enum:

@@ -28,6 +28,8 @@ paths:
                 $ref: '#/components/schemas/MultiOrderDto'
       tags:
       - Multi Order
+      summary: Multi order by order id
+      x-summary-source: derived
   /v2/multi-order/create:
     post:
       operationId: createMultiOrder
@@ -47,6 +49,8 @@ paths:
                 $ref: '#/components/schemas/MultiOrderDto'
       tags:
       - Multi Order
+      summary: Create multi order
+      x-summary-source: derived
   /v2/multi-order/addOrder/{id}:
     put:
       operationId: addOrderToMultiOrder
@@ -71,6 +75,8 @@ paths:
                 type: object
       tags:
       - Multi Order
+      summary: Add order to multi order
+      x-summary-source: derived
 components:
   schemas:
     MultiOrderDto:
@@ -89,13 +95,6 @@ components:
       - id
       - orderIds
       - createdAt
-    NewOrderMultiOrderDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
     NewMultiOrderDto:
       type: object
       properties:
@@ -105,6 +104,13 @@ components:
             type: string
       required:
       - ids
+    NewOrderMultiOrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

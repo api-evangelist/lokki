@@ -28,6 +28,8 @@ paths:
                 $ref: '#/components/schemas/MailStatusDto'
       tags:
       - Mail V2
+      summary: Get email status
+      x-summary-source: derived
 components:
   schemas:
     MailStatusDto:

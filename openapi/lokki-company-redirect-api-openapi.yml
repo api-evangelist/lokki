@@ -46,6 +46,8 @@ paths:
                 $ref: '#/components/schemas/CompanyRedirectTargetDto'
       tags:
       - Company Redirect
+      summary: Get company redirect
+      x-summary-source: derived
 components:
   schemas:
     CompanyRedirectTargetType:

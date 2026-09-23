@@ -28,6 +28,8 @@ paths:
                 $ref: '#/components/schemas/TransactionsCsvDto'
       tags:
       - Company Payout
+      summary: Get payout related transactions csv
+      x-summary-source: derived
 components:
   schemas:
     TransactionsCsvDto:

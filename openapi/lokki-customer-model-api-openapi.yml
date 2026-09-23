@@ -25,6 +25,8 @@ paths:
           description: ''
       tags:
       - Customer Model
+      summary: Bulk create customer models
+      x-summary-source: derived
     put:
       operationId: bulkUpdateCustomerModels
       parameters: []
@@ -39,6 +41,8 @@ paths:
           description: ''
       tags:
       - Customer Model
+      summary: Bulk update customer models
+      x-summary-source: derived
   /v2/customer-model/all:
     get:
       operationId: listCompanyCustomerModel
@@ -54,6 +58,8 @@ paths:
                   $ref: '#/components/schemas/CustomerModel'
       tags:
       - Customer Model
+      summary: List company customer model
+      x-summary-source: derived
   /v2/customer-model/listByCompanyId/{companyId}:
     get:
       operationId: listCustomerModels
@@ -74,42 +80,10 @@ paths:
                   $ref: '#/components/schemas/CustomerModel'
       tags:
       - Customer Model
+      summary: List customer models
+      x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    BulkUpdateCustomerModelsDto:
-      type: object
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateCustomerModelDto'
-      required:
-      - models
-    CreateUpdateCustomerModelField:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - value
-    UpdateCustomerModelDto:
-      type: object
-      properties:
-        id:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
-      required:
-      - id
-      - fields
     CreateCustomerModelDto:
       type: object
       properties:
@@ -125,16 +99,6 @@ components:
       required:
       - type
       - fields
-    CustomerModelField:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - id
-      - value
     CustomerModel:
       type: object
       properties:
@@ -160,6 +124,37 @@ components:
       - fields
       - companyId
       - createdAt
+    CreateUpdateCustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - value
+    UpdateCustomerModelDto:
+      type: object
+      properties:
+        id:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
+      required:
+      - id
+      - fields
+    CustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - value
     BulkCreateCustomerModelsDto:
       type: object
       properties:
@@ -167,6 +162,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CreateCustomerModelDto'
+      required:
+      - models
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    BulkUpdateCustomerModelsDto:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateCustomerModelDto'
       required:
       - models
   securitySchemes:

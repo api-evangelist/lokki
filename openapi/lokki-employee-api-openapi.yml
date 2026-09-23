@@ -23,6 +23,8 @@ paths:
                 type: object
       tags:
       - Employee
+      summary: Get my company employees
+      x-summary-source: derived
   /v2/employee/add:
     post:
       operationId: addEmployee
@@ -42,6 +44,8 @@ paths:
                 $ref: '#/components/schemas/CompanyEmployee'
       tags:
       - Employee
+      summary: Add employee
+      x-summary-source: derived
   /v2/employee/updateAccess/{employeeId}:
     post:
       operationId: updateEmployeeAccess
@@ -66,6 +70,8 @@ paths:
                 $ref: '#/components/schemas/CompanyEmployee'
       tags:
       - Employee
+      summary: Update employee access
+      x-summary-source: derived
   /v2/employee/updateInfos/{employeeId}:
     put:
       operationId: updateEmployeeInfos
@@ -90,6 +96,8 @@ paths:
                 $ref: '#/components/schemas/CompanyEmployee'
       tags:
       - Employee
+      summary: Update employee infos
+      x-summary-source: derived
   /v2/employee/delete/{employeeId}:
     delete:
       operationId: deleteEmployee
@@ -104,6 +112,8 @@ paths:
           description: ''
       tags:
       - Employee
+      summary: Delete employee
+      x-summary-source: derived
   /v2/employee/public/{userId}/{companyId}:
     get:
       operationId: getEmployeeRegistrationInformation
@@ -127,6 +137,8 @@ paths:
                 $ref: '#/components/schemas/EmployeeRegistrationInfoDto'
       tags:
       - Employee
+      summary: Get employee registration information
+      x-summary-source: derived
   /v2/employee/public/validation:
     post:
       operationId: validateEmployee
@@ -146,8 +158,49 @@ paths:
                 type: boolean
       tags:
       - Employee
+      summary: Validate employee
+      x-summary-source: derived
 components:
   schemas:
+    UpdateEmployeeDto:
+      type: object
+      properties:
+        isMonitor:
+          type: boolean
+        imageUrl:
+          type: string
+        isAccountActivated:
+          type: boolean
+    AddEmployeeDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        isMonitor:
+          type: boolean
+      required:
+      - name
+      - email
+      - isMonitor
+    EmployeeRegistrationInfoDto:
+      type: object
+      properties:
+        companyName:
+          type: string
+        newUserName:
+          type: string
+      required:
+      - companyName
+      - newUserName
+    UpdateEmployeeAccessDto:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/EmployeeAccess'
+      required:
+      - access
     EmployeeAccess:
       type: object
       properties:
@@ -173,35 +226,6 @@ components:
           type: boolean
         bookingDeletion:
           type: boolean
-    UpdateEmployeeDto:
-      type: object
-      properties:
-        isMonitor:
-          type: boolean
-        imageUrl:
-          type: string
-        isAccountActivated:
-          type: boolean
-    AddEmployeeDto:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        isMonitor:
-          type: boolean
-      required:
-      - name
-      - email
-      - isMonitor
-    UpdateEmployeeAccessDto:
-      type: object
-      properties:
-        access:
-          $ref: '#/components/schemas/EmployeeAccess'
-      required:
-      - access
     ValidateEmployeeDto:
       type: object
       properties:
@@ -215,16 +239,6 @@ components:
       - encryptedUserId
       - encryptedCompanyId
       - password
-    EmployeeRegistrationInfoDto:
-      type: object
-      properties:
-        companyName:
-          type: string
-        newUserName:
-          type: string
-      required:
-      - companyName
-      - newUserName
     CompanyEmployee:
       type: object
       properties:

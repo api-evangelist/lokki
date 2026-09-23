@@ -28,6 +28,8 @@ paths:
                 type: object
       tags:
       - Status Model
+      summary: Delete status model by id
+      x-summary-source: derived
   /v2/status-model/byCompany:
     get:
       operationId: getStatusModelsByCompany
@@ -43,6 +45,8 @@ paths:
                   $ref: '#/components/schemas/StatusModel'
       tags:
       - Status Model
+      summary: Get status models by company
+      x-summary-source: derived
   /v2/status-model/create-status-model:
     post:
       operationId: createStatusModel
@@ -62,6 +66,8 @@ paths:
                 $ref: '#/components/schemas/StatusModel'
       tags:
       - Status Model
+      summary: Create status model
+      x-summary-source: derived
   /v2/status-model/update-status-model:
     put:
       operationId: updateStatusModel
@@ -81,6 +87,8 @@ paths:
                 $ref: '#/components/schemas/StatusModel'
       tags:
       - Status Model
+      summary: Update status model
+      x-summary-source: derived
 components:
   schemas:
     CreateStatusModelDto:
@@ -100,20 +108,27 @@ components:
       - name
       - status
       - companyId
-    CreateStatusModelStatusDto:
+    UpdateStatusModelDto:
       type: object
       properties:
-        id:
-          type: string
-        color:
-          type: string
         name:
           type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateStatusModelStatusDto'
+        companyId:
+          type: string
+        isFirst:
+          type: boolean
+        id:
+          type: string
       required:
-      - id
-      - color
       - name
-    StatusModelStatus:
+      - status
+      - companyId
+      - id
+    CreateStatusModelStatusDto:
       type: object
       properties:
         id:
@@ -151,26 +166,19 @@ components:
       - status
       - companyId
       - createdAt
-    UpdateStatusModelDto:
+    StatusModelStatus:
       type: object
       properties:
-        name:
-          type: string
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateStatusModelStatusDto'
-        companyId:
-          type: string
-        isFirst:
-          type: boolean
         id:
           type: string
+        color:
+          type: string
+        name:
+          type: string
       required:
-      - name
-      - status
-      - companyId
       - id
+      - color
+      - name
   securitySchemes:
     x-access-token:
       scheme: bearer

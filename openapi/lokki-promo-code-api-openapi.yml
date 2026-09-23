@@ -82,6 +82,8 @@ paths:
                 $ref: '#/components/schemas/PromoCodeDto'
       tags:
       - Promo Code
+      summary: Verify code
+      x-summary-source: derived
   /v2/promo-code/admin:
     get:
       operationId: listAdminPromoCodes
@@ -97,6 +99,8 @@ paths:
                   $ref: '#/components/schemas/PromoCodeDto'
       tags:
       - Promo Code
+      summary: List admin promo codes
+      x-summary-source: derived
     post:
       operationId: createAdminPromoCode
       parameters: []
@@ -115,6 +119,8 @@ paths:
                 $ref: '#/components/schemas/PromoCodeDto'
       tags:
       - Promo Code
+      summary: Create admin promo code
+      x-summary-source: derived
   /v2/promo-code/admin/{id}:
     put:
       operationId: updateAdminPromoCode
@@ -139,6 +145,8 @@ paths:
                 $ref: '#/components/schemas/PromoCodeDto'
       tags:
       - Promo Code
+      summary: Update admin promo code
+      x-summary-source: derived
     delete:
       operationId: deleteAdminPromoCode
       parameters:
@@ -152,6 +160,8 @@ paths:
           description: ''
       tags:
       - Promo Code
+      summary: Delete admin promo code
+      x-summary-source: derived
   /v2/promo-code/company:
     get:
       operationId: listCompanyPromoCodes
@@ -167,6 +177,8 @@ paths:
                   $ref: '#/components/schemas/PromoCodeDto'
       tags:
       - Promo Code
+      summary: List company promo codes
+      x-summary-source: derived
     post:
       operationId: createCompanyPromoCode
       parameters: []
@@ -185,6 +197,8 @@ paths:
                 $ref: '#/components/schemas/PromoCodeDto'
       tags:
       - Promo Code
+      summary: Create company promo code
+      x-summary-source: derived
   /v2/promo-code/company/{id}:
     put:
       operationId: updateCompanyPromoCode
@@ -209,6 +223,8 @@ paths:
                 $ref: '#/components/schemas/PromoCodeDto'
       tags:
       - Promo Code
+      summary: Update company promo code
+      x-summary-source: derived
     delete:
       operationId: deleteCompanyPromoCode
       parameters:
@@ -222,61 +238,10 @@ paths:
           description: ''
       tags:
       - Promo Code
+      summary: Delete company promo code
+      x-summary-source: derived
 components:
   schemas:
-    CreateCompanyPromoCodeDto:
-      type: object
-      properties:
-        code:
-          type: string
-          minLength: 4
-          maxLength: 30
-          pattern: /^([A-Z0-9]*)$/
-        source:
-          type: string
-          enum:
-          - COMPANY
-          - LOKKI
-        discountType:
-          type: string
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-        discountAmount:
-          type: number
-          minimum: 0
-        creationDate:
-          format: date-time
-          type: string
-        expirationDate:
-          format: date-time
-          type: string
-        minPrice:
-          type: number
-          minimum: 0
-        maxUses:
-          type:
-          - number
-          - 'null'
-          minimum: 1
-        dateCheck:
-          type: string
-          enum:
-          - CREATION_DATE
-          - ORDER_DATE
-        applyOnDelivery:
-          type: boolean
-      required:
-      - code
-      - source
-      - discountType
-      - discountAmount
-      - creationDate
-      - expirationDate
-      - minPrice
-      - maxUses
-      - dateCheck
-      - applyOnDelivery
     CreateAdminPromoCodeDto:
       type: object
       properties:
@@ -360,36 +325,6 @@ components:
       - maxUses
       - dateCheck
       - applyOnDelivery
-    UpdatePromoCodeDto:
-      type: object
-      properties:
-        active:
-          type: boolean
-        creationDate:
-          format: date-time
-          type: string
-        expirationDate:
-          format: date-time
-          type: string
-        maxUses:
-          type:
-          - number
-          - 'null'
-          minimum: 1
-        dateCheck:
-          enum:
-          - CREATION_DATE
-          - ORDER_DATE
-          type: string
-        applyOnDelivery:
-          type: boolean
-      required:
-      - active
-      - creationDate
-      - expirationDate
-      - maxUses
-      - dateCheck
-      - applyOnDelivery
     PromoCodeDto:
       type: object
       properties:
@@ -469,6 +404,89 @@ components:
       - discountAmount
       - discountType
       - amountUsed
+      - creationDate
+      - expirationDate
+      - minPrice
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    UpdatePromoCodeDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+          type: string
+        applyOnDelivery:
+          type: boolean
+      required:
+      - active
+      - creationDate
+      - expirationDate
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    CreateCompanyPromoCodeDto:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 4
+          maxLength: 30
+          pattern: /^([A-Z0-9]*)$/
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        discountAmount:
+          type: number
+          minimum: 0
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        minPrice:
+          type: number
+          minimum: 0
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          type: string
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+        applyOnDelivery:
+          type: boolean
+      required:
+      - code
+      - source
+      - discountType
+      - discountAmount
       - creationDate
       - expirationDate
       - minPrice

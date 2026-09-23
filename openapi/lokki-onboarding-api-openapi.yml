@@ -8,7 +8,7 @@ servers: []
 security:
 - x-access-token: []
 tags:
-- name: On Boarding
+- name: Onboarding
 paths:
   /v2/on-boarding/{userId}:
     get:
@@ -27,7 +27,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserOnboarding'
       tags:
-      - On Boarding
+      - Onboarding
+      summary: Get user on boarding by user id
+      x-summary-source: derived
   /v2/on-boarding:
     post:
       operationId: createUserOnboarding
@@ -46,7 +48,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserOnboarding'
       tags:
-      - On Boarding
+      - Onboarding
+      summary: Create user onboarding
+      x-summary-source: derived
   /v2/on-boarding/{id}:
     put:
       operationId: updateUserOnboarding
@@ -70,7 +74,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserOnboarding'
       tags:
-      - On Boarding
+      - Onboarding
+      summary: Update user onboarding
+      x-summary-source: derived
   /v2/on-boarding/user/{userId}:
     put:
       operationId: updateUserOnboardingByUserId
@@ -94,7 +100,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserOnboarding'
       tags:
-      - On Boarding
+      - Onboarding
+      summary: Update user onboarding by user id
+      x-summary-source: derived
     post:
       operationId: upsertUserOnboardingByUserId
       parameters:
@@ -117,7 +125,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserOnboarding'
       tags:
-      - On Boarding
+      - Onboarding
+      summary: Upsert user onboarding by user id
+      x-summary-source: derived
 components:
   schemas:
     UpdateUserOnboardingDto:

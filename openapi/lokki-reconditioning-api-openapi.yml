@@ -29,6 +29,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSale'
       tags:
       - Reconditioning
+      summary: Create reconditioning sale
+      x-summary-source: derived
   /v2/reconditioning/getAllByCompany:
     get:
       operationId: getAllReconditioningSalesByCompany
@@ -42,6 +44,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSaleList'
       tags:
       - Reconditioning
+      summary: Get all reconditioning sales by company
+      x-summary-source: derived
   /v2/reconditioning/getAll:
     get:
       operationId: getAllReconditioningSales
@@ -55,6 +59,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSaleList'
       tags:
       - Reconditioning
+      summary: Get all reconditioning sales
+      x-summary-source: derived
   /v2/reconditioning/getAllActive:
     get:
       operationId: getAllActiveReconditioningSales
@@ -68,6 +74,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSaleList'
       tags:
       - Reconditioning
+      summary: Get all active reconditioning sales
+      x-summary-source: derived
   /v2/reconditioning/myOffers:
     get:
       operationId: getMyOffers
@@ -81,6 +89,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSaleList'
       tags:
       - Reconditioning
+      summary: Get my offers
+      x-summary-source: derived
   /v2/reconditioning/getById/{id}:
     get:
       operationId: getReconditioningSaleById
@@ -99,6 +109,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSale'
       tags:
       - Reconditioning
+      summary: Get reconditioning sale by id
+      x-summary-source: derived
   /v2/reconditioning/offer/{id}:
     post:
       operationId: makeOfferOnReconditioningSale
@@ -117,6 +129,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSale'
       tags:
       - Reconditioning
+      summary: Make offer on reconditioning sale
+      x-summary-source: derived
   /v2/reconditioning/update/{id}:
     put:
       operationId: updateReconditioningSale
@@ -141,6 +155,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSale'
       tags:
       - Reconditioning
+      summary: Update reconditioning sale
+      x-summary-source: derived
   /v2/reconditioning/offer/{id}/{offerId}:
     put:
       operationId: customizeOfferOnReconditioningSale
@@ -170,6 +186,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSale'
       tags:
       - Reconditioning
+      summary: Customize offer on reconditioning sale
+      x-summary-source: derived
   /v2/reconditioning/archive/{id}:
     put:
       operationId: archiveReconditioningSale
@@ -188,6 +206,8 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSale'
       tags:
       - Reconditioning
+      summary: Archive reconditioning sale
+      x-summary-source: derived
   /v2/reconditioning/delete/{id}:
     delete:
       operationId: deleteReconditioningSale
@@ -206,9 +226,99 @@ paths:
                 $ref: '#/components/schemas/ReconditioningSale'
       tags:
       - Reconditioning
+      summary: Delete reconditioning sale
+      x-summary-source: derived
 components:
   schemas:
     ReconditioningSaleOfferCustomizationDto:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        comment:
+          type: string
+      required:
+      - subProductId
+      - comment
+    ReconditioningSaleCompanyDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        currency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        address:
+          type: string
+        name:
+          type: string
+        companyMailSender:
+          $ref: '#/components/schemas/CompanyMailSender'
+        phone:
+          type: string
+        logoURL:
+          type: string
+      required:
+      - id
+      - currency
+      - address
+      - name
+      - companyMailSender
+      - phone
+      - logoURL
+    ReconditioningSaleOfferCustomizationsDto:
+      type: object
+      properties:
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
+      required:
+      - customizations
+    ReconditioningSaleSubProduct:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        serial:
+          type: string
+        brand:
+          type: string
+        years:
+          type: string
+          enum:
+          - YEAR_OR_LESS
+          - TWO_YEARS
+          - THREE_YEARS
+          - FOUR_YEARS
+          - FIVE_OR_MORE
+        state:
+          type: string
+          enum:
+          - EXCELLENT
+          - GOOD
+          - MEDIUM
+          - BAD
+        priceNew:
+          type: number
+        comment:
+          type: string
+        pictures:
+          type: array
+          items:
+            type: string
+        certificate:
+          type: string
+      required:
+      - subProductId
+      - serial
+      - brand
+      - years
+      - state
+      - priceNew
+      - comment
+      - pictures
+      - certificate
+    ReconditioningSaleOfferCustomize:
       type: object
       properties:
         subProductId:
@@ -266,16 +376,6 @@ components:
       - price
       - availabilityDate
       - subProducts
-    CompanyCurrency:
-      type: object
-      properties:
-        isoName:
-          type: string
-        symbol:
-          type: string
-      required:
-      - isoName
-      - symbol
     ReconditioningSaleList:
       type: object
       properties:
@@ -285,42 +385,25 @@ components:
             $ref: '#/components/schemas/ReconditioningSale'
       required:
       - sales
-    ReconditioningSaleOfferCustomizationsDto:
-      type: object
-      properties:
-        customizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
-      required:
-      - customizations
-    ReconditioningSaleOfferCustomize:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        comment:
-          type: string
-      required:
-      - subProductId
-      - comment
-    ReconditioningSaleOffer:
+    ReconditioningSaleOfferUserDetails:
       type: object
       properties:
         id:
           type: string
-        userId:
+        name:
           type: string
-        customizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReconditioningSaleOfferCustomize'
-        details:
-          $ref: '#/components/schemas/ReconditioningSaleOfferUserDetails'
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
       required:
       - id
-      - userId
-      - customizations
+      - name
+      - email
+      - phone
+      - picture
     CreateUpdateReconditioningSaleSubProductDto:
       type: object
       properties:
@@ -365,85 +448,6 @@ components:
       - comment
       - pictures
       - certificate
-    ReconditioningSaleCompanyDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        currency:
-          $ref: '#/components/schemas/CompanyCurrency'
-        address:
-          type: string
-        name:
-          type: string
-        companyMailSender:
-          $ref: '#/components/schemas/CompanyMailSender'
-        phone:
-          type: string
-        logoURL:
-          type: string
-      required:
-      - id
-      - currency
-      - address
-      - name
-      - companyMailSender
-      - phone
-      - logoURL
-    ReconditioningSaleSubProduct:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        serial:
-          type: string
-        brand:
-          type: string
-        years:
-          type: string
-          enum:
-          - YEAR_OR_LESS
-          - TWO_YEARS
-          - THREE_YEARS
-          - FOUR_YEARS
-          - FIVE_OR_MORE
-        state:
-          type: string
-          enum:
-          - EXCELLENT
-          - GOOD
-          - MEDIUM
-          - BAD
-        priceNew:
-          type: number
-        comment:
-          type: string
-        pictures:
-          type: array
-          items:
-            type: string
-        certificate:
-          type: string
-      required:
-      - subProductId
-      - serial
-      - brand
-      - years
-      - state
-      - priceNew
-      - comment
-      - pictures
-      - certificate
-    CompanyMailSender:
-      type: object
-      properties:
-        name:
-          type: string
-        replyToEmailAddress:
-          type: string
-      required:
-      - name
-      - replyToEmailAddress
     ReconditioningSale:
       type: object
       properties:
@@ -520,25 +524,43 @@ components:
       - subProducts
       - offers
       - createdAt
-    ReconditioningSaleOfferUserDetails:
+    CompanyMailSender:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    ReconditioningSaleOffer:
       type: object
       properties:
         id:
           type: string
-        name:
+        userId:
           type: string
-        email:
-          type: string
-        phone:
-          type: string
-        picture:
-          type: string
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomize'
+        details:
+          $ref: '#/components/schemas/ReconditioningSaleOfferUserDetails'
       required:
       - id
-      - name
-      - email
-      - phone
-      - picture
+      - userId
+      - customizations
   securitySchemes:
     x-access-token:
       scheme: bearer

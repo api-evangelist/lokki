@@ -60,6 +60,8 @@ paths:
                 $ref: '#/components/schemas/HereAddressAutosuggestResultDto'
       tags:
       - Maps
+      summary: Get autosuggestions
+      x-summary-source: derived
   /v2/maps/addresses/{locationId}:
     get:
       operationId: getAddressByLocationId
@@ -78,6 +80,8 @@ paths:
                 $ref: '#/components/schemas/HereAddressByLocationIdResultDto'
       tags:
       - Maps
+      summary: Get address by location id
+      x-summary-source: derived
 components:
   schemas:
     HereAddressDto:
@@ -107,15 +111,6 @@ components:
       - coordinates
       - addressType
       - address
-    HereAddressAutosuggestResultDto:
-      type: object
-      properties:
-        addressSuggestions:
-          type: array
-          items:
-            $ref: '#/components/schemas/HereAddressDto'
-      required:
-      - addressSuggestions
     HereAddressByLocationIdResultDto:
       type: object
       properties:
@@ -125,6 +120,15 @@ components:
           - $ref: '#/components/schemas/HereAddressDto'
       required:
       - address
+    HereAddressAutosuggestResultDto:
+      type: object
+      properties:
+        addressSuggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/HereAddressDto'
+      required:
+      - addressSuggestions
     HereAddressComponentsDto:
       type: object
       properties:

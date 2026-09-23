@@ -25,6 +25,8 @@ paths:
           description: ''
       tags:
       - Mail
+      summary: Send mail order event session time change
+      x-summary-source: derived
   /v2/mail/sendWorkshopOrderMail:
     post:
       operationId: sendWorkshopOrderMail
@@ -40,6 +42,8 @@ paths:
           description: ''
       tags:
       - Mail
+      summary: Send workshop order mail
+      x-summary-source: derived
   /v2/mail/sendMailStateDocument:
     post:
       operationId: sendMailStateDocument
@@ -55,6 +59,8 @@ paths:
           description: ''
       tags:
       - Mail
+      summary: Send mail state document
+      x-summary-source: derived
   /v2/mail/orderMailStats/{orderId}:
     get:
       operationId: getOrderMailStats
@@ -73,6 +79,8 @@ paths:
                 $ref: '#/components/schemas/OrderSentMailDataDto'
       tags:
       - Mail
+      summary: Get order mail stats
+      x-summary-source: derived
   /v2/mail/workshopOrderMailStats/{workshopOrderId}:
     get:
       operationId: getWorkshopOrderMailStats
@@ -91,6 +99,8 @@ paths:
                 $ref: '#/components/schemas/OrderSentMailDataDto'
       tags:
       - Mail
+      summary: Get workshop order mail stats
+      x-summary-source: derived
   /v2/mail/orderEventMailStats/{orderEventId}:
     get:
       operationId: getOrderEventMailStats
@@ -109,6 +119,8 @@ paths:
                 $ref: '#/components/schemas/OrderSentMailDataDto'
       tags:
       - Mail
+      summary: Get order event mail stats
+      x-summary-source: derived
   /v2/mail/orderLLDMailStats/{orderLLDId}:
     get:
       operationId: getOrderLLDMailStats
@@ -127,35 +139,10 @@ paths:
                 $ref: '#/components/schemas/OrderSentMailDataDto'
       tags:
       - Mail
+      summary: Get order LLD mail stats
+      x-summary-source: derived
 components:
   schemas:
-    SentMailRecipients:
-      type: object
-      properties:
-        main:
-          type: string
-        cc:
-          type: array
-          items:
-            type: string
-      required:
-      - main
-      - cc
-    SentMailDataActionsDto:
-      type: object
-      properties:
-        sign:
-          type: boolean
-        payment:
-          type: boolean
-        bail:
-          type: boolean
-        booster:
-          type: boolean
-      required:
-      - sign
-      - payment
-      - bail
     SendMailOrderEventSessionTimeChangeDto:
       type: object
       properties:
@@ -184,6 +171,30 @@ components:
       - sessionId
       - initialStartDate
       - initialEndDate
+    OrderSentMailDataDto:
+      type: object
+      properties:
+        sentMails:
+          type: array
+          items:
+            $ref: '#/components/schemas/SentMailDataDto'
+      required:
+      - sentMails
+    SentMailDataActionsDto:
+      type: object
+      properties:
+        sign:
+          type: boolean
+        payment:
+          type: boolean
+        bail:
+          type: boolean
+        booster:
+          type: boolean
+      required:
+      - sign
+      - payment
+      - bail
     SendMailStateDto:
       type: object
       properties:
@@ -278,15 +289,18 @@ components:
       - object
       - actions
       - createdAt
-    OrderSentMailDataDto:
+    SentMailRecipients:
       type: object
       properties:
-        sentMails:
+        main:
+          type: string
+        cc:
           type: array
           items:
-            $ref: '#/components/schemas/SentMailDataDto'
+            type: string
       required:
-      - sentMails
+      - main
+      - cc
   securitySchemes:
     x-access-token:
       scheme: bearer

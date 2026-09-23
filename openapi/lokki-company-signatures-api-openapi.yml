@@ -358,6 +358,8 @@ paths:
                 $ref: '#/components/schemas/GetManyCompanySignaturesResponseDto'
       tags:
       - Company Signatures
+      summary: Get many company signatures
+      x-summary-source: derived
     post:
       operationId: createOneCompanySignature
       parameters: []
@@ -376,8 +378,43 @@ paths:
                 $ref: '#/components/schemas/CompanySignature'
       tags:
       - Company Signatures
+      summary: Create one company signature
+      x-summary-source: derived
 components:
   schemas:
+    CompanySignature:
+      type: object
+      properties:
+        companyId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        document:
+          $ref: '#/components/schemas/CompanyDocument'
+        userId:
+          type: string
+        id:
+          type: string
+      required:
+      - companyId
+      - createdAt
+      - document
+      - userId
+      - id
+    CreateOneCompanySignatureBodyDto:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/CompanyDocumentBodyDto'
+        userId:
+          type: string
+        companyId:
+          type: string
+      required:
+      - document
+      - userId
+      - companyId
     CompanyDocumentBodyDto:
       type: object
       properties:
@@ -400,39 +437,6 @@ components:
       - internalTitle
       - collection
       - type
-    CreateOneCompanySignatureBodyDto:
-      type: object
-      properties:
-        document:
-          $ref: '#/components/schemas/CompanyDocumentBodyDto'
-        userId:
-          type: string
-        companyId:
-          type: string
-      required:
-      - document
-      - userId
-      - companyId
-    CompanySignature:
-      type: object
-      properties:
-        companyId:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        document:
-          $ref: '#/components/schemas/CompanyDocument'
-        userId:
-          type: string
-        id:
-          type: string
-      required:
-      - companyId
-      - createdAt
-      - document
-      - userId
-      - id
     CompanyDocument:
       type: object
       properties:

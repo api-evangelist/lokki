@@ -28,6 +28,8 @@ paths:
                 type: boolean
       tags:
       - Price Template
+      summary: Has price template items
+      x-summary-source: derived
   /v2/price-template/{priceTemplateId}:
     get:
       operationId: getOnePriceTemplate
@@ -46,6 +48,8 @@ paths:
                 $ref: '#/components/schemas/PriceTemplate'
       tags:
       - Price Template
+      summary: Get one price template
+      x-summary-source: derived
     delete:
       operationId: deleteOnePriceTemplate
       parameters:
@@ -59,6 +63,8 @@ paths:
           description: ''
       tags:
       - Price Template
+      summary: Delete one price template
+      x-summary-source: derived
     put:
       operationId: updateOnePriceTemplate
       parameters:
@@ -82,6 +88,8 @@ paths:
                 $ref: '#/components/schemas/PriceTemplate'
       tags:
       - Price Template
+      summary: Update one price template
+      x-summary-source: derived
   /v2/price-template:
     get:
       operationId: getManyPriceTemplates
@@ -194,6 +202,8 @@ paths:
                 $ref: '#/components/schemas/GetManyPriceTemplatesResponseDto'
       tags:
       - Price Template
+      summary: Get many price templates
+      x-summary-source: derived
     post:
       operationId: createOnePriceTemplate
       parameters: []
@@ -212,15 +222,17 @@ paths:
                 $ref: '#/components/schemas/PriceTemplate'
       tags:
       - Price Template
+      summary: Create one price template
+      x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    CreateOnePriceTemplateDto:
+    PriceTemplate:
       type: object
       properties:
+        id:
+          type: string
+        companyId:
+          type: string
         name:
           type: string
         ranges:
@@ -228,8 +240,25 @@ components:
           items:
             $ref: '#/components/schemas/ProductModelPriceRange'
       required:
+      - id
+      - companyId
       - name
       - ranges
+    GetManyPriceTemplatesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceTemplate'
+      required:
+      - total
+      - docs
     ProductModelPriceRange:
       type: object
       properties:
@@ -269,28 +298,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductModelPriceRange'
-    GetManyPriceTemplatesResponseDto:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CreateOnePriceTemplateDto:
       type: object
       properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceTemplate'
-      required:
-      - total
-      - docs
-    PriceTemplate:
-      type: object
-      properties:
-        id:
-          type: string
-        companyId:
-          type: string
         name:
           type: string
         ranges:
@@ -298,8 +312,6 @@ components:
           items:
             $ref: '#/components/schemas/ProductModelPriceRange'
       required:
-      - id
-      - companyId
       - name
       - ranges
   securitySchemes:

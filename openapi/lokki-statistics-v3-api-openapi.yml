@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/GetStatisticAuthTokenResponseDto'
       tags:
       - Statistics V3
+      summary: Get statistic auth token
+      x-summary-source: derived
 components:
   schemas:
     GetStatisticAuthTokenResponseDto:

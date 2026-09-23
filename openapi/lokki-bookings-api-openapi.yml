@@ -41,7 +41,7 @@ paths:
   /v2/bookings/{orderId}/payment-requests/{paymentRequestId}/init/stripe:
     post:
       operationId: initBookingPaymentRequestStripe
-      summary: Return (reuse or mint) a Stripe PaymentIntent client secret for this PaymentRequest
+      summary: Return (reuse or mint) a Stripe PaymentIntent client secret for this…
       parameters:
       - name: orderId
         required: true
@@ -248,18 +248,308 @@ paths:
       - Bookings
 components:
   schemas:
-    RentalPlaceBookingItemPricing:
+    SubmitBookingSubProductAnswerDto:
+      type: object
+      properties:
+        subProductId:
+          type: string
+          description: subProduct id for products; for packs and services, the owning item id (synthetic).
+        answers:
+          type: object
+          additionalProperties:
+            type: string
+          description: Map of survey fieldId → answer value. Empty values are not allowed.
+      required:
+      - subProductId
+      - answers
+    RentalPlaceBookingStoreContact:
+      type: object
+      properties:
+        email:
+          type: string
+        phone:
+          type:
+          - string
+          - 'null'
+      required:
+      - email
+      - phone
+    SubmitBookingSurveyAnswersDto:
+      type: object
+      properties:
+        items:
+          default: []
+          description: Survey answers, one bucket per booking item (product / pack / service).
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmitBookingItemAnswersDto'
+      required:
+      - items
+    RentalPlaceBookingStoreGeo:
+      type: object
+      properties:
+        location:
+          allOf:
+          - $ref: '#/components/schemas/StoreLocation'
+        locations:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StoreLocation'
+      required:
+      - location
+      - locations
+    RentalPlaceBookingsCount:
+      type: object
+      properties:
+        incoming:
+          type: number
+        past:
+          type: number
+        cancelled:
+          type: number
+      required:
+      - incoming
+      - past
+      - cancelled
+    RentalPlaceBookingStoreProfile:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    RentalPlaceBookingPayments:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceBookingPayment'
+      required:
+      - items
+    RentalPlaceBookingGetDto:
+      type: object
+      properties:
+        booking:
+          $ref: '#/components/schemas/RentalPlaceBooking'
+        store:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceBookingStore'
+        payments:
+          $ref: '#/components/schemas/RentalPlaceBookingPayments'
+      required:
+      - booking
+      - store
+      - payments
+    ItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        amount:
+          type: number
+      required:
+      - discountType
+      - amount
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    RentalPlaceBooking:
+      type: object
+      properties:
+        id:
+          type: string
+        customer:
+          $ref: '#/components/schemas/RentalPlaceBookingCustomer'
+        pricing:
+          $ref: '#/components/schemas/RentalPlaceBookingPricing'
+        period:
+          $ref: '#/components/schemas/RentalPlaceBookingPeriod'
+        status:
+          $ref: '#/components/schemas/RentalPlaceBookingStatus'
+        logistics:
+          $ref: '#/components/schemas/RentalPlaceBookingLogistics'
+        content:
+          $ref: '#/components/schemas/RentalPlaceBookingContent'
+        marketing:
+          $ref: '#/components/schemas/RentalPlaceBookingMarketing'
+        documents:
+          $ref: '#/components/schemas/RentalPlaceBookingDocuments'
+        surveyFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceBookingSurveyFile'
+        event:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceBookingEventDetails'
+        cancellation:
+          $ref: '#/components/schemas/RentalPlaceBookingCancellation'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - customer
+      - pricing
+      - period
+      - status
+      - logistics
+      - content
+      - marketing
+      - documents
+      - surveyFiles
+      - cancellation
+      - createdAt
+    RentalPlaceBookingStorePricing:
+      type: object
+      properties:
+        currencySymbol:
+          type: string
+        currencyIsoCode:
+          type: string
+          description: ISO 4217 currency code, e.g. EUR
+      required:
+      - currencySymbol
+      - currencyIsoCode
+    CustomerField:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    RentalPlaceBookingSubProductAnswer:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        answers:
+          type: object
+          additionalProperties:
+            type: string
+          description: Survey answers for this subProduct, keyed by fieldId.
+      required:
+      - subProductId
+      - answers
+    RentalPlaceBookingPriceDetails:
       type: object
       properties:
         total:
           type: number
         baseTotal:
           type: number
-        discount:
-          $ref: '#/components/schemas/ItemDiscount'
+    RentalPlaceBookingPack:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        amount:
+          type: number
+        imageUrl:
+          type:
+          - string
+          - 'null'
+        survey:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceBookingItemSurvey'
+        pricing:
+          $ref: '#/components/schemas/RentalPlaceBookingItemPricing'
+        insurance:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceBookingItemInsurance'
+        items:
+          type: array
+          items:
+            type: string
       required:
-      - total
-      - baseTotal
+      - id
+      - name
+      - amount
+      - pricing
+      - items
+    StoreLocation:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the secondary location
+          example: 64b64c4f5f3c2a6d8e7f9b0b
+        name:
+          type: string
+          description: Name of the secondary location
+          example: Point de retrait - Gare de Lyon
+        slug:
+          type: string
+          description: Unique slug for the secondary location, used in URLs (https://www.lokki.rent/loueur/my-store/magasin/my-location)
+          example: my-location
+        address:
+          type: string
+          description: Full address as a single string
+          example: 4 Rue du Commandant Rivière, 75008 Paris, France
+        placeId:
+          type: string
+          description: Google Place ID for the location
+          example: ChIJLU7jZClu5kcR4PcOOO6p3I0
+        components:
+          description: Detailed address components
+          allOf:
+          - $ref: '#/components/schemas/AddressComponents'
+        canonicalComponents:
+          description: Detailed address components, normalized in english
+          allOf:
+          - $ref: '#/components/schemas/AddressComponents'
+        point:
+          description: Geographical point (latitude and longitude)
+          allOf:
+          - $ref: '#/components/schemas/StoreLocationPoint'
+      required:
+      - id
+      - name
+      - slug
+      - address
+      - placeId
+      - components
+      - canonicalComponents
+      - point
+    RentalPlaceUserSignedUpWith:
+      type: string
+      description: Sign-up provider of the account the booking belongs to
+      enum:
+      - email
+      - google
+      - apple
+    RentalPlaceBookingDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
+      required:
+      - id
+      - name
+      - scope
     ProductSurveyField:
       type: object
       properties:
@@ -283,20 +573,59 @@ components:
       - value
       - type
       - selectAnswers
-    SubmitBookingSubProductAnswerDto:
+    RentalPlaceBookingItemPricing:
       type: object
       properties:
-        subProductId:
-          type: string
-          description: subProduct id for products; for packs and services, the owning item id (synthetic).
-        answers:
-          type: object
-          additionalProperties:
-            type: string
-          description: Map of survey fieldId → answer value. Empty values are not allowed.
+        total:
+          type: number
+        baseTotal:
+          type: number
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
       required:
-      - subProductId
-      - answers
+      - total
+      - baseTotal
+    SessionFile:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        size:
+          type: number
+        ext:
+          type: string
+      required:
+      - uid
+      - name
+      - url
+      - size
+      - ext
+    UploadSurveyFilesDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        uids:
+          type: string
+          description: Comma-separated client-generated uids, one per uploaded file (same order).
+      required:
+      - files
+      - uids
+    RentalPlaceBookingSurveyFileUrl:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Signed download URL valid for ~60s.
+      required:
+      - url
     RentalPlaceBookingParticipant:
       type: object
       properties:
@@ -321,39 +650,127 @@ components:
       required:
       - isoCode
       - symbol
-    RentalPlaceBookingMarketing:
+    RentalPlaceBookingStoreTemporal:
       type: object
       properties:
-        promoCode:
-          allOf:
-          - $ref: '#/components/schemas/PromoCode'
-    RentalPlaceBookingContent:
+        timezone:
+          type: string
+          description: Store timezone in IANA format (e.g., Europe/Paris)
+          example: Europe/Paris
+      required:
+      - timezone
+    CancelBookingBodyDto:
       type: object
       properties:
-        items:
+        message:
+          type: string
+          description: Customer-provided reason surfaced to the merchant.
+    RentalPlaceBookingsByStatusGetDto:
+      type: object
+      properties:
+        bookings:
+          $ref: '#/components/schemas/RentalPlaceBookingsByStatus'
+        count:
+          $ref: '#/components/schemas/RentalPlaceBookingsCount'
+      required:
+      - bookings
+      - count
+    StoreLocationPoint:
+      type: object
+      properties:
+        lat:
+          type: number
+          description: Latitude of the location
+          example: 48.8728361
+        lng:
+          type: number
+          description: Longitude of the location
+          example: 2.3094988
+      required:
+      - lat
+      - lng
+    RentalPlaceBookingDeliveryAddress:
+      type: object
+      properties:
+        address:
+          type: string
+        type:
+          type: string
+          default: DELIVERY
+          enum:
+          - DELIVERY
+      required:
+      - address
+      - type
+    RentalPlaceBookingRemainingActions:
+      type: object
+      properties:
+        deposit:
+          type: boolean
+        survey:
+          type: boolean
+      required:
+      - deposit
+      - survey
+    RentalPlaceBookingCancellation:
+      type: object
+      properties:
+        isCancellable:
+          type: boolean
+          description: True when the customer can submit a cancellation for this booking
+        isAutoCancellable:
+          type: boolean
+          description: True when cancellation will auto-refund instead of being a request
+        refundableAmount:
+          type:
+          - number
+          - 'null'
+          description: Amount that will be refunded on auto-cancellation (null when no refund applies)
+        hasNonRefundablePayments:
+          type: boolean
+          description: True when the booking has successful non-Stripe customer payments (ANCV / offline). Those can't be refunded automatically — the UI should tell the customer to contact the merchant.
+        ranges:
+          description: Policy ranges — exposed for UI display of the cancellation rules
           type: array
           items:
-            $ref: '#/components/schemas/RentalPlaceBookingItem'
-        packs:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceBookingPack'
-        promoCode:
-          allOf:
-          - $ref: '#/components/schemas/PromoCode'
+            $ref: '#/components/schemas/StoreCancellationRange'
       required:
-      - items
-      - packs
-    RentalPlaceBookingSurveyFile:
+      - isCancellable
+      - isAutoCancellable
+      - refundableAmount
+      - hasNonRefundablePayments
+      - ranges
+    PaymentRequestStripeInitDto:
       type: object
       properties:
-        uid:
+        clientSecret:
           type: string
-        name:
+          description: Stripe PaymentIntent client_secret — passed to Stripe.js to confirm the payment.
+          example: pi_3N8a1fJk2l3m4n5o_secret_6p7q8r9s0t
+        paymentIntentRef:
           type: string
+          description: Underlying Stripe PaymentIntent id. Useful for support/debugging.
+          example: pi_3N8a1fJk2l3m4n5o
+        paymentRequestId:
+          type: string
+          description: Echo of the PaymentRequest id this intent is attached to.
+          example: 65b2f3d1b7a4e8f1a2c3d4e5
+        publishableKey:
+          type: string
+          description: Stripe publishable key the client must pass to `loadStripe()` to mount Elements. Resolved server-side so demo/live accounts get the matching key.
+          example: pk_live_...
+        customerSessionClientSecret:
+          type:
+          - string
+          - 'null'
+          description: Stripe Customer Session client secret. Passed to Elements options so the PaymentElement surfaces the customer's saved PaymentMethods (e.g. the card used at checkout) for one-click confirm. Null when no Stripe Customer is attached to the request.
+          example: cuss_1N8a1fJk2l3m4n5o_secret_6p7q8r9s0t
       required:
-      - uid
-      - name
+      - clientSecret
+      - paymentIntentRef
+      - paymentRequestId
+      - publishableKey
+      - customerSessionClientSecret
     RentalPlaceBookingsByStatus:
       type: object
       properties:
@@ -373,6 +790,39 @@ components:
       - incoming
       - past
       - cancelled
+    RentalPlaceBookingEventPricing:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        amount:
+          type: number
+        initialAmount:
+          type: number
+      required:
+      - id
+      - name
+      - amount
+      - initialAmount
+    RentalPlaceBookingAccessHintDto:
+      type: object
+      properties:
+        exists:
+          type: boolean
+          description: Always true — a non-existent order returns a 404 instead of this payload
+        provider:
+          $ref: '#/components/schemas/RentalPlaceUserSignedUpWith'
+        maskedEmail:
+          type:
+          - string
+          - 'null'
+          description: Obfuscated owner email — only set when provider is email, null otherwise
+      required:
+      - exists
+      - provider
+      - maskedEmail
     RentalPlaceBookingDeliveryRentalPoint:
       type: object
       properties:
@@ -389,105 +839,19 @@ components:
       - address
       - type
       - rentalPointName
-    RentalPlaceBookingStore:
+    RentalPlaceBookingItemInsurance:
       type: object
       properties:
-        id:
-          type: string
-        slug:
-          type: string
-        profile:
-          $ref: '#/components/schemas/RentalPlaceBookingStoreProfile'
-        contact:
-          $ref: '#/components/schemas/RentalPlaceBookingStoreContact'
-        branding:
-          $ref: '#/components/schemas/RentalPlaceBookingStoreBranding'
-        geo:
-          $ref: '#/components/schemas/RentalPlaceBookingStoreGeo'
-        pricing:
-          $ref: '#/components/schemas/RentalPlaceBookingStorePricing'
-        temporal:
-          $ref: '#/components/schemas/RentalPlaceBookingStoreTemporal'
-      required:
-      - id
-      - slug
-      - profile
-      - contact
-      - branding
-      - geo
-      - pricing
-      - temporal
-    RentalPlaceBookingStoreGeo:
-      type: object
-      properties:
-        location:
-          allOf:
-          - $ref: '#/components/schemas/StoreLocation'
-        locations:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/StoreLocation'
-      required:
-      - location
-      - locations
-    RentalPlaceBookingStoreProfile:
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-      - name
-    RentalPlaceBookingRemainingActions:
-      type: object
-      properties:
-        deposit:
+        enabled:
           type: boolean
-        survey:
-          type: boolean
-      required:
-      - deposit
-      - survey
-    RentalPlaceBookingDocuments:
-      type: object
-      properties:
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceBookingDocument'
-        documentsState:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceBookingStateDocument'
-      required:
-      - documents
-      - documentsState
-    CustomerField:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
-    RentalPlaceBookingDeliveryAddress:
-      type: object
-      properties:
-        address:
-          type: string
         type:
-          type: string
-          default: DELIVERY
           enum:
-          - DELIVERY
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+          type: string
       required:
-      - address
+      - enabled
       - type
     RentalPlaceBookingEventDetails:
       type: object
@@ -506,172 +870,23 @@ components:
       - name
       - participants
       - pricings
-    UploadSurveyFilesDto:
+    RentalPlaceBookingContent:
       type: object
       properties:
-        files:
+        items:
           type: array
           items:
-            type: string
-            format: binary
-        uids:
-          type: string
-          description: Comma-separated client-generated uids, one per uploaded file (same order).
-      required:
-      - files
-      - uids
-    AddressComponents:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-          description: Street number
-          example: '4'
-        street:
-          type: string
-          description: Street name
-          example: Rue du Commandant Rivière
-        postalCode:
-          type: string
-          description: Postal code
-          example: '75008'
-        city:
-          type: string
-          description: City name
-          example: Paris
-        administrativeAreaLevel1:
-          type: string
-          description: Administrative area level 1 (e.g. state or province)
-          example: Île-de-France
-        administrativeAreaLevel2:
-          type: string
-          description: Administrative area level 2 (e.g. city or district)
-          example: Paris
-        country:
-          type: string
-          description: Country name
-          example: France
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-    RentalPlaceBookingStoreContact:
-      type: object
-      properties:
-        email:
-          type: string
-        phone:
-          type:
-          - string
-          - 'null'
-      required:
-      - email
-      - phone
-    RentalPlaceBookingStoreTemporal:
-      type: object
-      properties:
-        timezone:
-          type: string
-          description: Store timezone in IANA format (e.g., Europe/Paris)
-          example: Europe/Paris
-      required:
-      - timezone
-    StoreCancellationRange:
-      type: object
-      properties:
-        hourThreshold:
-          type: number
-          description: Threshold in hours before the booking start time for this cancellation range. (e.g. 48 means cancellations made more than 48 hours before start)
-          example: 48
-        refundType:
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-          type: string
-          description: Type of refund for this cancellation range
-          example: PERCENTAGE
-        refundAmount:
-          type: number
-          description: Refund amount for this cancellation range
-          example: 50
-      required:
-      - hourThreshold
-      - refundType
-      - refundAmount
-    RentalPlaceBookingItemSurvey:
-      type: object
-      properties:
-        surveyId:
-          type: string
-        name:
-          type: string
-        fields:
+            $ref: '#/components/schemas/RentalPlaceBookingItem'
+        packs:
           type: array
           items:
-            $ref: '#/components/schemas/ProductSurveyField'
-        answersBySubProduct:
-          description: Lokkiffeur's answers, one entry per subProduct for products, a single synthetic entry for packs and services.
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceBookingSubProductAnswer'
+            $ref: '#/components/schemas/RentalPlaceBookingPack'
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/PromoCode'
       required:
-      - surveyId
-      - name
-      - fields
-      - answersBySubProduct
-    RentalPlaceBookingAccessHintDto:
-      type: object
-      properties:
-        exists:
-          type: boolean
-          description: Always true — a non-existent order returns a 404 instead of this payload
-        provider:
-          $ref: '#/components/schemas/RentalPlaceUserSignedUpWith'
-        maskedEmail:
-          type:
-          - string
-          - 'null'
-          description: Obfuscated owner email — only set when provider is email, null otherwise
-      required:
-      - exists
-      - provider
-      - maskedEmail
-    RentalPlaceBookingDocument:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        scope:
-          type: string
-          enum:
-          - DOCUMENT
-          - DOCUMENT_STATE
-          - PAYMENT
-          - NONE
-      required:
-      - id
-      - name
-      - scope
-    StoreLocationPoint:
-      type: object
-      properties:
-        lat:
-          type: number
-          description: Latitude of the location
-          example: 48.8728361
-        lng:
-          type: number
-          description: Longitude of the location
-          example: 2.3094988
-      required:
-      - lat
-      - lng
+      - items
+      - packs
     RentalPlaceBookingStateDocument:
       type: object
       properties:
@@ -690,6 +905,36 @@ components:
       - id
       - name
       - scope
+    RentalPlaceBookingStoreBranding:
+      type: object
+      properties:
+        logoURL:
+          type: string
+        bannerUrls:
+          type: array
+          items:
+            type: string
+      required:
+      - logoURL
+      - bannerUrls
+    RentalPlaceBookingPeriod:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - startDate
+      - endDate
+    RentalPlaceBookingMarketing:
+      type: object
+      properties:
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/PromoCode'
     RentalPlaceBookingItem:
       type: object
       properties:
@@ -716,109 +961,31 @@ components:
       - name
       - amount
       - pricing
-    SubmitBookingSurveyAnswersDto:
+    RentalPlaceBookingStatus:
       type: object
       properties:
-        items:
-          default: []
-          description: Survey answers, one bucket per booking item (product / pack / service).
-          type: array
-          items:
-            $ref: '#/components/schemas/SubmitBookingItemAnswersDto'
-      required:
-      - items
-    RentalPlaceBookingsCount:
-      type: object
-      properties:
-        incoming:
-          type: number
-        past:
-          type: number
-        cancelled:
-          type: number
-      required:
-      - incoming
-      - past
-      - cancelled
-    RentalPlaceBookingEventPricing:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        amount:
-          type: number
-        initialAmount:
-          type: number
-      required:
-      - id
-      - name
-      - amount
-      - initialAmount
-    RentalPlaceBookingCustomer:
-      type: object
-      properties:
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerField'
-      required:
-      - fields
-    CancelBookingResultDto:
-      type: object
-      properties:
-        outcome:
+        type:
           enum:
-          - AUTO
-          - REQUEST
+          - ORDER
+          - PRE_BOOKING
+          - PRE_BOOKING_ADMIN
+          - CANCELED
           type: string
-        refundedAmount:
-          type:
-          - number
-          - 'null'
-          description: Amount refunded to the customer when outcome=AUTO. Null for REQUEST or when nothing was due.
-      required:
-      - outcome
-      - refundedAmount
-    RentalPlaceBookingsRemainingActionsGetDto:
-      type: object
-      properties:
-        deposit:
+        isCancelled:
           type: boolean
-        survey:
+        isRequest:
           type: boolean
+        remainingActions:
+          $ref: '#/components/schemas/RentalPlaceBookingRemainingActions'
+        hasPendingCancellation:
+          type: boolean
+          description: True when the customer sent a cancellation request not yet processed
       required:
-      - deposit
-      - survey
-    SubmitBookingItemAnswersDto:
-      type: object
-      properties:
-        itemId:
-          type: string
-          description: Item id (product, pack or service id from booking.content.items / packs).
-        answersBySubProduct:
-          description: One entry per subProduct for products; a single synthetic entry for packs and services.
-          type: array
-          items:
-            $ref: '#/components/schemas/SubmitBookingSubProductAnswerDto'
-      required:
-      - itemId
-      - answersBySubProduct
-    RentalPlaceBookingLogistics:
-      type: object
-      properties:
-        departurePoint:
-          oneOf:
-          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryAddress'
-          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryRentalPoint'
-        arrivalPoint:
-          oneOf:
-          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryAddress'
-          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryRentalPoint'
-      required:
-      - departurePoint
-      - arrivalPoint
+      - type
+      - isCancelled
+      - isRequest
+      - remainingActions
+      - hasPendingCancellation
     RentalPlaceBookingPayment:
       type: object
       properties:
@@ -876,39 +1043,223 @@ components:
       - provider
       - context
       - createdAt
-    RentalPlaceBookingGetDto:
+    CancelBookingResultDto:
       type: object
       properties:
-        booking:
-          $ref: '#/components/schemas/RentalPlaceBooking'
-        store:
-          allOf:
-          - $ref: '#/components/schemas/RentalPlaceBookingStore'
-        payments:
-          $ref: '#/components/schemas/RentalPlaceBookingPayments'
-      required:
-      - booking
-      - store
-      - payments
-    CancelBookingBodyDto:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Customer-provided reason surfaced to the merchant.
-    ItemDiscount:
-      type: object
-      properties:
-        discountType:
-          type: string
+        outcome:
           enum:
-          - AMOUNT
-          - PERCENTAGE
-        amount:
-          type: number
+          - AUTO
+          - REQUEST
+          type: string
+        refundedAmount:
+          type:
+          - number
+          - 'null'
+          description: Amount refunded to the customer when outcome=AUTO. Null for REQUEST or when nothing was due.
       required:
-      - discountType
-      - amount
+      - outcome
+      - refundedAmount
+    RentalPlaceBookingSurveyFile:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+      required:
+      - uid
+      - name
+    SubmitBookingItemAnswersDto:
+      type: object
+      properties:
+        itemId:
+          type: string
+          description: Item id (product, pack or service id from booking.content.items / packs).
+        answersBySubProduct:
+          description: One entry per subProduct for products; a single synthetic entry for packs and services.
+          type: array
+          items:
+            $ref: '#/components/schemas/SubmitBookingSubProductAnswerDto'
+      required:
+      - itemId
+      - answersBySubProduct
+    RentalPlaceBookingDocuments:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceBookingDocument'
+        documentsState:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceBookingStateDocument'
+      required:
+      - documents
+      - documentsState
+    RentalPlaceBookingPricing:
+      type: object
+      properties:
+        includingTaxes:
+          $ref: '#/components/schemas/RentalPlaceBookingPriceDetails'
+        excludingTaxes:
+          $ref: '#/components/schemas/RentalPlaceBookingPriceDetails'
+        deposit:
+          type: number
+        delivery:
+          type: number
+        insurance:
+          type: number
+        currency:
+          $ref: '#/components/schemas/StoreCurrency'
+      required:
+      - includingTaxes
+      - excludingTaxes
+      - deposit
+      - currency
+    RentalPlaceBookingStore:
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        profile:
+          $ref: '#/components/schemas/RentalPlaceBookingStoreProfile'
+        contact:
+          $ref: '#/components/schemas/RentalPlaceBookingStoreContact'
+        branding:
+          $ref: '#/components/schemas/RentalPlaceBookingStoreBranding'
+        geo:
+          $ref: '#/components/schemas/RentalPlaceBookingStoreGeo'
+        pricing:
+          $ref: '#/components/schemas/RentalPlaceBookingStorePricing'
+        temporal:
+          $ref: '#/components/schemas/RentalPlaceBookingStoreTemporal'
+      required:
+      - id
+      - slug
+      - profile
+      - contact
+      - branding
+      - geo
+      - pricing
+      - temporal
+    AddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+          description: Street number
+          example: '4'
+        street:
+          type: string
+          description: Street name
+          example: Rue du Commandant Rivière
+        postalCode:
+          type: string
+          description: Postal code
+          example: '75008'
+        city:
+          type: string
+          description: City name
+          example: Paris
+        administrativeAreaLevel1:
+          type: string
+          description: Administrative area level 1 (e.g. state or province)
+          example: Île-de-France
+        administrativeAreaLevel2:
+          type: string
+          description: Administrative area level 2 (e.g. city or district)
+          example: Paris
+        country:
+          type: string
+          description: Country name
+          example: France
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    RentalPlaceBookingsRemainingActionsGetDto:
+      type: object
+      properties:
+        deposit:
+          type: boolean
+        survey:
+          type: boolean
+      required:
+      - deposit
+      - survey
+    RentalPlaceBookingCustomer:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerField'
+      required:
+      - fields
+    RentalPlaceBookingItemSurvey:
+      type: object
+      properties:
+        surveyId:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductSurveyField'
+        answersBySubProduct:
+          description: Lokkiffeur's answers, one entry per subProduct for products, a single synthetic entry for packs and services.
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceBookingSubProductAnswer'
+      required:
+      - surveyId
+      - name
+      - fields
+      - answersBySubProduct
+    StoreCancellationRange:
+      type: object
+      properties:
+        hourThreshold:
+          type: number
+          description: Threshold in hours before the booking start time for this cancellation range. (e.g. 48 means cancellations made more than 48 hours before start)
+          example: 48
+        refundType:
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+          type: string
+          description: Type of refund for this cancellation range
+          example: PERCENTAGE
+        refundAmount:
+          type: number
+          description: Refund amount for this cancellation range
+          example: 50
+      required:
+      - hourThreshold
+      - refundType
+      - refundAmount
+    RentalPlaceBookingLogistics:
+      type: object
+      properties:
+        departurePoint:
+          oneOf:
+          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryAddress'
+          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryRentalPoint'
+        arrivalPoint:
+          oneOf:
+          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryAddress'
+          - $ref: '#/components/schemas/RentalPlaceBookingDeliveryRentalPoint'
+      required:
+      - departurePoint
+      - arrivalPoint
     PromoCode:
       type: object
       properties:
@@ -946,294 +1297,6 @@ components:
       - discountAmount
       - discountType
       - applyOnDelivery
-    SessionFile:
-      type: object
-      properties:
-        uid:
-          type: string
-        name:
-          type: string
-        url:
-          type: string
-        size:
-          type: number
-        ext:
-          type: string
-      required:
-      - uid
-      - name
-      - url
-      - size
-      - ext
-    RentalPlaceBookingPeriod:
-      type: object
-      properties:
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-      required:
-      - startDate
-      - endDate
-    StoreLocation:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the secondary location
-          example: 64b64c4f5f3c2a6d8e7f9b0b
-        name:
-          type: string
-          description: Name of the secondary location
-          example: Point de retrait - Gare de Lyon
-        slug:
-          type: string
-          description: Unique slug for the secondary location, used in URLs (https://www.lokki.rent/loueur/my-store/magasin/my-location)
-          example: my-location
-        address:
-          type: string
-          description: Full address as a single string
-          example: 4 Rue du Commandant Rivière, 75008 Paris, France
-        placeId:
-          type: string
-          description: Google Place ID for the location
-          example: ChIJLU7jZClu5kcR4PcOOO6p3I0
-        components:
-          description: Detailed address components
-          allOf:
-          - $ref: '#/components/schemas/AddressComponents'
-        canonicalComponents:
-          description: Detailed address components, normalized in english
-          allOf:
-          - $ref: '#/components/schemas/AddressComponents'
-        point:
-          description: Geographical point (latitude and longitude)
-          allOf:
-          - $ref: '#/components/schemas/StoreLocationPoint'
-      required:
-      - id
-      - name
-      - slug
-      - address
-      - placeId
-      - components
-      - canonicalComponents
-      - point
-    RentalPlaceUserSignedUpWith:
-      type: string
-      description: Sign-up provider of the account the booking belongs to
-      enum:
-      - email
-      - google
-      - apple
-    RentalPlaceBookingStorePricing:
-      type: object
-      properties:
-        currencySymbol:
-          type: string
-        currencyIsoCode:
-          type: string
-          description: ISO 4217 currency code, e.g. EUR
-      required:
-      - currencySymbol
-      - currencyIsoCode
-    RentalPlaceBookingPack:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        amount:
-          type: number
-        imageUrl:
-          type:
-          - string
-          - 'null'
-        survey:
-          allOf:
-          - $ref: '#/components/schemas/RentalPlaceBookingItemSurvey'
-        pricing:
-          $ref: '#/components/schemas/RentalPlaceBookingItemPricing'
-        insurance:
-          allOf:
-          - $ref: '#/components/schemas/RentalPlaceBookingItemInsurance'
-        items:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - name
-      - amount
-      - pricing
-      - items
-    RentalPlaceBooking:
-      type: object
-      properties:
-        id:
-          type: string
-        customer:
-          $ref: '#/components/schemas/RentalPlaceBookingCustomer'
-        pricing:
-          $ref: '#/components/schemas/RentalPlaceBookingPricing'
-        period:
-          $ref: '#/components/schemas/RentalPlaceBookingPeriod'
-        status:
-          $ref: '#/components/schemas/RentalPlaceBookingStatus'
-        logistics:
-          $ref: '#/components/schemas/RentalPlaceBookingLogistics'
-        content:
-          $ref: '#/components/schemas/RentalPlaceBookingContent'
-        marketing:
-          $ref: '#/components/schemas/RentalPlaceBookingMarketing'
-        documents:
-          $ref: '#/components/schemas/RentalPlaceBookingDocuments'
-        surveyFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceBookingSurveyFile'
-        event:
-          allOf:
-          - $ref: '#/components/schemas/RentalPlaceBookingEventDetails'
-        cancellation:
-          $ref: '#/components/schemas/RentalPlaceBookingCancellation'
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - customer
-      - pricing
-      - period
-      - status
-      - logistics
-      - content
-      - marketing
-      - documents
-      - surveyFiles
-      - cancellation
-      - createdAt
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    RentalPlaceBookingItemInsurance:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        type:
-          enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-          type: string
-      required:
-      - enabled
-      - type
-    RentalPlaceBookingPriceDetails:
-      type: object
-      properties:
-        total:
-          type: number
-        baseTotal:
-          type: number
-    RentalPlaceBookingStoreBranding:
-      type: object
-      properties:
-        logoURL:
-          type: string
-        bannerUrls:
-          type: array
-          items:
-            type: string
-      required:
-      - logoURL
-      - bannerUrls
-    RentalPlaceBookingPayments:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceBookingPayment'
-      required:
-      - items
-    RentalPlaceBookingSubProductAnswer:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        answers:
-          type: object
-          additionalProperties:
-            type: string
-          description: Survey answers for this subProduct, keyed by fieldId.
-      required:
-      - subProductId
-      - answers
-    RentalPlaceBookingPricing:
-      type: object
-      properties:
-        includingTaxes:
-          $ref: '#/components/schemas/RentalPlaceBookingPriceDetails'
-        excludingTaxes:
-          $ref: '#/components/schemas/RentalPlaceBookingPriceDetails'
-        deposit:
-          type: number
-        delivery:
-          type: number
-        insurance:
-          type: number
-        currency:
-          $ref: '#/components/schemas/StoreCurrency'
-      required:
-      - includingTaxes
-      - excludingTaxes
-      - deposit
-      - currency
-    RentalPlaceBookingSurveyFileUrl:
-      type: object
-      properties:
-        url:
-          type: string
-          description: Signed download URL valid for ~60s.
-      required:
-      - url
-    PaymentRequestStripeInitDto:
-      type: object
-      properties:
-        clientSecret:
-          type: string
-          description: Stripe PaymentIntent client_secret — passed to Stripe.js to confirm the payment.
-          example: pi_3N8a1fJk2l3m4n5o_secret_6p7q8r9s0t
-        paymentIntentRef:
-          type: string
-          description: Underlying Stripe PaymentIntent id. Useful for support/debugging.
-          example: pi_3N8a1fJk2l3m4n5o
-        paymentRequestId:
-          type: string
-          description: Echo of the PaymentRequest id this intent is attached to.
-          example: 65b2f3d1b7a4e8f1a2c3d4e5
-        publishableKey:
-          type: string
-          description: Stripe publishable key the client must pass to `loadStripe()` to mount Elements. Resolved server-side so demo/live accounts get the matching key.
-          example: pk_live_...
-        customerSessionClientSecret:
-          type:
-          - string
-          - 'null'
-          description: Stripe Customer Session client secret. Passed to Elements options so the PaymentElement surfaces the customer's saved PaymentMethods (e.g. the card used at checkout) for one-click confirm. Null when no Stripe Customer is attached to the request.
-          example: cuss_1N8a1fJk2l3m4n5o_secret_6p7q8r9s0t
-      required:
-      - clientSecret
-      - paymentIntentRef
-      - paymentRequestId
-      - publishableKey
-      - customerSessionClientSecret
     PaymentRequestStateDto:
       type: object
       properties:
@@ -1311,69 +1374,6 @@ components:
       - lastFailureReason
       - attempts
       - maxAttempts
-    RentalPlaceBookingCancellation:
-      type: object
-      properties:
-        isCancellable:
-          type: boolean
-          description: True when the customer can submit a cancellation for this booking
-        isAutoCancellable:
-          type: boolean
-          description: True when cancellation will auto-refund instead of being a request
-        refundableAmount:
-          type:
-          - number
-          - 'null'
-          description: Amount that will be refunded on auto-cancellation (null when no refund applies)
-        hasNonRefundablePayments:
-          type: boolean
-          description: True when the booking has successful non-Stripe customer payments (ANCV / offline). Those can't be refunded automatically — the UI should tell the customer to contact the merchant.
-        ranges:
-          description: Policy ranges — exposed for UI display of the cancellation rules
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreCancellationRange'
-      required:
-      - isCancellable
-      - isAutoCancellable
-      - refundableAmount
-      - hasNonRefundablePayments
-      - ranges
-    RentalPlaceBookingStatus:
-      type: object
-      properties:
-        type:
-          enum:
-          - ORDER
-          - PRE_BOOKING
-          - PRE_BOOKING_ADMIN
-          - CANCELED
-          type: string
-        isCancelled:
-          type: boolean
-        isRequest:
-          type: boolean
-        remainingActions:
-          $ref: '#/components/schemas/RentalPlaceBookingRemainingActions'
-        hasPendingCancellation:
-          type: boolean
-          description: True when the customer sent a cancellation request not yet processed
-      required:
-      - type
-      - isCancelled
-      - isRequest
-      - remainingActions
-      - hasPendingCancellation
-    RentalPlaceBookingsByStatusGetDto:
-      type: object
-      properties:
-        bookings:
-          $ref: '#/components/schemas/RentalPlaceBookingsByStatus'
-        count:
-          $ref: '#/components/schemas/RentalPlaceBookingsCount'
-      required:
-      - bookings
-      - count
   securitySchemes:
     x-access-token:
       scheme: bearer

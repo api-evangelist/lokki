@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/TrustpilotRating'
       tags:
       - Trustpilot
+      summary: Get trustpilot rating lokki
+      x-summary-source: derived
 components:
   schemas:
     TrustpilotRating:

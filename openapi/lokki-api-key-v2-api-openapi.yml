@@ -29,6 +29,8 @@ paths:
                 $ref: '#/components/schemas/PostOneApiKeyV2ResponseDto'
       tags:
       - Api Key V2
+      summary: Post one api key V2
+      x-summary-source: derived
     get:
       operationId: getManyApiKeyV2
       parameters:
@@ -308,6 +310,8 @@ paths:
                 $ref: '#/components/schemas/GetManyApiKeyV2ResponseDto'
       tags:
       - Api Key V2
+      summary: Get many api key V2
+      x-summary-source: derived
   /v2/api-key-v2/{id}:
     get:
       operationId: getOneApiKeyV2
@@ -326,6 +330,8 @@ paths:
                 $ref: '#/components/schemas/ApiKeyV2'
       tags:
       - Api Key V2
+      summary: Get one api key V2
+      x-summary-source: derived
     patch:
       operationId: patchOneApiKeyV2
       parameters:
@@ -349,6 +355,8 @@ paths:
                 $ref: '#/components/schemas/ApiKeyV2'
       tags:
       - Api Key V2
+      summary: Patch one api key V2
+      x-summary-source: derived
     delete:
       operationId: deleteOneApiKeyV2
       parameters:
@@ -362,8 +370,141 @@ paths:
           description: ''
       tags:
       - Api Key V2
+      summary: Delete one api key V2
+      x-summary-source: derived
 components:
   schemas:
+    PostOneApiKeyV2BodyDto:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: /^[a-z0-9-]+$/
+        note:
+          type: string
+        owner:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PostOneApiKeyV2BodyScopeDto'
+        settings:
+          $ref: '#/components/schemas/PostOneApiKeyV2BodySettinsDto'
+      required:
+      - name
+      - note
+      - owner
+      - scopes
+      - settings
+    PostOneApiKeyV2BodyUtmDto:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        source:
+          type: string
+        medium:
+          type: string
+        campaign:
+          type: string
+        term:
+          type: string
+        content:
+          type: string
+      required:
+      - enabled
+    GetManyApiKeyV2ResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiKeyV2'
+      required:
+      - total
+      - docs
+    ApiKeyV2Scope:
+      type: object
+      properties:
+        domain:
+          type: string
+          enum:
+          - STORES
+          - STORE_ITEMS
+          - VERTICALES
+        read:
+          type: boolean
+        write:
+          type: boolean
+        actions:
+          type: array
+          items:
+            type: string
+      required:
+      - domain
+      - read
+      - write
+      - actions
+    ApiKeyV2:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        note:
+          type: string
+        owner:
+          type: string
+        trailingDigits:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiKeyV2Scope'
+        status:
+          enum:
+          - ACTIVE
+          - INACTIVE
+          type: string
+        settings:
+          $ref: '#/components/schemas/ApiKeyV2Settings'
+        lastUsedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - note
+      - owner
+      - trailingDigits
+      - scopes
+      - status
+      - settings
+      - lastUsedAt
+      - createdAt
+      - updatedAt
+    ApiKeyV2Settings:
+      type: object
+      properties:
+        utm:
+          allOf:
+          - $ref: '#/components/schemas/ApiKeyV2Utm'
+      required:
+      - utm
     PostOneApiKeyV2ResponseDto:
       type: object
       properties:
@@ -414,58 +555,6 @@ components:
       - createdAt
       - updatedAt
       - apiKey
-    PostOneApiKeyV2BodyDto:
-      type: object
-      properties:
-        name:
-          type: string
-          pattern: /^[a-z0-9-]+$/
-        note:
-          type: string
-        owner:
-          type: string
-        scopes:
-          type: array
-          items:
-            $ref: '#/components/schemas/PostOneApiKeyV2BodyScopeDto'
-        settings:
-          $ref: '#/components/schemas/PostOneApiKeyV2BodySettinsDto'
-      required:
-      - name
-      - note
-      - owner
-      - scopes
-      - settings
-    ApiKeyV2Settings:
-      type: object
-      properties:
-        utm:
-          allOf:
-          - $ref: '#/components/schemas/ApiKeyV2Utm'
-      required:
-      - utm
-    ApiKeyV2Scope:
-      type: object
-      properties:
-        domain:
-          type: string
-          enum:
-          - STORES
-          - STORE_ITEMS
-          - VERTICALES
-        read:
-          type: boolean
-        write:
-          type: boolean
-        actions:
-          type: array
-          items:
-            type: string
-      required:
-      - domain
-      - read
-      - write
-      - actions
     PatchOneApiKeyV2BodyDto:
       type: object
       properties:
@@ -479,6 +568,23 @@ components:
           type:
           - string
           - 'null'
+    ApiKeyV2Utm:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        source:
+          type: string
+        medium:
+          type: string
+        campaign:
+          type: string
+        term:
+          type: string
+        content:
+          type: string
+      required:
+      - enabled
     PostOneApiKeyV2BodyScopeDto:
       type: object
       properties:
@@ -501,107 +607,11 @@ components:
       - read
       - write
       - actions
-    ApiKeyV2Utm:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        source:
-          type: string
-        medium:
-          type: string
-        campaign:
-          type: string
-        term:
-          type: string
-        content:
-          type: string
-      required:
-      - enabled
-    ApiKeyV2:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        note:
-          type: string
-        owner:
-          type: string
-        trailingDigits:
-          type: string
-        scopes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiKeyV2Scope'
-        status:
-          enum:
-          - ACTIVE
-          - INACTIVE
-          type: string
-        settings:
-          $ref: '#/components/schemas/ApiKeyV2Settings'
-        lastUsedAt:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - name
-      - note
-      - owner
-      - trailingDigits
-      - scopes
-      - status
-      - settings
-      - lastUsedAt
-      - createdAt
-      - updatedAt
-    PostOneApiKeyV2BodyUtmDto:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        source:
-          type: string
-        medium:
-          type: string
-        campaign:
-          type: string
-        term:
-          type: string
-        content:
-          type: string
-      required:
-      - enabled
     PostOneApiKeyV2BodySettinsDto:
       type: object
       properties:
         utm:
           $ref: '#/components/schemas/PostOneApiKeyV2BodyUtmDto'
-    GetManyApiKeyV2ResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiKeyV2'
-      required:
-      - total
-      - docs
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -695,6 +695,8 @@ paths:
                 $ref: '#/components/schemas/CsvResponse'
       tags:
       - Export Csv
+      summary: Generate orders product survey csv
+      x-summary-source: derived
   /v2/export-csv/orderLCD:
     get:
       operationId: exportLCDOrdersCSV
@@ -766,6 +768,8 @@ paths:
                 type: string
       tags:
       - Export Csv
+      summary: Export LCD orders CSV
+      x-summary-source: derived
 components:
   schemas:
     CsvResponse:

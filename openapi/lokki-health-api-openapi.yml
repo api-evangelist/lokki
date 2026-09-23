@@ -23,6 +23,8 @@ paths:
                 type: number
       tags:
       - Health
+      summary: Ping
+      x-summary-source: derived
 components:
   securitySchemes:
     x-access-token:

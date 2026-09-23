@@ -25,6 +25,8 @@ paths:
                   $ref: '#/components/schemas/Universe'
       tags:
       - Universe
+      summary: List universes
+      x-summary-source: derived
   /v2/universe/create:
     post:
       operationId: createUniverse
@@ -44,6 +46,8 @@ paths:
                 type: object
       tags:
       - Universe
+      summary: Create universe
+      x-summary-source: derived
   /v2/universe/{id}:
     put:
       operationId: updateUniverse
@@ -68,6 +72,8 @@ paths:
                 $ref: '#/components/schemas/Universe'
       tags:
       - Universe
+      summary: Update universe
+      x-summary-source: derived
     delete:
       operationId: deleteUniverse
       parameters:
@@ -81,50 +87,10 @@ paths:
           description: ''
       tags:
       - Universe
+      summary: Delete universe
+      x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    UpdateUniverseControllerFormDataDto:
-      type: object
-      properties:
-        picture:
-          type: string
-          format: binary
-        title:
-          type: string
-        productModelIds:
-          type: array
-          items:
-            type: string
-        ranking:
-          type: number
-        minimumPrice:
-          type: string
-    CreateUniverseControllerFormDataDto:
-      type: object
-      properties:
-        picture:
-          type: string
-          format: binary
-        title:
-          type: string
-        productModelIds:
-          type: array
-          items:
-            type: string
-        ranking:
-          type: number
-        minimumPrice:
-          type: string
-      required:
-      - picture
-      - title
-      - productModelIds
-      - ranking
-      - minimumPrice
     UniverseMinimumPrice:
       type: object
       properties:
@@ -172,6 +138,48 @@ components:
       - rentalPlaceTitle
       - ranking
       - minimumPrice
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CreateUniverseControllerFormDataDto:
+      type: object
+      properties:
+        picture:
+          type: string
+          format: binary
+        title:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        ranking:
+          type: number
+        minimumPrice:
+          type: string
+      required:
+      - picture
+      - title
+      - productModelIds
+      - ranking
+      - minimumPrice
+    UpdateUniverseControllerFormDataDto:
+      type: object
+      properties:
+        picture:
+          type: string
+          format: binary
+        title:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        ranking:
+          type: number
+        minimumPrice:
+          type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

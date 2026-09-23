@@ -29,8 +29,35 @@ paths:
                 $ref: '#/components/schemas/HarvestrPostMessageResult'
       tags:
       - Harvestr
+      summary: Create feedback
+      x-summary-source: derived
 components:
   schemas:
+    CreateHarvestrMessageRequester:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/HarvestrRequesterType'
+        name:
+          type: string
+        email:
+          type: string
+        externalUid:
+          type: string
+      required:
+      - type
+      - name
+    CreateHarvestrMessageSubmitter:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        externalUid:
+          type: string
+      required:
+      - name
     HarvestrMessageChannel:
       type: string
       enum:
@@ -45,22 +72,6 @@ components:
       - SHEET
       - SLACK
       - ZENDESK
-    CreateHarvestrMessageSubmitter:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        externalUid:
-          type: string
-      required:
-      - name
-    HarvestrRequesterType:
-      type: string
-      enum:
-      - USER
-      - COMPANY
     CreateHarvestrMessageDto:
       type: object
       properties:
@@ -82,20 +93,11 @@ components:
       - title
       - content
       - requester
-    CreateHarvestrMessageRequester:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/HarvestrRequesterType'
-        name:
-          type: string
-        email:
-          type: string
-        externalUid:
-          type: string
-      required:
-      - type
-      - name
+    HarvestrRequesterType:
+      type: string
+      enum:
+      - USER
+      - COMPANY
     HarvestrPostMessageResult:
       type: object
       properties:

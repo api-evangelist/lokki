@@ -23,6 +23,8 @@ paths:
                 $ref: '#/components/schemas/OnlineStoreText'
       tags:
       - Online Store Text
+      summary: Get online store text by company id
+      x-summary-source: derived
     put:
       operationId: updateOnlineStoreTextByCompanyId
       parameters: []
@@ -41,25 +43,10 @@ paths:
                 $ref: '#/components/schemas/OnlineStoreText'
       tags:
       - Online Store Text
+      summary: Update online store text by company id
+      x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    UpdateOnlineStoreTextDto:
-      type: object
-      properties:
-        retrievalOptionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        retrievalOptionDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        deliveryOptionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        deliveryOptionDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        universeSectionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
     OnlineStoreText:
       type: object
       properties:
@@ -85,6 +72,23 @@ components:
       - deliveryOptionTitle
       - deliveryOptionDescription
       - universeSectionTitle
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateOnlineStoreTextDto:
+      type: object
+      properties:
+        retrievalOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        retrievalOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        universeSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
   securitySchemes:
     x-access-token:
       scheme: bearer

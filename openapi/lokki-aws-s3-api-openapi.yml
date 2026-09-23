@@ -35,6 +35,8 @@ paths:
                 type: string
       tags:
       - Aws S3
+      summary: Aws S3 upload image
+      x-summary-source: derived
   /v2/aws-s3/duplicate-image:
     post:
       operationId: awsS3DuplicateImage
@@ -54,16 +56,10 @@ paths:
                 type: string
       tags:
       - Aws S3
+      summary: Aws S3 duplicate image
+      x-summary-source: derived
 components:
   schemas:
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-      - file
     DuplicateImageDto:
       type: object
       properties:
@@ -74,6 +70,14 @@ components:
       required:
       - key
       - newKey
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
   securitySchemes:
     x-access-token:
       scheme: bearer
