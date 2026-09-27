@@ -293,69 +293,6 @@ components:
       required:
       - id
       - name
-    DiscoverPageAggregate:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    CleanupObsoleteStrapiLokkiBodyDto:
-      type: object
-      properties:
-        dryRun:
-          type: boolean
-      required:
-      - dryRun
-    GetExportStrapiActivityCityPagesDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-      - file
-    CleanupObsoleteCategoriesResponseDto:
-      type: object
-      properties:
-        dryRun:
-          type: boolean
-        verticales:
-          type: object
-        orphanCategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/StrapiOrphanCategory'
-      required:
-      - dryRun
-      - verticales
-      - orphanCategories
-    GetExportStrapiCitiesDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
     StrapiImportStatus:
       type: object
       properties:
@@ -391,6 +328,69 @@ components:
       - importStep
       - importStartedAt
       - importEndedAt
+    CleanupObsoleteCategoriesResponseDto:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+        verticales:
+          type: object
+        orphanCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrapiOrphanCategory'
+      required:
+      - dryRun
+      - verticales
+      - orphanCategories
+    GetExportStrapiActivityCityPagesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    GetExportStrapiCitiesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    CleanupObsoleteStrapiLokkiBodyDto:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+      required:
+      - dryRun
+    DiscoverPageAggregate:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
     GetExportStrapiDiscoverPagesDto:
       type: object
       properties:

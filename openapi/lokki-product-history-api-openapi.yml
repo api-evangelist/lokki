@@ -105,19 +105,78 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DeleteProductHistoryEventDto:
+    HistoryInspectionField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryInspectionAnswer'
+      required:
+      - id
+      - name
+      - answers
+    CreateUpdateProductHistoryEventDto:
       type: object
       properties:
         productId:
           type: string
         subProductId:
           type: string
-        eventId:
-          type: string
+        event:
+          $ref: '#/components/schemas/EditProductHistoryEventDto'
       required:
       - productId
       - subProductId
-      - eventId
+      - event
+    StateLastEventList:
+      type: object
+      properties:
+        lastEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/StateLastEvent'
+      required:
+      - lastEvents
+    HistoryInspectionOption:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    GetLastStateEventsBySubProductsIdsDto:
+      type: object
+      properties:
+        subProductIds:
+          type: array
+          items:
+            type: string
+      required:
+      - subProductIds
+    EventOptions:
+      type: object
+      properties:
+        unavailable:
+          type: boolean
+      required:
+      - unavailable
+    GetProductHistoryEventsByIdsDto:
+      type: object
+      properties:
+        productHistoryEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetProductHistoryEventByIdDto'
+      required:
+      - productHistoryEvents
     HistoryAttachedFile:
       type: object
       properties:
@@ -136,25 +195,57 @@ components:
       - key
       - size
       - type
-    HistoryInspectionOption:
+    StateLastEvent:
       type: object
       properties:
-        id:
+        productId:
           type: string
-        value:
+        subProductId:
           type: string
-      required:
-      - id
-      - value
-    StateLastEventList:
-      type: object
-      properties:
-        lastEvents:
+        note:
+          type: string
+        inspectionFields:
           type: array
           items:
-            $ref: '#/components/schemas/StateLastEvent'
+            $ref: '#/components/schemas/HistoryInspectionField'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
       required:
-      - lastEvents
+      - productId
+      - subProductId
+      - note
+      - inspectionFields
+      - files
+    CreateUpdateManyProductHistoryEventsForProductDto:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductIds:
+          type: array
+          items:
+            type: string
+        event:
+          $ref: '#/components/schemas/EditProductHistoryEventDto'
+      required:
+      - productId
+      - subProductIds
+      - event
+    DeleteProductHistoryEventDto:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductId:
+          type: string
+        eventId:
+          type: string
+      required:
+      - productId
+      - subProductId
+      - eventId
     HistoryInspectionAnswer:
       type: object
       properties:
@@ -178,13 +269,16 @@ components:
       - answerType
       - value
       - options
-    EventOptions:
+    GetProductHistoryEventByIdDto:
       type: object
       properties:
-        unavailable:
-          type: boolean
+        productHistoryId:
+          type: string
+        eventId:
+          type: string
       required:
-      - unavailable
+      - productHistoryId
+      - eventId
     EditProductHistoryEventDto:
       type: object
       properties:
@@ -225,100 +319,6 @@ components:
       - unite
       - orderId
       - customerId
-    GetProductHistoryEventByIdDto:
-      type: object
-      properties:
-        productHistoryId:
-          type: string
-        eventId:
-          type: string
-      required:
-      - productHistoryId
-      - eventId
-    GetProductHistoryEventsByIdsDto:
-      type: object
-      properties:
-        productHistoryEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetProductHistoryEventByIdDto'
-      required:
-      - productHistoryEvents
-    CreateUpdateManyProductHistoryEventsForProductDto:
-      type: object
-      properties:
-        productId:
-          type: string
-        subProductIds:
-          type: array
-          items:
-            type: string
-        event:
-          $ref: '#/components/schemas/EditProductHistoryEventDto'
-      required:
-      - productId
-      - subProductIds
-      - event
-    StateLastEvent:
-      type: object
-      properties:
-        productId:
-          type: string
-        subProductId:
-          type: string
-        note:
-          type: string
-        inspectionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryInspectionField'
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryAttachedFile'
-      required:
-      - productId
-      - subProductId
-      - note
-      - inspectionFields
-      - files
-    HistoryInspectionField:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        answers:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryInspectionAnswer'
-      required:
-      - id
-      - name
-      - answers
-    GetLastStateEventsBySubProductsIdsDto:
-      type: object
-      properties:
-        subProductIds:
-          type: array
-          items:
-            type: string
-      required:
-      - subProductIds
-    CreateUpdateProductHistoryEventDto:
-      type: object
-      properties:
-        productId:
-          type: string
-        subProductId:
-          type: string
-        event:
-          $ref: '#/components/schemas/EditProductHistoryEventDto'
-      required:
-      - productId
-      - subProductId
-      - event
   securitySchemes:
     x-access-token:
       scheme: bearer

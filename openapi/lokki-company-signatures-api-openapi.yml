@@ -382,6 +382,65 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CompanyDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        collection:
+          type: string
+          enum:
+          - termsAndConditions
+        internalTitle:
+          type: string
+        type:
+          type: string
+          enum:
+          - lokkiPayment
+          - lokkiVisibility
+          - lokkiRent
+      required:
+      - id
+      - collection
+      - internalTitle
+      - type
+    CompanyDocumentBodyDto:
+      type: object
+      properties:
+        id:
+          type: string
+        internalTitle:
+          type: string
+        collection:
+          type: string
+          enum:
+          - termsAndConditions
+        type:
+          type: string
+          enum:
+          - lokkiPayment
+          - lokkiVisibility
+          - lokkiRent
+      required:
+      - id
+      - internalTitle
+      - collection
+      - type
+    GetManyCompanySignaturesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanySignature'
+      required:
+      - total
+      - docs
     CompanySignature:
       type: object
       properties:
@@ -415,65 +474,6 @@ components:
       - document
       - userId
       - companyId
-    CompanyDocumentBodyDto:
-      type: object
-      properties:
-        id:
-          type: string
-        internalTitle:
-          type: string
-        collection:
-          type: string
-          enum:
-          - termsAndConditions
-        type:
-          type: string
-          enum:
-          - lokkiPayment
-          - lokkiVisibility
-          - lokkiRent
-      required:
-      - id
-      - internalTitle
-      - collection
-      - type
-    CompanyDocument:
-      type: object
-      properties:
-        id:
-          type: string
-        collection:
-          type: string
-          enum:
-          - termsAndConditions
-        internalTitle:
-          type: string
-        type:
-          type: string
-          enum:
-          - lokkiPayment
-          - lokkiVisibility
-          - lokkiRent
-      required:
-      - id
-      - collection
-      - internalTitle
-      - type
-    GetManyCompanySignaturesResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanySignature'
-      required:
-      - total
-      - docs
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -69,6 +69,7 @@ tags:
 - MCP
 - Agents
 - Agent Skills
+- A2A
 tags_raw:
 - Company
 - Climate Tech
@@ -91,6 +92,7 @@ tags_raw:
 - MCP
 - Agents
 - Agent Skills
+- A2A
 apis:
 - aid: lokki:lokki-action-log-api
   name: Lokki Action Log API
@@ -2721,3 +2723,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 28
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.getlokki.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

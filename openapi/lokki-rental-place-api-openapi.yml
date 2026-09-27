@@ -606,206 +606,59 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RentalPlaceSearchItemDuration:
+    RentalPlaceCompanyUniverseDto:
       type: object
       properties:
+        id:
+          type: string
+        name:
+          type: string
+        img:
+          type: string
+        pricePerDay:
+          type: number
+      required:
+      - id
+      - name
+      - img
+      - pricePerDay
+    RentalPlaceCompaniesDto:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceCompanyDto'
+        totalCount:
+          type: number
+      required:
+      - companies
+      - totalCount
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
         type:
           type: string
           enum:
-          - shorter
-          - longer
-        duration:
+          - in
+          - include
+          - overlap
+        variation:
           type: number
       required:
+      - startDate
+      - endDate
       - type
-      - duration
-    CompanyRentalPlaceDescriptionsDto:
+      - variation
+    UpdateCreateRentalPlaceUniverseDto:
       type: object
       properties:
-        fr:
-          type: string
-        en:
-          type: string
-      required:
-      - fr
-      - en
-    CompanyRentalPlaceUniversesDto:
-      type: object
-      properties:
-        id:
-          type: string
-        categoryIds:
-          type: array
-          items:
-            type: string
-        pack:
-          type: boolean
-      required:
-      - id
-      - categoryIds
-      - pack
-    CompanyDeliveryCity:
-      type: object
-      properties:
-        cityName:
-          type: string
-        sublocalityName:
-          type: string
-        zipCode:
-          type: string
-        placeId:
-          type: string
-        hasMultiplePostcodeLocalities:
-          type: boolean
-      required:
-      - cityName
-      - sublocalityName
-      - zipCode
-      - placeId
-      - hasMultiplePostcodeLocalities
-    RentalPlacePriceDto:
-      type: object
-      properties:
-        initial:
-          type:
-          - number
-          - 'null'
-        discounted:
-          type:
-          - number
-          - 'null'
-      required:
-      - initial
-      - discounted
-    OnlineStoreConfig:
-      type: object
-      properties:
-        newOnlineStoreDesign:
-          type: boolean
-        customerTextRGPD:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        featuredSectionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        eventsTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        openingTimeFrames:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpeningTimeFrame'
-        openingTimeFramesLowSeason:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpeningTimeFrame'
-        closedDates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DateRange'
-        lowSeasonRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DateRange'
-        bannerURL:
-          type: array
-          items:
-            type: string
-        featuredIds:
-          type: array
-          items:
-            type: string
-        bannerScroll:
-          type: number
-        reservationRanges:
-          $ref: '#/components/schemas/ReservationRanges'
-        timeLapsBeforeBookingInHours:
-          type: number
-        delivery:
-          $ref: '#/components/schemas/CompanyDelivery'
-        reservationTimes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationTime'
-        insuranceActivated:
-          type: boolean
-        eventActivated:
-          type: boolean
-        customFeaturedMode:
-          type: boolean
-        hideOnlineStoreLCD:
-          type: boolean
-        hideOnlineStoreLLD:
-          type: boolean
-        displayAddressOnlineStore:
-          type: boolean
-        eventDirectOrder:
-          type: boolean
-        eventTags:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventTag'
-        eventUniverses:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventUniverse'
-        eventUniversesActivated:
-          type: boolean
-        eventUniversesTag:
-          type: string
-        phoneNumber:
-          type: string
-        displayPhoneNumber:
-          type: boolean
-        script:
-          type: string
-        defaultPhoneCode:
-          type: string
-        showPricing:
-          type: boolean
-        showStock:
-          type: boolean
-        lldBilling:
-          type: boolean
-      required:
-      - newOnlineStoreDesign
-      - customerTextRGPD
-      - description
-      - featuredSectionTitle
-      - eventsTitle
-      - openingTimeFrames
-      - openingTimeFramesLowSeason
-      - closedDates
-      - lowSeasonRanges
-      - bannerURL
-      - featuredIds
-      - bannerScroll
-      - reservationRanges
-      - timeLapsBeforeBookingInHours
-      - delivery
-      - reservationTimes
-      - insuranceActivated
-      - eventActivated
-      - customFeaturedMode
-      - hideOnlineStoreLCD
-      - hideOnlineStoreLLD
-      - displayAddressOnlineStore
-      - eventDirectOrder
-      - eventTags
-      - eventUniverses
-      - eventUniversesActivated
-      - eventUniversesTag
-      - phoneNumber
-      - displayPhoneNumber
-      - script
-      - defaultPhoneCode
-      - showPricing
-      - showStock
-      - lldBilling
-    RentalPlaceUniverseDto:
-      type: object
-      properties:
-        id:
-          type: string
         name:
           type: string
         displayName:
@@ -836,56 +689,51 @@ components:
             - MOTOCULTURE
             - TOOLING
       required:
-      - id
       - name
       - displayName
       - img
       - color
       - verticales
-    PriceRule:
+    RentalPlaceStoresWithProductsAddressComponentsDto:
       type: object
       properties:
-        _id:
+        administrativeAreaLevel1:
           type: string
-        startDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        endDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        type:
+        administrativeAreaLevel2:
           type: string
-          enum:
-          - in
-          - include
-          - overlap
-        variation:
-          type: number
+        city:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+        postalCode:
+          type: string
+        street:
+          type: string
+        streetNumber:
+          type: string
       required:
-      - startDate
-      - endDate
-      - type
-      - variation
-    RentalPlaceCompaniesDto:
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - city
+      - country
+      - placeId
+      - postalCode
+      - street
+      - streetNumber
+    RawOnlineStoreItemListDto:
       type: object
       properties:
-        companies:
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/RentalPlaceCompanyDto'
-        totalCount:
-          type: number
+            oneOf:
+            - $ref: '#/components/schemas/RawOnlineStoreServiceDto'
+            - $ref: '#/components/schemas/RawOnlineStoreProductDto'
+            - $ref: '#/components/schemas/RawOnlineStorePackDto'
       required:
-      - companies
-      - totalCount
-    ReservationRanges:
-      type: object
-      properties:
-        minimum:
-          $ref: '#/components/schemas/ReservationRange'
-        maximum:
-          $ref: '#/components/schemas/ReservationRange'
-      required:
-      - minimum
-      - maximum
+      - items
     ProductPriceRule:
       type: object
       properties:
@@ -901,139 +749,6 @@ components:
       - id
       - title
       - rules
-    CompanyDelivery:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRange'
-        deliveryOnly:
-          type: boolean
-        returnDelivery:
-          type: boolean
-        freeDeliveryActivated:
-          type: boolean
-        freeDeliveryMinimumType:
-          type: string
-          enum:
-          - MINUTES
-          - SUBTOTAL
-        freeDeliveryMinimumVal:
-          type: number
-        excludedCities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
-      - activated
-      - ranges
-      - deliveryOnly
-      - returnDelivery
-      - freeDeliveryActivated
-      - freeDeliveryMinimumType
-      - freeDeliveryMinimumVal
-      - excludedCities
-    RentalPlaceCompanyPriceRangeDto:
-      type: object
-      properties:
-        min:
-          type: number
-        max:
-          type: number
-      required:
-      - min
-      - max
-    RawOnlineStoreItemListDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/RawOnlineStoreServiceDto'
-            - $ref: '#/components/schemas/RawOnlineStoreProductDto'
-            - $ref: '#/components/schemas/RawOnlineStorePackDto'
-      required:
-      - items
-    CompanyShowcaseProductDto:
-      type: object
-      properties:
-        id:
-          type: string
-        price:
-          type: number
-      required:
-      - id
-      - price
-    OpeningTimeFrame:
-      type: object
-      properties:
-        id:
-          type: string
-        day:
-          type: string
-          enum:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          - saturday
-          - sunday
-          - ALL
-        isOpen:
-          type: boolean
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - day
-      - isOpen
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    ReservationTime:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - start
-          - end
-        time:
-          type: string
-      required:
-      - id
-      - type
-      - time
-    ReservationRange:
-      type: object
-      properties:
-        nbHours:
-          type: number
-        activated:
-          type: boolean
-      required:
-      - nbHours
-      - activated
-    ItemOnlineStoreInformation:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - name
-      - description
     PriceModelSpecificDuration:
       type: object
       properties:
@@ -1063,214 +778,22 @@ components:
       - price
       - priceLowSeason
       - label
-    RentalPlaceExtraCompanyInfoDto:
-      type: object
-      properties:
-        addressComponents:
-          $ref: '#/components/schemas/CompanyAddressComponentsDto'
-        companyType:
-          type: string
-          default: lokki
-          enum:
-          - lokki
-        id:
-          type: string
-        slug:
-          type: string
-        name:
-          type: string
-        logo:
-          type: string
-        banner:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        currency:
-          type: string
-        address:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        rentalPlaceInfos:
-          $ref: '#/components/schemas/CompanyRentalPlaceDto'
-        googleRating:
-          type: number
-        googleReviews:
-          type: array
-          items:
-            $ref: '#/components/schemas/GoogleReview'
-        googleReviewsNb:
-          type: number
-        showcaseProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShowcaseProductDto'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        universes:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceCompanyUniverseDto'
-      required:
-      - companyType
-      - id
-      - slug
-      - name
-      - logo
-      - banner
-      - description
-      - currency
-      - address
-      - lat
-      - lng
-      - rentalPlaceInfos
-      - googleRating
-      - googleReviews
-      - googleReviewsNb
-      - showcaseProducts
-      - verticales
-      - universes
-    RawOnlineStoreSubProductDto:
-      type: object
-      properties:
-        id:
-          type: string
-        isAvailable:
-          type: boolean
-      required:
-      - id
-      - isAvailable
-    PackCategory:
+    ShowcaseProductDto:
       type: object
       properties:
         id:
           type: string
         name:
-          type: string
-        productModelId:
-          type: string
-        fieldId:
-          type: string
-      required:
-      - id
-      - name
-      - productModelId
-      - fieldId
-    RentalPlaceStoresWithProductsAddressComponentsDto:
-      type: object
-      properties:
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        placeId:
-          type: string
-        postalCode:
-          type: string
-        street:
-          type: string
-        streetNumber:
-          type: string
-      required:
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - city
-      - country
-      - placeId
-      - postalCode
-      - street
-      - streetNumber
-    OnlineStoreProductTags:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        isTagged:
-          type: boolean
-        value:
-          type: string
-      required:
-      - id
-      - name
-      - isTagged
-      - value
-    PriceModelRangeDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: range
-          enum:
-          - range
-        minDuration:
-          type: number
-        maxDuration:
-          type: number
-        durationInDays:
-          type: number
-        id:
           type: string
         price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - minDuration
-      - maxDuration
-      - id
-      - price
-      - priceLowSeason
-      - label
-    RawOnlineStorePackOptionDto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/RawOnlineStoreServiceDto'
-            - $ref: '#/components/schemas/RawOnlineStoreProductDto'
-        name:
+          type: number
+        imageUrl:
           type: string
       required:
-      - items
+      - id
       - name
+      - price
+      - imageUrl
     RentalPlaceDiscoverEventDto:
       type: object
       properties:
@@ -1293,6 +816,30 @@ components:
       - duration
       - slot
       - price
+    RentalPlacePriceDto:
+      type: object
+      properties:
+        initial:
+          type:
+          - number
+          - 'null'
+        discounted:
+          type:
+          - number
+          - 'null'
+      required:
+      - initial
+      - discounted
+    RentalPlaceCompanyPriceRangeDto:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+      required:
+      - min
+      - max
     DeliveryRange:
       type: object
       properties:
@@ -1311,329 +858,6 @@ components:
       - max
       - price
       - specificPrices
-    RentalPlaceCompanyUniverseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        img:
-          type: string
-        pricePerDay:
-          type: number
-      required:
-      - id
-      - name
-      - img
-      - pricePerDay
-    CompanyRentalPlaceDto:
-      type: object
-      properties:
-        image:
-          type: string
-        additionalImages:
-          type: array
-          items:
-            type: string
-        descriptions:
-          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
-        universes:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        showcaseProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyShowcaseProductDto'
-        team:
-          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
-        lokkiComment:
-          type: string
-      required:
-      - image
-      - additionalImages
-      - descriptions
-      - universes
-      - verticales
-      - showcaseProducts
-      - team
-      - lokkiComment
-    PartnerRentalPlaceCompanyDto:
-      type: object
-      properties:
-        name:
-          type: string
-        slug:
-          type: string
-        logoURL:
-          type: string
-        images:
-          type: array
-          items:
-            type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        url:
-          type: string
-        availableProducts:
-          type: array
-          items:
-            type: string
-        availableProductsDetails:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductDetails'
-        totalNbAvailableProducts:
-          type: number
-        averagePrice:
-          type: number
-        minPrice:
-          type: number
-        maxPrice:
-          type: number
-        googleRating:
-          type: number
-        googleReviewsNb:
-          type: number
-        description:
-          type: string
-        descriptionHtml:
-          type: string
-        delivery:
-          type: boolean
-        deliveryRange:
-          type: number
-        insurance:
-          type: boolean
-        address:
-          type: string
-      required:
-      - name
-      - slug
-      - logoURL
-      - images
-      - lat
-      - lng
-      - url
-      - availableProducts
-      - availableProductsDetails
-      - totalNbAvailableProducts
-      - averagePrice
-      - minPrice
-      - maxPrice
-      - googleRating
-      - googleReviewsNb
-      - description
-      - descriptionHtml
-      - delivery
-      - deliveryRange
-      - insurance
-      - address
-    RentalPlaceCompanyDurationRangeDto:
-      type: object
-      properties:
-        min:
-          type: number
-        max:
-          type: number
-      required:
-      - min
-      - max
-    RentalPlaceSearchItemDto:
-      type: object
-      properties:
-        product_online_information:
-          $ref: '#/components/schemas/ItemOnlineStoreInformation'
-        id:
-          type: string
-        product_model_id:
-          type: string
-        product_verticale_category:
-          type:
-          - string
-          - 'null'
-        product_verticale_category_i18n_key:
-          type:
-          - string
-          - 'null'
-        product_verticale_category_name:
-          type:
-          - string
-          - 'null'
-        product_verticale_category_verticale:
-          type:
-          - string
-          - 'null'
-        product_image:
-          type: array
-          items:
-            type: string
-        product_name:
-          type: string
-        price:
-          $ref: '#/components/schemas/RentalPlacePriceDto'
-        pricePerDay:
-          $ref: '#/components/schemas/RentalPlacePriceDto'
-        avgPrice:
-          type:
-          - number
-          - 'null'
-        price_rule:
-          allOf:
-          - $ref: '#/components/schemas/ProductPriceRule'
-        is_bestseller:
-          type: boolean
-        is_low_stock:
-          type: boolean
-        order_count:
-          type: number
-        usage_count:
-          type: number
-        discount_in_percentage:
-          type: number
-        closest_valid_range:
-          allOf:
-          - $ref: '#/components/schemas/RentalPlaceSearchItemDuration'
-        item_type:
-          type: string
-          enum:
-          - PRODUCT
-          - SERVICE
-        rental_type:
-          type: string
-          enum:
-          - LCD
-          - LLD
-      required:
-      - product_online_information
-      - id
-      - product_model_id
-      - product_verticale_category
-      - product_verticale_category_i18n_key
-      - product_verticale_category_name
-      - product_verticale_category_verticale
-      - product_image
-      - product_name
-      - price
-      - pricePerDay
-      - avgPrice
-      - is_bestseller
-      - is_low_stock
-      - order_count
-      - usage_count
-      - discount_in_percentage
-      - closest_valid_range
-      - item_type
-      - rental_type
-    RentalPlaceStoreClosedReason:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - CLOSED_DATES_RANGE
-          - CLOSED_DAYS
-          - CLOSED_TIMES
-        startDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        endDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - type
-      - startDate
-      - endDate
-    GoogleRating:
-      type: object
-      properties:
-        localizedReviews:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocalizedReview'
-        rating:
-          type: number
-        reviewNb:
-          type: number
-        placeId:
-          type: string
-        mapsUrl:
-          type: string
-        fetchedAt:
-          format: date-time
-          type: string
-      required:
-      - localizedReviews
-      - rating
-      - reviewNb
-      - placeId
-      - mapsUrl
-      - fetchedAt
-    ProductInsurance:
-      type: object
-      properties:
-        isActivated:
-          type: boolean
-        tulipProductId:
-          type: string
-        averagePurchasePrice:
-          type: number
-        margin:
-          type: number
-        sum:
-          type: number
-        contractType:
-          type: string
-          enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-      required:
-      - isActivated
-      - tulipProductId
-      - averagePurchasePrice
-      - margin
-      - sum
-    PartnerRentalPlaceCompaniesDto:
-      type: object
-      properties:
-        totalCount:
-          type: number
-        stores:
-          type: array
-          items:
-            $ref: '#/components/schemas/PartnerRentalPlaceCompanyDto'
-      required:
-      - totalCount
-      - stores
     RentalPlaceStoresWithProductsDto:
       type: object
       properties:
@@ -1787,6 +1011,1223 @@ components:
       - directOrderEnabled
       - phoneNumber
       - withTimeSlots
+    ProductDetails:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type:
+          - string
+          - 'null'
+      required:
+      - name
+      - image
+    CompanyRentalPlaceUniversesDto:
+      type: object
+      properties:
+        id:
+          type: string
+        categoryIds:
+          type: array
+          items:
+            type: string
+        pack:
+          type: boolean
+      required:
+      - id
+      - categoryIds
+      - pack
+    RawOnlineStoreProductDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: product
+          enum:
+          - product
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        bailPrice:
+          type: number
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProduct:
+          type: boolean
+        category:
+          type: string
+        productModel:
+          type: string
+        verticalCategory:
+          $ref: '#/components/schemas/RawOnlineStoreVerticalCategoryDto'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/OnlineStoreProductTags'
+        insurance:
+          $ref: '#/components/schemas/ProductInsurance'
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/RawOnlineStoreSubProductDto'
+        id:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        rank:
+          type: number
+        productSurveyId:
+          type: string
+        vat:
+          type: number
+        onlineAvailability:
+          type: boolean
+        isAvailable:
+          type: boolean
+        hideOnOnlineStore:
+          type: boolean
+      required:
+      - type
+      - priceModels
+      - bailPrice
+      - relatedProducts
+      - isRelatedProduct
+      - category
+      - productModel
+      - verticalCategory
+      - tags
+      - insurance
+      - subProducts
+      - id
+      - name
+      - onlineStoreName
+      - imageUrl
+      - videoLink
+      - description
+      - rank
+      - productSurveyId
+      - vat
+      - onlineAvailability
+      - isAvailable
+      - hideOnOnlineStore
+    RawOnlineStoreSubProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+      required:
+      - id
+      - isAvailable
+    RawOnlineStorePackDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: pack
+          enum:
+          - pack
+        category:
+          type: string
+          default: pack
+          enum:
+          - pack
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        bailAmount:
+          type: number
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProduct:
+          type: boolean
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/RawOnlineStorePackOptionDto'
+        packType:
+          enum:
+          - PRODUCT
+          - CATEGORY
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackCategory'
+        id:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        rank:
+          type: number
+        productSurveyId:
+          type: string
+        vat:
+          type: number
+        onlineAvailability:
+          type: boolean
+        isAvailable:
+          type: boolean
+        hideOnOnlineStore:
+          type: boolean
+      required:
+      - type
+      - category
+      - priceModels
+      - bailAmount
+      - relatedProducts
+      - isRelatedProduct
+      - options
+      - packType
+      - categories
+      - id
+      - name
+      - onlineStoreName
+      - imageUrl
+      - videoLink
+      - description
+      - rank
+      - productSurveyId
+      - vat
+      - onlineAvailability
+      - isAvailable
+      - hideOnOnlineStore
+    PackCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        productModelId:
+          type: string
+        fieldId:
+          type: string
+      required:
+      - id
+      - name
+      - productModelId
+      - fieldId
+    PartnerRentalPlaceCompaniesDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        stores:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartnerRentalPlaceCompanyDto'
+      required:
+      - totalCount
+      - stores
+    ItemOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    OnlineStoreProductTags:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isTagged:
+          type: boolean
+        value:
+          type: string
+      required:
+      - id
+      - name
+      - isTagged
+      - value
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    EventUniverse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+      required:
+      - id
+      - name
+      - imageUrl
+    ReservationTime:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - start
+          - end
+        time:
+          type: string
+      required:
+      - id
+      - type
+      - time
+    DeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - price
+      - cities
+    CompanyDeliveryCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+        sublocalityName:
+          type: string
+        zipCode:
+          type: string
+        placeId:
+          type: string
+        hasMultiplePostcodeLocalities:
+          type: boolean
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    CompanyShowcaseProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+      required:
+      - id
+      - price
+    CompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
+    RentalPlaceUniversesDto:
+      type: object
+      properties:
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceUniverseDto'
+      required:
+      - universes
+    ReservationRange:
+      type: object
+      properties:
+        nbHours:
+          type: number
+        activated:
+          type: boolean
+      required:
+      - nbHours
+      - activated
+    RawOnlineStoreVerticalCategoryDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        i18nKey:
+          type: string
+      required:
+      - id
+      - name
+      - i18nKey
+    OnlineStoreConfig:
+      type: object
+      properties:
+        newOnlineStoreDesign:
+          type: boolean
+        customerTextRGPD:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        featuredSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        eventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        openingTimeFrames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingTimeFramesLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        lowSeasonRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        bannerURL:
+          type: array
+          items:
+            type: string
+        featuredIds:
+          type: array
+          items:
+            type: string
+        bannerScroll:
+          type: number
+        reservationRanges:
+          $ref: '#/components/schemas/ReservationRanges'
+        timeLapsBeforeBookingInHours:
+          type: number
+        delivery:
+          $ref: '#/components/schemas/CompanyDelivery'
+        reservationTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationTime'
+        insuranceActivated:
+          type: boolean
+        eventActivated:
+          type: boolean
+        customFeaturedMode:
+          type: boolean
+        hideOnlineStoreLCD:
+          type: boolean
+        hideOnlineStoreLLD:
+          type: boolean
+        displayAddressOnlineStore:
+          type: boolean
+        eventDirectOrder:
+          type: boolean
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+        eventUniverses:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventUniverse'
+        eventUniversesActivated:
+          type: boolean
+        eventUniversesTag:
+          type: string
+        phoneNumber:
+          type: string
+        displayPhoneNumber:
+          type: boolean
+        script:
+          type: string
+        defaultPhoneCode:
+          type: string
+        showPricing:
+          type: boolean
+        showStock:
+          type: boolean
+        lldBilling:
+          type: boolean
+      required:
+      - newOnlineStoreDesign
+      - customerTextRGPD
+      - description
+      - featuredSectionTitle
+      - eventsTitle
+      - openingTimeFrames
+      - openingTimeFramesLowSeason
+      - closedDates
+      - lowSeasonRanges
+      - bannerURL
+      - featuredIds
+      - bannerScroll
+      - reservationRanges
+      - timeLapsBeforeBookingInHours
+      - delivery
+      - reservationTimes
+      - insuranceActivated
+      - eventActivated
+      - customFeaturedMode
+      - hideOnlineStoreLCD
+      - hideOnlineStoreLLD
+      - displayAddressOnlineStore
+      - eventDirectOrder
+      - eventTags
+      - eventUniverses
+      - eventUniversesActivated
+      - eventUniversesTag
+      - phoneNumber
+      - displayPhoneNumber
+      - script
+      - defaultPhoneCode
+      - showPricing
+      - showStock
+      - lldBilling
+    RentalPlaceExtraCompanyInfoDto:
+      type: object
+      properties:
+        addressComponents:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        companyType:
+          type: string
+          default: lokki
+          enum:
+          - lokki
+        id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        logo:
+          type: string
+        banner:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        currency:
+          type: string
+        address:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        rentalPlaceInfos:
+          $ref: '#/components/schemas/CompanyRentalPlaceDto'
+        googleRating:
+          type: number
+        googleReviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleReview'
+        googleReviewsNb:
+          type: number
+        showcaseProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShowcaseProductDto'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceCompanyUniverseDto'
+      required:
+      - companyType
+      - id
+      - slug
+      - name
+      - logo
+      - banner
+      - description
+      - currency
+      - address
+      - lat
+      - lng
+      - rentalPlaceInfos
+      - googleRating
+      - googleReviews
+      - googleReviewsNb
+      - showcaseProducts
+      - verticales
+      - universes
+    PartnerRentalPlaceCompanyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+        logoURL:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        url:
+          type: string
+        availableProducts:
+          type: array
+          items:
+            type: string
+        availableProductsDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetails'
+        totalNbAvailableProducts:
+          type: number
+        averagePrice:
+          type: number
+        minPrice:
+          type: number
+        maxPrice:
+          type: number
+        googleRating:
+          type: number
+        googleReviewsNb:
+          type: number
+        description:
+          type: string
+        descriptionHtml:
+          type: string
+        delivery:
+          type: boolean
+        deliveryRange:
+          type: number
+        insurance:
+          type: boolean
+        address:
+          type: string
+      required:
+      - name
+      - slug
+      - logoURL
+      - images
+      - lat
+      - lng
+      - url
+      - availableProducts
+      - availableProductsDetails
+      - totalNbAvailableProducts
+      - averagePrice
+      - minPrice
+      - maxPrice
+      - googleRating
+      - googleReviewsNb
+      - description
+      - descriptionHtml
+      - delivery
+      - deliveryRange
+      - insurance
+      - address
+    DateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - from
+      - to
+    GoogleReview:
+      type: object
+      properties:
+        rating:
+          type: number
+        name:
+          type: string
+        comment:
+          type: string
+        authorPhotoUrl:
+          type:
+          - string
+          - 'null'
+        publishTime:
+          format: date-time
+          type: string
+      required:
+      - rating
+      - name
+      - comment
+      - authorPhotoUrl
+      - publishTime
+    ReservationRanges:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/ReservationRange'
+        maximum:
+          $ref: '#/components/schemas/ReservationRange'
+      required:
+      - minimum
+      - maximum
+    EventTag:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - name
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
+    PriceModelRangeDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: range
+          enum:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - minDuration
+      - maxDuration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    RawOnlineStoreServiceDto:
+      type: object
+      properties:
+        type:
+          type: string
+          default: service
+          enum:
+          - service
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/OnlineStoreProductTags'
+        isRelatedProducts:
+          type: boolean
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isAssuranceTulip:
+          type: boolean
+        productModel:
+          type: string
+        verticalCategory:
+          $ref: '#/components/schemas/RawOnlineStoreVerticalCategoryDto'
+        id:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        rank:
+          type: number
+        productSurveyId:
+          type: string
+        vat:
+          type: number
+        onlineAvailability:
+          type: boolean
+        isAvailable:
+          type: boolean
+        hideOnOnlineStore:
+          type: boolean
+      required:
+      - type
+      - priceModels
+      - category
+      - tags
+      - isRelatedProducts
+      - relatedProducts
+      - isAssuranceTulip
+      - productModel
+      - verticalCategory
+      - id
+      - name
+      - onlineStoreName
+      - imageUrl
+      - videoLink
+      - description
+      - rank
+      - productSurveyId
+      - vat
+      - onlineAvailability
+      - isAvailable
+      - hideOnOnlineStore
+    CompanyDelivery:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+        freeDeliveryActivated:
+          type: boolean
+        freeDeliveryMinimumType:
+          type: string
+          enum:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
+          type: number
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - activated
+      - ranges
+      - deliveryOnly
+      - returnDelivery
+      - freeDeliveryActivated
+      - freeDeliveryMinimumType
+      - freeDeliveryMinimumVal
+      - excludedCities
+    ProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+        contractType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    RawOnlineStorePackOptionDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/RawOnlineStoreServiceDto'
+            - $ref: '#/components/schemas/RawOnlineStoreProductDto'
+        name:
+          type: string
+      required:
+      - items
+      - name
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    LocalizedReview:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleReview'
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - reviews
+    CompanyRentalPlaceDto:
+      type: object
+      properties:
+        image:
+          type: string
+        additionalImages:
+          type: array
+          items:
+            type: string
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        showcaseProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyShowcaseProductDto'
+        team:
+          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
+        lokkiComment:
+          type: string
+      required:
+      - image
+      - additionalImages
+      - descriptions
+      - universes
+      - verticales
+      - showcaseProducts
+      - team
+      - lokkiComment
+    RentalPlaceUniverseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        img:
+          type: string
+        color:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+      required:
+      - id
+      - name
+      - displayName
+      - img
+      - color
+      - verticales
+    CompanyRentalPlaceTeamDto:
+      type: object
+      properties:
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        image:
+          type: string
+        video:
+          type: string
+        teamName:
+          type: string
+      required:
+      - descriptions
+      - image
+      - video
+      - teamName
+    RentalPlaceCompanyDurationRangeDto:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+      required:
+      - min
+      - max
+    RentalPlaceSearchItemDto:
+      type: object
+      properties:
+        product_online_information:
+          $ref: '#/components/schemas/ItemOnlineStoreInformation'
+        id:
+          type: string
+        product_model_id:
+          type: string
+        product_verticale_category:
+          type:
+          - string
+          - 'null'
+        product_verticale_category_i18n_key:
+          type:
+          - string
+          - 'null'
+        product_verticale_category_name:
+          type:
+          - string
+          - 'null'
+        product_verticale_category_verticale:
+          type:
+          - string
+          - 'null'
+        product_image:
+          type: array
+          items:
+            type: string
+        product_name:
+          type: string
+        price:
+          $ref: '#/components/schemas/RentalPlacePriceDto'
+        pricePerDay:
+          $ref: '#/components/schemas/RentalPlacePriceDto'
+        avgPrice:
+          type:
+          - number
+          - 'null'
+        price_rule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        is_bestseller:
+          type: boolean
+        is_low_stock:
+          type: boolean
+        order_count:
+          type: number
+        usage_count:
+          type: number
+        discount_in_percentage:
+          type: number
+        closest_valid_range:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceSearchItemDuration'
+        item_type:
+          type: string
+          enum:
+          - PRODUCT
+          - SERVICE
+        rental_type:
+          type: string
+          enum:
+          - LCD
+          - LLD
+      required:
+      - product_online_information
+      - id
+      - product_model_id
+      - product_verticale_category
+      - product_verticale_category_i18n_key
+      - product_verticale_category_name
+      - product_verticale_category_verticale
+      - product_image
+      - product_name
+      - price
+      - pricePerDay
+      - avgPrice
+      - is_bestseller
+      - is_low_stock
+      - order_count
+      - usage_count
+      - discount_in_percentage
+      - closest_valid_range
+      - item_type
+      - rental_type
     RentalPlaceCompanyDto:
       type: object
       properties:
@@ -1881,518 +2322,77 @@ components:
       - haveLld
       - events
       - delivery
-    PriceRuleDate:
+    GoogleRating:
       type: object
       properties:
-        day:
-          type: number
-        time:
-          type: string
-      required:
-      - day
-      - time
-    UpdateCreateRentalPlaceUniverseDto:
-      type: object
-      properties:
-        name:
-          type: string
-        displayName:
-          type: string
-        img:
-          type: string
-        color:
-          type: string
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-      required:
-      - name
-      - displayName
-      - img
-      - color
-      - verticales
-    EventTag:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - id
-      - name
-    GoogleReview:
-      type: object
-      properties:
+        localizedReviews:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocalizedReview'
         rating:
           type: number
-        name:
-          type: string
-        comment:
-          type: string
-        authorPhotoUrl:
-          type:
-          - string
-          - 'null'
-        publishTime:
-          format: date-time
-          type: string
-      required:
-      - rating
-      - name
-      - comment
-      - authorPhotoUrl
-      - publishTime
-    RawOnlineStorePackDto:
-      type: object
-      properties:
-        type:
-          type: string
-          default: pack
-          enum:
-          - pack
-        category:
-          type: string
-          default: pack
-          enum:
-          - pack
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        bailAmount:
+        reviewNb:
           type: number
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isRelatedProduct:
-          type: boolean
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/RawOnlineStorePackOptionDto'
-        packType:
-          enum:
-          - PRODUCT
-          - CATEGORY
+        placeId:
           type: string
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackCategory'
-        id:
+        mapsUrl:
           type: string
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
-          type: string
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        rank:
-          type: number
-        productSurveyId:
-          type: string
-        vat:
-          type: number
-        onlineAvailability:
-          type: boolean
-        isAvailable:
-          type: boolean
-        hideOnOnlineStore:
-          type: boolean
-      required:
-      - type
-      - category
-      - priceModels
-      - bailAmount
-      - relatedProducts
-      - isRelatedProduct
-      - options
-      - packType
-      - categories
-      - id
-      - name
-      - onlineStoreName
-      - imageUrl
-      - videoLink
-      - description
-      - rank
-      - productSurveyId
-      - vat
-      - onlineAvailability
-      - isAvailable
-      - hideOnOnlineStore
-    RawOnlineStoreServiceDto:
-      type: object
-      properties:
-        type:
-          type: string
-          default: service
-          enum:
-          - service
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        category:
-          type: string
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/OnlineStoreProductTags'
-        isRelatedProducts:
-          type: boolean
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isAssuranceTulip:
-          type: boolean
-        productModel:
-          type: string
-        verticalCategory:
-          $ref: '#/components/schemas/RawOnlineStoreVerticalCategoryDto'
-        id:
-          type: string
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
-          type: string
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        rank:
-          type: number
-        productSurveyId:
-          type: string
-        vat:
-          type: number
-        onlineAvailability:
-          type: boolean
-        isAvailable:
-          type: boolean
-        hideOnOnlineStore:
-          type: boolean
-      required:
-      - type
-      - priceModels
-      - category
-      - tags
-      - isRelatedProducts
-      - relatedProducts
-      - isAssuranceTulip
-      - productModel
-      - verticalCategory
-      - id
-      - name
-      - onlineStoreName
-      - imageUrl
-      - videoLink
-      - description
-      - rank
-      - productSurveyId
-      - vat
-      - onlineAvailability
-      - isAvailable
-      - hideOnOnlineStore
-    ProductDetails:
-      type: object
-      properties:
-        name:
-          type: string
-        image:
-          type:
-          - string
-          - 'null'
-      required:
-      - name
-      - image
-    CompanyRentalPlaceTeamDto:
-      type: object
-      properties:
-        descriptions:
-          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
-        image:
-          type: string
-        video:
-          type: string
-        teamName:
-          type: string
-      required:
-      - descriptions
-      - image
-      - video
-      - teamName
-    ShowcaseProductDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        price:
-          type: number
-        imageUrl:
-          type: string
-      required:
-      - id
-      - name
-      - price
-      - imageUrl
-    DeliveryRangeSpecificPrice:
-      type: object
-      properties:
-        price:
-          type: number
-        cities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
-      - price
-      - cities
-    LocalizedReview:
-      type: object
-      properties:
-        reviews:
-          type: array
-          items:
-            $ref: '#/components/schemas/GoogleReview'
         fetchedAt:
           format: date-time
           type: string
       required:
-      - reviews
-    DateRange:
-      type: object
-      properties:
-        id:
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - from
-      - to
-    CompanyAddressComponentsDto:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-        placeId:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
+      - localizedReviews
+      - rating
+      - reviewNb
       - placeId
-    EventUniverse:
+      - mapsUrl
+      - fetchedAt
+    CompanyRentalPlaceDescriptionsDto:
       type: object
       properties:
-        id:
+        fr:
           type: string
-        name:
-          type: string
-        imageUrl:
+        en:
           type: string
       required:
-      - id
-      - name
-      - imageUrl
-    RentalPlaceUniversesDto:
-      type: object
-      properties:
-        universes:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceUniverseDto'
-      required:
-      - universes
-    PriceModelLLDDuration:
+      - fr
+      - en
+    RentalPlaceStoreClosedReason:
       type: object
       properties:
         type:
           type: string
-          default: LLD
           enum:
-          - LLD
-        calendarMonths:
-          type: number
-        id:
-          type: string
-        price:
+          - CLOSED_DATES_RANGE
+          - CLOSED_DAYS
+          - CLOSED_TIMES
+        startDate:
+          format: date-time
           type:
-          - number
+          - string
           - 'null'
-        priceLowSeason:
+        endDate:
+          format: date-time
           type:
-          - number
+          - string
           - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
       required:
       - type
-      - calendarMonths
-      - id
-      - price
-      - priceLowSeason
-      - label
-    RawOnlineStoreVerticalCategoryDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        i18nKey:
-          type: string
-      required:
-      - id
-      - name
-      - i18nKey
-    RawOnlineStoreProductDto:
+      - startDate
+      - endDate
+    RentalPlaceSearchItemDuration:
       type: object
       properties:
         type:
           type: string
-          default: product
           enum:
-          - product
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        bailPrice:
+          - shorter
+          - longer
+        duration:
           type: number
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isRelatedProduct:
-          type: boolean
-        category:
-          type: string
-        productModel:
-          type: string
-        verticalCategory:
-          $ref: '#/components/schemas/RawOnlineStoreVerticalCategoryDto'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/OnlineStoreProductTags'
-        insurance:
-          $ref: '#/components/schemas/ProductInsurance'
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/RawOnlineStoreSubProductDto'
-        id:
-          type: string
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
-          type: string
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        rank:
-          type: number
-        productSurveyId:
-          type: string
-        vat:
-          type: number
-        onlineAvailability:
-          type: boolean
-        isAvailable:
-          type: boolean
-        hideOnOnlineStore:
-          type: boolean
       required:
       - type
-      - priceModels
-      - bailPrice
-      - relatedProducts
-      - isRelatedProduct
-      - category
-      - productModel
-      - verticalCategory
-      - tags
-      - insurance
-      - subProducts
-      - id
-      - name
-      - onlineStoreName
-      - imageUrl
-      - videoLink
-      - description
-      - rank
-      - productSurveyId
-      - vat
-      - onlineAvailability
-      - isAvailable
-      - hideOnOnlineStore
+      - duration
   securitySchemes:
     x-access-token:
       scheme: bearer

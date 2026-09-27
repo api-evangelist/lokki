@@ -80,48 +80,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BulkPatchSubProductDto:
-      type: object
-      properties:
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        isAvailable:
-          type: boolean
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        id:
-          type: string
-      required:
-      - id
-    NotAvailableRange:
-      type: object
-      properties:
-        from:
-          format: date-time
-          type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
-    BulkPatchSubProductsDto:
-      type: object
-      properties:
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkPatchSubProductDto'
-      required:
-      - subProducts
     SubProduct:
       type: object
       properties:
@@ -149,6 +107,36 @@ components:
       - archive
       - externalQrCode
       - notAvailableRanges
+    BulkPatchSubProductsDto:
+      type: object
+      properties:
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkPatchSubProductDto'
+      required:
+      - subProducts
+    BulkPatchSubProductDto:
+      type: object
+      properties:
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        isAvailable:
+          type: boolean
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        id:
+          type: string
+      required:
+      - id
     PatchSubProductsDto:
       type: object
       properties:
@@ -166,6 +154,18 @@ components:
           type: boolean
         serialNumber:
           type: string
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -501,19 +501,34 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CustomerField:
+    CustomerCompanyNewsletterUpdateDto:
       type: object
       properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
+        subscribed:
+          type: boolean
       required:
-      - label
-      - value
-      - id
+      - subscribed
+    PaginatedCustomersDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+      required:
+      - totalCount
+      - customers
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
     CreateUpdateCustomerDto:
       type: object
       properties:
@@ -571,88 +586,6 @@ components:
       - isNewsletterSubscribe
       - isLokkiNewsletterSubscribe
       - customerImage
-    CustomerSkisetInfos:
-      type: object
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-      required:
-      - customerId
-    CustomersCsvDto:
-      type: object
-      properties:
-        customers:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - customers
-    CustomerFieldDto:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
-    GetManyCustomersResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-      required:
-      - total
-      - docs
-    PaginatedCustomersDto:
-      type: object
-      properties:
-        totalCount:
-          type: number
-        customers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-      required:
-      - totalCount
-      - customers
-    TulipInfos:
-      type: object
-      properties:
-        address:
-          type: string
-        zipcode:
-          type: string
-        city:
-          type: string
-        managerFirstName:
-          type: string
-        managerLastName:
-          type: string
-        sirenNumber:
-          type: string
-      required:
-      - address
-      - zipcode
-      - city
-      - managerFirstName
-      - managerLastName
-      - sirenNumber
     Customer:
       type: object
       properties:
@@ -732,17 +665,84 @@ components:
       - createdAt
       - hidden
       - createdFrom
-    CustomerCompanyNewsletterUpdateDto:
+    CustomersCsvDto:
       type: object
       properties:
-        subscribed:
-          type: boolean
+        customers:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
       required:
-      - subscribed
+      - customers
+    GetManyCustomersResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+      required:
+      - total
+      - docs
+    CustomerFieldDto:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    TulipInfos:
+      type: object
+      properties:
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
+      required:
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
     LocalizedContent:
       type: object
       additionalProperties:
         type: string
+    CustomerField:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

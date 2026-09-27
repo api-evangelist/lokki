@@ -91,24 +91,63 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LokkitCreateAccountResultDto:
+    SelfTestUtmInfos:
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-      - user
-    UserValidationCode:
-      type: object
-      properties:
-        code:
+        utm_source:
           type: string
-        expiresAt:
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    UpdateLokkiUserDataDto:
+      type: object
+      properties:
+        launchDate:
           format: date-time
-          type: string
+          type:
+          - string
+          - 'null'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
       required:
-      - code
-      - expiresAt
+      - launchDate
+      - verticales
     LokkitUserData:
       type: object
       properties:
@@ -156,38 +195,6 @@ components:
       - verticales
       - tasks
       - createdAt
-    UpdateLokkiUserDataDto:
-      type: object
-      properties:
-        launchDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-      required:
-      - launchDate
-      - verticales
     UpdateLokkitUserDataTaskDto:
       type: object
       properties:
@@ -198,31 +205,19 @@ components:
       required:
       - taskId
       - isCompleted
-    SelfTestUtmInfos:
+    LokkitTask:
       type: object
       properties:
-        utm_source:
+        id:
           type: string
-        utm_medium:
-          type: string
-        utm_campaign:
-          type: string
-        utm_content:
-          type: string
-        utm_term:
-          type: string
-        device:
-          type: string
-        matchtype:
-          type: string
-        campaign_id:
-          type: string
-        adset_id:
-          type: string
-        ad_id:
-          type: string
-        GeoLoc:
-          type: string
+        taskId:
+          type: number
+        isCompleted:
+          type: boolean
+      required:
+      - id
+      - taskId
+      - isCompleted
     LokkitCompleteFormInfosDto:
       type: object
       properties:
@@ -280,6 +275,24 @@ components:
       - projectDescription
       - utmInfos
       - lang
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    LokkitCreateAccountResultDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - user
     User:
       type: object
       properties:
@@ -352,19 +365,6 @@ components:
       - createdAt
       - connectionAttempt
       - availableTools
-    LokkitTask:
-      type: object
-      properties:
-        id:
-          type: string
-        taskId:
-          type: number
-        isCompleted:
-          type: boolean
-      required:
-      - id
-      - taskId
-      - isCompleted
   securitySchemes:
     x-access-token:
       scheme: bearer

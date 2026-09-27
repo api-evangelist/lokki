@@ -33,45 +33,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateHarvestrMessageRequester:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/HarvestrRequesterType'
-        name:
-          type: string
-        email:
-          type: string
-        externalUid:
-          type: string
-      required:
-      - type
-      - name
-    CreateHarvestrMessageSubmitter:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        externalUid:
-          type: string
-      required:
-      - name
-    HarvestrMessageChannel:
-      type: string
-      enum:
-      - CHROME_WIDGET
-      - FORM
-      - FRESHDESK
-      - HUBSPOT
-      - INTERCOM
-      - MAIL
-      - NOTE
-      - SALESFORCE
-      - SHEET
-      - SLACK
-      - ZENDESK
     CreateHarvestrMessageDto:
       type: object
       properties:
@@ -93,11 +54,6 @@ components:
       - title
       - content
       - requester
-    HarvestrRequesterType:
-      type: string
-      enum:
-      - USER
-      - COMPANY
     HarvestrPostMessageResult:
       type: object
       properties:
@@ -162,6 +118,50 @@ components:
       - labels
       - code
       - messageStatus
+    HarvestrRequesterType:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+    HarvestrMessageChannel:
+      type: string
+      enum:
+      - CHROME_WIDGET
+      - FORM
+      - FRESHDESK
+      - HUBSPOT
+      - INTERCOM
+      - MAIL
+      - NOTE
+      - SALESFORCE
+      - SHEET
+      - SLACK
+      - ZENDESK
+    CreateHarvestrMessageRequester:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/HarvestrRequesterType'
+        name:
+          type: string
+        email:
+          type: string
+        externalUid:
+          type: string
+      required:
+      - type
+      - name
+    CreateHarvestrMessageSubmitter:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        externalUid:
+          type: string
+      required:
+      - name
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -65,6 +65,14 @@ components:
           example: optimize-company-1234567890
       required:
       - jobId
+    MagicScheduleCompanyOccupancyDto:
+      type: object
+      properties:
+        occupancyRate:
+          type: number
+          example: 76
+      required:
+      - occupancyRate
     MagicScheduleCompanyStateDto:
       type: object
       properties:
@@ -85,14 +93,6 @@ components:
       - status
       - progress
       - error
-    MagicScheduleCompanyOccupancyDto:
-      type: object
-      properties:
-        occupancyRate:
-          type: number
-          example: 76
-      required:
-      - occupancyRate
   securitySchemes:
     x-access-token:
       scheme: bearer

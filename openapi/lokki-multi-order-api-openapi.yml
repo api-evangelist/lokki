@@ -79,6 +79,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    NewOrderMultiOrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    NewMultiOrderDto:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+      required:
+      - ids
     MultiOrderDto:
       type: object
       properties:
@@ -95,22 +111,6 @@ components:
       - id
       - orderIds
       - createdAt
-    NewMultiOrderDto:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-      required:
-      - ids
-    NewOrderMultiOrderDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

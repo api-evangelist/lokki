@@ -230,152 +230,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ReconditioningSaleOfferCustomizationDto:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        comment:
-          type: string
-      required:
-      - subProductId
-      - comment
-    ReconditioningSaleCompanyDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        currency:
-          $ref: '#/components/schemas/CompanyCurrency'
-        address:
-          type: string
-        name:
-          type: string
-        companyMailSender:
-          $ref: '#/components/schemas/CompanyMailSender'
-        phone:
-          type: string
-        logoURL:
-          type: string
-      required:
-      - id
-      - currency
-      - address
-      - name
-      - companyMailSender
-      - phone
-      - logoURL
-    ReconditioningSaleOfferCustomizationsDto:
-      type: object
-      properties:
-        customizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
-      required:
-      - customizations
-    ReconditioningSaleSubProduct:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        serial:
-          type: string
-        brand:
-          type: string
-        years:
-          type: string
-          enum:
-          - YEAR_OR_LESS
-          - TWO_YEARS
-          - THREE_YEARS
-          - FOUR_YEARS
-          - FIVE_OR_MORE
-        state:
-          type: string
-          enum:
-          - EXCELLENT
-          - GOOD
-          - MEDIUM
-          - BAD
-        priceNew:
-          type: number
-        comment:
-          type: string
-        pictures:
-          type: array
-          items:
-            type: string
-        certificate:
-          type: string
-      required:
-      - subProductId
-      - serial
-      - brand
-      - years
-      - state
-      - priceNew
-      - comment
-      - pictures
-      - certificate
-    ReconditioningSaleOfferCustomize:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        comment:
-          type: string
-      required:
-      - subProductId
-      - comment
-    CreateUpdateReconditioningSaleDto:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        verticale:
-          enum:
-          - BIKE
-          - ELECTRIC_BIKE
-          - MOPED
-          - MOTORCYCLE
-          - CAR
-          - SCOOTER
-          - SKI
-          - CLIMBING
-          - SNOWSHOES
-          - SURF
-          - PADDLE
-          - CANOE_KAYAK
-          - BOAT
-          - EVENT
-          - MOTOCULTURE
-          - TOOLING
-          type: string
-        productId:
-          type: string
-        productName:
-          type: string
-        price:
-          type: number
-        availabilityDate:
-          format: date-time
-          type: string
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateReconditioningSaleSubProductDto'
-      required:
-      - title
-      - description
-      - verticale
-      - productId
-      - productName
-      - price
-      - availabilityDate
-      - subProducts
     ReconditioningSaleList:
       type: object
       properties:
@@ -385,69 +239,6 @@ components:
             $ref: '#/components/schemas/ReconditioningSale'
       required:
       - sales
-    ReconditioningSaleOfferUserDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        picture:
-          type: string
-      required:
-      - id
-      - name
-      - email
-      - phone
-      - picture
-    CreateUpdateReconditioningSaleSubProductDto:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        serial:
-          type: string
-        brand:
-          type: string
-        years:
-          type: string
-          enum:
-          - YEAR_OR_LESS
-          - TWO_YEARS
-          - THREE_YEARS
-          - FOUR_YEARS
-          - FIVE_OR_MORE
-        state:
-          type: string
-          enum:
-          - EXCELLENT
-          - GOOD
-          - MEDIUM
-          - BAD
-        priceNew:
-          type: number
-        comment:
-          type: string
-        pictures:
-          type: array
-          items:
-            type: string
-        certificate:
-          type: string
-      required:
-      - subProductId
-      - serial
-      - brand
-      - years
-      - state
-      - priceNew
-      - comment
-      - pictures
-      - certificate
     ReconditioningSale:
       type: object
       properties:
@@ -524,6 +315,121 @@ components:
       - subProducts
       - offers
       - createdAt
+    ReconditioningSaleOfferCustomizationDto:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        comment:
+          type: string
+      required:
+      - subProductId
+      - comment
+    ReconditioningSaleOfferUserDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+    ReconditioningSaleSubProduct:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        serial:
+          type: string
+        brand:
+          type: string
+        years:
+          type: string
+          enum:
+          - YEAR_OR_LESS
+          - TWO_YEARS
+          - THREE_YEARS
+          - FOUR_YEARS
+          - FIVE_OR_MORE
+        state:
+          type: string
+          enum:
+          - EXCELLENT
+          - GOOD
+          - MEDIUM
+          - BAD
+        priceNew:
+          type: number
+        comment:
+          type: string
+        pictures:
+          type: array
+          items:
+            type: string
+        certificate:
+          type: string
+      required:
+      - subProductId
+      - serial
+      - brand
+      - years
+      - state
+      - priceNew
+      - comment
+      - pictures
+      - certificate
+    ReconditioningSaleOffer:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomize'
+        details:
+          $ref: '#/components/schemas/ReconditioningSaleOfferUserDetails'
+      required:
+      - id
+      - userId
+      - customizations
+    ReconditioningSaleCompanyDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        currency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        address:
+          type: string
+        name:
+          type: string
+        companyMailSender:
+          $ref: '#/components/schemas/CompanyMailSender'
+        phone:
+          type: string
+        logoURL:
+          type: string
+      required:
+      - id
+      - currency
+      - address
+      - name
+      - companyMailSender
+      - phone
+      - logoURL
     CompanyMailSender:
       type: object
       properties:
@@ -544,23 +450,117 @@ components:
       required:
       - isoName
       - symbol
-    ReconditioningSaleOffer:
+    CreateUpdateReconditioningSaleDto:
       type: object
       properties:
-        id:
+        title:
           type: string
-        userId:
+        description:
           type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        productId:
+          type: string
+        productName:
+          type: string
+        price:
+          type: number
+        availabilityDate:
+          format: date-time
+          type: string
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateReconditioningSaleSubProductDto'
+      required:
+      - title
+      - description
+      - verticale
+      - productId
+      - productName
+      - price
+      - availabilityDate
+      - subProducts
+    ReconditioningSaleOfferCustomizationsDto:
+      type: object
+      properties:
         customizations:
           type: array
           items:
-            $ref: '#/components/schemas/ReconditioningSaleOfferCustomize'
-        details:
-          $ref: '#/components/schemas/ReconditioningSaleOfferUserDetails'
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
       required:
-      - id
-      - userId
       - customizations
+    ReconditioningSaleOfferCustomize:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        comment:
+          type: string
+      required:
+      - subProductId
+      - comment
+    CreateUpdateReconditioningSaleSubProductDto:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        serial:
+          type: string
+        brand:
+          type: string
+        years:
+          type: string
+          enum:
+          - YEAR_OR_LESS
+          - TWO_YEARS
+          - THREE_YEARS
+          - FOUR_YEARS
+          - FIVE_OR_MORE
+        state:
+          type: string
+          enum:
+          - EXCELLENT
+          - GOOD
+          - MEDIUM
+          - BAD
+        priceNew:
+          type: number
+        comment:
+          type: string
+        pictures:
+          type: array
+          items:
+            type: string
+        certificate:
+          type: string
+      required:
+      - subProductId
+      - serial
+      - brand
+      - years
+      - state
+      - priceNew
+      - comment
+      - pictures
+      - certificate
   securitySchemes:
     x-access-token:
       scheme: bearer

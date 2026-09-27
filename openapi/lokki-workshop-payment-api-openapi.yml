@@ -486,26 +486,20 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PaymentsInfo:
+    StatusHistory:
       type: object
       properties:
-        method:
+        from:
           type: string
-        amount:
-          type: number
-      required:
-      - method
-      - amount
-    SquarePaymentInfo:
-      type: object
-      properties:
-        squarePaymentId:
-          type: string
-        squareOrderId:
+        to:
+          type: boolean
+        date:
+          format: date-time
           type: string
       required:
-      - squarePaymentId
-      - squareOrderId
+      - from
+      - to
+      - date
     WorkshopOrder:
       type: object
       properties:
@@ -605,27 +599,120 @@ components:
       - sentMails
       - updatedAt
       - createdAt
-    PaginatedPaymentsWithWorkshopOrderDto:
+    SquarePaymentInfo:
       type: object
       properties:
-        totalCount:
+        squarePaymentId:
+          type: string
+        squareOrderId:
+          type: string
+      required:
+      - squarePaymentId
+      - squareOrderId
+    WorkshopPayment:
+      type: object
+      properties:
+        id:
+          type: string
+        paymentDate:
+          format: date-time
+          type: string
+        initialAmount:
           type: number
-        payments:
+        amount:
+          type: number
+        status:
+          enum:
+          - waiting
+          - pending
+          - paid
+          type: string
+        link:
+          type: string
+        paymentIntentId:
+          type: string
+        isEmailSent:
+          type: boolean
+        method:
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+          type: string
+        companyId:
+          type: string
+        orderWorkshopId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        refunds:
           type: array
           items:
-            $ref: '#/components/schemas/PaymentWithWorkshopOrderDto'
+            $ref: '#/components/schemas/WorkshopPaymentRefund'
+        stripeStatus:
+          enum:
+          - pending
+          - error
+          - success
+          - canceled
+          type: string
+        adyenPaymentData:
+          type: string
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
       required:
-      - totalCount
-      - payments
-    WorkshopPaymentDto:
+      - id
+      - initialAmount
+      - amount
+      - status
+      - isEmailSent
+      - method
+      - companyId
+      - orderWorkshopId
+      - createdAt
+      - isPartPayment
+      - refunds
+    TulipInfos:
       type: object
       properties:
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopPayment'
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
       required:
-      - payments
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
+    PaymentWithWorkshopOrderDto:
+      type: object
+      properties:
+        payment:
+          $ref: '#/components/schemas/WorkshopPayment'
+        workshopOrder:
+          $ref: '#/components/schemas/WorkshopOrder'
+      required:
+      - payment
     WorkshopOrderQuotes:
       type: object
       properties:
@@ -684,10 +771,31 @@ components:
       - date
       - method
       - reason
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
     LocalizedContent:
       type: object
       additionalProperties:
         type: string
+    PaginatedPaymentsWithWorkshopOrderDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentWithWorkshopOrderDto'
+      required:
+      - totalCount
+      - payments
     CustomerField:
       type: object
       properties:
@@ -701,41 +809,15 @@ components:
       - label
       - value
       - id
-    WorkshopPaymentRefund:
+    WorkshopPaymentDto:
       type: object
       properties:
-        id:
-          type: string
-        amount:
-          type: number
-        date:
-          format: date-time
-          type: string
-        method:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Autre
-          - Square Terminal
-        reason:
-          type: string
-          enum:
-          - DUPLICATE
-          - FRAUDULENT
-          - REQUESTED_BY_CUSTOMER
-          - OTHER
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPayment'
       required:
-      - id
-      - amount
-      - date
-      - method
-      - reason
+      - payments
     WorkshopOrderDocument:
       type: object
       properties:
@@ -765,6 +847,114 @@ components:
       - isEmailSend
       - isSigned
       - documentUrl
+    CustomInputWorkshop:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        isDone:
+          type: boolean
+      required:
+      - id
+      - name
+      - price
+      - isDone
+    WorkshopBatchRefundDto:
+      type: object
+      properties:
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopRefundPaymentDto'
+      required:
+      - refunds
+    WorkshopCreatePaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        initialAmount:
+          type: number
+        paymentIntentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - waiting
+          - pending
+          - paid
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+        paymentDate:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        isEmailSent:
+          type: boolean
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPaymentRefund'
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
+      required:
+      - amount
+      - method
+    PaymentInfoDto:
+      type: object
+      properties:
+        totalCount:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentsInfo'
+      required:
+      - totalCount
+      - totalTTC
+      - totalHT
+      - payments
+    RepairerWorkshop:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+      required:
+      - userId
+      - name
+    WorkshopPaymentCsvDto:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - payments
     Customer:
       type: object
       properties:
@@ -844,183 +1034,18 @@ components:
       - createdAt
       - hidden
       - createdFrom
-    PaymentInfoDto:
-      type: object
-      properties:
-        totalCount:
-          type: number
-        totalTTC:
-          type: number
-        totalHT:
-          type: number
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentsInfo'
-      required:
-      - totalCount
-      - totalTTC
-      - totalHT
-      - payments
-    CustomerSkisetInfos:
-      type: object
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-      required:
-      - customerId
-    WorkshopPaymentCsvDto:
-      type: object
-      properties:
-        payments:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - payments
-    TulipInfos:
-      type: object
-      properties:
-        address:
-          type: string
-        zipcode:
-          type: string
-        city:
-          type: string
-        managerFirstName:
-          type: string
-        managerLastName:
-          type: string
-        sirenNumber:
-          type: string
-      required:
-      - address
-      - zipcode
-      - city
-      - managerFirstName
-      - managerLastName
-      - sirenNumber
-    PaymentWithWorkshopOrderDto:
-      type: object
-      properties:
-        payment:
-          $ref: '#/components/schemas/WorkshopPayment'
-        workshopOrder:
-          $ref: '#/components/schemas/WorkshopOrder'
-      required:
-      - payment
-    CustomInputWorkshop:
+    WorkshopPaymentRefund:
       type: object
       properties:
         id:
           type: string
-        name:
-          type: string
-        price:
-          type: number
-        isDone:
-          type: boolean
-      required:
-      - id
-      - name
-      - price
-      - isDone
-    WorkshopBatchRefundDto:
-      type: object
-      properties:
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopRefundPaymentDto'
-      required:
-      - refunds
-    WorkshopCreatePaymentDto:
-      type: object
-      properties:
         amount:
           type: number
-        initialAmount:
-          type: number
-        paymentIntentId:
-          type: string
-        status:
-          type: string
-          enum:
-          - waiting
-          - pending
-          - paid
-        method:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Autre
-          - Square Terminal
-        paymentDate:
-          format: date-time
-          type: string
-        isPartPayment:
-          type: boolean
-        isEmailSent:
-          type: boolean
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopPaymentRefund'
-        squareInfo:
-          allOf:
-          - $ref: '#/components/schemas/SquarePaymentInfo'
-      required:
-      - amount
-      - method
-    StatusHistory:
-      type: object
-      properties:
-        from:
-          type: string
-        to:
-          type: boolean
         date:
           format: date-time
           type: string
-      required:
-      - from
-      - to
-      - date
-    WorkshopPayment:
-      type: object
-      properties:
-        id:
-          type: string
-        paymentDate:
-          format: date-time
-          type: string
-        initialAmount:
-          type: number
-        amount:
-          type: number
-        status:
-          enum:
-          - waiting
-          - pending
-          - paid
-          type: string
-        link:
-          type: string
-        paymentIntentId:
-          type: string
-        isEmailSent:
-          type: boolean
         method:
+          type: string
           enum:
           - Carte bleue
           - Espèces
@@ -1031,54 +1056,29 @@ components:
           - Lien de paiement
           - Autre
           - Square Terminal
+        reason:
           type: string
-        companyId:
-          type: string
-        orderWorkshopId:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        isPartPayment:
-          type: boolean
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopPaymentRefund'
-        stripeStatus:
           enum:
-          - pending
-          - error
-          - success
-          - canceled
-          type: string
-        adyenPaymentData:
-          type: string
-        squareInfo:
-          allOf:
-          - $ref: '#/components/schemas/SquarePaymentInfo'
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
       required:
       - id
-      - initialAmount
       - amount
-      - status
-      - isEmailSent
+      - date
       - method
-      - companyId
-      - orderWorkshopId
-      - createdAt
-      - isPartPayment
-      - refunds
-    RepairerWorkshop:
+      - reason
+    PaymentsInfo:
       type: object
       properties:
-        userId:
+        method:
           type: string
-        name:
-          type: string
+        amount:
+          type: number
       required:
-      - userId
-      - name
+      - method
+      - amount
   securitySchemes:
     x-access-token:
       scheme: bearer

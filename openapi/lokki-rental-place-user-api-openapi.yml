@@ -264,255 +264,34 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OrderEventPerson:
+    UpdateSubscriptionsDto:
       type: object
       properties:
-        name:
-          type: string
-        pricing:
-          type: string
-        infos:
-          type: object
-        categoryItems:
-          type: object
+        bouge:
+          type: boolean
+        bonplan:
+          type: boolean
       required:
-      - name
-      - pricing
-      - infos
-      - categoryItems
-    ValidateRentalPlaceUserDto:
-      type: object
-      properties:
-        email:
-          type: string
-        newEmail:
-          type: string
-        code:
-          type: string
-      required:
-      - email
-      - code
-    OrderEventPricing:
+      - bouge
+      - bonplan
+    YourOrderDocument:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
-        amount:
-          type: number
-        initialAmount:
-          type: number
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
       required:
       - id
       - name
-      - amount
-      - initialAmount
-    CompanyRentalPlace:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-        address:
-          type: string
-        addressComposants:
-          $ref: '#/components/schemas/RentalPlaceUserAddressComponents'
-        email:
-          type: string
-        phone:
-          type: string
-        slug:
-          type: string
-        accessRentalPlace:
-          type: boolean
-        logo:
-          type: string
-        cover:
-          type: string
-        rentalPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPointRP'
-        currencySymbol:
-          type: string
-      required:
-      - name
-      - id
-      - address
-      - addressComposants
-      - email
-      - phone
-      - slug
-      - accessRentalPlace
-      - logo
-      - cover
-      - rentalPoints
-      - currencySymbol
-    RentalPlaceUserDto:
-      type: object
-      properties:
-        id:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        lang:
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-          type: string
-        address:
-          type: string
-        addressComponents:
-          $ref: '#/components/schemas/RentalPlaceUserAddressComponents'
-        isAccountActivated:
-          type: boolean
-        lastConnection:
-          format: date-time
-          type: string
-        cguValidationDate:
-          format: date-time
-          type: string
-        orderRelations:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderRelation'
-        createdFrom:
-          enum:
-          - admin_dashboard
-          - rental_place_header
-          - rental_place_checkout
-          - rental_place_quote
-          - rental_place_favorites
-          - online_store
-          - sea
-          - unknown
-          type: string
-        createdPlatform:
-          enum:
-          - DESKTOP_BROWSER
-          - MOBILE_BROWSER
-          - MOBILE_APP
-          - UNKNOWN
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        subscribedToBouge:
-          type: boolean
-        subscribedToBonPlan:
-          type: boolean
-        anonymizationDate:
-          format: date-time
-          type: string
-        anonymizationOrigin:
-          enum:
-          - User
-          - Admin
-          - Inactivity
-          type: string
-        avatar:
-          enum:
-          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_bird.svg
-          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_flower_1.svg
-          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_flower_2.svg
-          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_hand.svg
-          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_heart.svg
-          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_sun.svg
-          type: string
-        signedUpWith:
-          enum:
-          - email
-          - google
-          - apple
-          type: string
-        newsletters:
-          $ref: '#/components/schemas/RentalPlaceUserNewsletters'
-      required:
-      - id
-      - firstName
-      - lastName
-      - email
-      - phone
-      - isAccountActivated
-      - cguValidationDate
-      - orderRelations
-      - createdFrom
-      - createdPlatform
-      - createdAt
-      - subscribedToBouge
-      - subscribedToBonPlan
-      - avatar
-      - signedUpWith
-      - newsletters
-    CreateRentalPlaceUserResponseDto:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/RentalPlaceUserDto'
-        messageId:
-          type: string
-      required:
-      - user
-      - messageId
-    ResendValidationEmailResponseDto:
-      type: object
-      properties:
-        sentEmail:
-          $ref: '#/components/schemas/ResendValidationSentEmailDto'
-      required:
-      - sentEmail
-    UpdateNewslettersSupportDto:
-      type: object
-      properties:
-        email:
-          type: boolean
-        sms:
-          type: boolean
-        push:
-          type: boolean
-      required:
-      - email
-      - sms
-      - push
-    PackRP:
-      type: object
-      properties:
-        name:
-          type: string
-        amount:
-          type: number
-        products:
-          type: array
-          items:
-            type: string
-      required:
-      - name
-      - amount
-      - products
-    UpdateRentalPlaceUserPasswordDto:
-      type: object
-      properties:
-        oldPassword:
-          type: string
-        newPassword:
-          type: string
-      required:
-      - oldPassword
-      - newPassword
+      - scope
     OrderLCDRP:
       type: object
       properties:
@@ -573,125 +352,6 @@ components:
       - departurePoint
       - arrivalPoint
       - isRequest
-    RentalPlaceUserNewsletters:
-      type: object
-      properties:
-        support:
-          $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
-      required:
-      - support
-    OrderEventRP:
-      type: object
-      properties:
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventPerson'
-        itemsRP:
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemRP'
-        packs:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackRP'
-        pricings:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventPricing'
-        name:
-          type: string
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/YourOrderDocument'
-        documentsState:
-          type: array
-          items:
-            $ref: '#/components/schemas/YourOrderStateDocumentFromOrder'
-        promoCode:
-          allOf:
-          - $ref: '#/components/schemas/PromoCodeDto'
-        createdAt:
-          format: date-time
-          type: string
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        price:
-          type: number
-        type:
-          type: string
-        id:
-          type: string
-        isCancelled:
-          type: boolean
-        departurePoint:
-          type: string
-        arrivalPoint:
-          type: string
-        isRequest:
-          type: boolean
-      required:
-      - participants
-      - itemsRP
-      - packs
-      - pricings
-      - name
-      - documents
-      - documentsState
-      - createdAt
-      - startDate
-      - endDate
-      - price
-      - type
-      - id
-      - isCancelled
-      - departurePoint
-      - arrivalPoint
-      - isRequest
-    RentalPlaceResendValidationEmailDto:
-      type: object
-      properties:
-        email:
-          type: string
-        newEmail:
-          type: string
-        encrypted:
-          type: boolean
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-        storeOrigin:
-          type: string
-      required:
-      - email
-      - encrypted
-      - lang
-    RentalPlaceUserNewslettersSupport:
-      type: object
-      properties:
-        email:
-          type: boolean
-        sms:
-          type: boolean
-        push:
-          type: boolean
-      required:
-      - email
-      - sms
-      - push
     ItemRP:
       type: object
       properties:
@@ -702,60 +362,41 @@ components:
       required:
       - name
       - amount
-    UpdateNewslettersDto:
+    CompleteGoogleRegistrationDto:
       type: object
       properties:
-        support:
-          $ref: '#/components/schemas/UpdateNewslettersSupportDto'
-      required:
-      - support
-    OrderRelation:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderRP'
-        companyId:
+        phone:
           type: string
-      required:
-      - orders
-      - companyId
-    RentalPlaceUserAddressComponents:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-    UpdateSubscriptionsDto:
-      type: object
-      properties:
-        bouge:
+        subscribedToBouge:
           type: boolean
-        bonplan:
+        subscribedToBonPlan:
           type: boolean
+        newsletters:
+          $ref: '#/components/schemas/RentalPlaceUserNewsletters'
       required:
-      - bouge
-      - bonplan
+      - phone
+    CreateRentalPlaceUserResponseDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/RentalPlaceUserDto'
+        messageId:
+          type: string
+      required:
+      - user
+      - messageId
+    FormatedOrderRelation:
+      type: object
+      properties:
+        order:
+          oneOf:
+          - $ref: '#/components/schemas/OrderEventRP'
+          - $ref: '#/components/schemas/OrderLCDRP'
+        company:
+          $ref: '#/components/schemas/CompanyRentalPlace'
+      required:
+      - order
+      - company
     PromoCodeDto:
       type: object
       properties:
@@ -891,6 +532,259 @@ components:
       - password
       - phone
       - lang
+    RentalPlaceUserDto:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/RentalPlaceUserAddressComponents'
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        cguValidationDate:
+          format: date-time
+          type: string
+        orderRelations:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRelation'
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - rental_place_header
+          - rental_place_checkout
+          - rental_place_quote
+          - rental_place_favorites
+          - online_store
+          - sea
+          - unknown
+          type: string
+        createdPlatform:
+          enum:
+          - DESKTOP_BROWSER
+          - MOBILE_BROWSER
+          - MOBILE_APP
+          - UNKNOWN
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        subscribedToBouge:
+          type: boolean
+        subscribedToBonPlan:
+          type: boolean
+        anonymizationDate:
+          format: date-time
+          type: string
+        anonymizationOrigin:
+          enum:
+          - User
+          - Admin
+          - Inactivity
+          type: string
+        avatar:
+          enum:
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_bird.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_flower_1.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_flower_2.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_hand.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_heart.svg
+          - https://bucket-prod.getlokki.com/rental-place/avatar/avatar_sun.svg
+          type: string
+        signedUpWith:
+          enum:
+          - email
+          - google
+          - apple
+          type: string
+        newsletters:
+          $ref: '#/components/schemas/RentalPlaceUserNewsletters'
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - phone
+      - isAccountActivated
+      - cguValidationDate
+      - orderRelations
+      - createdFrom
+      - createdPlatform
+      - createdAt
+      - subscribedToBouge
+      - subscribedToBonPlan
+      - avatar
+      - signedUpWith
+      - newsletters
+    RentalPointRP:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        slug:
+          type: string
+      required:
+      - name
+      - address
+      - city
+      - zipcode
+      - slug
+    OrderRelation:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRP'
+        companyId:
+          type: string
+      required:
+      - orders
+      - companyId
+    OrderEventPricing:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        amount:
+          type: number
+        initialAmount:
+          type: number
+      required:
+      - id
+      - name
+      - amount
+      - initialAmount
+    UpdateNewslettersSupportDto:
+      type: object
+      properties:
+        email:
+          type: boolean
+        sms:
+          type: boolean
+        push:
+          type: boolean
+      required:
+      - email
+      - sms
+      - push
+    ValidateRentalPlaceUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+        newEmail:
+          type: string
+        code:
+          type: string
+      required:
+      - email
+      - code
+    YourOrderStateDocumentFromOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
+        status:
+          type: string
+          enum:
+          - PENDING
+          - SUCCESS
+      required:
+      - id
+      - name
+      - scope
+    ResendValidationEmailResponseDto:
+      type: object
+      properties:
+        sentEmail:
+          $ref: '#/components/schemas/ResendValidationSentEmailDto'
+      required:
+      - sentEmail
+    OrderRP:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        type:
+          type: string
+          enum:
+          - LCD
+          - LLD
+          - Event
+          - LCDRequest
+          - LCDRequestAccepted
+      required:
+      - orderId
+      - type
+    RentalPlaceUserAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
     UpdateMeRentalPlaceDto:
       type: object
       properties:
@@ -941,15 +835,138 @@ components:
       - subscribedToBouge
       - subscribedToBonPlan
       - avatar
-    RentalPlaceUserList:
+    OrderEventRP:
       type: object
       properties:
-        users:
+        participants:
           type: array
           items:
-            $ref: '#/components/schemas/RentalPlaceUserDto'
+            $ref: '#/components/schemas/OrderEventPerson'
+        itemsRP:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemRP'
+        packs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackRP'
+        pricings:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventPricing'
+        name:
+          type: string
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderDocument'
+        documentsState:
+          type: array
+          items:
+            $ref: '#/components/schemas/YourOrderStateDocumentFromOrder'
+        promoCode:
+          allOf:
+          - $ref: '#/components/schemas/PromoCodeDto'
+        createdAt:
+          format: date-time
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        price:
+          type: number
+        type:
+          type: string
+        id:
+          type: string
+        isCancelled:
+          type: boolean
+        departurePoint:
+          type: string
+        arrivalPoint:
+          type: string
+        isRequest:
+          type: boolean
       required:
-      - users
+      - participants
+      - itemsRP
+      - packs
+      - pricings
+      - name
+      - documents
+      - documentsState
+      - createdAt
+      - startDate
+      - endDate
+      - price
+      - type
+      - id
+      - isCancelled
+      - departurePoint
+      - arrivalPoint
+      - isRequest
+    RentalPlaceUserNewsletters:
+      type: object
+      properties:
+        support:
+          $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
+      required:
+      - support
+    UpdateRentalPlaceUserPasswordDto:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      required:
+      - oldPassword
+      - newPassword
+    CompanyRentalPlace:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        address:
+          type: string
+        addressComposants:
+          $ref: '#/components/schemas/RentalPlaceUserAddressComponents'
+        email:
+          type: string
+        phone:
+          type: string
+        slug:
+          type: string
+        accessRentalPlace:
+          type: boolean
+        logo:
+          type: string
+        cover:
+          type: string
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPointRP'
+        currencySymbol:
+          type: string
+      required:
+      - name
+      - id
+      - address
+      - addressComposants
+      - email
+      - phone
+      - slug
+      - accessRentalPlace
+      - logo
+      - cover
+      - rentalPoints
+      - currencySymbol
     PromoCode:
       type: object
       properties:
@@ -987,59 +1004,6 @@ components:
       - discountAmount
       - discountType
       - applyOnDelivery
-    OrderRP:
-      type: object
-      properties:
-        orderId:
-          type: string
-        customerId:
-          type: string
-        type:
-          type: string
-          enum:
-          - LCD
-          - LLD
-          - Event
-          - LCDRequest
-          - LCDRequestAccepted
-      required:
-      - orderId
-      - type
-    YourOrderStateDocumentFromOrder:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        scope:
-          type: string
-          enum:
-          - DOCUMENT
-          - DOCUMENT_STATE
-          - PAYMENT
-          - NONE
-        status:
-          type: string
-          enum:
-          - PENDING
-          - SUCCESS
-      required:
-      - id
-      - name
-      - scope
-    FormatedOrderRelation:
-      type: object
-      properties:
-        order:
-          oneOf:
-          - $ref: '#/components/schemas/OrderEventRP'
-          - $ref: '#/components/schemas/OrderLCDRP'
-        company:
-          $ref: '#/components/schemas/CompanyRentalPlace'
-      required:
-      - order
-      - company
     ResendValidationSentEmailDto:
       type: object
       properties:
@@ -1047,56 +1011,92 @@ components:
           type: string
       required:
       - messageId
-    CompleteGoogleRegistrationDto:
+    UpdateNewslettersDto:
       type: object
       properties:
-        phone:
-          type: string
-        subscribedToBouge:
-          type: boolean
-        subscribedToBonPlan:
-          type: boolean
-        newsletters:
-          $ref: '#/components/schemas/RentalPlaceUserNewsletters'
+        support:
+          $ref: '#/components/schemas/UpdateNewslettersSupportDto'
       required:
-      - phone
-    RentalPointRP:
+      - support
+    PackRP:
       type: object
       properties:
         name:
           type: string
-        address:
-          type: string
-        city:
-          type: string
-        zipcode:
-          type: string
-        slug:
-          type: string
+        amount:
+          type: number
+        products:
+          type: array
+          items:
+            type: string
       required:
       - name
-      - address
-      - city
-      - zipcode
-      - slug
-    YourOrderDocument:
+      - amount
+      - products
+    RentalPlaceUserList:
       type: object
       properties:
-        id:
-          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceUserDto'
+      required:
+      - users
+    OrderEventPerson:
+      type: object
+      properties:
         name:
           type: string
-        scope:
+        pricing:
+          type: string
+        infos:
+          type: object
+        categoryItems:
+          type: object
+      required:
+      - name
+      - pricing
+      - infos
+      - categoryItems
+    RentalPlaceUserNewslettersSupport:
+      type: object
+      properties:
+        email:
+          type: boolean
+        sms:
+          type: boolean
+        push:
+          type: boolean
+      required:
+      - email
+      - sms
+      - push
+    RentalPlaceResendValidationEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+        newEmail:
+          type: string
+        encrypted:
+          type: boolean
+        lang:
           type: string
           enum:
-          - DOCUMENT
-          - DOCUMENT_STATE
-          - PAYMENT
-          - NONE
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+        storeOrigin:
+          type: string
       required:
-      - id
-      - name
-      - scope
+      - email
+      - encrypted
+      - lang
   securitySchemes:
     x-access-token:
       scheme: bearer

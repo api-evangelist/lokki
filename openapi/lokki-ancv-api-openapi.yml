@@ -78,45 +78,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AncvPayerAuthorization:
-      type: object
-      properties:
-        number:
-          type: string
-        type:
-          type: string
-        amount:
-          $ref: '#/components/schemas/AncvAmount'
-        validationDate:
-          type: string
-        holder:
-          type: string
-      required:
-      - number
-      - type
-      - amount
-      - validationDate
-      - holder
-    AuthenticateTransactionBodyDto:
-      type: object
-      properties:
-        beneficiaryId:
-          type: string
-        amount:
-          type: number
-        currencyIso:
-          type: string
-      required:
-      - beneficiaryId
-      - amount
-      - currencyIso
-    AncvMerchant:
-      type: object
-      properties:
-        shopId:
-          type: string
-      required:
-      - shopId
     AncvRedirectUrls:
       type: object
       properties:
@@ -128,44 +89,6 @@ components:
           type:
           - string
           - 'null'
-    AncvOrder:
-      type: object
-      properties:
-        id:
-          type: string
-        paymentId:
-          type: string
-        amount:
-          $ref: '#/components/schemas/AncvAmount'
-      required:
-      - id
-      - paymentId
-      - amount
-    AncvPayer:
-      type: object
-      properties:
-        beneficiaryId:
-          type: string
-        amount:
-          $ref: '#/components/schemas/AncvAmount'
-        authorizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AncvPayerAuthorization'
-      required:
-      - beneficiaryId
-      - amount
-      - authorizations
-    AncvAmount:
-      type: object
-      properties:
-        total:
-          type: number
-        currency:
-          type: string
-      required:
-      - total
-      - currency
     AncvTransaction:
       type: object
       properties:
@@ -214,6 +137,51 @@ components:
       - order
       - paymentMethod
       - redirectUrls
+    AncvAmount:
+      type: object
+      properties:
+        total:
+          type: number
+        currency:
+          type: string
+      required:
+      - total
+      - currency
+    AncvPayer:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AncvPayerAuthorization'
+      required:
+      - beneficiaryId
+      - amount
+      - authorizations
+    AuthenticateTransactionBodyDto:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        amount:
+          type: number
+        currencyIso:
+          type: string
+      required:
+      - beneficiaryId
+      - amount
+      - currencyIso
+    AncvMerchant:
+      type: object
+      properties:
+        shopId:
+          type: string
+      required:
+      - shopId
     AncvPaymentMethod:
       type: object
       properties:
@@ -233,6 +201,38 @@ components:
       - captureTerm
       - captureDate
       - tspdMode
+    AncvPayerAuthorization:
+      type: object
+      properties:
+        number:
+          type: string
+        type:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+        validationDate:
+          type: string
+        holder:
+          type: string
+      required:
+      - number
+      - type
+      - amount
+      - validationDate
+      - holder
+    AncvOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        paymentId:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+      required:
+      - id
+      - paymentId
+      - amount
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -226,6 +226,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UpdateOnePriceTemplateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelPriceRange'
     PriceTemplate:
       type: object
       properties:
@@ -259,6 +268,18 @@ components:
       required:
       - total
       - docs
+    CreateOnePriceTemplateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelPriceRange'
+      required:
+      - name
+      - ranges
     ProductModelPriceRange:
       type: object
       properties:
@@ -289,31 +310,10 @@ components:
       - timeStartMinutes
       - timeEndHours
       - timeEndMinutes
-    UpdateOnePriceTemplateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductModelPriceRange'
     LocalizedContent:
       type: object
       additionalProperties:
         type: string
-    CreateOnePriceTemplateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductModelPriceRange'
-      required:
-      - name
-      - ranges
   securitySchemes:
     x-access-token:
       scheme: bearer

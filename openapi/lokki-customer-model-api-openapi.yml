@@ -84,20 +84,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateCustomerModelDto:
+    BulkUpdateCustomerModelsDto:
       type: object
       properties:
-        type:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateCustomerModelDto'
+      required:
+      - models
+    UpdateCustomerModelDto:
+      type: object
+      properties:
+        id:
           type: string
-          enum:
-          - entreprise
-          - individual
         fields:
           type: array
           items:
             $ref: '#/components/schemas/CreateUpdateCustomerModelField'
       required:
-      - type
+      - id
       - fields
     CustomerModel:
       type: object
@@ -124,27 +130,6 @@ components:
       - fields
       - companyId
       - createdAt
-    CreateUpdateCustomerModelField:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - value
-    UpdateCustomerModelDto:
-      type: object
-      properties:
-        id:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
-      required:
-      - id
-      - fields
     CustomerModelField:
       type: object
       properties:
@@ -168,15 +153,30 @@ components:
       type: object
       additionalProperties:
         type: string
-    BulkUpdateCustomerModelsDto:
+    CreateCustomerModelDto:
       type: object
       properties:
-        models:
+        type:
+          type: string
+          enum:
+          - entreprise
+          - individual
+        fields:
           type: array
           items:
-            $ref: '#/components/schemas/UpdateCustomerModelDto'
+            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
       required:
-      - models
+      - type
+      - fields
+    CreateUpdateCustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - value
   securitySchemes:
     x-access-token:
       scheme: bearer

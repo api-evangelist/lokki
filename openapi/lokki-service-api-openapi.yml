@@ -491,15 +491,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PriceModelSpecificDuration:
+    PriceModelLLDDuration:
       type: object
       properties:
         type:
           type: string
-          default: specific
+          default: LLD
           enum:
-          - specific
-        duration:
+          - LLD
+        calendarMonths:
           type: number
         id:
           type: string
@@ -515,38 +515,29 @@ components:
           $ref: '#/components/schemas/LocalizedContent'
       required:
       - type
-      - duration
+      - calendarMonths
       - id
       - price
       - priceLowSeason
       - label
-    ServiceAttribute:
+    AttachedFile:
       type: object
       properties:
-        attribute:
+        name:
           type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    GetManyServicesResponseDto:
-      type: object
-      properties:
-        total:
+        key:
+          type: string
+        size:
           type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
+        type:
+          type: string
+        uid:
+          type: string
       required:
-      - total
-      - docs
+      - name
+      - key
+      - size
+      - type
     UpdateServiceAvailabilityDto:
       type: object
       properties:
@@ -557,54 +548,6 @@ components:
       required:
       - id
       - available
-    PriceModelRangeDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: range
-          enum:
-          - range
-        minDuration:
-          type: number
-        maxDuration:
-          type: number
-        durationInDays:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - minDuration
-      - maxDuration
-      - id
-      - price
-      - priceLowSeason
-      - label
-    TentativeCategorization:
-      type: object
-      properties:
-        subcategoryName:
-          type:
-          - string
-          - 'null'
-        verticalName:
-          type:
-          - string
-          - 'null'
-      required:
-      - subcategoryName
-      - verticalName
     ServiceField:
       type: object
       properties:
@@ -621,99 +564,44 @@ components:
       - name
       - value
       - isTagged
-    ItemAttribute:
+    UpdateManyServicesDto:
       type: object
       properties:
-        attribute:
-          type: string
-        tags:
+        services:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/UpdateServiceDto'
       required:
-      - attribute
-      - tags
-    UpdateServiceDto:
+      - services
+    TentativeCategorization:
       type: object
       properties:
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        id:
-          type: string
-        name:
-          type: string
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceField'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTag'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
-          type: string
-        attachedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachedFile'
-        rank:
-          type: number
-        isAvailable:
-          type: boolean
-        onlineStoreInformation:
-          type: object
-          properties:
-            name:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-            description:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-        productModel:
-          type: string
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isRelatedProducts:
-          type: boolean
-        productSurveyId:
-          type: string
-        hideOnOnlineStore:
-          type: boolean
-        vat:
-          type: number
-        isAssuranceTulip:
-          type: boolean
-        verticalCategoryId:
-          type: string
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceAttribute'
-        translationInProgress:
-          type: boolean
-        onlineAvailability:
-          type: boolean
-        printed:
-          type: boolean
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
       required:
-      - id
-      - onlineStoreInformation
+      - subcategoryName
+      - verticalName
+    GetManyServicesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+      required:
+      - total
+      - docs
     CreateUpdateServiceDto:
       type: object
       properties:
@@ -813,15 +701,138 @@ components:
       - isAssuranceTulip
       - onlineAvailability
       - printed
-    UpdateManyServicesDto:
+    UpdateServiceDto:
       type: object
       properties:
-        services:
+        priceModels:
           type: array
           items:
-            $ref: '#/components/schemas/UpdateServiceDto'
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTag'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProducts:
+          type: boolean
+        productSurveyId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        vat:
+          type: number
+        isAssuranceTulip:
+          type: boolean
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceAttribute'
+        translationInProgress:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
       required:
-      - services
+      - id
+      - onlineStoreInformation
+    PriceModelSpecificDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        duration:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - duration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    ItemOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    ServiceAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
     Service:
       type: object
       properties:
@@ -925,33 +936,45 @@ components:
       - printed
       - vat
       - translationInProgress
-    AttachedFile:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    ServiceTag:
       type: object
       properties:
         name:
           type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
+        value:
           type: string
       required:
       - name
-      - key
-      - size
-      - type
-    PriceModelLLDDuration:
+      - value
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    PriceModelRangeDuration:
       type: object
       properties:
         type:
           type: string
-          default: LLD
+          default: range
           enum:
-          - LLD
-        calendarMonths:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
           type: number
         id:
           type: string
@@ -967,35 +990,12 @@ components:
           $ref: '#/components/schemas/LocalizedContent'
       required:
       - type
-      - calendarMonths
+      - minDuration
+      - maxDuration
       - id
       - price
       - priceLowSeason
       - label
-    ServiceTag:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-      required:
-      - name
-      - value
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    ItemOnlineStoreInformation:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - name
-      - description
   securitySchemes:
     x-access-token:
       scheme: bearer

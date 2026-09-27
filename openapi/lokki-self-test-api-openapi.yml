@@ -56,105 +56,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    SelfTestFormDto:
-      type: object
-      properties:
-        hasRentalActivity:
-          type: boolean
-        launchDate:
-          type: string
-        verticale:
-          type: string
-          enum:
-          - BIKE
-          - ELECTRIC_BIKE
-          - MOPED
-          - MOTORCYCLE
-          - CAR
-          - SCOOTER
-          - SKI
-          - CLIMBING
-          - SNOWSHOES
-          - SURF
-          - PADDLE
-          - CANOE_KAYAK
-          - BOAT
-          - EVENT
-          - MOTOCULTURE
-          - TOOLING
-        productsNumber:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        companyName:
-          type: string
-        website:
-          type: string
-        replaceForLokki:
-          type: array
-          items:
-            type: string
-        currentSoftware:
-          type: string
-        painPoints:
-          type: array
-          items:
-            type: string
-        featuresToUse:
-          type: array
-          items:
-            type: string
-        comments:
-          type: string
-        utmInfos:
-          $ref: '#/components/schemas/SelfTestUtmInfos'
-        companyId:
-          type: string
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-      required:
-      - hasRentalActivity
-      - launchDate
-      - verticale
-      - productsNumber
-      - firstName
-      - lastName
-      - email
-      - phone
-      - companyName
-      - website
-      - replaceForLokki
-      - currentSoftware
-      - painPoints
-      - featuresToUse
-      - comments
-      - utmInfos
     SelfTestCreateAccountFormDto:
       type: object
       properties:
@@ -273,6 +174,17 @@ components:
           type: string
         GeoLoc:
           type: string
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
     SelfTestCreateAccountResultDto:
       type: object
       properties:
@@ -280,6 +192,94 @@ components:
           $ref: '#/components/schemas/User'
       required:
       - user
+    SelfTestFormDto:
+      type: object
+      properties:
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          type: string
+        verticale:
+          type: string
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+        productsNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        companyName:
+          type: string
+        website:
+          type: string
+        replaceForLokki:
+          type: array
+          items:
+            type: string
+        currentSoftware:
+          type: string
+        painPoints:
+          type: array
+          items:
+            type: string
+        featuresToUse:
+          type: array
+          items:
+            type: string
+        comments:
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        companyId:
+          type: string
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - hasRentalActivity
+      - launchDate
+      - verticale
+      - productsNumber
+      - firstName
+      - lastName
+      - email
+      - phone
+      - companyName
+      - website
+      - replaceForLokki
+      - currentSoftware
+      - painPoints
+      - featuresToUse
+      - comments
+      - utmInfos
     User:
       type: object
       properties:

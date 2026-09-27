@@ -95,6 +95,284 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    DiscountFlat:
+      type: object
+      properties:
+        percentage:
+          type: number
+      required:
+      - percentage
+    SearchEngineAddressComponentsDto:
+      type: object
+      properties:
+        streetAddress:
+          type:
+          - string
+          - 'null'
+        addressLocality:
+          type:
+          - string
+          - 'null'
+        postalCode:
+          type:
+          - string
+          - 'null'
+        addressCountry:
+          type:
+          - string
+          - 'null'
+    SuggestCartParticipantDto:
+      type: object
+      properties:
+        count:
+          type: number
+          minimum: 1
+        size:
+          type: string
+        audience:
+          enum:
+          - adult
+          - child
+          type: string
+          description: Rider type (the funnel size encodes adult vs child) — stamped on the agency quote
+      required:
+      - count
+    SuggestCartGeoLocDto:
+      type: object
+      properties:
+        address:
+          type: string
+        locality:
+          type: string
+          description: City name from the address autocomplete — round-tripped so a search restored from a persisted suggestion keeps the real city instead of the full street address
+        geoPoint:
+          $ref: '#/components/schemas/SuggestCartGeoPointDto'
+      required:
+      - address
+      - geoPoint
+    StoreInsuranceTulipDetails:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+          - TULIP
+        status:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+          description: Tulip insurance status for the store
+          example: on_inclusion
+      required:
+      - provider
+      - status
+    QuickCartMismatchReason:
+      type: string
+      description: The ways this reference is an approximate match for the request (wrong size, opposite bike family, …). Empty when the reference matches the request exactly. The frontend flags each reason to the user; a new dimension is added as an enum member, not a new field.
+      enum:
+      - SIZE_APPROXIMATE
+      - CATEGORY_FALLBACK
+      - GEO_OUTSIDE_NOMINAL_RADIUS
+      - HOURS_APPROXIMATE
+      - DATES_SHIFTED
+    SuggestCartDatesDto:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - startDate
+      - endDate
+    SuggestCartResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this suggestion set
+        request:
+          $ref: '#/components/schemas/SuggestCartRequestDto'
+        suggestions:
+          description: Up to 3 matching rental companies, each with server-computed derived values
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestCartEnrichedSuggestionDto'
+        quoteRequestId:
+          type: string
+          description: Id of the agency QuoteRequest created for this Quick Cart (logged-in users only). Carried by the frontend onto the cart so the quote can be cancelled on self-checkout.
+        quoteRequestReused:
+          type: boolean
+          description: True when the quote request was deduplicated onto an existing recent identical Quick Cart quote — no new lead was created and no recap email was sent. Only set on the POST response.
+        createdAt:
+          type: string
+          description: ISO timestamp of the submission — the funnel compares it to its stored state's lastUpdate to decide whether restoring this search would overwrite fresher user edits.
+      required:
+      - id
+      - request
+      - suggestions
+    DiscountPeriodic:
+      type: object
+      properties:
+        percentage:
+          type: number
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - percentage
+      - startDate
+      - endDate
+    GeoPoint:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+      - latitude
+      - longitude
+    AdminSearchCartResponseDto:
+      type: object
+      properties:
+        request:
+          description: The demand that was matched
+          allOf:
+          - $ref: '#/components/schemas/SuggestCartRequestDto'
+        suggestions:
+          description: 'Matching rental companies with the same shape as the Quick Cart suggestions, nearest first. Nothing is persisted: no suggestion document, no quote request, no email.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestCartEnrichedSuggestionDto'
+      required:
+      - request
+      - suggestions
+    Discount:
+      type: object
+      properties:
+        flatDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountFlat'
+        periodicDiscountsByCurrentDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountPeriodic'
+        periodicDiscountsByStartDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountPeriodic'
+      required:
+      - flatDiscounts
+      - periodicDiscountsByCurrentDate
+      - periodicDiscountsByStartDate
+    ItemCompanyInsurance:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        details:
+          $ref: '#/components/schemas/StoreInsuranceTulipDetails'
+      required:
+      - enabled
+      - details
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    SearchEngineLocation:
+      type: object
+      properties:
+        point:
+          $ref: '#/components/schemas/GeoPoint'
+        address:
+          type:
+          - string
+          - 'null'
+        addressComponents:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineAddressComponents'
+      required:
+      - point
+      - address
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    SuggestCartQueryEntryDto:
+      type: object
+      properties:
+        categoryId:
+          type: string
+          description: ProductVerticaleCategory ObjectId — the group leader for merged tiles
+        mergedCategoryIds:
+          description: Additional category IDs that form an OR group with categoryId. Items from any of these categories satisfy this demand — the requested quantity is allocated from the combined pool, not separately per category.
+          type: array
+          items:
+            type: string
+        fallbackCategoryIds:
+          description: 'Lower-priority fallback category IDs: the opposite bike family (électrique ↔ classique) for the essentials tiles. The preferred pool (categoryId + mergedCategoryIds) is allocated first; only the remaining shortfall is filled from these categories.'
+          type: array
+          items:
+            type: string
+        categoryName:
+          description: Localized category name — used in email template when provided
+          allOf:
+          - $ref: '#/components/schemas/LocalizedContent'
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestCartParticipantDto'
+      required:
+      - categoryId
+      - participants
+    SuggestCartCategoryResultDto:
+      type: object
+      properties:
+        categoryId:
+          type: string
+          description: ProductVerticaleCategory ObjectId
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestCartItemDto'
+      required:
+      - categoryId
+      - items
+    SuggestCartPackCategoryDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Pack option group id (PackOption.id)
+        value:
+          type: string
+          description: Selected component product/service id for this group
+      required:
+      - id
+      - value
+    SuggestCartItemType:
+      type: string
+      enum:
+      - product
+      - service
+      - pack
     SuggestCartDerivedDto:
       type: object
       properties:
@@ -109,6 +387,18 @@ components:
       required:
       - totalTTC
       - isRecommended
+    LowSeasonDate:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
     SuggestCartItemDto:
       type: object
       properties:
@@ -162,414 +452,6 @@ components:
       - quantity
       - price
       - matchWarnings
-    CompanyCategoryDiscount:
-      type: object
-      properties:
-        categoryIds:
-          type: array
-          items:
-            type: string
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
-      required:
-      - categoryIds
-      - ranges
-    DiscountFlat:
-      type: object
-      properties:
-        percentage:
-          type: number
-      required:
-      - percentage
-    GeoPoint:
-      type: object
-      properties:
-        latitude:
-          type: number
-        longitude:
-          type: number
-      required:
-      - latitude
-      - longitude
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    OpeningTimeFrame:
-      type: object
-      properties:
-        id:
-          type: string
-        day:
-          type: string
-          enum:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          - saturday
-          - sunday
-          - ALL
-        isOpen:
-          type: boolean
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - day
-      - isOpen
-    PrecheckCartResponseDto:
-      type: object
-      properties:
-        hasResults:
-          type: boolean
-          description: Whether the search would yield at least one suggestion. Anonymous dry-run — deliberately reveals nothing else, so no renter data reaches unauthenticated clients.
-      required:
-      - hasResults
-    SuggestCartGeoPointDto:
-      type: object
-      properties:
-        latitude:
-          type: number
-        longitude:
-          type: number
-      required:
-      - latitude
-      - longitude
-    SearchEngineAddressComponentsDto:
-      type: object
-      properties:
-        streetAddress:
-          type:
-          - string
-          - 'null'
-        addressLocality:
-          type:
-          - string
-          - 'null'
-        postalCode:
-          type:
-          - string
-          - 'null'
-        addressCountry:
-          type:
-          - string
-          - 'null'
-    SuggestCartResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for this suggestion set
-        request:
-          $ref: '#/components/schemas/SuggestCartRequestDto'
-        suggestions:
-          description: Up to 3 matching rental companies, each with server-computed derived values
-          type: array
-          items:
-            $ref: '#/components/schemas/SuggestCartEnrichedSuggestionDto'
-        quoteRequestId:
-          type: string
-          description: Id of the agency QuoteRequest created for this Quick Cart (logged-in users only). Carried by the frontend onto the cart so the quote can be cancelled on self-checkout.
-        quoteRequestReused:
-          type: boolean
-          description: True when the quote request was deduplicated onto an existing recent identical Quick Cart quote — no new lead was created and no recap email was sent. Only set on the POST response.
-        createdAt:
-          type: string
-          description: ISO timestamp of the submission — the funnel compares it to its stored state's lastUpdate to decide whether restoring this search would overwrite fresher user edits.
-      required:
-      - id
-      - request
-      - suggestions
-    ItemCompanyInsurance:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        details:
-          $ref: '#/components/schemas/StoreInsuranceTulipDetails'
-      required:
-      - enabled
-      - details
-    SuggestCartDatesDto:
-      type: object
-      properties:
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-      required:
-      - startDate
-      - endDate
-    QuoteFlexibility:
-      type: string
-      description: How flexible the user's rental dates are — persisted as-is on the agency QuoteRequest and surfaced in the suggestion email. Defaults to EXACT_DATES when omitted.
-      enum:
-      - exact_dates
-      - more_less_1_day
-      - more_less_2_days
-      - more_less_3_days
-      - more_less_7_days
-    SuggestCartQueryEntryDto:
-      type: object
-      properties:
-        categoryId:
-          type: string
-          description: ProductVerticaleCategory ObjectId — the group leader for merged tiles
-        mergedCategoryIds:
-          description: Additional category IDs that form an OR group with categoryId. Items from any of these categories satisfy this demand — the requested quantity is allocated from the combined pool, not separately per category.
-          type: array
-          items:
-            type: string
-        fallbackCategoryIds:
-          description: 'Lower-priority fallback category IDs: the opposite bike family (électrique ↔ classique) for the essentials tiles. The preferred pool (categoryId + mergedCategoryIds) is allocated first; only the remaining shortfall is filled from these categories.'
-          type: array
-          items:
-            type: string
-        categoryName:
-          description: Localized category name — used in email template when provided
-          allOf:
-          - $ref: '#/components/schemas/LocalizedContent'
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuggestCartParticipantDto'
-      required:
-      - categoryId
-      - participants
-    SearchEngineLocationDto:
-      type: object
-      properties:
-        point:
-          $ref: '#/components/schemas/GeoPoint'
-        address:
-          type:
-          - string
-          - 'null'
-        addressComponents:
-          allOf:
-          - $ref: '#/components/schemas/SearchEngineAddressComponentsDto'
-      required:
-      - point
-      - address
-    SuggestCartCategoryResultDto:
-      type: object
-      properties:
-        categoryId:
-          type: string
-          description: ProductVerticaleCategory ObjectId
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuggestCartItemDto'
-      required:
-      - categoryId
-      - items
-    SearchEngineAddressComponents:
-      type: object
-      properties:
-        streetAddress:
-          type:
-          - string
-          - 'null'
-        addressLocality:
-          type:
-          - string
-          - 'null'
-        postalCode:
-          type:
-          - string
-          - 'null'
-        addressCountry:
-          type:
-          - string
-          - 'null'
-    CompanyCurrency:
-      type: object
-      properties:
-        isoName:
-          type: string
-        symbol:
-          type: string
-      required:
-      - isoName
-      - symbol
-    QuickCartMismatchReason:
-      type: string
-      description: The ways this reference is an approximate match for the request (wrong size, opposite bike family, …). Empty when the reference matches the request exactly. The frontend flags each reason to the user; a new dimension is added as an enum member, not a new field.
-      enum:
-      - SIZE_APPROXIMATE
-      - CATEGORY_FALLBACK
-      - GEO_OUTSIDE_NOMINAL_RADIUS
-      - HOURS_APPROXIMATE
-      - DATES_SHIFTED
-    AdminSearchCartResponseDto:
-      type: object
-      properties:
-        request:
-          description: The demand that was matched
-          allOf:
-          - $ref: '#/components/schemas/SuggestCartRequestDto'
-        suggestions:
-          description: 'Matching rental companies with the same shape as the Quick Cart suggestions, nearest first. Nothing is persisted: no suggestion document, no quote request, no email.'
-          type: array
-          items:
-            $ref: '#/components/schemas/SuggestCartEnrichedSuggestionDto'
-      required:
-      - request
-      - suggestions
-    SuggestCartRentalPeriodDto:
-      type: object
-      properties:
-        startDate:
-          format: date-time
-          type: string
-          description: Effective rental start — clamped to the store's opening hours
-        endDate:
-          format: date-time
-          type: string
-          description: Effective rental end — clamped to the store's opening hours
-      required:
-      - startDate
-      - endDate
-    SuggestCartPackCategoryDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Pack option group id (PackOption.id)
-        value:
-          type: string
-          description: Selected component product/service id for this group
-      required:
-      - id
-      - value
-    SuggestCartRequestDto:
-      type: object
-      properties:
-        dates:
-          $ref: '#/components/schemas/SuggestCartDatesDto'
-        geoLoc:
-          $ref: '#/components/schemas/SuggestCartGeoLocDto'
-        query:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuggestCartQueryEntryDto'
-        rentalPlaceUserId:
-          type: string
-          description: RentalPlaceUser ObjectId — triggers email delivery when provided
-        lang:
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-          type: string
-          description: Language for the cart suggestion email
-        flexibility:
-          $ref: '#/components/schemas/QuoteFlexibility'
-        isDateFlexible:
-          type: boolean
-          deprecated: true
-          description: Deprecated. Use `flexibility` instead. `true` retains the legacy ±3-day behavior.
-      required:
-      - dates
-      - geoLoc
-      - query
-    ClosedDate:
-      type: object
-      properties:
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-      required:
-      - startDate
-      - endDate
-    SuggestCartParticipantDto:
-      type: object
-      properties:
-        count:
-          type: number
-          minimum: 1
-        size:
-          type: string
-        audience:
-          enum:
-          - adult
-          - child
-          type: string
-          description: Rider type (the funnel size encodes adult vs child) — stamped on the agency quote
-      required:
-      - count
-    SearchEngineLocation:
-      type: object
-      properties:
-        point:
-          $ref: '#/components/schemas/GeoPoint'
-        address:
-          type:
-          - string
-          - 'null'
-        addressComponents:
-          allOf:
-          - $ref: '#/components/schemas/SearchEngineAddressComponents'
-      required:
-      - point
-      - address
-    SuggestCartItemType:
-      type: string
-      enum:
-      - product
-      - service
-      - pack
-    Discount:
-      type: object
-      properties:
-        flatDiscounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscountFlat'
-        periodicDiscountsByCurrentDate:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscountPeriodic'
-        periodicDiscountsByStartDate:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscountPeriodic'
-      required:
-      - flatDiscounts
-      - periodicDiscountsByCurrentDate
-      - periodicDiscountsByStartDate
-    DiscountPeriodic:
-      type: object
-      properties:
-        percentage:
-          type: number
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-      required:
-      - percentage
-      - startDate
-      - endDate
     SuggestCartEnrichedSuggestionDto:
       type: object
       properties:
@@ -604,18 +486,25 @@ components:
       - matchWarnings
       - categories
       - derived
-    LowSeasonDate:
+    SearchEngineAddressComponents:
       type: object
       properties:
-        from:
-          format: date-time
-          type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
+        streetAddress:
+          type:
+          - string
+          - 'null'
+        addressLocality:
+          type:
+          - string
+          - 'null'
+        postalCode:
+          type:
+          - string
+          - 'null'
+        addressCountry:
+          type:
+          - string
+          - 'null'
     ItemCompanyDetailsDto:
       type: object
       properties:
@@ -734,39 +623,118 @@ components:
       - locations
       - phoneNumber
       - closedDates
-    SuggestCartGeoLocDto:
+    SuggestCartRentalPeriodDto:
       type: object
       properties:
+        startDate:
+          format: date-time
+          type: string
+          description: Effective rental start — clamped to the store's opening hours
+        endDate:
+          format: date-time
+          type: string
+          description: Effective rental end — clamped to the store's opening hours
+      required:
+      - startDate
+      - endDate
+    SuggestCartRequestDto:
+      type: object
+      properties:
+        dates:
+          $ref: '#/components/schemas/SuggestCartDatesDto'
+        geoLoc:
+          $ref: '#/components/schemas/SuggestCartGeoLocDto'
+        query:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestCartQueryEntryDto'
+        rentalPlaceUserId:
+          type: string
+          description: RentalPlaceUser ObjectId — triggers email delivery when provided
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+          description: Language for the cart suggestion email
+        flexibility:
+          $ref: '#/components/schemas/QuoteFlexibility'
+        isDateFlexible:
+          type: boolean
+          deprecated: true
+          description: Deprecated. Use `flexibility` instead. `true` retains the legacy ±3-day behavior.
+      required:
+      - dates
+      - geoLoc
+      - query
+    SearchEngineLocationDto:
+      type: object
+      properties:
+        point:
+          $ref: '#/components/schemas/GeoPoint'
         address:
-          type: string
-        locality:
-          type: string
-          description: City name from the address autocomplete — round-tripped so a search restored from a persisted suggestion keeps the real city instead of the full street address
-        geoPoint:
-          $ref: '#/components/schemas/SuggestCartGeoPointDto'
+          type:
+          - string
+          - 'null'
+        addressComponents:
+          allOf:
+          - $ref: '#/components/schemas/SearchEngineAddressComponentsDto'
       required:
+      - point
       - address
-      - geoPoint
-    StoreInsuranceTulipDetails:
+    ClosedDate:
       type: object
       properties:
-        provider:
+        startDate:
+          format: date-time
           type: string
-          enum:
-          - TULIP
-        status:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
+        endDate:
+          format: date-time
           type: string
-          description: Tulip insurance status for the store
-          example: on_inclusion
       required:
-      - provider
-      - status
+      - startDate
+      - endDate
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    QuoteFlexibility:
+      type: string
+      description: How flexible the user's rental dates are — persisted as-is on the agency QuoteRequest and surfaced in the suggestion email. Defaults to EXACT_DATES when omitted.
+      enum:
+      - exact_dates
+      - more_less_1_day
+      - more_less_2_days
+      - more_less_3_days
+      - more_less_7_days
     CompanyCategoryDiscountRange:
       type: object
       properties:
@@ -798,6 +766,38 @@ components:
       - rangeFrom
       - rangeTo
       - infiniteTo
+    CompanyCategoryDiscount:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - categoryIds
+      - ranges
+    PrecheckCartResponseDto:
+      type: object
+      properties:
+        hasResults:
+          type: boolean
+          description: Whether the search would yield at least one suggestion. Anonymous dry-run — deliberately reveals nothing else, so no renter data reaches unauthenticated clients.
+      required:
+      - hasResults
+    SuggestCartGeoPointDto:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+      - latitude
+      - longitude
   securitySchemes:
     x-access-token:
       scheme: bearer

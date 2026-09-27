@@ -90,13 +90,28 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreatePriceRulesDto:
+    PriceRule:
       type: object
       properties:
-        rule:
-          $ref: '#/components/schemas/PriceRulesDto'
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
       required:
-      - rule
+      - startDate
+      - endDate
+      - type
+      - variation
     PriceRulesDto:
       type: object
       properties:
@@ -109,6 +124,13 @@ components:
       required:
       - title
       - rules
+    CreatePriceRulesDto:
+      type: object
+      properties:
+        rule:
+          $ref: '#/components/schemas/PriceRulesDto'
+      required:
+      - rule
     PriceRuleDate:
       type: object
       properties:
@@ -137,28 +159,6 @@ components:
       - companyId
       - title
       - rules
-    PriceRule:
-      type: object
-      properties:
-        _id:
-          type: string
-        startDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        endDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        type:
-          type: string
-          enum:
-          - in
-          - include
-          - overlap
-        variation:
-          type: number
-      required:
-      - startDate
-      - endDate
-      - type
-      - variation
   securitySchemes:
     x-access-token:
       scheme: bearer

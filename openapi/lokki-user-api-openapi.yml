@@ -147,35 +147,19 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    FileUploadDto:
+    UpdateMeDto:
       type: object
       properties:
-        file:
+        name:
           type: string
-          format: binary
-      required:
-      - file
-    UpdateUserPasswordDto:
-      type: object
-      properties:
-        oldPassword:
+        email:
           type: string
-        newPassword:
+        phone:
           type: string
       required:
-      - oldPassword
-      - newPassword
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
+      - name
+      - email
+      - phone
     UpdateCompanyUserDto:
       type: object
       properties:
@@ -186,6 +170,14 @@ components:
       required:
       - name
       - email
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
     EmployeeAccess:
       type: object
       properties:
@@ -211,19 +203,27 @@ components:
           type: boolean
         bookingDeletion:
           type: boolean
-    UpdateMeDto:
+    UserValidationCode:
       type: object
       properties:
-        name:
+        code:
           type: string
-        email:
-          type: string
-        phone:
+        expiresAt:
+          format: date-time
           type: string
       required:
-      - name
-      - email
-      - phone
+      - code
+      - expiresAt
+    UpdateUserPasswordDto:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      required:
+      - oldPassword
+      - newPassword
     User:
       type: object
       properties:

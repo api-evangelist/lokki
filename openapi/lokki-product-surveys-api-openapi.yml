@@ -116,18 +116,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateProductSurveyDto:
+    CreateProductSurveyFieldDto:
       type: object
       properties:
-        name:
+        value:
           type: string
-        fields:
+        type:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - MULTIPLE_SELECT
+          - DOCUMENT
+        selectAnswers:
           type: array
           items:
-            $ref: '#/components/schemas/CreateProductSurveyFieldDto'
+            type: string
       required:
-      - name
-      - fields
+      - value
+      - type
+      - selectAnswers
     ProductSurveyField:
       type: object
       properties:
@@ -148,51 +156,6 @@ components:
             type: string
       required:
       - id
-      - value
-      - type
-      - selectAnswers
-    UpdateProductSurveyFieldDto:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        value:
-          type: string
-        type:
-          type: string
-          enum:
-          - TEXT
-          - SELECT
-          - MULTIPLE_SELECT
-          - DOCUMENT
-        selectAnswers:
-          type: array
-          items:
-            type: string
-      required:
-      - id
-      - value
-      - type
-      - selectAnswers
-    CreateProductSurveyFieldDto:
-      type: object
-      properties:
-        value:
-          type: string
-        type:
-          type: string
-          enum:
-          - TEXT
-          - SELECT
-          - MULTIPLE_SELECT
-          - DOCUMENT
-        selectAnswers:
-          type: array
-          items:
-            type: string
-      required:
       - value
       - type
       - selectAnswers
@@ -218,6 +181,43 @@ components:
       - name
       - fields
       - createdAt
+    UpdateProductSurveyFieldDto:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - MULTIPLE_SELECT
+          - DOCUMENT
+        selectAnswers:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - value
+      - type
+      - selectAnswers
+    CreateProductSurveyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateProductSurveyFieldDto'
+      required:
+      - name
+      - fields
     UpdateProductSurveyDto:
       type: object
       properties:

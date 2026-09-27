@@ -39,21 +39,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WorkshopOrderStatisticsDto:
-      type: object
-      properties:
-        turnover:
-          type: number
-        numberOfOrders:
-          type: number
-        statisticsByQuotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/StatisticsByQuoteDto'
-      required:
-      - turnover
-      - numberOfOrders
-      - statisticsByQuotes
     StatisticsByQuoteDto:
       type: object
       properties:
@@ -70,6 +55,21 @@ components:
       - name
       - turnover
       - number
+    WorkshopOrderStatisticsDto:
+      type: object
+      properties:
+        turnover:
+          type: number
+        numberOfOrders:
+          type: number
+        statisticsByQuotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticsByQuoteDto'
+      required:
+      - turnover
+      - numberOfOrders
+      - statisticsByQuotes
   securitySchemes:
     x-access-token:
       scheme: bearer

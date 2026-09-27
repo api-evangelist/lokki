@@ -162,15 +162,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateEmployeeDto:
-      type: object
-      properties:
-        isMonitor:
-          type: boolean
-        imageUrl:
-          type: string
-        isAccountActivated:
-          type: boolean
     AddEmployeeDto:
       type: object
       properties:
@@ -184,16 +175,15 @@ components:
       - name
       - email
       - isMonitor
-    EmployeeRegistrationInfoDto:
+    UpdateEmployeeDto:
       type: object
       properties:
-        companyName:
+        isMonitor:
+          type: boolean
+        imageUrl:
           type: string
-        newUserName:
-          type: string
-      required:
-      - companyName
-      - newUserName
+        isAccountActivated:
+          type: boolean
     UpdateEmployeeAccessDto:
       type: object
       properties:
@@ -226,19 +216,16 @@ components:
           type: boolean
         bookingDeletion:
           type: boolean
-    ValidateEmployeeDto:
+    EmployeeRegistrationInfoDto:
       type: object
       properties:
-        encryptedUserId:
+        companyName:
           type: string
-        encryptedCompanyId:
-          type: string
-        password:
+        newUserName:
           type: string
       required:
-      - encryptedUserId
-      - encryptedCompanyId
-      - password
+      - companyName
+      - newUserName
     CompanyEmployee:
       type: object
       properties:
@@ -274,6 +261,19 @@ components:
       - isMonitor
       - name
       - email
+    ValidateEmployeeDto:
+      type: object
+      properties:
+        encryptedUserId:
+          type: string
+        encryptedCompanyId:
+          type: string
+        password:
+          type: string
+      required:
+      - encryptedUserId
+      - encryptedCompanyId
+      - password
   securitySchemes:
     x-access-token:
       scheme: bearer

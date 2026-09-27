@@ -118,6 +118,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    StripeAccountUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
     StripeCreateAccountDto:
       type: object
       properties:
@@ -131,15 +138,16 @@ components:
       required:
       - country
       - type
-    StripeConnectErrorCode:
-      type: string
-      enum:
-      - STRIPE_ACCOUNT_ALREADY_ACTIVE
-      - STRIPE_INVALID_PHONE_NUMBER
-      - STRIPE_INVALID_EMAIL
-      - STRIPE_UNSUPPORTED_COUNTRY
-      - STRIPE_INVALID_ACCOUNT_DATA
-      - STRIPE_ACCOUNT_CREATION_FAILED
+    StripeConnectErrorDto:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/StripeConnectErrorCode'
+        message:
+          type: string
+      required:
+      - error
+      - message
     LokkiPaymentMethods:
       type: object
       properties:
@@ -180,23 +188,15 @@ components:
       - blik
       - multibanco
       - eps
-    StripeAccountUrlDto:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url
-    StripeConnectErrorDto:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/StripeConnectErrorCode'
-        message:
-          type: string
-      required:
-      - error
-      - message
+    StripeConnectErrorCode:
+      type: string
+      enum:
+      - STRIPE_ACCOUNT_ALREADY_ACTIVE
+      - STRIPE_INVALID_PHONE_NUMBER
+      - STRIPE_INVALID_EMAIL
+      - STRIPE_UNSUPPORTED_COUNTRY
+      - STRIPE_INVALID_ACCOUNT_DATA
+      - STRIPE_ACCOUNT_CREATION_FAILED
   securitySchemes:
     x-access-token:
       scheme: bearer

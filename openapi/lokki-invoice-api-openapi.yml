@@ -82,6 +82,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    LokkiPaymentInvoice:
+      type: object
+      properties:
+        status:
+          enum:
+          - SUCCEEDED
+          - FAILED
+          type: string
+        payoutId:
+          type: string
+        hyperlineInvoiceId:
+          type: string
+        invoiceNb:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        currency:
+          type: string
+      required:
+      - status
+      - payoutId
+      - invoiceNb
+      - createdAt
+      - currency
     SubscriptionInvoice:
       type: object
       properties:
@@ -111,31 +136,6 @@ components:
       required:
       - totalItems
       - invoices
-    LokkiPaymentInvoice:
-      type: object
-      properties:
-        status:
-          enum:
-          - SUCCEEDED
-          - FAILED
-          type: string
-        payoutId:
-          type: string
-        hyperlineInvoiceId:
-          type: string
-        invoiceNb:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        currency:
-          type: string
-      required:
-      - status
-      - payoutId
-      - invoiceNb
-      - createdAt
-      - currency
     GetLokkiPaymentInvoicesResponseDto:
       type: object
       properties:

@@ -90,6 +90,72 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ProductStateModelAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+        answerType:
+          type: string
+          enum:
+          - OPEN_FIELD
+          - UNIQUE_CHOICE
+          - MULTIPLE_CHOICE
+          - ODOMETER
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductStateModelAnswerOption'
+      required:
+      - id
+      - answerType
+      - options
+    CreateUpdateProductStateModelAnswerOptionDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - name
+    ProductStateModelAnswerOption:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    ProductStateModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductStateModelAnswer'
+      required:
+      - id
+      - name
+      - answers
+    CreateUpdateProductStateModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateProductStateFieldDto'
+      required:
+      - name
+      - fields
     CreateUpdateProductStateFieldDto:
       type: object
       properties:
@@ -104,25 +170,6 @@ components:
       required:
       - name
       - answers
-    ProductStateModelAnswerOption:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-    CreateUpdateProductStateModelAnswerOptionDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - name
     CreateUpdateProductStateAnswerDto:
       type: object
       properties:
@@ -160,53 +207,6 @@ components:
       - companyId
       - name
       - fields
-    ProductStateModelAnswer:
-      type: object
-      properties:
-        id:
-          type: string
-        answerType:
-          type: string
-          enum:
-          - OPEN_FIELD
-          - UNIQUE_CHOICE
-          - MULTIPLE_CHOICE
-          - ODOMETER
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductStateModelAnswerOption'
-      required:
-      - id
-      - answerType
-      - options
-    CreateUpdateProductStateModelDto:
-      type: object
-      properties:
-        name:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateProductStateFieldDto'
-      required:
-      - name
-      - fields
-    ProductStateModelField:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        answers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductStateModelAnswer'
-      required:
-      - id
-      - name
-      - answers
   securitySchemes:
     x-access-token:
       scheme: bearer

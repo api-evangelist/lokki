@@ -166,143 +166,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ProductVerticaleCategoryListDto:
-      type: object
-      properties:
-        productVerticaleCategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVerticaleCategory'
-      required:
-      - productVerticaleCategories
-    UpdateManyProductVerticaleCategoryDto:
-      type: object
-      properties:
-        productVerticaleCategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateProductVerticaleCategoryDto'
-      required:
-      - productVerticaleCategories
-    CreateUpdateProductVerticaleCategoryDto:
-      type: object
-      properties:
-        name:
-          type: string
-        i18nKey:
-          type: string
-        verticale:
-          enum:
-          - BIKE
-          - ELECTRIC_BIKE
-          - MOPED
-          - MOTORCYCLE
-          - CAR
-          - SCOOTER
-          - SKI
-          - CLIMBING
-          - SNOWSHOES
-          - SURF
-          - PADDLE
-          - CANOE_KAYAK
-          - BOAT
-          - EVENT
-          - MOTOCULTURE
-          - TOOLING
-          type: string
-        rank:
-          type: number
-        isDefault:
-          type: boolean
-        isOptions:
-          type: boolean
-        hasChildItems:
-          type: boolean
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
-        newAttributes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
-        newName:
-          type:
-          - string
-          - 'null'
-        legacy:
-          type: boolean
-      required:
-      - name
-      - i18nKey
-      - verticale
-      - rank
-      - isDefault
-      - isOptions
-      - hasChildItems
-    UpdateProductVerticaleCategoryDto:
-      type: object
-      properties:
-        name:
-          type: string
-        i18nKey:
-          type: string
-        verticale:
-          enum:
-          - BIKE
-          - ELECTRIC_BIKE
-          - MOPED
-          - MOTORCYCLE
-          - CAR
-          - SCOOTER
-          - SKI
-          - CLIMBING
-          - SNOWSHOES
-          - SURF
-          - PADDLE
-          - CANOE_KAYAK
-          - BOAT
-          - EVENT
-          - MOTOCULTURE
-          - TOOLING
-          type: string
-        rank:
-          type: number
-        isDefault:
-          type: boolean
-        isOptions:
-          type: boolean
-        hasChildItems:
-          type: boolean
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
-        newAttributes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
-        newName:
-          type:
-          - string
-          - 'null'
-        legacy:
-          type: boolean
-        id:
-          type: string
-      required:
-      - name
-      - i18nKey
-      - verticale
-      - rank
-      - isDefault
-      - isOptions
-      - hasChildItems
-      - id
     ProductVerticalCategoryAttribute:
       type: object
       properties:
@@ -318,6 +181,15 @@ components:
       - attribute
       - tags
       - mandatory
+    UpdateManyProductVerticaleCategoryDto:
+      type: object
+      properties:
+        productVerticaleCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateProductVerticaleCategoryDto'
+      required:
+      - productVerticaleCategories
     ProductVerticaleCategory:
       type: object
       properties:
@@ -384,6 +256,134 @@ components:
       - attributes
       - createdAt
       - updatedAt
+    ProductVerticaleCategoryListDto:
+      type: object
+      properties:
+        productVerticaleCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticaleCategory'
+      required:
+      - productVerticaleCategories
+    UpdateProductVerticaleCategoryDto:
+      type: object
+      properties:
+        name:
+          type: string
+        i18nKey:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        rank:
+          type: number
+        isDefault:
+          type: boolean
+        isOptions:
+          type: boolean
+        hasChildItems:
+          type: boolean
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newAttributes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newName:
+          type:
+          - string
+          - 'null'
+        legacy:
+          type: boolean
+        id:
+          type: string
+      required:
+      - name
+      - i18nKey
+      - verticale
+      - rank
+      - isDefault
+      - isOptions
+      - hasChildItems
+      - id
+    CreateUpdateProductVerticaleCategoryDto:
+      type: object
+      properties:
+        name:
+          type: string
+        i18nKey:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        rank:
+          type: number
+        isDefault:
+          type: boolean
+        isOptions:
+          type: boolean
+        hasChildItems:
+          type: boolean
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newAttributes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProductVerticalCategoryAttribute'
+        newName:
+          type:
+          - string
+          - 'null'
+        legacy:
+          type: boolean
+      required:
+      - name
+      - i18nKey
+      - verticale
+      - rank
+      - isDefault
+      - isOptions
+      - hasChildItems
   securitySchemes:
     x-access-token:
       scheme: bearer

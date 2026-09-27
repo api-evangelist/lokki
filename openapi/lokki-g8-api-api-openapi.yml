@@ -44,6 +44,133 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    PointOfSalesOrdersToImport:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PointOfSalesOrderDto'
+      required:
+      - orders
+    PointOfSalesOrderWarrantDto:
+      type: object
+      properties:
+        totalAmountTTC:
+          type: number
+        vat:
+          type: number
+        quantity:
+          type: number
+      required:
+      - totalAmountTTC
+      - vat
+      - quantity
+    PointOfSalesOrderPaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        paymentMethod:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Autre
+          - Boutique en ligne
+          - Lien de paiement
+        paymentDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+      required:
+      - amount
+      - paymentMethod
+      - paymentDate
+      - id
+    PointOfSalesOrderCustomerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - entreprise
+          - individual
+        email:
+          type: string
+        phone:
+          type: string
+        firstName:
+          type: string
+        companyName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        streetNumber:
+          type: string
+      required:
+      - id
+      - type
+      - email
+      - phone
+      - firstName
+      - companyName
+      - lastName
+      - address
+      - zipCode
+      - city
+      - streetNumber
+    PointOfSalesOrderPromoCodeDto:
+      type: object
+      properties:
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliesToDelivery:
+          type: boolean
+      required:
+      - discountAmount
+      - discountType
+      - appliesToDelivery
+    PointOfSalesItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        discountAmount:
+          type: number
+      required:
+      - discountType
+      - discountAmount
+    G8Ids:
+      type: object
+      properties:
+        lokkiOrderId:
+          type: string
+        g8OrderId:
+          type: string
+      required:
+      - lokkiOrderId
+      - g8OrderId
     PointOfSalesOrderDto:
       type: object
       properties:
@@ -107,42 +234,6 @@ components:
       - warrant
       - currency
       - type
-    PointOfSalesOrderPaymentDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        paymentMethod:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Autre
-          - Boutique en ligne
-          - Lien de paiement
-        paymentDate:
-          format: date-time
-          type: string
-        id:
-          type: string
-      required:
-      - amount
-      - paymentMethod
-      - paymentDate
-      - id
-    G8Ids:
-      type: object
-      properties:
-        lokkiOrderId:
-          type: string
-        g8OrderId:
-          type: string
-      required:
-      - lokkiOrderId
-      - g8OrderId
     PointOfSalesOrderItemDto:
       type: object
       properties:
@@ -168,97 +259,15 @@ components:
       - totalHT
       - name
       - vat
-    PointOfSalesItemDiscount:
+    UpdateOrderG8Id:
       type: object
       properties:
-        discountType:
-          type: string
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-        discountAmount:
-          type: number
-      required:
-      - discountType
-      - discountAmount
-    PointOfSalesOrderWarrantDto:
-      type: object
-      properties:
-        totalAmountTTC:
-          type: number
-        vat:
-          type: number
-        quantity:
-          type: number
-      required:
-      - totalAmountTTC
-      - vat
-      - quantity
-    PointOfSalesOrdersToImport:
-      type: object
-      properties:
-        orders:
+        g8Ids:
           type: array
           items:
-            $ref: '#/components/schemas/PointOfSalesOrderDto'
+            $ref: '#/components/schemas/G8Ids'
       required:
-      - orders
-    PointOfSalesOrderCustomerDto:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - entreprise
-          - individual
-        email:
-          type: string
-        phone:
-          type: string
-        firstName:
-          type: string
-        companyName:
-          type: string
-        lastName:
-          type: string
-        address:
-          type: string
-        zipCode:
-          type: string
-        city:
-          type: string
-        streetNumber:
-          type: string
-      required:
-      - id
-      - type
-      - email
-      - phone
-      - firstName
-      - companyName
-      - lastName
-      - address
-      - zipCode
-      - city
-      - streetNumber
-    PointOfSalesOrderPromoCodeDto:
-      type: object
-      properties:
-        discountAmount:
-          type: number
-        discountType:
-          type: string
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-        appliesToDelivery:
-          type: boolean
-      required:
-      - discountAmount
-      - discountType
-      - appliesToDelivery
+      - g8Ids
     PointOfSalesOrderDeliveryDto:
       type: object
       properties:
@@ -269,15 +278,6 @@ components:
       required:
       - amountTTC
       - vat
-    UpdateOrderG8Id:
-      type: object
-      properties:
-        g8Ids:
-          type: array
-          items:
-            $ref: '#/components/schemas/G8Ids'
-      required:
-      - g8Ids
   securitySchemes:
     x-access-token:
       scheme: bearer

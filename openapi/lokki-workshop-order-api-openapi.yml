@@ -238,19 +238,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CustomerField:
+    PaginatedWorkshopOrdersDto:
       type: object
       properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
+        workshopOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopOrder'
+        totalCount:
+          type: number
       required:
-      - label
-      - value
-      - id
+      - workshopOrders
+      - totalCount
     CustomInputWorkshop:
       type: object
       properties:
@@ -267,64 +266,41 @@ components:
       - name
       - price
       - isDone
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    CustomerSkisetInfos:
+    StatusHistory:
       type: object
       properties:
-        customerId:
-          type:
-          - string
-          - 'null'
+        from:
+          type: string
+        to:
+          type: boolean
+        date:
+          format: date-time
+          type: string
       required:
-      - customerId
-    WorkshopPaymentRefund:
+      - from
+      - to
+      - date
+    WorkshopOrderQuotes:
       type: object
       properties:
         id:
           type: string
-        amount:
+        isDone:
+          type: boolean
+        name:
+          type: string
+        price:
           type: number
-        date:
-          format: date-time
-          type: string
-        method:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Autre
-          - Square Terminal
-        reason:
-          type: string
-          enum:
-          - DUPLICATE
-          - FRAUDULENT
-          - REQUESTED_BY_CUSTOMER
-          - OTHER
+        timeInMinutes:
+          type: number
+        number:
+          type: number
       required:
       - id
-      - amount
-      - date
-      - method
-      - reason
-    SquarePaymentInfo:
-      type: object
-      properties:
-        squarePaymentId:
-          type: string
-        squareOrderId:
-          type: string
-      required:
-      - squarePaymentId
-      - squareOrderId
+      - isDone
+      - name
+      - price
+      - timeInMinutes
     WorkshopOrder:
       type: object
       properties:
@@ -424,35 +400,133 @@ components:
       - sentMails
       - updatedAt
       - createdAt
-    WorkshopOrderDocument:
+    WorkshopOrderCreateDocumentDto:
       type: object
       properties:
-        documentId:
+        workshopOrderId:
           type: string
         documentModelId:
           type: string
-        name:
+        comment:
           type: string
-        createdDate:
-          format: date-time
+        lang:
           type: string
-        key:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - workshopOrderId
+      - documentModelId
+      - comment
+      - lang
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+    OrdersInfoForCustomerDto:
+      type: object
+      properties:
+        totalTTC:
+          type: number
+        totalCount:
+          type: number
+      required:
+      - totalTTC
+      - totalCount
+    SquarePaymentInfo:
+      type: object
+      properties:
+        squarePaymentId:
           type: string
-        isEmailSend:
-          type: boolean
-        isSigned:
-          type: boolean
-        documentUrl:
+        squareOrderId:
           type: string
       required:
-      - documentId
-      - documentModelId
-      - name
-      - createdDate
-      - key
-      - isEmailSend
-      - isSigned
-      - documentUrl
+      - squarePaymentId
+      - squareOrderId
+    WorkshopPayment:
+      type: object
+      properties:
+        id:
+          type: string
+        paymentDate:
+          format: date-time
+          type: string
+        initialAmount:
+          type: number
+        amount:
+          type: number
+        status:
+          enum:
+          - waiting
+          - pending
+          - paid
+          type: string
+        link:
+          type: string
+        paymentIntentId:
+          type: string
+        isEmailSent:
+          type: boolean
+        method:
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+          type: string
+        companyId:
+          type: string
+        orderWorkshopId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPaymentRefund'
+        stripeStatus:
+          enum:
+          - pending
+          - error
+          - success
+          - canceled
+          type: string
+        adyenPaymentData:
+          type: string
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
+      required:
+      - id
+      - initialAmount
+      - amount
+      - status
+      - isEmailSent
+      - method
+      - companyId
+      - orderWorkshopId
+      - createdAt
+      - isPartPayment
+      - refunds
     Customer:
       type: object
       properties:
@@ -532,6 +606,16 @@ components:
       - createdAt
       - hidden
       - createdFrom
+    RepairerWorkshop:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+      required:
+      - userId
+      - name
     TulipInfos:
       type: object
       properties:
@@ -554,113 +638,22 @@ components:
       - managerFirstName
       - managerLastName
       - sirenNumber
-    PaginatedWorkshopOrdersDto:
+    LocalizedContent:
       type: object
-      properties:
-        workshopOrders:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopOrder'
-        totalCount:
-          type: number
-      required:
-      - workshopOrders
-      - totalCount
-    WorkshopOrderCreateDocumentDto:
-      type: object
-      properties:
-        workshopOrderId:
-          type: string
-        documentModelId:
-          type: string
-        comment:
-          type: string
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-      required:
-      - workshopOrderId
-      - documentModelId
-      - comment
-      - lang
-    WorkshopOrderQuotes:
+      additionalProperties:
+        type: string
+    WorkshopPaymentRefund:
       type: object
       properties:
         id:
           type: string
-        isDone:
-          type: boolean
-        name:
-          type: string
-        price:
+        amount:
           type: number
-        timeInMinutes:
-          type: number
-        number:
-          type: number
-      required:
-      - id
-      - isDone
-      - name
-      - price
-      - timeInMinutes
-    OrdersInfoForCustomerDto:
-      type: object
-      properties:
-        totalTTC:
-          type: number
-        totalCount:
-          type: number
-      required:
-      - totalTTC
-      - totalCount
-    StatusHistory:
-      type: object
-      properties:
-        from:
-          type: string
-        to:
-          type: boolean
         date:
           format: date-time
           type: string
-      required:
-      - from
-      - to
-      - date
-    WorkshopPayment:
-      type: object
-      properties:
-        id:
-          type: string
-        paymentDate:
-          format: date-time
-          type: string
-        initialAmount:
-          type: number
-        amount:
-          type: number
-        status:
-          enum:
-          - waiting
-          - pending
-          - paid
-          type: string
-        link:
-          type: string
-        paymentIntentId:
-          type: string
-        isEmailSent:
-          type: boolean
         method:
+          type: string
           enum:
           - Carte bleue
           - Espèces
@@ -671,54 +664,61 @@ components:
           - Lien de paiement
           - Autre
           - Square Terminal
+        reason:
           type: string
-        companyId:
-          type: string
-        orderWorkshopId:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        isPartPayment:
-          type: boolean
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopPaymentRefund'
-        stripeStatus:
           enum:
-          - pending
-          - error
-          - success
-          - canceled
-          type: string
-        adyenPaymentData:
-          type: string
-        squareInfo:
-          allOf:
-          - $ref: '#/components/schemas/SquarePaymentInfo'
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
       required:
       - id
-      - initialAmount
       - amount
-      - status
-      - isEmailSent
+      - date
       - method
-      - companyId
-      - orderWorkshopId
-      - createdAt
-      - isPartPayment
-      - refunds
-    RepairerWorkshop:
+      - reason
+    CustomerField:
       type: object
       properties:
-        userId:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    WorkshopOrderDocument:
+      type: object
+      properties:
+        documentId:
+          type: string
+        documentModelId:
           type: string
         name:
           type: string
+        createdDate:
+          format: date-time
+          type: string
+        key:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        documentUrl:
+          type: string
       required:
-      - userId
+      - documentId
+      - documentModelId
       - name
+      - createdDate
+      - key
+      - isEmailSend
+      - isSigned
+      - documentUrl
   securitySchemes:
     x-access-token:
       scheme: bearer

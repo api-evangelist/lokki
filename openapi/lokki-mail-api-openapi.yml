@@ -143,43 +143,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SendMailOrderEventSessionTimeChangeDto:
+    SentMailRecipients:
       type: object
       properties:
-        lang:
+        main:
           type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-        content:
-          type: string
-        sessionId:
-          type: string
-        initialStartDate:
-          type: string
-        initialEndDate:
-          type: string
-      required:
-      - lang
-      - content
-      - sessionId
-      - initialStartDate
-      - initialEndDate
-    OrderSentMailDataDto:
-      type: object
-      properties:
-        sentMails:
+        cc:
           type: array
           items:
-            $ref: '#/components/schemas/SentMailDataDto'
+            type: string
       required:
-      - sentMails
+      - main
+      - cc
     SentMailDataActionsDto:
       type: object
       properties:
@@ -212,6 +187,62 @@ components:
       - orderId
       - to
       - stateType
+    SentMailDataDto:
+      type: object
+      properties:
+        sentDate:
+          type: string
+        id:
+          type: string
+        object:
+          type: string
+        recipients:
+          $ref: '#/components/schemas/SentMailRecipients'
+        actions:
+          $ref: '#/components/schemas/SentMailDataActionsDto'
+        status:
+          type: string
+          enum:
+          - BOUNCED
+          - NOT_OPENED
+          - OPENED
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - sentDate
+      - id
+      - object
+      - actions
+      - createdAt
+    SendMailOrderEventSessionTimeChangeDto:
+      type: object
+      properties:
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+        content:
+          type: string
+        sessionId:
+          type: string
+        initialStartDate:
+          type: string
+        initialEndDate:
+          type: string
+      required:
+      - lang
+      - content
+      - sessionId
+      - initialStartDate
+      - initialEndDate
     FormDataSendWorkshopMailDto:
       type: object
       properties:
@@ -261,46 +292,15 @@ components:
       - hideDate
       - hideTime
       - lang
-    SentMailDataDto:
+    OrderSentMailDataDto:
       type: object
       properties:
-        sentDate:
-          type: string
-        id:
-          type: string
-        object:
-          type: string
-        recipients:
-          $ref: '#/components/schemas/SentMailRecipients'
-        actions:
-          $ref: '#/components/schemas/SentMailDataActionsDto'
-        status:
-          type: string
-          enum:
-          - BOUNCED
-          - NOT_OPENED
-          - OPENED
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - sentDate
-      - id
-      - object
-      - actions
-      - createdAt
-    SentMailRecipients:
-      type: object
-      properties:
-        main:
-          type: string
-        cc:
+        sentMails:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/SentMailDataDto'
       required:
-      - main
-      - cc
+      - sentMails
   securitySchemes:
     x-access-token:
       scheme: bearer

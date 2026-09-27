@@ -91,23 +91,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateStatusModelDto:
-      type: object
-      properties:
-        name:
-          type: string
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateStatusModelStatusDto'
-        companyId:
-          type: string
-        isFirst:
-          type: boolean
-      required:
-      - name
-      - status
-      - companyId
     UpdateStatusModelDto:
       type: object
       properties:
@@ -166,6 +149,23 @@ components:
       - status
       - companyId
       - createdAt
+    CreateStatusModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateStatusModelStatusDto'
+        companyId:
+          type: string
+        isFirst:
+          type: boolean
+      required:
+      - name
+      - status
+      - companyId
     StatusModelStatus:
       type: object
       properties:

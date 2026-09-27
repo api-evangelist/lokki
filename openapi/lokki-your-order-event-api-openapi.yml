@@ -183,25 +183,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    YourOrderEventPaymentAndBail:
+    YourOrderDocument:
       type: object
       properties:
-        amount:
-          type: number
         id:
           type: string
-        disabled:
-          type: boolean
-        isError:
-          type: boolean
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - DOCUMENT
+          - DOCUMENT_STATE
+          - PAYMENT
+          - NONE
       required:
-      - amount
       - id
-    OnlineStoreStripeCheckoutResultDto:
+      - name
+      - scope
+    YourOrderDocumentAction:
       type: object
       properties:
-        paymentClientSecret:
+        documentId:
           type: string
+      required:
+      - documentId
     InitiateCheckoutYourOrderEventAdyenDto:
       type: object
       properties:
@@ -224,150 +230,6 @@ components:
       - linkId
       - companyId
       - adyenInfo
-    YourOrderDocumentAction:
-      type: object
-      properties:
-        documentId:
-          type: string
-      required:
-      - documentId
-    OrderEventPerson:
-      type: object
-      properties:
-        name:
-          type: string
-        pricing:
-          type: string
-        infos:
-          type: object
-        categoryItems:
-          type: object
-      required:
-      - name
-      - pricing
-      - infos
-      - categoryItems
-    OnlineStoreAdyenCheckoutDto:
-      type: object
-      properties:
-        paymentMethod:
-          type: object
-        browserInfo:
-          type: object
-      required:
-      - paymentMethod
-      - browserInfo
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    CancelOrderInfosDto:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-      - message
-    OrderEventProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        name:
-          type: string
-        price:
-          type: number
-        vat:
-          type: number
-        productImage:
-          type: array
-          items:
-            type: string
-        nbSelected:
-          type: number
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderEventSubProduct'
-      required:
-      - id
-      - type
-      - name
-      - price
-      - vat
-      - productImage
-      - nbSelected
-      - subProducts
-    YourOrderEventAction:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - PAYMENT
-          - NONE
-          - DOCUMENT
-          - DOCUMENT_STATE
-        payment:
-          $ref: '#/components/schemas/YourOrderEventPaymentAndBail'
-        bail:
-          $ref: '#/components/schemas/YourOrderEventPaymentAndBail'
-        document:
-          $ref: '#/components/schemas/YourOrderDocumentAction'
-        documentState:
-          $ref: '#/components/schemas/YourOrderDocumentState'
-      required:
-      - type
-    OrderEventPricings:
-      type: object
-      properties:
-        label:
-          type: string
-        amount:
-          type: number
-        initialAmount:
-          type: number
-        id:
-          type: string
-      required:
-      - label
-      - amount
-      - initialAmount
-      - id
-    SignDocumentYourOrderEventDto:
-      type: object
-      properties:
-        orderEventId:
-          type: string
-        documentId:
-          type: string
-        lang:
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-          type: string
-      required:
-      - orderEventId
-      - documentId
-      - lang
-    YourOrderSignUrlDto:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url
     YourOrderOrderEventInfo:
       type: object
       properties:
@@ -441,19 +303,142 @@ components:
       - documents
       - stateDocuments
       - createdFrom
-    DocumentStateInspectionField:
+    OnlineStoreAdyenCheckoutDto:
       type: object
       properties:
-        name:
-          type: string
-        departureInfo:
-          type: string
-        arrivalInfo:
+        paymentMethod:
+          type: object
+        browserInfo:
+          type: object
+      required:
+      - paymentMethod
+      - browserInfo
+    CancelOrderInfosDto:
+      type: object
+      properties:
+        message:
           type: string
       required:
+      - message
+    OnlineStoreStripeCheckoutResultDto:
+      type: object
+      properties:
+        paymentClientSecret:
+          type: string
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    SignDocumentYourOrderEventDto:
+      type: object
+      properties:
+        orderEventId:
+          type: string
+        documentId:
+          type: string
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+          type: string
+      required:
+      - orderEventId
+      - documentId
+      - lang
+    YourOrderEventDto:
+      type: object
+      properties:
+        orderEvent:
+          $ref: '#/components/schemas/YourOrderOrderEventInfo'
+        action:
+          $ref: '#/components/schemas/YourOrderEventAction'
+      required:
+      - orderEvent
+      - action
+    OrderEventProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        name:
+          type: string
+        price:
+          type: number
+        vat:
+          type: number
+        productImage:
+          type: array
+          items:
+            type: string
+        nbSelected:
+          type: number
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEventSubProduct'
+      required:
+      - id
+      - type
       - name
-      - departureInfo
-      - arrivalInfo
+      - price
+      - vat
+      - productImage
+      - nbSelected
+      - subProducts
+    YourOrderSignUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    YourOrderEventAction:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - PAYMENT
+          - NONE
+          - DOCUMENT
+          - DOCUMENT_STATE
+        payment:
+          $ref: '#/components/schemas/YourOrderEventPaymentAndBail'
+        bail:
+          $ref: '#/components/schemas/YourOrderEventPaymentAndBail'
+        document:
+          $ref: '#/components/schemas/YourOrderDocumentAction'
+        documentState:
+          $ref: '#/components/schemas/YourOrderDocumentState'
+      required:
+      - type
+    InitiateStripeCheckoutYourOrderEventDto:
+      type: object
+      properties:
+        orderEventId:
+          type: string
+        paymentId:
+          type: string
+        bailId:
+          type: string
+        companyId:
+          type: string
+      required:
+      - orderEventId
+      - paymentId
+      - bailId
+      - companyId
     YourOrderEventStateDocumentFromOrderEvent:
       type: object
       properties:
@@ -479,6 +464,20 @@ components:
       - name
       - scope
       - status
+    YourOrderEventPaymentAndBail:
+      type: object
+      properties:
+        amount:
+          type: number
+        id:
+          type: string
+        disabled:
+          type: boolean
+        isError:
+          type: boolean
+      required:
+      - amount
+      - id
     YourOrderActionStateProduct:
       type: object
       properties:
@@ -510,6 +509,35 @@ components:
       - stateInspectionFields
       - departureFiles
       - arrivalFiles
+    OrderEventPricings:
+      type: object
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        initialAmount:
+          type: number
+        id:
+          type: string
+      required:
+      - label
+      - amount
+      - initialAmount
+      - id
+    DocumentStateInspectionField:
+      type: object
+      properties:
+        name:
+          type: string
+        departureInfo:
+          type: string
+        arrivalInfo:
+          type: string
+      required:
+      - name
+      - departureInfo
+      - arrivalInfo
     YourOrderDocumentState:
       type: object
       properties:
@@ -525,6 +553,22 @@ components:
       - documentId
       - name
       - documentStateProducts
+    OrderEventPerson:
+      type: object
+      properties:
+        name:
+          type: string
+        pricing:
+          type: string
+        infos:
+          type: object
+        categoryItems:
+          type: object
+      required:
+      - name
+      - pricing
+      - infos
+      - categoryItems
     OrderEventSubProduct:
       type: object
       properties:
@@ -545,50 +589,6 @@ components:
       - available
       - serialNumber
       - status
-    InitiateStripeCheckoutYourOrderEventDto:
-      type: object
-      properties:
-        orderEventId:
-          type: string
-        paymentId:
-          type: string
-        bailId:
-          type: string
-        companyId:
-          type: string
-      required:
-      - orderEventId
-      - paymentId
-      - bailId
-      - companyId
-    YourOrderEventDto:
-      type: object
-      properties:
-        orderEvent:
-          $ref: '#/components/schemas/YourOrderOrderEventInfo'
-        action:
-          $ref: '#/components/schemas/YourOrderEventAction'
-      required:
-      - orderEvent
-      - action
-    YourOrderDocument:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        scope:
-          type: string
-          enum:
-          - DOCUMENT
-          - DOCUMENT_STATE
-          - PAYMENT
-          - NONE
-      required:
-      - id
-      - name
-      - scope
   securitySchemes:
     x-access-token:
       scheme: bearer

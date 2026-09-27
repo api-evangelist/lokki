@@ -242,41 +242,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateAdminPromoCodeDto:
+    CreateCompanyPromoCodeDto:
       type: object
       properties:
         code:
           type: string
           minLength: 4
           maxLength: 30
-          pattern: /^LOKKI-([A-Z0-9]*)$/
-        limitToNewCustomers:
-          type: boolean
-        limitToVerticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        limitToCompanies:
-          type: array
-          items:
-            type: string
+          pattern: /^([A-Z0-9]*)$/
         source:
           type: string
           enum:
@@ -313,9 +286,6 @@ components:
           type: boolean
       required:
       - code
-      - limitToNewCustomers
-      - limitToVerticales
-      - limitToCompanies
       - source
       - discountType
       - discountAmount
@@ -410,44 +380,41 @@ components:
       - maxUses
       - dateCheck
       - applyOnDelivery
-    UpdatePromoCodeDto:
-      type: object
-      properties:
-        active:
-          type: boolean
-        creationDate:
-          format: date-time
-          type: string
-        expirationDate:
-          format: date-time
-          type: string
-        maxUses:
-          type:
-          - number
-          - 'null'
-          minimum: 1
-        dateCheck:
-          enum:
-          - CREATION_DATE
-          - ORDER_DATE
-          type: string
-        applyOnDelivery:
-          type: boolean
-      required:
-      - active
-      - creationDate
-      - expirationDate
-      - maxUses
-      - dateCheck
-      - applyOnDelivery
-    CreateCompanyPromoCodeDto:
+    CreateAdminPromoCodeDto:
       type: object
       properties:
         code:
           type: string
           minLength: 4
           maxLength: 30
-          pattern: /^([A-Z0-9]*)$/
+          pattern: /^LOKKI-([A-Z0-9]*)$/
+        limitToNewCustomers:
+          type: boolean
+        limitToVerticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        limitToCompanies:
+          type: array
+          items:
+            type: string
         source:
           type: string
           enum:
@@ -484,12 +451,45 @@ components:
           type: boolean
       required:
       - code
+      - limitToNewCustomers
+      - limitToVerticales
+      - limitToCompanies
       - source
       - discountType
       - discountAmount
       - creationDate
       - expirationDate
       - minPrice
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    UpdatePromoCodeDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+          type: string
+        applyOnDelivery:
+          type: boolean
+      required:
+      - active
+      - creationDate
+      - expirationDate
       - maxUses
       - dateCheck
       - applyOnDelivery

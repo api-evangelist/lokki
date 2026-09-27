@@ -47,6 +47,23 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateOnlineStoreTextDto:
+      type: object
+      properties:
+        retrievalOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        retrievalOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        deliveryOptionDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        universeSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
     OnlineStoreText:
       type: object
       properties:
@@ -72,23 +89,6 @@ components:
       - deliveryOptionTitle
       - deliveryOptionDescription
       - universeSectionTitle
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    UpdateOnlineStoreTextDto:
-      type: object
-      properties:
-        retrievalOptionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        retrievalOptionDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        deliveryOptionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        deliveryOptionDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        universeSectionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
   securitySchemes:
     x-access-token:
       scheme: bearer

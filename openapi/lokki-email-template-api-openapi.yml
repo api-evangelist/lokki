@@ -111,36 +111,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateEmailTemplateDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-        type:
-          type: string
-        object:
-          $ref: '#/components/schemas/LocalizedContent'
-        content:
-          $ref: '#/components/schemas/LocalizedContent'
-        documentId:
-          type: string
-        method:
-          type: string
-        payment:
-          type: number
-        bail:
-          type: number
-        methodState:
-          type: string
-        hideTime:
-          type: boolean
-        hideDate:
-          type: boolean
-      required:
-      - companyId
-      - type
-      - object
-      - content
     EmailTemplate:
       type: object
       properties:
@@ -180,16 +150,6 @@ components:
       - hideTime
       - hideDate
       - createdAt
-    EmailTemplateDocument:
-      type: object
-      properties:
-        id:
-          type: string
-        method:
-          type: string
-      required:
-      - id
-      - method
     UpdateEmailTemplateDto:
       type: object
       properties:
@@ -224,6 +184,46 @@ components:
       type: object
       additionalProperties:
         type: string
+    CreateEmailTemplateDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        type:
+          type: string
+        object:
+          $ref: '#/components/schemas/LocalizedContent'
+        content:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentId:
+          type: string
+        method:
+          type: string
+        payment:
+          type: number
+        bail:
+          type: number
+        methodState:
+          type: string
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+      required:
+      - companyId
+      - type
+      - object
+      - content
+    EmailTemplateDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        method:
+          type: string
+      required:
+      - id
+      - method
   securitySchemes:
     x-access-token:
       scheme: bearer

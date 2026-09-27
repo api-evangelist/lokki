@@ -110,10 +110,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateDocumentModelDto:
+    CreateDocumentModelDto:
       type: object
       properties:
         name:
+          type: string
+        companyId:
           type: string
         legalMentions:
           type: string
@@ -149,6 +151,7 @@ components:
           type: boolean
       required:
       - name
+      - companyId
       - legalMentions
       - signature
       - onlineProductsName
@@ -164,7 +167,6 @@ components:
       - hideTime
       - hideDate
       - hidePrice
-      - useLegalCompanyInfo
     DocumentModel:
       type: object
       properties:
@@ -233,12 +235,10 @@ components:
       - hidePrice
       - useLegalCompanyInfo
       - createdAt
-    CreateDocumentModelDto:
+    UpdateDocumentModelDto:
       type: object
       properties:
         name:
-          type: string
-        companyId:
           type: string
         legalMentions:
           type: string
@@ -274,7 +274,6 @@ components:
           type: boolean
       required:
       - name
-      - companyId
       - legalMentions
       - signature
       - onlineProductsName
@@ -290,6 +289,7 @@ components:
       - hideTime
       - hideDate
       - hidePrice
+      - useLegalCompanyInfo
   securitySchemes:
     x-access-token:
       scheme: bearer

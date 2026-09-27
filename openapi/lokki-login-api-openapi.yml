@@ -398,6 +398,63 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ResendValidationEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+        encrypted:
+          type: boolean
+        origin:
+          type: string
+          enum:
+          - plg
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - email
+      - encrypted
+      - origin
+      - lang
+    OrderRP:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        type:
+          type: string
+          enum:
+          - LCD
+          - LLD
+          - Event
+          - LCDRequest
+          - LCDRequestAccepted
+      required:
+      - orderId
+      - type
+    LoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        lang:
+          type: string
+      required:
+      - email
+      - password
     RentalPlaceUserDto:
       type: object
       properties:
@@ -506,44 +563,66 @@ components:
       - avatar
       - signedUpWith
       - newsletters
-    ResendValidationEmailDto:
+    RentalPlaceUserAddressComponents:
       type: object
       properties:
-        email:
+        streetNumber:
           type: string
-        encrypted:
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    AvailableEmailDto:
+      type: object
+      properties:
+        isAvailable:
           type: boolean
-        origin:
-          type: string
-          enum:
-          - plg
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
+        isAccountActivated:
+          type: boolean
       required:
-      - email
-      - encrypted
-      - origin
-      - lang
-    UserValidationCode:
+      - isAvailable
+      - isAccountActivated
+    CheckTokenDashboardResponseDto:
       type: object
       properties:
-        code:
+        isLoggedIn:
+          type: boolean
+        role:
           type: string
-        expiresAt:
-          format: date-time
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+        connectTo:
           type: string
+          enum:
+          - dashboard
+          - lokkit
+          - visibility_on_boarding
+          - visibility
+          - visibility_one
+          - hyperline
       required:
-      - code
-      - expiresAt
+      - isLoggedIn
+      - role
+      - connectTo
     ValidateAccountCodeDto:
       type: object
       properties:
@@ -574,16 +653,6 @@ components:
       - code
       - origin
       - lang
-    ResetPasswordDto:
-      type: object
-      properties:
-        token:
-          type: string
-        password:
-          type: string
-      required:
-      - token
-      - password
     LoginUserDto:
       type: object
       properties:
@@ -617,17 +686,15 @@ components:
       - role
       - connectTo
       - availableTools
-    LoginDto:
+    ResetPasswordDto:
       type: object
       properties:
-        email:
+        token:
           type: string
         password:
           type: string
-        lang:
-          type: string
       required:
-      - email
+      - token
       - password
     OrderRelation:
       type: object
@@ -641,49 +708,6 @@ components:
       required:
       - orders
       - companyId
-    OrderRP:
-      type: object
-      properties:
-        orderId:
-          type: string
-        customerId:
-          type: string
-        type:
-          type: string
-          enum:
-          - LCD
-          - LLD
-          - Event
-          - LCDRequest
-          - LCDRequestAccepted
-      required:
-      - orderId
-      - type
-    RentalPlaceUserAddressComponents:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
     RentalPlaceUserNewsletters:
       type: object
       properties:
@@ -691,6 +715,17 @@ components:
           $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
       required:
       - support
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
     RentalPlaceUserNewslettersSupport:
       type: object
       properties:
@@ -704,16 +739,6 @@ components:
       - email
       - sms
       - push
-    AvailableEmailDto:
-      type: object
-      properties:
-        isAvailable:
-          type: boolean
-        isAccountActivated:
-          type: boolean
-      required:
-      - isAvailable
-      - isAccountActivated
     ForgotPasswordDto:
       type: object
       properties:
@@ -795,31 +820,6 @@ components:
       - createdAt
       - connectionAttempt
       - availableTools
-    CheckTokenDashboardResponseDto:
-      type: object
-      properties:
-        isLoggedIn:
-          type: boolean
-        role:
-          type: string
-          enum:
-          - user
-          - manager
-          - admin
-          - reconditioner
-        connectTo:
-          type: string
-          enum:
-          - dashboard
-          - lokkit
-          - visibility_on_boarding
-          - visibility
-          - visibility_one
-          - hyperline
-      required:
-      - isLoggedIn
-      - role
-      - connectTo
   securitySchemes:
     x-access-token:
       scheme: bearer

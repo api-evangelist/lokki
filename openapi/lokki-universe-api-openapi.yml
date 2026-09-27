@@ -138,10 +138,6 @@ components:
       - rentalPlaceTitle
       - ranking
       - minimumPrice
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
     CreateUniverseControllerFormDataDto:
       type: object
       properties:
@@ -180,6 +176,10 @@ components:
           type: number
         minimumPrice:
           type: string
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

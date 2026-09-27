@@ -264,34 +264,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateWorkshopQuoteDto:
-      type: object
-      properties:
-        companyId:
-          type: string
-        name:
-          type: string
-        category:
-          type: string
-        price:
-          type: number
-        time:
-          type: number
-      required:
-      - companyId
-      - name
-      - category
-      - price
-      - time
-    WorkshopQuoteList:
-      type: object
-      properties:
-        quotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopQuote'
-      required:
-      - quotes
     WorkshopShoppingListItem:
       type: object
       properties:
@@ -326,54 +298,15 @@ components:
       - companyId
       - updatedAt
       - createdAt
-    WorkshopShoppingListOrderCustomer:
+    UpdateWorkshopQuoteProductsDto:
       type: object
       properties:
-        id:
-          type: string
-        lastName:
-          type: string
-        firstName:
-          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateWorkshopQuoteProductDto'
       required:
-      - id
-      - lastName
-      - firstName
-    UpdateWorkshopQuoteDto:
-      type: object
-      properties:
-        name:
-          type: string
-        category:
-          type: string
-        price:
-          type: number
-        time:
-          type: number
-      required:
-      - name
-      - category
-      - price
-      - time
-    WorkshopShoppingListOrder:
-      type: object
-      properties:
-        id:
-          type: string
-        customer:
-          $ref: '#/components/schemas/WorkshopShoppingListOrderCustomer'
-      required:
-      - id
-    CreateWorkshopProductDto:
-      type: object
-      properties:
-        name:
-          type: string
-        quantity:
-          type: number
-      required:
-      - name
-      - quantity
+      - products
     UpdateWorkshopQuoteProductDto:
       type: object
       properties:
@@ -393,16 +326,24 @@ components:
             $ref: '#/components/schemas/WorkshopProduct'
       required:
       - products
-    WorkshopQuoteRelatedProducts:
+    WorkshopQuoteList:
       type: object
       properties:
-        productId:
-          type: string
-        quantity:
-          type: number
+        quotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopQuote'
       required:
-      - productId
-      - quantity
+      - quotes
+    WorkshopShoppingListOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        customer:
+          $ref: '#/components/schemas/WorkshopShoppingListOrderCustomer'
+      required:
+      - id
     CreateWorkshopShoppingListItemDto:
       type: object
       properties:
@@ -423,6 +364,48 @@ components:
       required:
       - name
       - status
+    WorkshopProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: number
+        companyId:
+          type: string
+      required:
+      - id
+      - name
+      - quantity
+      - companyId
+    UpdateWorkshopShoppingListItemDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - NOT_LISTED
+          - TO_ORDER
+          - ORDERED
+          - ARCHIVED
+          - USED
+      required:
+      - status
+    WorkshopShoppingListOrderCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+      required:
+      - id
+      - lastName
+      - firstName
     WorkshopQuote:
       type: object
       properties:
@@ -458,44 +441,6 @@ components:
       - relatedProducts
       - updatedAt
       - createdAt
-    UpdateWorkshopQuoteProductsDto:
-      type: object
-      properties:
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateWorkshopQuoteProductDto'
-      required:
-      - products
-    UpdateWorkshopShoppingListItemDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - NOT_LISTED
-          - TO_ORDER
-          - ORDERED
-          - ARCHIVED
-          - USED
-      required:
-      - status
-    WorkshopProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        quantity:
-          type: number
-        companyId:
-          type: string
-      required:
-      - id
-      - name
-      - quantity
-      - companyId
     WorkshopShoppingListDto:
       type: object
       properties:
@@ -505,6 +450,61 @@ components:
             $ref: '#/components/schemas/WorkshopShoppingListItem'
       required:
       - items
+    WorkshopQuoteRelatedProducts:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: number
+      required:
+      - productId
+      - quantity
+    UpdateWorkshopQuoteDto:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        time:
+          type: number
+      required:
+      - name
+      - category
+      - price
+      - time
+    CreateWorkshopQuoteDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        time:
+          type: number
+      required:
+      - companyId
+      - name
+      - category
+      - price
+      - time
+    CreateWorkshopProductDto:
+      type: object
+      properties:
+        name:
+          type: string
+        quantity:
+          type: number
+      required:
+      - name
+      - quantity
   securitySchemes:
     x-access-token:
       scheme: bearer
