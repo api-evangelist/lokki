@@ -57,22 +57,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MagicScheduleOptimizeDto:
-      type: object
-      properties:
-        jobId:
-          type: string
-          example: optimize-company-1234567890
-      required:
-      - jobId
-    MagicScheduleCompanyOccupancyDto:
-      type: object
-      properties:
-        occupancyRate:
-          type: number
-          example: 76
-      required:
-      - occupancyRate
     MagicScheduleCompanyStateDto:
       type: object
       properties:
@@ -93,6 +77,22 @@ components:
       - status
       - progress
       - error
+    MagicScheduleCompanyOccupancyDto:
+      type: object
+      properties:
+        occupancyRate:
+          type: number
+          example: 76
+      required:
+      - occupancyRate
+    MagicScheduleOptimizeDto:
+      type: object
+      properties:
+        jobId:
+          type: string
+          example: optimize-company-1234567890
+      required:
+      - jobId
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -404,6 +404,34 @@ components:
       - collection
       - internalTitle
       - type
+    GetManyCompanySignaturesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanySignature'
+      required:
+      - total
+      - docs
+    CreateOneCompanySignatureBodyDto:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/CompanyDocumentBodyDto'
+        userId:
+          type: string
+        companyId:
+          type: string
+      required:
+      - document
+      - userId
+      - companyId
     CompanyDocumentBodyDto:
       type: object
       properties:
@@ -426,21 +454,6 @@ components:
       - internalTitle
       - collection
       - type
-    GetManyCompanySignaturesResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanySignature'
-      required:
-      - total
-      - docs
     CompanySignature:
       type: object
       properties:
@@ -461,19 +474,6 @@ components:
       - document
       - userId
       - id
-    CreateOneCompanySignatureBodyDto:
-      type: object
-      properties:
-        document:
-          $ref: '#/components/schemas/CompanyDocumentBodyDto'
-        userId:
-          type: string
-        companyId:
-          type: string
-      required:
-      - document
-      - userId
-      - companyId
   securitySchemes:
     x-access-token:
       scheme: bearer

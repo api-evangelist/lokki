@@ -116,26 +116,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateProductSurveyFieldDto:
-      type: object
-      properties:
-        value:
-          type: string
-        type:
-          type: string
-          enum:
-          - TEXT
-          - SELECT
-          - MULTIPLE_SELECT
-          - DOCUMENT
-        selectAnswers:
-          type: array
-          items:
-            type: string
-      required:
-      - value
-      - type
-      - selectAnswers
     ProductSurveyField:
       type: object
       properties:
@@ -159,28 +139,6 @@ components:
       - value
       - type
       - selectAnswers
-    ProductSurvey:
-      type: object
-      properties:
-        id:
-          type: string
-        companyId:
-          type: string
-        name:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductSurveyField'
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - companyId
-      - name
-      - fields
-      - createdAt
     UpdateProductSurveyFieldDto:
       type: object
       properties:
@@ -206,18 +164,6 @@ components:
       - value
       - type
       - selectAnswers
-    CreateProductSurveyDto:
-      type: object
-      properties:
-        name:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateProductSurveyFieldDto'
-      required:
-      - name
-      - fields
     UpdateProductSurveyDto:
       type: object
       properties:
@@ -227,6 +173,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UpdateProductSurveyFieldDto'
+      required:
+      - name
+      - fields
+    CreateProductSurveyFieldDto:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - TEXT
+          - SELECT
+          - MULTIPLE_SELECT
+          - DOCUMENT
+        selectAnswers:
+          type: array
+          items:
+            type: string
+      required:
+      - value
+      - type
+      - selectAnswers
+    ProductSurvey:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductSurveyField'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - companyId
+      - name
+      - fields
+      - createdAt
+    CreateProductSurveyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateProductSurveyFieldDto'
       required:
       - name
       - fields

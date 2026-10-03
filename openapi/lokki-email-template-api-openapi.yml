@@ -111,6 +111,10 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
     EmailTemplate:
       type: object
       properties:
@@ -150,40 +154,6 @@ components:
       - hideTime
       - hideDate
       - createdAt
-    UpdateEmailTemplateDto:
-      type: object
-      properties:
-        id:
-          type: string
-        companyId:
-          type: string
-        type:
-          type: string
-        object:
-          $ref: '#/components/schemas/LocalizedContent'
-        content:
-          $ref: '#/components/schemas/LocalizedContent'
-        documentState:
-          type: object
-        documents:
-          type: object
-        payment:
-          type: number
-        bail:
-          type: number
-        hideTime:
-          type: boolean
-        hideDate:
-          type: boolean
-      required:
-      - companyId
-      - type
-      - object
-      - content
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
     CreateEmailTemplateDto:
       type: object
       properties:
@@ -224,6 +194,36 @@ components:
       required:
       - id
       - method
+    UpdateEmailTemplateDto:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        type:
+          type: string
+        object:
+          $ref: '#/components/schemas/LocalizedContent'
+        content:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentState:
+          type: object
+        documents:
+          type: object
+        payment:
+          type: number
+        bail:
+          type: number
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+      required:
+      - companyId
+      - type
+      - object
+      - content
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -242,59 +242,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateCompanyPromoCodeDto:
-      type: object
-      properties:
-        code:
-          type: string
-          minLength: 4
-          maxLength: 30
-          pattern: /^([A-Z0-9]*)$/
-        source:
-          type: string
-          enum:
-          - COMPANY
-          - LOKKI
-        discountType:
-          type: string
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-        discountAmount:
-          type: number
-          minimum: 0
-        creationDate:
-          format: date-time
-          type: string
-        expirationDate:
-          format: date-time
-          type: string
-        minPrice:
-          type: number
-          minimum: 0
-        maxUses:
-          type:
-          - number
-          - 'null'
-          minimum: 1
-        dateCheck:
-          type: string
-          enum:
-          - CREATION_DATE
-          - ORDER_DATE
-        applyOnDelivery:
-          type: boolean
-      required:
-      - code
-      - source
-      - discountType
-      - discountAmount
-      - creationDate
-      - expirationDate
-      - minPrice
-      - maxUses
-      - dateCheck
-      - applyOnDelivery
     PromoCodeDto:
       type: object
       properties:
@@ -380,6 +327,89 @@ components:
       - maxUses
       - dateCheck
       - applyOnDelivery
+    CreateCompanyPromoCodeDto:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 4
+          maxLength: 30
+          pattern: /^([A-Z0-9]*)$/
+        source:
+          type: string
+          enum:
+          - COMPANY
+          - LOKKI
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        discountAmount:
+          type: number
+          minimum: 0
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        minPrice:
+          type: number
+          minimum: 0
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          type: string
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+        applyOnDelivery:
+          type: boolean
+      required:
+      - code
+      - source
+      - discountType
+      - discountAmount
+      - creationDate
+      - expirationDate
+      - minPrice
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
+    UpdatePromoCodeDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+        creationDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        maxUses:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+        dateCheck:
+          enum:
+          - CREATION_DATE
+          - ORDER_DATE
+          type: string
+        applyOnDelivery:
+          type: boolean
+      required:
+      - active
+      - creationDate
+      - expirationDate
+      - maxUses
+      - dateCheck
+      - applyOnDelivery
     CreateAdminPromoCodeDto:
       type: object
       properties:
@@ -460,36 +490,6 @@ components:
       - creationDate
       - expirationDate
       - minPrice
-      - maxUses
-      - dateCheck
-      - applyOnDelivery
-    UpdatePromoCodeDto:
-      type: object
-      properties:
-        active:
-          type: boolean
-        creationDate:
-          format: date-time
-          type: string
-        expirationDate:
-          format: date-time
-          type: string
-        maxUses:
-          type:
-          - number
-          - 'null'
-          minimum: 1
-        dateCheck:
-          enum:
-          - CREATION_DATE
-          - ORDER_DATE
-          type: string
-        applyOnDelivery:
-          type: boolean
-      required:
-      - active
-      - creationDate
-      - expirationDate
       - maxUses
       - dateCheck
       - applyOnDelivery

@@ -47,10 +47,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
     UpdateOnlineStoreTextDto:
       type: object
       properties:
@@ -64,6 +60,10 @@ components:
           $ref: '#/components/schemas/LocalizedContent'
         universeSectionTitle:
           $ref: '#/components/schemas/LocalizedContent'
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
     OnlineStoreText:
       type: object
       properties:

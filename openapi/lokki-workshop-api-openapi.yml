@@ -264,40 +264,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WorkshopShoppingListItem:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        status:
-          enum:
-          - NOT_LISTED
-          - TO_ORDER
-          - ORDERED
-          - ARCHIVED
-          - USED
-          type: string
-        workshopProductId:
-          type: string
-        workshopOrder:
-          $ref: '#/components/schemas/WorkshopShoppingListOrder'
-        companyId:
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - name
-      - status
-      - companyId
-      - updatedAt
-      - createdAt
     UpdateWorkshopQuoteProductsDto:
       type: object
       properties:
@@ -307,43 +273,6 @@ components:
             $ref: '#/components/schemas/UpdateWorkshopQuoteProductDto'
       required:
       - products
-    UpdateWorkshopQuoteProductDto:
-      type: object
-      properties:
-        productId:
-          type: string
-        quantity:
-          type: number
-      required:
-      - productId
-      - quantity
-    WorkshopProductList:
-      type: object
-      properties:
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopProduct'
-      required:
-      - products
-    WorkshopQuoteList:
-      type: object
-      properties:
-        quotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopQuote'
-      required:
-      - quotes
-    WorkshopShoppingListOrder:
-      type: object
-      properties:
-        id:
-          type: string
-        customer:
-          $ref: '#/components/schemas/WorkshopShoppingListOrderCustomer'
-      required:
-      - id
     CreateWorkshopShoppingListItemDto:
       type: object
       properties:
@@ -364,48 +293,6 @@ components:
       required:
       - name
       - status
-    WorkshopProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        quantity:
-          type: number
-        companyId:
-          type: string
-      required:
-      - id
-      - name
-      - quantity
-      - companyId
-    UpdateWorkshopShoppingListItemDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - NOT_LISTED
-          - TO_ORDER
-          - ORDERED
-          - ARCHIVED
-          - USED
-      required:
-      - status
-    WorkshopShoppingListOrderCustomer:
-      type: object
-      properties:
-        id:
-          type: string
-        lastName:
-          type: string
-        firstName:
-          type: string
-      required:
-      - id
-      - lastName
-      - firstName
     WorkshopQuote:
       type: object
       properties:
@@ -450,16 +337,6 @@ components:
             $ref: '#/components/schemas/WorkshopShoppingListItem'
       required:
       - items
-    WorkshopQuoteRelatedProducts:
-      type: object
-      properties:
-        productId:
-          type: string
-        quantity:
-          type: number
-      required:
-      - productId
-      - quantity
     UpdateWorkshopQuoteDto:
       type: object
       properties:
@@ -476,6 +353,79 @@ components:
       - category
       - price
       - time
+    CreateWorkshopProductDto:
+      type: object
+      properties:
+        name:
+          type: string
+        quantity:
+          type: number
+      required:
+      - name
+      - quantity
+    WorkshopProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: number
+        companyId:
+          type: string
+      required:
+      - id
+      - name
+      - quantity
+      - companyId
+    WorkshopShoppingListItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          enum:
+          - NOT_LISTED
+          - TO_ORDER
+          - ORDERED
+          - ARCHIVED
+          - USED
+          type: string
+        workshopProductId:
+          type: string
+        workshopOrder:
+          $ref: '#/components/schemas/WorkshopShoppingListOrder'
+        companyId:
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - status
+      - companyId
+      - updatedAt
+      - createdAt
+    WorkshopShoppingListOrderCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+      required:
+      - id
+      - lastName
+      - firstName
     CreateWorkshopQuoteDto:
       type: object
       properties:
@@ -495,16 +445,66 @@ components:
       - category
       - price
       - time
-    CreateWorkshopProductDto:
+    UpdateWorkshopQuoteProductDto:
       type: object
       properties:
-        name:
+        productId:
           type: string
         quantity:
           type: number
       required:
-      - name
+      - productId
       - quantity
+    WorkshopQuoteList:
+      type: object
+      properties:
+        quotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopQuote'
+      required:
+      - quotes
+    WorkshopQuoteRelatedProducts:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: number
+      required:
+      - productId
+      - quantity
+    WorkshopShoppingListOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        customer:
+          $ref: '#/components/schemas/WorkshopShoppingListOrderCustomer'
+      required:
+      - id
+    WorkshopProductList:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopProduct'
+      required:
+      - products
+    UpdateWorkshopShoppingListItemDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - NOT_LISTED
+          - TO_ORDER
+          - ORDERED
+          - ARCHIVED
+          - USED
+      required:
+      - status
   securitySchemes:
     x-access-token:
       scheme: bearer

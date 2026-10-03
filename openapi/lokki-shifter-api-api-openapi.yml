@@ -44,64 +44,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PointOfSalesOrdersToImport:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/PointOfSalesOrderDto'
-      required:
-      - orders
-    PointOfSalesOrderWarrantDto:
-      type: object
-      properties:
-        totalAmountTTC:
-          type: number
-        vat:
-          type: number
-        quantity:
-          type: number
-      required:
-      - totalAmountTTC
-      - vat
-      - quantity
-    PointOfSalesOrderPaymentDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        paymentMethod:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Autre
-          - Boutique en ligne
-          - Lien de paiement
-        paymentDate:
-          format: date-time
-          type: string
-        id:
-          type: string
-      required:
-      - amount
-      - paymentMethod
-      - paymentDate
-      - id
-    ShifterIds:
-      type: object
-      properties:
-        lokkiOrderId:
-          type: string
-        shifterOrderId:
-          type: string
-      required:
-      - lokkiOrderId
-      - shifterOrderId
     PointOfSalesOrderCustomerDto:
       type: object
       properties:
@@ -142,44 +84,60 @@ components:
       - zipCode
       - city
       - streetNumber
-    PointOfSalesOrderPromoCodeDto:
+    PointOfSalesOrderDeliveryDto:
       type: object
       properties:
-        discountAmount:
+        amountTTC:
           type: number
-        discountType:
-          type: string
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-        appliesToDelivery:
-          type: boolean
-      required:
-      - discountAmount
-      - discountType
-      - appliesToDelivery
-    PointOfSalesItemDiscount:
-      type: object
-      properties:
-        discountType:
-          type: string
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-        discountAmount:
+        vat:
           type: number
       required:
-      - discountType
-      - discountAmount
-    UpdateOrderShifterId:
+      - amountTTC
+      - vat
+    PointOfSalesOrdersToImport:
       type: object
       properties:
-        shifterIds:
+        orders:
           type: array
           items:
-            $ref: '#/components/schemas/ShifterIds'
+            $ref: '#/components/schemas/PointOfSalesOrderDto'
       required:
-      - shifterIds
+      - orders
+    ShifterIds:
+      type: object
+      properties:
+        lokkiOrderId:
+          type: string
+        shifterOrderId:
+          type: string
+      required:
+      - lokkiOrderId
+      - shifterOrderId
+    PointOfSalesOrderItemDto:
+      type: object
+      properties:
+        quantity:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        name:
+          type: string
+        vat:
+          type: number
+        discount:
+          $ref: '#/components/schemas/PointOfSalesItemDiscount'
+        discountedTotalHT:
+          type: number
+        discountedTotalTTC:
+          type: number
+      required:
+      - quantity
+      - totalTTC
+      - totalHT
+      - name
+      - vat
     PointOfSalesOrderDto:
       type: object
       properties:
@@ -243,41 +201,83 @@ components:
       - warrant
       - currency
       - type
-    PointOfSalesOrderItemDto:
+    UpdateOrderShifterId:
       type: object
       properties:
+        shifterIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShifterIds'
+      required:
+      - shifterIds
+    PointOfSalesOrderPromoCodeDto:
+      type: object
+      properties:
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliesToDelivery:
+          type: boolean
+      required:
+      - discountAmount
+      - discountType
+      - appliesToDelivery
+    PointOfSalesItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        discountAmount:
+          type: number
+      required:
+      - discountType
+      - discountAmount
+    PointOfSalesOrderPaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        paymentMethod:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Autre
+          - Boutique en ligne
+          - Lien de paiement
+        paymentDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+      required:
+      - amount
+      - paymentMethod
+      - paymentDate
+      - id
+    PointOfSalesOrderWarrantDto:
+      type: object
+      properties:
+        totalAmountTTC:
+          type: number
+        vat:
+          type: number
         quantity:
           type: number
-        totalTTC:
-          type: number
-        totalHT:
-          type: number
-        name:
-          type: string
-        vat:
-          type: number
-        discount:
-          $ref: '#/components/schemas/PointOfSalesItemDiscount'
-        discountedTotalHT:
-          type: number
-        discountedTotalTTC:
-          type: number
       required:
+      - totalAmountTTC
+      - vat
       - quantity
-      - totalTTC
-      - totalHT
-      - name
-      - vat
-    PointOfSalesOrderDeliveryDto:
-      type: object
-      properties:
-        amountTTC:
-          type: number
-        vat:
-          type: number
-      required:
-      - amountTTC
-      - vat
   securitySchemes:
     x-access-token:
       scheme: bearer

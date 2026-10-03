@@ -83,6 +83,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CreateUpdateWorkshopInterventionDto:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopInterventionFieldDto'
+      required:
+      - fields
     WorkshopInterventionField:
       type: object
       properties:
@@ -111,15 +120,6 @@ components:
       required:
       - fields
       - createdDate
-    CreateUpdateWorkshopInterventionDto:
-      type: object
-      properties:
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopInterventionFieldDto'
-      required:
-      - fields
     WorkshopInterventionFieldDto:
       type: object
       properties:

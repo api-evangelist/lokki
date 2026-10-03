@@ -91,26 +91,19 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateStatusModelDto:
+    StatusModelStatus:
       type: object
       properties:
-        name:
-          type: string
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateStatusModelStatusDto'
-        companyId:
-          type: string
-        isFirst:
-          type: boolean
         id:
           type: string
+        color:
+          type: string
+        name:
+          type: string
       required:
-      - name
-      - status
-      - companyId
       - id
+      - color
+      - name
     CreateStatusModelStatusDto:
       type: object
       properties:
@@ -149,6 +142,26 @@ components:
       - status
       - companyId
       - createdAt
+    UpdateStatusModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateStatusModelStatusDto'
+        companyId:
+          type: string
+        isFirst:
+          type: boolean
+        id:
+          type: string
+      required:
+      - name
+      - status
+      - companyId
+      - id
     CreateStatusModelDto:
       type: object
       properties:
@@ -166,19 +179,6 @@ components:
       - name
       - status
       - companyId
-    StatusModelStatus:
-      type: object
-      properties:
-        id:
-          type: string
-        color:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - color
-      - name
   securitySchemes:
     x-access-token:
       scheme: bearer

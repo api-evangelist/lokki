@@ -91,6 +91,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateUniverseControllerFormDataDto:
+      type: object
+      properties:
+        picture:
+          type: string
+          format: binary
+        title:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        ranking:
+          type: number
+        minimumPrice:
+          type: string
     UniverseMinimumPrice:
       type: object
       properties:
@@ -160,26 +180,6 @@ components:
       - productModelIds
       - ranking
       - minimumPrice
-    UpdateUniverseControllerFormDataDto:
-      type: object
-      properties:
-        picture:
-          type: string
-          format: binary
-        title:
-          type: string
-        productModelIds:
-          type: array
-          items:
-            type: string
-        ranking:
-          type: number
-        minimumPrice:
-          type: string
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

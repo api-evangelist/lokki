@@ -491,6 +491,36 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ServiceField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    ServiceTag:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
     PriceModelLLDDuration:
       type: object
       properties:
@@ -520,187 +550,6 @@ components:
       - price
       - priceLowSeason
       - label
-    AttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-    UpdateServiceAvailabilityDto:
-      type: object
-      properties:
-        id:
-          type: string
-        available:
-          type: boolean
-      required:
-      - id
-      - available
-    ServiceField:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        isTagged:
-          type: boolean
-      required:
-      - id
-      - name
-      - value
-      - isTagged
-    UpdateManyServicesDto:
-      type: object
-      properties:
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateServiceDto'
-      required:
-      - services
-    TentativeCategorization:
-      type: object
-      properties:
-        subcategoryName:
-          type:
-          - string
-          - 'null'
-        verticalName:
-          type:
-          - string
-          - 'null'
-      required:
-      - subcategoryName
-      - verticalName
-    GetManyServicesResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
-      required:
-      - total
-      - docs
-    CreateUpdateServiceDto:
-      type: object
-      properties:
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        id:
-          type: string
-        name:
-          type: string
-        rentalType:
-          enum:
-          - LCD
-          - LLD
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceField'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTag'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
-          type: string
-        attachedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachedFile'
-        rank:
-          type: number
-        isAvailable:
-          type: boolean
-        onlineStoreInformation:
-          type: object
-          properties:
-            name:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-            description:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-        productModel:
-          type: string
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isRelatedProducts:
-          type: boolean
-        productSurveyId:
-          type: string
-        hideOnOnlineStore:
-          type: boolean
-        vat:
-          type: number
-        isAssuranceTulip:
-          type: boolean
-        verticalCategoryId:
-          type: string
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceAttribute'
-        translationInProgress:
-          type: boolean
-        onlineAvailability:
-          type: boolean
-        printed:
-          type: boolean
-      required:
-      - priceModels
-      - name
-      - rentalType
-      - fields
-      - tags
-      - imageUrl
-      - videoLink
-      - attachedFiles
-      - rank
-      - isAvailable
-      - onlineStoreInformation
-      - productModel
-      - relatedProducts
-      - isRelatedProducts
-      - productSurveyId
-      - hideOnOnlineStore
-      - vat
-      - isAssuranceTulip
-      - onlineAvailability
-      - printed
     UpdateServiceDto:
       type: object
       properties:
@@ -821,6 +670,18 @@ components:
       required:
       - name
       - description
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
     ServiceAttribute:
       type: object
       properties:
@@ -833,6 +694,40 @@ components:
       required:
       - attribute
       - tags
+    UpdateServiceAvailabilityDto:
+      type: object
+      properties:
+        id:
+          type: string
+        available:
+          type: boolean
+      required:
+      - id
+      - available
+    GetManyServicesResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+      required:
+      - total
+      - docs
+    UpdateManyServicesDto:
+      type: object
+      properties:
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateServiceDto'
+      required:
+      - services
     Service:
       type: object
       properties:
@@ -936,32 +831,137 @@ components:
       - printed
       - vat
       - translationInProgress
-    LocalizedContent:
+    TentativeCategorization:
       type: object
-      additionalProperties:
-        type: string
-    ServiceTag:
+      properties:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    AttachedFile:
       type: object
       properties:
         name:
           type: string
-        value:
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
           type: string
       required:
       - name
-      - value
-    ItemAttribute:
+      - key
+      - size
+      - type
+    CreateUpdateServiceDto:
       type: object
       properties:
-        attribute:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
           type: string
+        name:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
         tags:
           type: array
           items:
+            $ref: '#/components/schemas/ServiceTag'
+        imageUrl:
+          type: array
+          items:
             type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProducts:
+          type: boolean
+        productSurveyId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        vat:
+          type: number
+        isAssuranceTulip:
+          type: boolean
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceAttribute'
+        translationInProgress:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
       required:
-      - attribute
+      - priceModels
+      - name
+      - rentalType
+      - fields
       - tags
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - rank
+      - isAvailable
+      - onlineStoreInformation
+      - productModel
+      - relatedProducts
+      - isRelatedProducts
+      - productSurveyId
+      - hideOnOnlineStore
+      - vat
+      - isAssuranceTulip
+      - onlineAvailability
+      - printed
     PriceModelRangeDuration:
       type: object
       properties:

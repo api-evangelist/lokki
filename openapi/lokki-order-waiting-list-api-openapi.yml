@@ -56,26 +56,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OrderWaitingListItem:
-      type: object
-      properties:
-        itemType:
-          type: string
-          enum:
-          - PRODUCT
-          - PACK
-          - SERVICE
-        itemId:
-          type: string
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - itemType
-      - itemId
-      - name
-      - onlineStoreName
     OrderWaitingList:
       type: object
       properties:
@@ -118,46 +98,10 @@ components:
       - rank
       - createdAt
       - updatedAt
-    OrderWaitingListCustomer:
-      type: object
-      properties:
-        companyName:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phoneNumber:
-          type: string
-        customerType:
-          type: string
-          enum:
-          - entreprise
-          - individual
-      required:
-      - companyName
-      - firstName
-      - lastName
-      - email
-      - phoneNumber
-      - customerType
     LocalizedContent:
       type: object
       additionalProperties:
         type: string
-    WaitingListCsvDto:
-      type: object
-      properties:
-        waitingListOrders:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - waitingListOrders
     CreateUpdateOrderWaitingListDto:
       type: object
       properties:
@@ -188,6 +132,62 @@ components:
       - customer
       - durationInMonths
       - startDate
+    WaitingListCsvDto:
+      type: object
+      properties:
+        waitingListOrders:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - waitingListOrders
+    OrderWaitingListItem:
+      type: object
+      properties:
+        itemType:
+          type: string
+          enum:
+          - PRODUCT
+          - PACK
+          - SERVICE
+        itemId:
+          type: string
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - itemType
+      - itemId
+      - name
+      - onlineStoreName
+    OrderWaitingListCustomer:
+      type: object
+      properties:
+        companyName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        customerType:
+          type: string
+          enum:
+          - entreprise
+          - individual
+      required:
+      - companyName
+      - firstName
+      - lastName
+      - email
+      - phoneNumber
+      - customerType
   securitySchemes:
     x-access-token:
       scheme: bearer

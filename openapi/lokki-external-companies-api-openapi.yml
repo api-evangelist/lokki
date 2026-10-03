@@ -328,39 +328,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SelfTestUtmInfos:
-      type: object
-      properties:
-        utm_source:
-          type: string
-        utm_medium:
-          type: string
-        utm_campaign:
-          type: string
-        utm_content:
-          type: string
-        utm_term:
-          type: string
-        device:
-          type: string
-        matchtype:
-          type: string
-        campaign_id:
-          type: string
-        adset_id:
-          type: string
-        ad_id:
-          type: string
-        GeoLoc:
-          type: string
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-      - file
     ExternalCompanyPageviewData:
       type: object
       properties:
@@ -419,115 +386,6 @@ components:
       - administrativeAreaLevel1
       - administrativeAreaLevel2
       - country
-    CreateUpdateExternalCompanyAddressComponentsDto:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-        placeId:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-    SearchExternalCompaniesCsvDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    CreateUpdateExternalCompanyClaimDataDto:
-      type: object
-      properties:
-        userId:
-          type: string
-        siret:
-          type: string
-        vatNumber:
-          type: string
-        siretCountry:
-          type: string
-          enum:
-          - FR
-          - BE
-          - CH
-          - DE
-          - NL
-          - ES
-          - PT
-          - IT
-        name:
-          type: string
-        website:
-          type: string
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        claimedAt:
-          format: date-time
-          type: string
-        status:
-          type: string
-          enum:
-          - PENDING
-          - HELP_REQUESTED
-          - ACCEPTED
-        upgradeStatus:
-          type: string
-          enum:
-          - NOT_STARTED
-          - PENDING
-          - FINISHED
-        utmInfos:
-          $ref: '#/components/schemas/SelfTestUtmInfos'
-      required:
-      - userId
-      - siret
-      - siretCountry
-      - name
-      - website
-      - verticales
-      - claimedAt
-      - status
     SearchExternalCompanies:
       type: object
       properties:
@@ -540,82 +398,31 @@ components:
       required:
       - total
       - companies
-    CreateUpdateExternalCompanyDto:
+    SelfTestUtmInfos:
       type: object
       properties:
-        companyId:
+        utm_source:
           type: string
-        name:
+        utm_medium:
           type: string
-        slug:
+        utm_campaign:
           type: string
-        website:
+        utm_content:
           type: string
-        address:
+        utm_term:
           type: string
-        addressComponents:
-          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
-        addressComponentsMachine:
-          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
-        phoneNumber:
+        device:
           type: string
-        email:
+        matchtype:
           type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        googleRating:
-          type: number
-        googleRatingCount:
-          type: number
-        googlePlaceId:
+        campaign_id:
           type: string
-        pipedrive:
+        adset_id:
           type: string
-        hubspot:
+        ad_id:
           type: string
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        productVerticaleCategoryIds:
-          type: array
-          items:
-            type: string
-        comment:
+        GeoLoc:
           type: string
-        visible:
-          type: boolean
-        claimData:
-          allOf:
-          - $ref: '#/components/schemas/CreateUpdateExternalCompanyClaimDataDto'
-      required:
-      - name
-      - slug
-      - website
-      - address
-      - lat
-      - lng
-      - verticales
-      - visible
     ExternalCompany:
       type: object
       properties:
@@ -707,6 +514,172 @@ components:
       - nbRecommendations
       - createdAt
       - updatedAt
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    SearchExternalCompaniesCsvDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    CreateUpdateExternalCompanyDto:
+      type: object
+      properties:
+        companyId:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        website:
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        googleRating:
+          type: number
+        googleRatingCount:
+          type: number
+        googlePlaceId:
+          type: string
+        pipedrive:
+          type: string
+        hubspot:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        productVerticaleCategoryIds:
+          type: array
+          items:
+            type: string
+        comment:
+          type: string
+        visible:
+          type: boolean
+        claimData:
+          allOf:
+          - $ref: '#/components/schemas/CreateUpdateExternalCompanyClaimDataDto'
+      required:
+      - name
+      - slug
+      - website
+      - address
+      - lat
+      - lng
+      - verticales
+      - visible
+    CreateUpdateExternalCompanyClaimDataDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        siret:
+          type: string
+        vatNumber:
+          type: string
+        siretCountry:
+          type: string
+          enum:
+          - FR
+          - BE
+          - CH
+          - DE
+          - NL
+          - ES
+          - PT
+          - IT
+        name:
+          type: string
+        website:
+          type: string
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        claimedAt:
+          format: date-time
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - HELP_REQUESTED
+          - ACCEPTED
+        upgradeStatus:
+          type: string
+          enum:
+          - NOT_STARTED
+          - PENDING
+          - FINISHED
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+      required:
+      - userId
+      - siret
+      - siretCountry
+      - name
+      - website
+      - verticales
+      - claimedAt
+      - status
     ExternalCompanyClaimData:
       type: object
       properties:
@@ -779,6 +752,33 @@ components:
       - claimedAt
       - status
       - upgradeStatus
+    CreateUpdateExternalCompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
   securitySchemes:
     x-access-token:
       scheme: bearer

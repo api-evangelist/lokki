@@ -230,15 +230,64 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ReconditioningSaleList:
+    CreateUpdateReconditioningSaleDto:
       type: object
       properties:
-        sales:
+        title:
+          type: string
+        description:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        productId:
+          type: string
+        productName:
+          type: string
+        price:
+          type: number
+        availabilityDate:
+          format: date-time
+          type: string
+        subProducts:
           type: array
           items:
-            $ref: '#/components/schemas/ReconditioningSale'
+            $ref: '#/components/schemas/CreateUpdateReconditioningSaleSubProductDto'
       required:
-      - sales
+      - title
+      - description
+      - verticale
+      - productId
+      - productName
+      - price
+      - availabilityDate
+      - subProducts
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
     ReconditioningSale:
       type: object
       properties:
@@ -315,35 +364,6 @@ components:
       - subProducts
       - offers
       - createdAt
-    ReconditioningSaleOfferCustomizationDto:
-      type: object
-      properties:
-        subProductId:
-          type: string
-        comment:
-          type: string
-      required:
-      - subProductId
-      - comment
-    ReconditioningSaleOfferUserDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        picture:
-          type: string
-      required:
-      - id
-      - name
-      - email
-      - phone
-      - picture
     ReconditioningSaleSubProduct:
       type: object
       properties:
@@ -388,23 +408,15 @@ components:
       - comment
       - pictures
       - certificate
-    ReconditioningSaleOffer:
+    ReconditioningSaleList:
       type: object
       properties:
-        id:
-          type: string
-        userId:
-          type: string
-        customizations:
+        sales:
           type: array
           items:
-            $ref: '#/components/schemas/ReconditioningSaleOfferCustomize'
-        details:
-          $ref: '#/components/schemas/ReconditioningSaleOfferUserDetails'
+            $ref: '#/components/schemas/ReconditioningSale'
       required:
-      - id
-      - userId
-      - customizations
+      - sales
     ReconditioningSaleCompanyDetails:
       type: object
       properties:
@@ -440,74 +452,26 @@ components:
       required:
       - name
       - replyToEmailAddress
-    CompanyCurrency:
+    ReconditioningSaleOfferUserDetails:
       type: object
       properties:
-        isoName:
+        id:
           type: string
-        symbol:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
           type: string
       required:
-      - isoName
-      - symbol
-    CreateUpdateReconditioningSaleDto:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        verticale:
-          enum:
-          - BIKE
-          - ELECTRIC_BIKE
-          - MOPED
-          - MOTORCYCLE
-          - CAR
-          - SCOOTER
-          - SKI
-          - CLIMBING
-          - SNOWSHOES
-          - SURF
-          - PADDLE
-          - CANOE_KAYAK
-          - BOAT
-          - EVENT
-          - MOTOCULTURE
-          - TOOLING
-          type: string
-        productId:
-          type: string
-        productName:
-          type: string
-        price:
-          type: number
-        availabilityDate:
-          format: date-time
-          type: string
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateReconditioningSaleSubProductDto'
-      required:
-      - title
-      - description
-      - verticale
-      - productId
-      - productName
-      - price
-      - availabilityDate
-      - subProducts
-    ReconditioningSaleOfferCustomizationsDto:
-      type: object
-      properties:
-        customizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
-      required:
-      - customizations
-    ReconditioningSaleOfferCustomize:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+    ReconditioningSaleOfferCustomizationDto:
       type: object
       properties:
         subProductId:
@@ -517,6 +481,15 @@ components:
       required:
       - subProductId
       - comment
+    ReconditioningSaleOfferCustomizationsDto:
+      type: object
+      properties:
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
+      required:
+      - customizations
     CreateUpdateReconditioningSaleSubProductDto:
       type: object
       properties:
@@ -561,6 +534,33 @@ components:
       - comment
       - pictures
       - certificate
+    ReconditioningSaleOfferCustomize:
+      type: object
+      properties:
+        subProductId:
+          type: string
+        comment:
+          type: string
+      required:
+      - subProductId
+      - comment
+    ReconditioningSaleOffer:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomize'
+        details:
+          $ref: '#/components/schemas/ReconditioningSaleOfferUserDetails'
+      required:
+      - id
+      - userId
+      - customizations
   securitySchemes:
     x-access-token:
       scheme: bearer

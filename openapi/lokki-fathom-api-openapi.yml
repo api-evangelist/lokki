@@ -368,33 +368,26 @@ components:
       required:
       - visits
       - countryCode
-    FathomUTMsDto:
+    FathomDeviceDto:
       type: object
       properties:
-        UTMArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomUTMDto'
+        visits:
+          type: string
+        device:
+          type: string
       required:
-      - UTMArray
-    FathomByDeviceDto:
+      - visits
+      - device
+    FathomUTMDto:
       type: object
       properties:
-        devicesArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomDeviceDto'
+        visits:
+          type: string
+        name:
+          type: string
       required:
-      - devicesArray
-    FathomByCountryDto:
-      type: object
-      properties:
-        countryArray:
-          type: array
-          items:
-            $ref: '#/components/schemas/FathomCountyDto'
-      required:
-      - countryArray
+      - visits
+      - name
     FathomTotalVisitsArrayDto:
       type: object
       properties:
@@ -404,6 +397,11 @@ components:
             $ref: '#/components/schemas/FathomTotalVisitBQDto'
       required:
       - visitsArray
+    FathomRequestOrigin:
+      type: string
+      enum:
+      - RENTAL_PLACE
+      - LOKKI
     FathomByHostDto:
       type: object
       properties:
@@ -413,11 +411,6 @@ components:
             $ref: '#/components/schemas/FathomReferrerHostnameDto'
       required:
       - referrerHostnameArray
-    FathomRequestOrigin:
-      type: string
-      enum:
-      - RENTAL_PLACE
-      - LOKKI
     FathomTotalVisitBQDto:
       type: object
       properties:
@@ -443,26 +436,6 @@ components:
       - pageviews
       - bounce_rate
       - avg_duration
-    FathomDeviceDto:
-      type: object
-      properties:
-        visits:
-          type: string
-        device:
-          type: string
-      required:
-      - visits
-      - device
-    FathomUTMDto:
-      type: object
-      properties:
-        visits:
-          type: string
-        name:
-          type: string
-      required:
-      - visits
-      - name
     FathomTotalVisitsDto:
       type: object
       properties:
@@ -470,6 +443,33 @@ components:
           type: string
       required:
       - visits
+    FathomByCountryDto:
+      type: object
+      properties:
+        countryArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomCountyDto'
+      required:
+      - countryArray
+    FathomByDeviceDto:
+      type: object
+      properties:
+        devicesArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomDeviceDto'
+      required:
+      - devicesArray
+    FathomUTMsDto:
+      type: object
+      properties:
+        UTMArray:
+          type: array
+          items:
+            $ref: '#/components/schemas/FathomUTMDto'
+      required:
+      - UTMArray
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -130,21 +130,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateUserOnboardingDto:
-      type: object
-      properties:
-        step:
-          enum:
-          - account-creation
-          - shop-search
-          - user-infos
-          - company-verticales
-          - completed
-          type: string
-        metadata:
-          type: object
-      required:
-      - step
     CreateUserOnboardingDto:
       type: object
       properties:
@@ -174,6 +159,21 @@ components:
       required:
       - userId
       - tool
+      - step
+    UpdateUserOnboardingDto:
+      type: object
+      properties:
+        step:
+          enum:
+          - account-creation
+          - shop-search
+          - user-infos
+          - company-verticales
+          - completed
+          type: string
+        metadata:
+          type: object
+      required:
       - step
     UserOnboarding:
       type: object

@@ -59,7 +59,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    HistoryAttachedFile:
+    DocumentStateProductAttachedFilePreview:
       type: object
       properties:
         name:
@@ -77,6 +77,7 @@ components:
       - key
       - size
       - type
+      - url
     ProductStateUploadAttachmentDto:
       type: object
       properties:
@@ -99,7 +100,23 @@ components:
       - orderId
       - subProductId
       - scope
-    DocumentStateProductAttachedFilePreview:
+    DocumentStateProductAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    HistoryAttachedFile:
       type: object
       properties:
         name:
@@ -117,7 +134,6 @@ components:
       - key
       - size
       - type
-      - url
     GetProductStateAttachmentPreviewDto:
       type: object
       properties:
@@ -127,22 +143,6 @@ components:
             $ref: '#/components/schemas/HistoryAttachedFile'
       required:
       - files
-    DocumentStateProductAttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
   securitySchemes:
     x-access-token:
       scheme: bearer

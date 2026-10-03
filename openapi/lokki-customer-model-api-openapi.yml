@@ -84,15 +84,10 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BulkUpdateCustomerModelsDto:
+    LocalizedContent:
       type: object
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateCustomerModelDto'
-      required:
-      - models
+      additionalProperties:
+        type: string
     UpdateCustomerModelDto:
       type: object
       properties:
@@ -105,6 +100,58 @@ components:
       required:
       - id
       - fields
+    CreateCustomerModelDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - entreprise
+          - individual
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
+      required:
+      - type
+      - fields
+    BulkUpdateCustomerModelsDto:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateCustomerModelDto'
+      required:
+      - models
+    CreateUpdateCustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - value
+    CustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - value
+    BulkCreateCustomerModelsDto:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateCustomerModelDto'
+      required:
+      - models
     CustomerModel:
       type: object
       properties:
@@ -130,53 +177,6 @@ components:
       - fields
       - companyId
       - createdAt
-    CustomerModelField:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - id
-      - value
-    BulkCreateCustomerModelsDto:
-      type: object
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateCustomerModelDto'
-      required:
-      - models
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    CreateCustomerModelDto:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - entreprise
-          - individual
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
-      required:
-      - type
-      - fields
-    CreateUpdateCustomerModelField:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - value
   securitySchemes:
     x-access-token:
       scheme: bearer

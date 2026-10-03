@@ -84,6 +84,51 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    HereAddressByLocationIdResultDto:
+      type: object
+      properties:
+        address:
+          description: Address details for the location
+          allOf:
+          - $ref: '#/components/schemas/HereAddressDto'
+      required:
+      - address
+    HereAddressDto:
+      type: object
+      properties:
+        locationId:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/GeoPoint'
+        addressType:
+          enum:
+          - LOCALITY
+          - AIRPORT
+          - TRAIN_STATION
+          - TRANSIT_STATION
+          - SUBWAY_STATION
+          - HOME_ADDRESS
+          - PLACE
+          type: string
+        address:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/HereAddressComponentsDto'
+        distance:
+          type: number
+      required:
+      - coordinates
+      - addressType
+      - address
+    HereAddressAutosuggestResultDto:
+      type: object
+      properties:
+        addressSuggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/HereAddressDto'
+      required:
+      - addressSuggestions
     HereAddressComponentsDto:
       type: object
       properties:
@@ -122,51 +167,6 @@ components:
       required:
       - latitude
       - longitude
-    HereAddressDto:
-      type: object
-      properties:
-        locationId:
-          type: string
-        coordinates:
-          $ref: '#/components/schemas/GeoPoint'
-        addressType:
-          enum:
-          - LOCALITY
-          - AIRPORT
-          - TRAIN_STATION
-          - TRANSIT_STATION
-          - SUBWAY_STATION
-          - HOME_ADDRESS
-          - PLACE
-          type: string
-        address:
-          type: string
-        addressComponents:
-          $ref: '#/components/schemas/HereAddressComponentsDto'
-        distance:
-          type: number
-      required:
-      - coordinates
-      - addressType
-      - address
-    HereAddressAutosuggestResultDto:
-      type: object
-      properties:
-        addressSuggestions:
-          type: array
-          items:
-            $ref: '#/components/schemas/HereAddressDto'
-      required:
-      - addressSuggestions
-    HereAddressByLocationIdResultDto:
-      type: object
-      properties:
-        address:
-          description: Address details for the location
-          allOf:
-          - $ref: '#/components/schemas/HereAddressDto'
-      required:
-      - address
   securitySchemes:
     x-access-token:
       scheme: bearer

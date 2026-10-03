@@ -605,6 +605,18 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    LocalizedSubCategoryLabels:
+      type: object
+      properties: {}
+    SearchEngineSearchMonitoringResponseDto:
+      type: object
+      properties:
+        processTimeMS:
+          type:
+          - number
+          - 'null'
+      required:
+      - processTimeMS
     DiscountFlat:
       type: object
       properties:
@@ -612,113 +624,6 @@ components:
           type: number
       required:
       - percentage
-    SearchEngineAddressComponentsDto:
-      type: object
-      properties:
-        streetAddress:
-          type:
-          - string
-          - 'null'
-        addressLocality:
-          type:
-          - string
-          - 'null'
-        postalCode:
-          type:
-          - string
-          - 'null'
-        addressCountry:
-          type:
-          - string
-          - 'null'
-    SearchEngineGoogleReviewDto:
-      type: object
-      properties:
-        rating:
-          type: number
-        name:
-          type: string
-        comment:
-          type: string
-        authorPhotoUrl:
-          type:
-          - string
-          - 'null'
-        publishTime:
-          format: date-time
-          type: string
-      required:
-      - rating
-      - name
-      - comment
-      - authorPhotoUrl
-      - publishTime
-    SitemapProductDto:
-      type: object
-      properties:
-        companySlug:
-          type: string
-          description: Slug of the product's company — the `:slug` segment of the route
-        itemName:
-          description: Localized product name, slugified per-locale on the front to match the product page canonical
-          allOf:
-          - $ref: '#/components/schemas/LocalizedContent'
-        itemId:
-          type: string
-          description: Product externalId (search index id) — the `:id` segment
-      required:
-      - companySlug
-      - itemName
-      - itemId
-    SearchEngineMatchedDateRangeDto:
-      type: object
-      properties:
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-      required:
-      - startDate
-      - endDate
-    SuggestItemPricingDto:
-      type: object
-      properties:
-        startingPrice:
-          type:
-          - number
-          - 'null'
-          description: Cheapest base unit price (no dates/availability/discounts applied), or null when the item is un-priceable.
-          example: 89
-      required:
-      - startingPrice
-    StoreInsuranceTulipDetails:
-      type: object
-      properties:
-        provider:
-          type: string
-          enum:
-          - TULIP
-        status:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
-          type: string
-          description: Tulip insurance status for the store
-          example: on_inclusion
-      required:
-      - provider
-      - status
-    SuggestCategoryType:
-      type: string
-      description: Whether this entry is a verticale or a sub-category.
-      enum:
-      - verticale
-      - subCategory
     CategoryKeyEnum:
       type: string
       description: Verticale key. The front maps it to an icon.
@@ -739,139 +644,13 @@ components:
       - EVENT
       - MOTOCULTURE
       - TOOLING
-    SearchEngineSuggestStoreDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Company (renter) id.
-          example: 6634f1c2a1b2c3d4e5f60123
-        name:
-          type: string
-          description: Store (renter) name.
-          example: RIDE
-        slug:
-          type: string
-          description: Store slug used to build the store link.
-          example: ride-marseille
-        logo:
-          type:
-          - string
-          - 'null'
-          description: Store logo URL, or null when the store has no logo.
-          example: https://bucket-prod.getlokki.com/companies/ride/logo.png
-        verticale:
-          description: Store's dominant verticale among the items that matched the query.
-          allOf:
-          - $ref: '#/components/schemas/SuggestVerticaleDto'
-        city:
-          type:
-          - string
-          - 'null'
-          description: Store's nearest-location city, or null when unavailable.
-          example: Marseille
-        reviews:
-          description: Store review summary.
-          allOf:
-          - $ref: '#/components/schemas/SuggestStoreReviewsDto'
-        matchCount:
-          type: number
-          description: Number of the store's items that matched the query (drives the store ranking).
-          example: 12
-      required:
-      - id
-      - name
-      - slug
-      - logo
-      - verticale
-      - city
-      - reviews
-      - matchCount
-    DiscountPeriodic:
-      type: object
-      properties:
-        percentage:
-          type: number
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-      required:
-      - percentage
-      - startDate
-      - endDate
-    GeoPoint:
-      type: object
-      properties:
-        latitude:
-          type: number
-        longitude:
-          type: number
-      required:
-      - latitude
-      - longitude
-    SearchEngineSearchMonitoringResponseDto:
-      type: object
-      properties:
-        processTimeMS:
-          type:
-          - number
-          - 'null'
-      required:
-      - processTimeMS
-    Discount:
-      type: object
-      properties:
-        flatDiscounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscountFlat'
-        periodicDiscountsByCurrentDate:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscountPeriodic'
-        periodicDiscountsByStartDate:
-          type: array
-          items:
-            $ref: '#/components/schemas/DiscountPeriodic'
-      required:
-      - flatDiscounts
-      - periodicDiscountsByCurrentDate
-      - periodicDiscountsByStartDate
-    LocalizedSubCategoryLabels:
-      type: object
-      properties: {}
-    ItemCompanyInsurance:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        details:
-          $ref: '#/components/schemas/StoreInsuranceTulipDetails'
-      required:
-      - enabled
-      - details
-    CompanyCurrency:
-      type: object
-      properties:
-        isoName:
-          type: string
-        symbol:
-          type: string
-      required:
-      - isoName
-      - symbol
-    SearchEngineSearchItemsResponseDto:
+    SearchEngineSearchCompaniesResponseDto:
       type: object
       properties:
         hits:
           type: array
           items:
-            $ref: '#/components/schemas/SearchEngineItemDto'
-        facets:
-          $ref: '#/components/schemas/SearchEngineSearchItemsFacetsDto'
+            $ref: '#/components/schemas/SearchEngineCompanyDto'
         nbHits:
           type: number
         pagination:
@@ -883,38 +662,6 @@ components:
       - nbHits
       - pagination
       - monitoring
-    SearchEngineLocation:
-      type: object
-      properties:
-        point:
-          $ref: '#/components/schemas/GeoPoint'
-        address:
-          type:
-          - string
-          - 'null'
-        addressComponents:
-          allOf:
-          - $ref: '#/components/schemas/SearchEngineAddressComponents'
-      required:
-      - point
-      - address
-    SearchEngineRangeFacetDto:
-      type: object
-      properties:
-        min:
-          type: number
-        max:
-          type: number
-        count:
-          type: number
-        buckets:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchEngineRangeFacetDto'
-      required:
-      - min
-      - max
-      - count
     SearchEngineCompanyDto:
       type: object
       properties:
@@ -1042,10 +789,6 @@ components:
       - locations
       - phoneNumber
       - closedDates
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
     LowSeasonDate:
       type: object
       properties:
@@ -1058,76 +801,38 @@ components:
       required:
       - from
       - to
-    SearchEngineSuggestItemDto:
+    SearchEngineLocation:
       type: object
       properties:
-        externalId:
-          type: string
-          description: Item identifier (product/service/pack) used to build the click-through link.
-          example: 6634f1c2a1b2c3d4e5f60789
-        name:
-          type: string
-          description: Item name resolved to the requested language (French fallback).
-          example: Honda NX500 A2
-        image:
+        point:
+          $ref: '#/components/schemas/GeoPoint'
+        address:
           type:
           - string
           - 'null'
-          description: First item image URL, or null when the item has no image.
-          example: https://bucket-prod.getlokki.com/items/nx500.jpg
-        verticale:
-          description: Verticale the item belongs to.
+        addressComponents:
           allOf:
-          - $ref: '#/components/schemas/SuggestVerticaleDto'
-        store:
-          description: Store (renter) offering the item.
-          allOf:
-          - $ref: '#/components/schemas/SuggestItemStoreDto'
-        pricing:
-          description: Item pricing summary.
-          allOf:
-          - $ref: '#/components/schemas/SuggestItemPricingDto'
+          - $ref: '#/components/schemas/SearchEngineAddressComponents'
       required:
-      - externalId
-      - name
-      - image
-      - verticale
-      - store
-      - pricing
-    SearchEngineSearchItemsFacetsDto:
+      - point
+      - address
+    SearchEngineRangeFacetDto:
       type: object
       properties:
-        categoryKey:
-          $ref: '#/components/schemas/SearchEngineStringFacetDto'
-        subCategoryKey:
-          $ref: '#/components/schemas/SearchEngineStringFacetDto'
-        tags:
-          $ref: '#/components/schemas/SearchEngineStringFacetDto'
-        deliveryEnabled:
-          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
-        insuranceEnabled:
-          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
-        directOrderLCD:
-          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
-        directOrderLLD:
-          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
-        price:
-          $ref: '#/components/schemas/SearchEngineRangeFacetDto'
-        disponibility:
-          $ref: '#/components/schemas/SearchEngineRangeFacetDto'
+        min:
+          type: number
+        max:
+          type: number
+        count:
+          type: number
+        buckets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineRangeFacetDto'
       required:
-      - categoryKey
-      - subCategoryKey
-      - tags
-      - deliveryEnabled
-      - insuranceEnabled
-      - directOrderLCD
-      - directOrderLLD
-      - price
-      - disponibility
-    SearchEngineStringFacetDto:
-      type: object
-      properties: {}
+      - min
+      - max
+      - count
     SearchEngineItemWithoutCompany:
       type: object
       properties:
@@ -1225,68 +930,53 @@ components:
       - inDeliveryRange
       - inDeliveryRangeOnly
       - matchedDateRange
-    SearchEnginePaginationResponseDto:
+    SuggestCategoryType:
+      type: string
+      description: Whether this entry is a verticale or a sub-category.
+      enum:
+      - verticale
+      - subCategory
+    SuggestItemPricingDto:
       type: object
       properties:
-        page:
-          type: number
-          minimum: 1
-        hitsPerPage:
-          type: number
-          minimum: 0
-          maximum: 50
-        totalPages:
-          type: number
-          minimum: 1
-      required:
-      - page
-      - hitsPerPage
-      - totalPages
-    Attribute:
-      type: object
-      properties:
-        key:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - key
-      - tags
-    SearchEngineSuggestCategoryDto:
-      type: object
-      properties:
-        type:
-          example: verticale
-          $ref: '#/components/schemas/SuggestCategoryType'
-        key:
-          type: string
-          description: Canonical key of this (possibly merged) entry — the verticale key (CompanyVerticale) or a representative sub-category key, depending on `type`. The front maps it to an icon.
-          example: MOTORCYCLE
-        keys:
-          description: 'Every underlying key this entry represents: verticale keys for `verticale`, sub-category ids for `subCategory`. Usually `[key]`, but mirrored verticales are merged into one entry (e.g. Bike + Electric Bike → `keys: [''BIKE'', ''ELECTRIC_BIKE'']`), so the front applies all of them on selection and filters both.'
-          example:
-          - MOTORCYCLE
-          type: array
-          items:
-            type: string
-        label:
+        startingPrice:
           type:
-          - string
+          - number
           - 'null'
-          description: Localized label resolved to the requested language, or null when no label is denormalized (front falls back to mapping the key).
-          example: Moto
-        count:
-          type: number
-          description: Number of matched items catalog-wide in this verticale/sub-category (drives ordering; not a local availability count).
-          example: 12
+          description: Cheapest base unit price (no dates/availability/discounts applied), or null when the item is un-priceable.
+          example: 89
       required:
-      - type
-      - key
-      - keys
-      - label
-      - count
+      - startingPrice
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    StoreInsuranceTulipDetails:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+          - TULIP
+        status:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+          description: Tulip insurance status for the store
+          example: on_inclusion
+      required:
+      - provider
+      - status
     SearchEngineAddressComponents:
       type: object
       properties:
@@ -1306,6 +996,36 @@ components:
           type:
           - string
           - 'null'
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
     ItemCompanyDetailsDto:
       type: object
       properties:
@@ -1424,28 +1144,131 @@ components:
       - locations
       - phoneNumber
       - closedDates
-    SearchEngineSuggestResponseDto:
+    SuggestStoreReviewsDto:
       type: object
       properties:
-        items:
-          description: Matched items (products/services/packs), capped. Empty without a geo context.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchEngineSuggestItemDto'
-        stores:
-          description: Stores with the most matching items, capped. Empty without a geo context.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchEngineSuggestStoreDto'
-        categories:
-          description: 'Matched verticales and sub-categories, count-ranked and capped. Catalog-wide: never geo- or date-filtered, so a category can be suggested even when no nearby item carries it.'
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchEngineSuggestCategoryDto'
+        score:
+          type:
+          - number
+          - 'null'
+          description: Google rating score (out of 5), or null when the store has no reviews.
+          example: 5
+        count:
+          type:
+          - number
+          - 'null'
+          description: Number of Google reviews, or null when the store has no reviews.
+          example: 38
       required:
-      - items
-      - stores
-      - categories
+      - score
+      - count
+    Attribute:
+      type: object
+      properties:
+        key:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - key
+      - tags
+    SearchEngineSuggestCategoryDto:
+      type: object
+      properties:
+        type:
+          example: verticale
+          $ref: '#/components/schemas/SuggestCategoryType'
+        key:
+          type: string
+          description: Canonical key of this (possibly merged) entry — the verticale key (CompanyVerticale) or a representative sub-category key, depending on `type`. The front maps it to an icon.
+          example: MOTORCYCLE
+        keys:
+          description: 'Every underlying key this entry represents: verticale keys for `verticale`, sub-category ids for `subCategory`. Usually `[key]`, but mirrored verticales are merged into one entry (e.g. Bike + Electric Bike → `keys: [''BIKE'', ''ELECTRIC_BIKE'']`), so the front applies all of them on selection and filters both.'
+          example:
+          - MOTORCYCLE
+          type: array
+          items:
+            type: string
+        label:
+          type:
+          - string
+          - 'null'
+          description: Localized label resolved to the requested language, or null when no label is denormalized (front falls back to mapping the key).
+          example: Moto
+        count:
+          type: number
+          description: Number of matched items catalog-wide in this verticale/sub-category (drives ordering; not a local availability count).
+          example: 12
+      required:
+      - type
+      - key
+      - keys
+      - label
+      - count
+    SearchEngineSuggestStoreDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Company (renter) id.
+          example: 6634f1c2a1b2c3d4e5f60123
+        name:
+          type: string
+          description: Store (renter) name.
+          example: RIDE
+        slug:
+          type: string
+          description: Store slug used to build the store link.
+          example: ride-marseille
+        logo:
+          type:
+          - string
+          - 'null'
+          description: Store logo URL, or null when the store has no logo.
+          example: https://bucket-prod.getlokki.com/companies/ride/logo.png
+        verticale:
+          description: Store's dominant verticale among the items that matched the query.
+          allOf:
+          - $ref: '#/components/schemas/SuggestVerticaleDto'
+        city:
+          type:
+          - string
+          - 'null'
+          description: Store's nearest-location city, or null when unavailable.
+          example: Marseille
+        reviews:
+          description: Store review summary.
+          allOf:
+          - $ref: '#/components/schemas/SuggestStoreReviewsDto'
+        matchCount:
+          type: number
+          description: Number of the store's items that matched the query (drives the store ranking).
+          example: 12
+      required:
+      - id
+      - name
+      - slug
+      - logo
+      - verticale
+      - city
+      - reviews
+      - matchCount
+    CompanyCategoryDiscount:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - categoryIds
+      - ranges
     SearchEngineItemDto:
       type: object
       properties:
@@ -1546,6 +1369,198 @@ components:
       - attributes
       - totalQuantity
       - insuranceEnabled
+    SearchEngineMatchedDateRangeDto:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - startDate
+      - endDate
+    SearchEngineSearchItemsFacetsDto:
+      type: object
+      properties:
+        categoryKey:
+          $ref: '#/components/schemas/SearchEngineStringFacetDto'
+        subCategoryKey:
+          $ref: '#/components/schemas/SearchEngineStringFacetDto'
+        tags:
+          $ref: '#/components/schemas/SearchEngineStringFacetDto'
+        deliveryEnabled:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        insuranceEnabled:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        directOrderLCD:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        directOrderLLD:
+          $ref: '#/components/schemas/SearchEngineBooleanFacetDto'
+        price:
+          $ref: '#/components/schemas/SearchEngineRangeFacetDto'
+        disponibility:
+          $ref: '#/components/schemas/SearchEngineRangeFacetDto'
+      required:
+      - categoryKey
+      - subCategoryKey
+      - tags
+      - deliveryEnabled
+      - insuranceEnabled
+      - directOrderLCD
+      - directOrderLLD
+      - price
+      - disponibility
+    SitemapProductDto:
+      type: object
+      properties:
+        companySlug:
+          type: string
+          description: Slug of the product's company — the `:slug` segment of the route
+        itemName:
+          description: Localized product name, slugified per-locale on the front to match the product page canonical
+          allOf:
+          - $ref: '#/components/schemas/LocalizedContent'
+        itemId:
+          type: string
+          description: Product externalId (search index id) — the `:id` segment
+      required:
+      - companySlug
+      - itemName
+      - itemId
+    SearchEngineAddressComponentsDto:
+      type: object
+      properties:
+        streetAddress:
+          type:
+          - string
+          - 'null'
+        addressLocality:
+          type:
+          - string
+          - 'null'
+        postalCode:
+          type:
+          - string
+          - 'null'
+        addressCountry:
+          type:
+          - string
+          - 'null'
+    SearchEngineGoogleReviewDto:
+      type: object
+      properties:
+        rating:
+          type: number
+        name:
+          type: string
+        comment:
+          type: string
+        authorPhotoUrl:
+          type:
+          - string
+          - 'null'
+        publishTime:
+          format: date-time
+          type: string
+      required:
+      - rating
+      - name
+      - comment
+      - authorPhotoUrl
+      - publishTime
+    SearchEngineSearchItemsResponseDto:
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineItemDto'
+        facets:
+          $ref: '#/components/schemas/SearchEngineSearchItemsFacetsDto'
+        nbHits:
+          type: number
+        pagination:
+          $ref: '#/components/schemas/SearchEnginePaginationResponseDto'
+        monitoring:
+          $ref: '#/components/schemas/SearchEngineSearchMonitoringResponseDto'
+      required:
+      - hits
+      - nbHits
+      - pagination
+      - monitoring
+    SuggestItemStoreDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Store (renter) name.
+          example: RIDE
+        slug:
+          type: string
+          description: Store slug, used to build the store/product link.
+          example: ride-marseille
+        city:
+          type:
+          - string
+          - 'null'
+          description: Store's nearest-location city, or null when unavailable.
+          example: Marseille
+      required:
+      - name
+      - slug
+      - city
+    SearchEngineStringFacetDto:
+      type: object
+      properties: {}
+    GeoPoint:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+      - latitude
+      - longitude
+    DiscountPeriodic:
+      type: object
+      properties:
+        percentage:
+          type: number
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+      required:
+      - percentage
+      - startDate
+      - endDate
+    SearchEngineSuggestResponseDto:
+      type: object
+      properties:
+        items:
+          description: Matched items (products/services/packs), capped. Empty without a geo context.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineSuggestItemDto'
+        stores:
+          description: Stores with the most matching items, capped. Empty without a geo context.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineSuggestStoreDto'
+        categories:
+          description: 'Matched verticales and sub-categories, count-ranked and capped. Catalog-wide: never geo- or date-filtered, so a category can be suggested even when no nearby item carries it.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchEngineSuggestCategoryDto'
+      required:
+      - items
+      - stores
+      - categories
     SearchEngineLocationDto:
       type: object
       properties:
@@ -1561,6 +1576,25 @@ components:
       required:
       - point
       - address
+    Discount:
+      type: object
+      properties:
+        flatDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountFlat'
+        periodicDiscountsByCurrentDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountPeriodic'
+        periodicDiscountsByStartDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiscountPeriodic'
+      required:
+      - flatDiscounts
+      - periodicDiscountsByCurrentDate
+      - periodicDiscountsByStartDate
     ClosedDate:
       type: object
       properties:
@@ -1573,65 +1607,59 @@ components:
       required:
       - startDate
       - endDate
-    OpeningTimeFrame:
+    SearchEnginePaginationResponseDto:
       type: object
       properties:
-        id:
-          type: string
-        day:
-          type: string
-          enum:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          - saturday
-          - sunday
-          - ALL
-        isOpen:
-          type: boolean
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - day
-      - isOpen
-    SearchEngineSearchCompaniesResponseDto:
-      type: object
-      properties:
-        hits:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchEngineCompanyDto'
-        nbHits:
+        page:
           type: number
-        pagination:
-          $ref: '#/components/schemas/SearchEnginePaginationResponseDto'
-        monitoring:
-          $ref: '#/components/schemas/SearchEngineSearchMonitoringResponseDto'
+          minimum: 1
+        hitsPerPage:
+          type: number
+          minimum: 0
+          maximum: 50
+        totalPages:
+          type: number
+          minimum: 1
       required:
-      - hits
-      - nbHits
-      - pagination
-      - monitoring
-    SuggestVerticaleDto:
+      - page
+      - hitsPerPage
+      - totalPages
+    SearchEngineSuggestItemDto:
       type: object
       properties:
-        key:
-          example: MOTORCYCLE
-          $ref: '#/components/schemas/CategoryKeyEnum'
-        label:
+        externalId:
+          type: string
+          description: Item identifier (product/service/pack) used to build the click-through link.
+          example: 6634f1c2a1b2c3d4e5f60789
+        name:
+          type: string
+          description: Item name resolved to the requested language (French fallback).
+          example: Honda NX500 A2
+        image:
           type:
           - string
           - 'null'
-          description: Localized verticale label (resolved to the requested language, French fallback).
-          example: Moto
+          description: First item image URL, or null when the item has no image.
+          example: https://bucket-prod.getlokki.com/items/nx500.jpg
+        verticale:
+          description: Verticale the item belongs to.
+          allOf:
+          - $ref: '#/components/schemas/SuggestVerticaleDto'
+        store:
+          description: Store (renter) offering the item.
+          allOf:
+          - $ref: '#/components/schemas/SuggestItemStoreDto'
+        pricing:
+          description: Item pricing summary.
+          allOf:
+          - $ref: '#/components/schemas/SuggestItemPricingDto'
       required:
-      - key
-      - label
+      - externalId
+      - name
+      - image
+      - verticale
+      - store
+      - pricing
     CompanyCategoryDiscountRange:
       type: object
       properties:
@@ -1663,59 +1691,6 @@ components:
       - rangeFrom
       - rangeTo
       - infiniteTo
-    SuggestItemStoreDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Store (renter) name.
-          example: RIDE
-        slug:
-          type: string
-          description: Store slug, used to build the store/product link.
-          example: ride-marseille
-        city:
-          type:
-          - string
-          - 'null'
-          description: Store's nearest-location city, or null when unavailable.
-          example: Marseille
-      required:
-      - name
-      - slug
-      - city
-    CompanyCategoryDiscount:
-      type: object
-      properties:
-        categoryIds:
-          type: array
-          items:
-            type: string
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
-      required:
-      - categoryIds
-      - ranges
-    SuggestStoreReviewsDto:
-      type: object
-      properties:
-        score:
-          type:
-          - number
-          - 'null'
-          description: Google rating score (out of 5), or null when the store has no reviews.
-          example: 5
-        count:
-          type:
-          - number
-          - 'null'
-          description: Number of Google reviews, or null when the store has no reviews.
-          example: 38
-      required:
-      - score
-      - count
     SearchEngineBooleanFacetDto:
       type: object
       properties:
@@ -1726,6 +1701,31 @@ components:
       required:
       - 'true'
       - 'false'
+    ItemCompanyInsurance:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        details:
+          $ref: '#/components/schemas/StoreInsuranceTulipDetails'
+      required:
+      - enabled
+      - details
+    SuggestVerticaleDto:
+      type: object
+      properties:
+        key:
+          example: MOTORCYCLE
+          $ref: '#/components/schemas/CategoryKeyEnum'
+        label:
+          type:
+          - string
+          - 'null'
+          description: Localized verticale label (resolved to the requested language, French fallback).
+          example: Moto
+      required:
+      - key
+      - label
   securitySchemes:
     x-access-token:
       scheme: bearer

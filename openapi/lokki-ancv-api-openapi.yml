@@ -78,17 +78,35 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AncvRedirectUrls:
+    AncvAmount:
       type: object
       properties:
-        returnUrl:
-          type:
-          - string
-          - 'null'
-        cancelUrl:
-          type:
-          - string
-          - 'null'
+        total:
+          type: number
+        currency:
+          type: string
+      required:
+      - total
+      - currency
+    AncvPaymentMethod:
+      type: object
+      properties:
+        captureMode:
+          type: string
+          enum:
+          - NORMAL
+          - DEFERRED
+        captureTerm:
+          type: number
+        captureDate:
+          type: string
+        tspdMode:
+          type: string
+      required:
+      - captureMode
+      - captureTerm
+      - captureDate
+      - tspdMode
     AncvTransaction:
       type: object
       properties:
@@ -137,44 +155,6 @@ components:
       - order
       - paymentMethod
       - redirectUrls
-    AncvAmount:
-      type: object
-      properties:
-        total:
-          type: number
-        currency:
-          type: string
-      required:
-      - total
-      - currency
-    AncvPayer:
-      type: object
-      properties:
-        beneficiaryId:
-          type: string
-        amount:
-          $ref: '#/components/schemas/AncvAmount'
-        authorizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AncvPayerAuthorization'
-      required:
-      - beneficiaryId
-      - amount
-      - authorizations
-    AuthenticateTransactionBodyDto:
-      type: object
-      properties:
-        beneficiaryId:
-          type: string
-        amount:
-          type: number
-        currencyIso:
-          type: string
-      required:
-      - beneficiaryId
-      - amount
-      - currencyIso
     AncvMerchant:
       type: object
       properties:
@@ -182,25 +162,6 @@ components:
           type: string
       required:
       - shopId
-    AncvPaymentMethod:
-      type: object
-      properties:
-        captureMode:
-          type: string
-          enum:
-          - NORMAL
-          - DEFERRED
-        captureTerm:
-          type: number
-        captureDate:
-          type: string
-        tspdMode:
-          type: string
-      required:
-      - captureMode
-      - captureTerm
-      - captureDate
-      - tspdMode
     AncvPayerAuthorization:
       type: object
       properties:
@@ -220,6 +181,21 @@ components:
       - amount
       - validationDate
       - holder
+    AncvPayer:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AncvPayerAuthorization'
+      required:
+      - beneficiaryId
+      - amount
+      - authorizations
     AncvOrder:
       type: object
       properties:
@@ -233,6 +209,30 @@ components:
       - id
       - paymentId
       - amount
+    AuthenticateTransactionBodyDto:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        amount:
+          type: number
+        currencyIso:
+          type: string
+      required:
+      - beneficiaryId
+      - amount
+      - currencyIso
+    AncvRedirectUrls:
+      type: object
+      properties:
+        returnUrl:
+          type:
+          - string
+          - 'null'
+        cancelUrl:
+          type:
+          - string
+          - 'null'
   securitySchemes:
     x-access-token:
       scheme: bearer

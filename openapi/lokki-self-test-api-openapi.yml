@@ -56,6 +56,96 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+        role:
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+          type: string
+        password:
+          type: string
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    SelfTestCreateAccountResultDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - user
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
     SelfTestCreateAccountFormDto:
       type: object
       properties:
@@ -174,24 +264,6 @@ components:
           type: string
         GeoLoc:
           type: string
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    SelfTestCreateAccountResultDto:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-      - user
     SelfTestFormDto:
       type: object
       properties:
@@ -280,78 +352,6 @@ components:
       - featuresToUse
       - comments
       - utmInfos
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        picture:
-          type: string
-        role:
-          enum:
-          - user
-          - manager
-          - admin
-          - reconditioner
-          type: string
-        password:
-          type: string
-        validationCode:
-          $ref: '#/components/schemas/UserValidationCode'
-        isDemoAccount:
-          type: boolean
-        isAccountActivated:
-          type: boolean
-        lastConnection:
-          format: date-time
-          type: string
-        createdFrom:
-          enum:
-          - admin_dashboard
-          - employee
-          - lokkit
-          - visibility
-          - self_test
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        connectionAttempt:
-          type: number
-        availableTools:
-          type: array
-          items:
-            type: string
-            enum:
-            - dashboard
-            - lokkit
-            - visibility
-            - visibility_one
-            - reconditioning
-        signedUpWith:
-          enum:
-          - google
-          - apple
-          type: string
-      required:
-      - id
-      - name
-      - email
-      - phone
-      - picture
-      - role
-      - isDemoAccount
-      - isAccountActivated
-      - createdFrom
-      - createdAt
-      - connectionAttempt
-      - availableTools
   securitySchemes:
     x-access-token:
       scheme: bearer

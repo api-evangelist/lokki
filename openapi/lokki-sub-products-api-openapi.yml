@@ -80,42 +80,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SubProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        isAvailable:
-          type: boolean
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-      required:
-      - id
-      - isAvailable
-      - printed
-      - serialNumber
-      - archive
-      - externalQrCode
-      - notAvailableRanges
-    BulkPatchSubProductsDto:
-      type: object
-      properties:
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkPatchSubProductDto'
-      required:
-      - subProducts
     BulkPatchSubProductDto:
       type: object
       properties:
@@ -154,6 +118,42 @@ components:
           type: boolean
         serialNumber:
           type: string
+    SubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+    BulkPatchSubProductsDto:
+      type: object
+      properties:
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkPatchSubProductDto'
+      required:
+      - subProducts
     NotAvailableRange:
       type: object
       properties:

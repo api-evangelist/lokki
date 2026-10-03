@@ -374,53 +374,56 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PostOneApiKeyV2BodyUtmDto:
+    PostOneApiKeyV2ResponseDto:
       type: object
       properties:
-        enabled:
-          type: boolean
-        source:
+        id:
           type: string
-        medium:
+        name:
           type: string
-        campaign:
+        note:
           type: string
-        term:
+        owner:
           type: string
-        content:
+        trailingDigits:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiKeyV2Scope'
+        status:
+          enum:
+          - ACTIVE
+          - INACTIVE
+          type: string
+        settings:
+          $ref: '#/components/schemas/ApiKeyV2Settings'
+        lastUsedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        apiKey:
           type: string
       required:
-      - enabled
-    PostOneApiKeyV2BodySettinsDto:
-      type: object
-      properties:
-        utm:
-          $ref: '#/components/schemas/PostOneApiKeyV2BodyUtmDto'
-    ApiKeyV2Utm:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        source:
-          type: string
-        medium:
-          type: string
-        campaign:
-          type: string
-        term:
-          type: string
-        content:
-          type: string
-      required:
-      - enabled
-    ApiKeyV2Settings:
-      type: object
-      properties:
-        utm:
-          allOf:
-          - $ref: '#/components/schemas/ApiKeyV2Utm'
-      required:
-      - utm
+      - id
+      - name
+      - note
+      - owner
+      - trailingDigits
+      - scopes
+      - status
+      - settings
+      - lastUsedAt
+      - createdAt
+      - updatedAt
+      - apiKey
     ApiKeyV2:
       type: object
       properties:
@@ -483,6 +486,14 @@ components:
       required:
       - total
       - docs
+    ApiKeyV2Settings:
+      type: object
+      properties:
+        utm:
+          allOf:
+          - $ref: '#/components/schemas/ApiKeyV2Utm'
+      required:
+      - utm
     PatchOneApiKeyV2BodyDto:
       type: object
       properties:
@@ -496,28 +507,6 @@ components:
           type:
           - string
           - 'null'
-    ApiKeyV2Scope:
-      type: object
-      properties:
-        domain:
-          type: string
-          enum:
-          - STORES
-          - STORE_ITEMS
-          - VERTICALES
-        read:
-          type: boolean
-        write:
-          type: boolean
-        actions:
-          type: array
-          items:
-            type: string
-      required:
-      - domain
-      - read
-      - write
-      - actions
     PostOneApiKeyV2BodyScopeDto:
       type: object
       properties:
@@ -540,6 +529,28 @@ components:
       - read
       - write
       - actions
+    PostOneApiKeyV2BodyUtmDto:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        source:
+          type: string
+        medium:
+          type: string
+        campaign:
+          type: string
+        term:
+          type: string
+        content:
+          type: string
+      required:
+      - enabled
+    PostOneApiKeyV2BodySettinsDto:
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/PostOneApiKeyV2BodyUtmDto'
     PostOneApiKeyV2BodyDto:
       type: object
       properties:
@@ -562,56 +573,45 @@ components:
       - owner
       - scopes
       - settings
-    PostOneApiKeyV2ResponseDto:
+    ApiKeyV2Scope:
       type: object
       properties:
-        id:
+        domain:
           type: string
-        name:
-          type: string
-        note:
-          type: string
-        owner:
-          type: string
-        trailingDigits:
-          type: string
-        scopes:
+          enum:
+          - STORES
+          - STORE_ITEMS
+          - VERTICALES
+        read:
+          type: boolean
+        write:
+          type: boolean
+        actions:
           type: array
           items:
-            $ref: '#/components/schemas/ApiKeyV2Scope'
-        status:
-          enum:
-          - ACTIVE
-          - INACTIVE
+            type: string
+      required:
+      - domain
+      - read
+      - write
+      - actions
+    ApiKeyV2Utm:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        source:
           type: string
-        settings:
-          $ref: '#/components/schemas/ApiKeyV2Settings'
-        lastUsedAt:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        createdAt:
-          format: date-time
+        medium:
           type: string
-        updatedAt:
-          format: date-time
+        campaign:
           type: string
-        apiKey:
+        term:
+          type: string
+        content:
           type: string
       required:
-      - id
-      - name
-      - note
-      - owner
-      - trailingDigits
-      - scopes
-      - status
-      - settings
-      - lastUsedAt
-      - createdAt
-      - updatedAt
-      - apiKey
+      - enabled
   securitySchemes:
     x-access-token:
       scheme: bearer

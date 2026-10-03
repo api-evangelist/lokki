@@ -501,34 +501,45 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CustomerCompanyNewsletterUpdateDto:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CustomerFieldDto:
       type: object
       properties:
-        subscribed:
-          type: boolean
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
       required:
-      - subscribed
-    PaginatedCustomersDto:
+      - label
+      - value
+      - id
+    TulipInfos:
       type: object
       properties:
-        totalCount:
-          type: number
-        customers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
       required:
-      - totalCount
-      - customers
-    CustomerSkisetInfos:
-      type: object
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-      required:
-      - customerId
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
     CreateUpdateCustomerDto:
       type: object
       properties:
@@ -665,17 +676,35 @@ components:
       - createdAt
       - hidden
       - createdFrom
-    CustomersCsvDto:
+    CustomerCompanyNewsletterUpdateDto:
       type: object
       properties:
-        customers:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
+        subscribed:
+          type: boolean
       required:
-      - customers
+      - subscribed
+    CustomerField:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
+          type: string
+        id:
+          type: string
+      required:
+      - label
+      - value
+      - id
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
     GetManyCustomersResponseDto:
       type: object
       properties:
@@ -691,58 +720,29 @@ components:
       required:
       - total
       - docs
-    CustomerFieldDto:
+    PaginatedCustomersDto:
       type: object
       properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
+        totalCount:
+          type: number
+        customers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
       required:
-      - label
-      - value
-      - id
-    TulipInfos:
+      - totalCount
+      - customers
+    CustomersCsvDto:
       type: object
       properties:
-        address:
-          type: string
-        zipcode:
-          type: string
-        city:
-          type: string
-        managerFirstName:
-          type: string
-        managerLastName:
-          type: string
-        sirenNumber:
-          type: string
+        customers:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
       required:
-      - address
-      - zipcode
-      - city
-      - managerFirstName
-      - managerLastName
-      - sirenNumber
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    CustomerField:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
+      - customers
   securitySchemes:
     x-access-token:
       scheme: bearer

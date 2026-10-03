@@ -91,208 +91,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SelfTestUtmInfos:
-      type: object
-      properties:
-        utm_source:
-          type: string
-        utm_medium:
-          type: string
-        utm_campaign:
-          type: string
-        utm_content:
-          type: string
-        utm_term:
-          type: string
-        device:
-          type: string
-        matchtype:
-          type: string
-        campaign_id:
-          type: string
-        adset_id:
-          type: string
-        ad_id:
-          type: string
-        GeoLoc:
-          type: string
-    UpdateLokkiUserDataDto:
-      type: object
-      properties:
-        launchDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-      required:
-      - launchDate
-      - verticales
-    LokkitUserData:
-      type: object
-      properties:
-        id:
-          type: string
-        userId:
-          type: string
-        launchDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        tasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/LokkitTask'
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - userId
-      - launchDate
-      - verticales
-      - tasks
-      - createdAt
-    UpdateLokkitUserDataTaskDto:
-      type: object
-      properties:
-        taskId:
-          type: number
-        isCompleted:
-          type: boolean
-      required:
-      - taskId
-      - isCompleted
-    LokkitTask:
-      type: object
-      properties:
-        id:
-          type: string
-        taskId:
-          type: number
-        isCompleted:
-          type: boolean
-      required:
-      - id
-      - taskId
-      - isCompleted
-    LokkitCompleteFormInfosDto:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        verticale:
-          type: string
-          enum:
-          - BIKE
-          - ELECTRIC_BIKE
-          - MOPED
-          - MOTORCYCLE
-          - CAR
-          - SCOOTER
-          - SKI
-          - CLIMBING
-          - SNOWSHOES
-          - SURF
-          - PADDLE
-          - CANOE_KAYAK
-          - BOAT
-          - EVENT
-          - MOTOCULTURE
-          - TOOLING
-        launchDate:
-          type: string
-        projectDescription:
-          type: string
-        utmInfos:
-          $ref: '#/components/schemas/SelfTestUtmInfos'
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-      required:
-      - firstName
-      - lastName
-      - email
-      - phone
-      - verticale
-      - launchDate
-      - projectDescription
-      - utmInfos
-      - lang
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    LokkitCreateAccountResultDto:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-      - user
     User:
       type: object
       properties:
@@ -365,6 +163,208 @@ components:
       - createdAt
       - connectionAttempt
       - availableTools
+    UpdateLokkitUserDataTaskDto:
+      type: object
+      properties:
+        taskId:
+          type: number
+        isCompleted:
+          type: boolean
+      required:
+      - taskId
+      - isCompleted
+    LokkitTask:
+      type: object
+      properties:
+        id:
+          type: string
+        taskId:
+          type: number
+        isCompleted:
+          type: boolean
+      required:
+      - id
+      - taskId
+      - isCompleted
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    UpdateLokkiUserDataDto:
+      type: object
+      properties:
+        launchDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+      required:
+      - launchDate
+      - verticales
+    LokkitCreateAccountResultDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - user
+    LokkitUserData:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        launchDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LokkitTask'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - userId
+      - launchDate
+      - verticales
+      - tasks
+      - createdAt
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    LokkitCompleteFormInfosDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        verticale:
+          type: string
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+        launchDate:
+          type: string
+        projectDescription:
+          type: string
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - firstName
+      - lastName
+      - email
+      - phone
+      - verticale
+      - launchDate
+      - projectDescription
+      - utmInfos
+      - lang
   securitySchemes:
     x-access-token:
       scheme: bearer

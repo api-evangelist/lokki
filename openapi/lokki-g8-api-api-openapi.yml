@@ -44,54 +44,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PointOfSalesOrdersToImport:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/PointOfSalesOrderDto'
-      required:
-      - orders
-    PointOfSalesOrderWarrantDto:
-      type: object
-      properties:
-        totalAmountTTC:
-          type: number
-        vat:
-          type: number
-        quantity:
-          type: number
-      required:
-      - totalAmountTTC
-      - vat
-      - quantity
-    PointOfSalesOrderPaymentDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        paymentMethod:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Autre
-          - Boutique en ligne
-          - Lien de paiement
-        paymentDate:
-          format: date-time
-          type: string
-        id:
-          type: string
-      required:
-      - amount
-      - paymentMethod
-      - paymentDate
-      - id
     PointOfSalesOrderCustomerDto:
       type: object
       properties:
@@ -132,45 +84,59 @@ components:
       - zipCode
       - city
       - streetNumber
-    PointOfSalesOrderPromoCodeDto:
+    UpdateOrderG8Id:
       type: object
       properties:
-        discountAmount:
-          type: number
-        discountType:
-          type: string
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-        appliesToDelivery:
-          type: boolean
+        g8Ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/G8Ids'
       required:
-      - discountAmount
-      - discountType
-      - appliesToDelivery
-    PointOfSalesItemDiscount:
+      - g8Ids
+    PointOfSalesOrderDeliveryDto:
       type: object
       properties:
-        discountType:
-          type: string
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-        discountAmount:
+        amountTTC:
+          type: number
+        vat:
           type: number
       required:
-      - discountType
-      - discountAmount
-    G8Ids:
+      - amountTTC
+      - vat
+    PointOfSalesOrdersToImport:
       type: object
       properties:
-        lokkiOrderId:
-          type: string
-        g8OrderId:
-          type: string
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PointOfSalesOrderDto'
       required:
-      - lokkiOrderId
-      - g8OrderId
+      - orders
+    PointOfSalesOrderItemDto:
+      type: object
+      properties:
+        quantity:
+          type: number
+        totalTTC:
+          type: number
+        totalHT:
+          type: number
+        name:
+          type: string
+        vat:
+          type: number
+        discount:
+          $ref: '#/components/schemas/PointOfSalesItemDiscount'
+        discountedTotalHT:
+          type: number
+        discountedTotalTTC:
+          type: number
+      required:
+      - quantity
+      - totalTTC
+      - totalHT
+      - name
+      - vat
     PointOfSalesOrderDto:
       type: object
       properties:
@@ -234,50 +200,84 @@ components:
       - warrant
       - currency
       - type
-    PointOfSalesOrderItemDto:
+    PointOfSalesOrderPromoCodeDto:
       type: object
       properties:
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliesToDelivery:
+          type: boolean
+      required:
+      - discountAmount
+      - discountType
+      - appliesToDelivery
+    G8Ids:
+      type: object
+      properties:
+        lokkiOrderId:
+          type: string
+        g8OrderId:
+          type: string
+      required:
+      - lokkiOrderId
+      - g8OrderId
+    PointOfSalesItemDiscount:
+      type: object
+      properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        discountAmount:
+          type: number
+      required:
+      - discountType
+      - discountAmount
+    PointOfSalesOrderWarrantDto:
+      type: object
+      properties:
+        totalAmountTTC:
+          type: number
+        vat:
+          type: number
         quantity:
           type: number
-        totalTTC:
-          type: number
-        totalHT:
-          type: number
-        name:
-          type: string
-        vat:
-          type: number
-        discount:
-          $ref: '#/components/schemas/PointOfSalesItemDiscount'
-        discountedTotalHT:
-          type: number
-        discountedTotalTTC:
-          type: number
       required:
+      - totalAmountTTC
+      - vat
       - quantity
-      - totalTTC
-      - totalHT
-      - name
-      - vat
-    UpdateOrderG8Id:
+    PointOfSalesOrderPaymentDto:
       type: object
       properties:
-        g8Ids:
-          type: array
-          items:
-            $ref: '#/components/schemas/G8Ids'
-      required:
-      - g8Ids
-    PointOfSalesOrderDeliveryDto:
-      type: object
-      properties:
-        amountTTC:
+        amount:
           type: number
-        vat:
-          type: number
+        paymentMethod:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Autre
+          - Boutique en ligne
+          - Lien de paiement
+        paymentDate:
+          format: date-time
+          type: string
+        id:
+          type: string
       required:
-      - amountTTC
-      - vat
+      - amount
+      - paymentMethod
+      - paymentDate
+      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

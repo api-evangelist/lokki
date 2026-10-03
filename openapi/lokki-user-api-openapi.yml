@@ -147,83 +147,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateMeDto:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-      required:
-      - name
-      - email
-      - phone
-    UpdateCompanyUserDto:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-      required:
-      - name
-      - email
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-      - file
-    EmployeeAccess:
-      type: object
-      properties:
-        clients:
-          type: boolean
-        getNewOrderMails:
-          type: boolean
-        editCatalog:
-          type: boolean
-        addPromo:
-          type: boolean
-        workshop:
-          type: boolean
-        workshopStat:
-          type: boolean
-        marketing:
-          type: boolean
-        statistics:
-          type: boolean
-        cashBook:
-          type: boolean
-        settings:
-          type: boolean
-        bookingDeletion:
-          type: boolean
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    UpdateUserPasswordDto:
-      type: object
-      properties:
-        oldPassword:
-          type: string
-        newPassword:
-          type: string
-      required:
-      - oldPassword
-      - newPassword
     User:
       type: object
       properties:
@@ -296,6 +219,83 @@ components:
       - createdAt
       - connectionAttempt
       - availableTools
+    UpdateMeDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+      required:
+      - name
+      - email
+      - phone
+    EmployeeAccess:
+      type: object
+      properties:
+        clients:
+          type: boolean
+        getNewOrderMails:
+          type: boolean
+        editCatalog:
+          type: boolean
+        addPromo:
+          type: boolean
+        workshop:
+          type: boolean
+        workshopStat:
+          type: boolean
+        marketing:
+          type: boolean
+        statistics:
+          type: boolean
+        cashBook:
+          type: boolean
+        settings:
+          type: boolean
+        bookingDeletion:
+          type: boolean
+    UpdateCompanyUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      required:
+      - name
+      - email
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    UpdateUserPasswordDto:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      required:
+      - oldPassword
+      - newPassword
   securitySchemes:
     x-access-token:
       scheme: bearer

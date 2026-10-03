@@ -2221,61 +2221,275 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateOnlineStoreRentalPointTypeDto:
+    BailMaxValueDto:
       type: object
       properties:
-        onlineStoreRentalPointType:
-          type: string
-          enum:
-          - SAME
-          - DIFFERENT
+        activated:
+          type: boolean
+        amount:
+          type: number
       required:
-      - onlineStoreRentalPointType
-    UpdateCompanyOnlineStorePaymentDto:
+      - activated
+      - amount
+    CompanyFeePayment:
       type: object
       properties:
-        onlineStorePayment:
+        percentage:
+          type: number
+        amount:
+          type: number
+      required:
+      - percentage
+      - amount
+    UpdateCompanyTulipSettingsNameDto:
+      type: object
+      properties:
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - i18nName
+    UpdateCompanyReservationTimesDto:
+      type: object
+      properties:
+        reservationTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationTime'
+      required:
+      - reservationTimes
+    CompanyAdyenCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: adyen
+          enum:
+          - adyen
+        apiKey:
+          type: string
+        merchantAccount:
+          type: string
+        clientKey:
+          type: string
+        liveEndpointUrlPrefix:
+          type: string
+        store:
+          type: string
+      required:
+      - provider
+      - apiKey
+      - merchantAccount
+      - clientKey
+      - liveEndpointUrlPrefix
+      - store
+    SocialMedia:
+      type: object
+      properties:
+        facebook:
+          type: string
+        twitter:
+          type: string
+        instagram:
+          type: string
+        linkedIn:
+          type: string
+        tiktok:
+          type: string
+      required:
+      - facebook
+      - twitter
+      - instagram
+      - linkedIn
+      - tiktok
+    CompanyVatNameDto:
+      type: object
+      properties:
+        vatName:
+          type: string
+      required:
+      - vatName
+    ReservationRange:
+      type: object
+      properties:
+        nbHours:
+          type: number
+        activated:
           type: boolean
       required:
-      - onlineStorePayment
-    CreateCompanySquareDeviceDto:
+      - nbHours
+      - activated
+    CompanyRentalPlaceDto:
       type: object
       properties:
-        deviceName:
+        image:
+          type: string
+        additionalImages:
+          type: array
+          items:
+            type: string
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        showcaseProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyShowcaseProductDto'
+        team:
+          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
+        lokkiComment:
           type: string
       required:
-      - deviceName
-    CompanySkisetInfos:
+      - image
+      - additionalImages
+      - descriptions
+      - universes
+      - verticales
+      - showcaseProducts
+      - team
+      - lokkiComment
+    CompanySlugDto:
+      type: object
+      properties:
+        slug:
+          type: string
+      required:
+      - slug
+    BailAccessDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+      required:
+      - activated
+    ThemeButtonStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        padding:
+          type: string
+      required:
+      - backgroundColor
+      - borderRadius
+      - padding
+    SquareLocation:
       type: object
       properties:
         id:
-          type: number
-        trademark:
           type: string
-        resort_id:
-          type: number
-        country_id:
-          type: number
-        member_id:
-          type: number
         name:
-          type: string
-        member:
-          type: string
-        city:
-          type: string
-        country:
           type: string
       required:
       - id
-      - trademark
-      - resort_id
-      - country_id
-      - member_id
       - name
-      - member
-      - city
-      - country
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    UpdateSquareIsActiveDto:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+      required:
+      - isActive
+    UpdateCompanyTermsConditionsDto:
+      type: object
+      properties:
+        i18nGeneralConditions:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - i18nGeneralConditions
+    ProposedRentalPlaceCommissionDto:
+      type: object
+      properties:
+        requiresSignature:
+          type: boolean
+      required:
+      - requiresSignature
+    PatchCompanySettingsDto:
+      type: object
+      properties:
+        companyAccess:
+          $ref: '#/components/schemas/AllowedCompanyAccessPropertiesDto'
+        marketing:
+          $ref: '#/components/schemas/MarketingSettings'
+        companyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+    CompanyOpinionBooster:
+      type: object
+      properties:
+        googleBusinessLink:
+          type: string
+        activated:
+          type: boolean
+        daysBeforeSend:
+          type: number
+        emailTemplateId:
+          type: string
+      required:
+      - googleBusinessLink
+      - activated
+      - daysBeforeSend
+      - emailTemplateId
     CompanyNewsletterSubscriptionDto:
       type: object
       properties:
@@ -2283,34 +2497,1114 @@ components:
           type: boolean
       required:
       - newsletterSubscription
-    CompanyStripeCredentials:
+    UpdateCompanyOrderReminderDto:
       type: object
       properties:
-        provider:
+        companyOrderReminder:
+          $ref: '#/components/schemas/CompanyOrderReminder'
+      required:
+      - companyOrderReminder
+    GetSquareOAuthStateDto:
+      type: object
+      properties:
+        state:
           type: string
-          default: stripe
+        env:
+          type: string
+      required:
+      - state
+      - env
+    CompanyOrderReminder:
+      type: object
+      properties:
+        emailOneDayBeforeOrderStart:
+          type: boolean
+        emailTemplateId:
+          type:
+          - string
+          - 'null'
+        bailLinkInEmail:
+          type: boolean
+        emailOneDayBeforeOrderEnd:
+          type: boolean
+        emailOnLokkiPayment:
+          type: boolean
+        emailOnFundsTransfer:
+          type: boolean
+        oneDayBeforeOrderEndEmailTemplateId:
+          type:
+          - string
+          - 'null'
+      required:
+      - emailOneDayBeforeOrderStart
+      - emailTemplateId
+      - bailLinkInEmail
+      - emailOneDayBeforeOrderEnd
+      - emailOnLokkiPayment
+      - emailOnFundsTransfer
+      - oneDayBeforeOrderEndEmailTemplateId
+    CompanyUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        lastConnected:
+          format: date-time
+          type: string
+        connectionDates:
+          type: array
+          items:
+            format: date-time
+            type: string
+        isAccountActivated:
+          type: boolean
+        role:
+          type: string
+        signedUpWith:
+          type: string
           enum:
-          - stripe
-        account:
+          - google
+          - apple
+      required:
+      - name
+      - email
+      - id
+    CompanyFeePayments:
+      type: object
+      properties:
+        standard:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        premium:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        uk:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        outOfUkUe:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        ancv:
+          $ref: '#/components/schemas/CompanyFeePayment'
+      required:
+      - standard
+      - premium
+      - uk
+      - outOfUkUe
+      - ancv
+    ThemeColors:
+      type: object
+      properties:
+        primary:
           type: string
-        type:
-          enum:
-          - EXPRESS
-          - STANDARD
+        secondary:
           type: string
-        status:
-          enum:
-          - ONBOARDING
-          - ACTIVE
+        ternary:
           type: string
-        onboardingDate:
+        priceColor:
+          type: string
+        priceColorText:
+          type: string
+        blockColor:
+          $ref: '#/components/schemas/ThemeBlockColor'
+        textColor:
+          type: string
+        danger:
+          type: string
+        header:
+          type: string
+      required:
+      - primary
+      - secondary
+      - ternary
+      - priceColor
+      - priceColorText
+      - blockColor
+      - textColor
+      - danger
+      - header
+    CompanyDeliveryCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+        sublocalityName:
+          type: string
+        zipCode:
+          type: string
+        placeId:
+          type: string
+        hasMultiplePostcodeLocalities:
+          type: boolean
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
+    LowSeasonDateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        endDate:
           format: date-time
           type: string
       required:
-      - provider
-      - account
+      - id
+      - startDate
+      - endDate
+    GoogleRating:
+      type: object
+      properties:
+        localizedReviews:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocalizedReview'
+        rating:
+          type: number
+        reviewNb:
+          type: number
+        placeId:
+          type: string
+        mapsUrl:
+          type: string
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - localizedReviews
+      - rating
+      - reviewNb
+      - placeId
+      - mapsUrl
+      - fetchedAt
+    UpdateFeaturedSectionTitleDto:
+      type: object
+      properties:
+        sectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - sectionTitle
+    TulipSettings:
+      type: object
+      properties:
+        state:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        initialState:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nContent:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+      - i18nName
+      - i18nContent
+      - i18nTitle
+      - displayedOptions
+    CompanyShowcaseProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+      required:
+      - id
+      - price
+    UpdateCompanyOnlineStoreDisplayPhoneNumberDto:
+      type: object
+      properties:
+        display:
+          type: boolean
+      required:
+      - display
+    LokkiPaymentMethods:
+      type: object
+      properties:
+        card:
+          type: boolean
+        applePay:
+          type: boolean
+        googlePay:
+          type: boolean
+        ancvConnect:
+          type: boolean
+        sepa:
+          type: boolean
+        ideal:
+          type: boolean
+        bancontact:
+          type: boolean
+        giroPay:
+          type: boolean
+        p24:
+          type: boolean
+        blik:
+          type: boolean
+        multibanco:
+          type: boolean
+        eps:
+          type: boolean
+      required:
+      - card
+      - applePay
+      - googlePay
+      - ancvConnect
+      - sepa
+      - ideal
+      - bancontact
+      - giroPay
+      - p24
+      - blik
+      - multibanco
+      - eps
+    ReservationRanges:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/ReservationRange'
+        maximum:
+          $ref: '#/components/schemas/ReservationRange'
+      required:
+      - minimum
+      - maximum
+    CompanyBailMaxAmount:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        maxAmount:
+          type: number
+      required:
+      - activated
+      - maxAmount
+    ReservationTime:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - start
+          - end
+        time:
+          type: string
+      required:
+      - id
       - type
-      - status
+      - time
+    CompanyFee:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - LOKKI_PAYMENT_ISO_STRIPE
+          - LOKKI_PAYMENT
+          - CUSTOM
+          - CUSTOM_BY_PAYMENT
+        percentage:
+          type: number
+        amount:
+          type: number
+        payments:
+          $ref: '#/components/schemas/CompanyFeePayments'
+      required:
+      - type
+      - percentage
+      - amount
+    OpeningHoursRange:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+        open:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - open
+      - from
+      - to
+    UpdateClosedDatesDto:
+      type: object
+      properties:
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClosedDatesRange'
+      required:
+      - closedDates
+    Company:
+      type: object
+      properties:
+        addressComponents:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        paymentProvider:
+          oneOf:
+          - $ref: '#/components/schemas/CompanyAdyenCredentials'
+          - $ref: '#/components/schemas/CompanyStripeCredentials'
+        paymentProviderEvent:
+          oneOf:
+          - $ref: '#/components/schemas/CompanyAdyenCredentials'
+          - $ref: '#/components/schemas/CompanyStripeCredentials'
+        id:
+          type: string
+        slug:
+          type: string
+        redirectSlugs:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        description:
+          type: string
+        address:
+          type: string
+        addressLatitude:
+          type: string
+        addressLongitude:
+          type: string
+        logoURL:
+          type: string
+        vat:
+          type: number
+        vatName:
+          type: string
+        vatWorkshop:
+          type: number
+        hyperlineTaxRate:
+          type: number
+        generalConditions:
+          $ref: '#/components/schemas/LocalizedContent'
+        generalConditionsLLD:
+          $ref: '#/components/schemas/LocalizedContent'
+        cancellationPolicy:
+          $ref: '#/components/schemas/CancellationPolicyDto'
+        newsletterSubscription:
+          type: boolean
+        onlineStoreConfig:
+          $ref: '#/components/schemas/OnlineStoreConfig'
+        isGeneralConditionsLCDModified:
+          type: boolean
+        isDemo:
+          type: boolean
+        accountStatus:
+          enum:
+          - ACTIVE
+          - DEMO
+          - TRIAL
+          - ARCHIVED
+          type: string
+        accountType:
+          enum:
+          - PLATFORM
+          - VISIBILITY_ONE
+          type: string
+        calendarView:
+          type: string
+        user:
+          $ref: '#/components/schemas/CompanyUser'
+        phoneNumber:
+          type: string
+        companyMailSender:
+          $ref: '#/components/schemas/CompanyMailSender'
+        companyAccess:
+          $ref: '#/components/schemas/CompanyAccess'
+        siret:
+          type: string
+        legalName:
+          type: string
+        headquartersAddress:
+          type: string
+        companyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        companyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailEventMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        internalCompanyBailLLDMaxAmount:
+          $ref: '#/components/schemas/CompanyBailMaxAmount'
+        group:
+          type: string
+        companyCurrency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        timezone:
+          type: string
+        companyOpinionBooster:
+          $ref: '#/components/schemas/CompanyOpinionBooster'
+        orderReminder:
+          $ref: '#/components/schemas/CompanyOrderReminder'
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPoint'
+        workshopLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopLocation'
+        onlineStoreRentalPointType:
+          enum:
+          - SAME
+          - DIFFERENT
+          type: string
+        partPayment:
+          $ref: '#/components/schemas/PartPayment'
+        partPaymentEvent:
+          $ref: '#/components/schemas/PartPayment'
+        onlineStoreSlots:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
+        timeProductsUnavailableAfterOrder:
+          type: string
+        dayProductsUnavailableAfterOrder:
+          type: number
+        dayType:
+          enum:
+          - full-24h
+          - opening-hours
+          type: string
+        timeProductsUnavailableBeforeOrder:
+          type: string
+        dayProductsUnavailableBeforeOrder:
+          type: number
+        magicSchedule:
+          type: boolean
+        enableQrCode:
+          type: boolean
+        templateEmailIdOnlineStore:
+          type: string
+        rentalPlaceInfos:
+          $ref: '#/components/schemas/CompanyRentalPlaceDto'
+        tulipSettings:
+          $ref: '#/components/schemas/TulipSettings'
+        ancvConnectSettings:
+          $ref: '#/components/schemas/AncvConnectSettings'
+        productStateInfo:
+          $ref: '#/components/schemas/ProductStateInfo'
+        eventCgu:
+          $ref: '#/components/schemas/LocalizedContent'
+        documentCustomFields:
+          $ref: '#/components/schemas/CompanyDocumentCustomFieldsDto'
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+        isArchived:
+          type: boolean
+        hasRentalPlaceOrder:
+          type: boolean
+        lifecycleEvents:
+          $ref: '#/components/schemas/CompanyLifecycleEvents'
+        csInfos:
+          $ref: '#/components/schemas/CompanyCsInfos'
+        squareCredentials:
+          allOf:
+          - $ref: '#/components/schemas/SquareCredentials'
+        googleRating:
+          $ref: '#/components/schemas/GoogleRating'
+        responseDuration:
+          $ref: '#/components/schemas/CompanyResponseDuration'
+        openTime:
+          type: string
+        closeTime:
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CompanySkisetInfos'
+        createdAt:
+          format: date-time
+          type: string
+        documentColor:
+          type: string
+        quickOrderDefaultMode:
+          $ref: '#/components/schemas/CompanyDefaultQuickOrderMode'
+        automaticInternalStartDateAttribution:
+          type: boolean
+        socialMedia:
+          $ref: '#/components/schemas/SocialMedia'
+        offlinePin:
+          type: string
+        internalPaymentMethods:
+          $ref: '#/components/schemas/LokkiPaymentMethods'
+        onlineStorePaymentMethods:
+          $ref: '#/components/schemas/LokkiPaymentMethods'
+        lokkiPaymentTermsConditionsHistory:
+          $ref: '#/components/schemas/LokkiPaymentTermsConditionsHistory'
+        fee:
+          $ref: '#/components/schemas/CompanyGlobalFee'
+        proposedRentalPlaceCommission:
+          $ref: '#/components/schemas/ProposedRentalPlaceCommission'
+        trialInfos:
+          $ref: '#/components/schemas/CompanyTrialInfos'
+        marketing:
+          $ref: '#/components/schemas/MarketingSettings'
+        periodicDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PeriodicDiscount'
+        hasOrders:
+          type: boolean
+      required:
+      - id
+      - slug
+      - redirectSlugs
+      - name
+      - description
+      - address
+      - addressLatitude
+      - addressLongitude
+      - logoURL
+      - vat
+      - vatName
+      - vatWorkshop
+      - hyperlineTaxRate
+      - generalConditions
+      - generalConditionsLLD
+      - cancellationPolicy
+      - newsletterSubscription
+      - onlineStoreConfig
+      - isDemo
+      - accountStatus
+      - accountType
+      - calendarView
+      - user
+      - phoneNumber
+      - companyMailSender
+      - companyAccess
+      - siret
+      - legalName
+      - headquartersAddress
+      - companyBailMaxAmount
+      - companyBailEventMaxAmount
+      - companyBailLLDMaxAmount
+      - internalCompanyBailMaxAmount
+      - internalCompanyBailEventMaxAmount
+      - internalCompanyBailLLDMaxAmount
+      - group
+      - companyCurrency
+      - timezone
+      - companyOpinionBooster
+      - orderReminder
+      - rentalPoints
+      - workshopLocations
+      - onlineStoreRentalPointType
+      - partPayment
+      - partPaymentEvent
+      - onlineStoreSlots
+      - timeProductsUnavailableAfterOrder
+      - dayProductsUnavailableAfterOrder
+      - timeProductsUnavailableBeforeOrder
+      - dayProductsUnavailableBeforeOrder
+      - magicSchedule
+      - enableQrCode
+      - templateEmailIdOnlineStore
+      - rentalPlaceInfos
+      - tulipSettings
+      - ancvConnectSettings
+      - productStateInfo
+      - eventCgu
+      - documentCustomFields
+      - categoryDiscounts
+      - isArchived
+      - squareCredentials
+      - openTime
+      - closeTime
+      - createdAt
+      - documentColor
+      - quickOrderDefaultMode
+      - automaticInternalStartDateAttribution
+      - socialMedia
+      - lokkiPaymentTermsConditionsHistory
+      - fee
+    UpdateSocialMediaDto:
+      type: object
+      properties:
+        facebook:
+          type: string
+        instagram:
+          type: string
+        twitter:
+          type: string
+        linkedIn:
+          type: string
+        tiktok:
+          type: string
+      required:
+      - facebook
+      - instagram
+      - twitter
+      - linkedIn
+      - tiktok
+    RentalPlaceStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        borderColor:
+          type: string
+        padding:
+          type: string
+    CompanyCategoryDiscountRange:
+      type: object
+      properties:
+        discount:
+          type: number
+          description: Discount value for the range
+        discountType:
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          type: string
+          description: Type of discount applied (amount or percentage)
+        rangeFrom:
+          type:
+          - number
+          - 'null'
+          description: Minimum value of the range (Quantity of items)
+        rangeTo:
+          type:
+          - number
+          - 'null'
+          description: Maximum value of the range (Quantity of items)
+        infiniteTo:
+          type: boolean
+          description: Indicates if the range has no upper limit
+      required:
+      - discount
+      - discountType
+      - rangeFrom
+      - rangeTo
+      - infiniteTo
+    CompanyShowStockDto:
+      type: object
+      properties:
+        showStock:
+          type: boolean
+      required:
+      - showStock
+    UpdateCompanyProductStateInfosDto:
+      type: object
+      properties:
+        name:
+          type: string
+        displayGeneralConditions:
+          type: boolean
+        legalNotices:
+          type: string
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - displayGeneralConditions
+      - legalNotices
+      - useLegalCompanyInfo
+    RentalPlaceTextStyle:
+      type: object
+      properties:
+        color:
+          type: string
+        fontSize:
+          type: string
+        fontWeight:
+          type: string
+        fontStyle:
+          type: string
+    CompanyEventUniversesActivatedDto:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+      required:
+      - isActivated
+    CompanyRentalPlaceTeamDto:
+      type: object
+      properties:
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        image:
+          type: string
+        video:
+          type: string
+        teamName:
+          type: string
+      required:
+      - descriptions
+      - image
+      - video
+      - teamName
+    ThemeTextStyle:
+      type: object
+      properties:
+        color:
+          type: string
+        fontSize:
+          type: string
+        fontWeight:
+          type: string
+        fontStyle:
+          type: string
+      required:
+      - color
+      - fontSize
+      - fontWeight
+      - fontStyle
+    CompanyTheme:
+      type: object
+      properties:
+        id:
+          type: string
+        mainStyles:
+          $ref: '#/components/schemas/ThemeMainStyles'
+        button:
+          $ref: '#/components/schemas/ThemeButton'
+        companyName:
+          $ref: '#/components/schemas/ThemeCompanyName'
+        title:
+          $ref: '#/components/schemas/ThemeTitle'
+        colors:
+          $ref: '#/components/schemas/ThemeColors'
+      required:
+      - mainStyles
+      - button
+      - companyName
+      - title
+      - colors
+    UpdateLowSeasonDateDto:
+      type: object
+      properties:
+        lowSeasonDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/LowSeasonDateRange'
+      required:
+      - lowSeasonDates
+    UpdateCompanyTulipSettingsDto:
+      type: object
+      properties:
+        state:
+          type: string
+        initialState:
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+    UpdateCompanyOnlineStoreEventsTitleDto:
+      type: object
+      properties:
+        onlineStoreEventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - onlineStoreEventsTitle
+    UpdateCompanyQuickOrderDefaultModeDto:
+      type: object
+      properties:
+        booking:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        bookingUpdate:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        readyToGo:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        return:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        exchange:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        showDelivery:
+          type: boolean
+        showSurvey:
+          type: boolean
+        showUnavailability:
+          type: boolean
+        showUnavailabilityOnUpdate:
+          type: boolean
+      required:
+      - booking
+      - bookingUpdate
+      - readyToGo
+      - return
+      - exchange
+      - showDelivery
+      - showSurvey
+      - showUnavailability
+      - showUnavailabilityOnUpdate
+    UpdateCsSupportRequestedDto:
+      type: object
+      properties:
+        requested:
+          type: boolean
+      required:
+      - requested
+    CompanyVatDto:
+      type: object
+      properties:
+        vat:
+          type: number
+      required:
+      - vat
+    RegisterShopIdBodyDto:
+      type: object
+      properties:
+        shopId:
+          type: string
+      required:
+      - shopId
+    CompanyCustomerTextRGPDDto:
+      type: object
+      properties:
+        rgpdText:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - rgpdText
+    Pricing:
+      type: object
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        id:
+          type: string
+      required:
+      - label
+      - amount
+      - id
+    UpdateCompanyOnlineStoreSlotsDto:
+      type: object
+      properties:
+        companyOnlineStoreSlots:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
+      required:
+      - companyOnlineStoreSlots
+    CompanyDelivery:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+        freeDeliveryActivated:
+          type: boolean
+        freeDeliveryMinimumType:
+          type: string
+          enum:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
+          type: number
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - activated
+      - ranges
+      - deliveryOnly
+      - returnDelivery
+      - freeDeliveryActivated
+      - freeDeliveryMinimumType
+      - freeDeliveryMinimumVal
+      - excludedCities
+    CompanyUploadImageDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+        names:
+          type: array
+          items:
+            type: string
+        indexes:
+          type: array
+          items:
+            type: number
+        indexesToDelete:
+          type: array
+          items:
+            type: number
+      required:
+      - files
+      - names
+      - indexes
+      - indexesToDelete
+    CompanyUpdateCategoryDiscountsDto:
+      type: object
+      properties:
+        categoryDiscounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscount'
+      required:
+      - categoryDiscounts
+    Coordinate:
+      type: object
+      properties:
+        lng:
+          type: string
+        lat:
+          type: string
+      required:
+      - lng
+      - lat
+    CompanyEventUniversesTagDto:
+      type: object
+      properties:
+        tagId:
+          type: string
+      required:
+      - tagId
+    AncvConnectSettings:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        shopId:
+          type:
+          - string
+          - 'null'
+      required:
+      - activated
+      - shopId
+    MarketingSettings:
+      type: object
+      properties:
+        trackers:
+          $ref: '#/components/schemas/Trackers'
+      required:
+      - trackers
+    UpdateCompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
+    DeliveryRange:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        price:
+          type: number
+        specificPrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
+      required:
+      - min
+      - max
+      - price
+      - specificPrices
+    CompanyShowPricingDto:
+      type: object
+      properties:
+        showPricing:
+          type: boolean
+      required:
+      - showPricing
     CompanyAccess:
       type: object
       properties:
@@ -2449,255 +3743,52 @@ components:
       - rentalPlaceNetwork
       - rentalPlaceShowBreadcrumb
       - quoteRequests
-    BailAccessDto:
+    UpdateCompanyOnlineStoreDescriptionDto:
       type: object
       properties:
-        activated:
-          type: boolean
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
       required:
-      - activated
-    TulipSettingsWithRenter:
+      - onlineStoreDescription
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UpdateSubscriptionModulePrice:
       type: object
       properties:
-        state:
+        module:
+          type: string
           enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
-          type: string
-        initialState:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
-          type: string
-        renterId:
-          type: string
-        verified:
-          type: boolean
-        i18nName:
-          $ref: '#/components/schemas/LocalizedContent'
-        i18nContent:
-          $ref: '#/components/schemas/LocalizedContent'
-        i18nTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        displayedOptions:
+          - ORDER_EVENT
+          - ANCV_CONNECT
+          - MULTIPLE_FUNDS_TRANSFER
+        prices:
           type: array
           items:
-            type: string
-            enum:
-            - theft
-            - break
-        renter:
-          allOf:
-          - $ref: '#/components/schemas/TulipRenter'
-      required:
-      - state
-      - initialState
-      - renterId
-      - verified
-      - i18nName
-      - i18nContent
-      - i18nTitle
-      - displayedOptions
-      - renter
-    CompanyTheme:
-      type: object
-      properties:
-        id:
-          type: string
-        mainStyles:
-          $ref: '#/components/schemas/ThemeMainStyles'
-        button:
-          $ref: '#/components/schemas/ThemeButton'
-        companyName:
-          $ref: '#/components/schemas/ThemeCompanyName'
-        title:
-          $ref: '#/components/schemas/ThemeTitle'
-        colors:
-          $ref: '#/components/schemas/ThemeColors'
-      required:
-      - mainStyles
-      - button
-      - companyName
-      - title
-      - colors
-    CompanyLLDBillingDto:
-      type: object
-      properties:
-        lldBilling:
+            type: object
+        createIfNotExists:
           type: boolean
       required:
-      - lldBilling
-    CompanyEventDirectOrderDto:
+      - module
+      - prices
+    ThemeButton:
       type: object
       properties:
-        eventDirectOrder:
-          type: boolean
+        textStyle:
+          $ref: '#/components/schemas/ThemeTextStyle'
+        style:
+          $ref: '#/components/schemas/ThemeButtonStyle'
       required:
-      - eventDirectOrder
-    UpdateCompanyBannerScrollDto:
+      - textStyle
+      - style
+    UpdateCompanyTimezoneDto:
       type: object
       properties:
-        bannerScroll:
-          type: number
+        companyTimezone:
+          $ref: '#/components/schemas/CompanyTimezone'
       required:
-      - bannerScroll
-    UpdateCompanyTulipConfigDto:
-      type: object
-      properties:
-        hideInclusive:
-          type: boolean
-        activated:
-          type: boolean
-      required:
-      - hideInclusive
-      - activated
-    UpdateCompanyOnlineStoreDisplayPhoneNumberDto:
-      type: object
-      properties:
-        display:
-          type: boolean
-      required:
-      - display
-    MarketingSettings:
-      type: object
-      properties:
-        trackers:
-          $ref: '#/components/schemas/Trackers'
-      required:
-      - trackers
-    LPTermConditionV0102:
-      type: object
-      properties:
-        date:
-          format: date-time
-          type: string
-        fee:
-          $ref: '#/components/schemas/CompanyGlobalFee'
-      required:
-      - date
-      - fee
-    UpdateCompanyOnlineStoreFeaturedIdsDto:
-      type: object
-      properties:
-        featuredIds:
-          type: array
-          items:
-            type: string
-      required:
-      - featuredIds
-    EventUniverse:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        imageUrl:
-          type: string
-      required:
-      - id
-      - name
-      - imageUrl
-    UpdateCompanyTermsConditionsDto:
-      type: object
-      properties:
-        i18nGeneralConditions:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - i18nGeneralConditions
-    CancellationPolicyDto:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        onlineRequests:
-          type: boolean
-        automaticRefunds:
-          type: boolean
-        policyType:
-          enum:
-          - FLEXIBLE
-          - MODERATE
-          - STRICT
-          - CUSTOM
-          type: string
-        lastMinuteThreshold:
-          type: number
-          minimum: 0
-        inAdvanceThreshold:
-          type: number
-          minimum: 0
-        lowRefundRate:
-          type: number
-          minimum: 0
-          maximum: 100
-        midRefundRate:
-          type: number
-          minimum: 0
-          maximum: 100
-        highRefundRate:
-          type: number
-          minimum: 0
-          maximum: 100
-      required:
-      - activated
-      - onlineRequests
-      - automaticRefunds
-      - policyType
-      - lastMinuteThreshold
-      - inAdvanceThreshold
-      - lowRefundRate
-      - midRefundRate
-      - highRefundRate
-    CreateUpdatePeriodicDiscountDto:
-      type: object
-      properties:
-        discountInPercentage:
-          type: number
-          minimum: 0
-          maximum: 100
-        startDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        endDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        applicableDate:
-          enum:
-          - CREATED_DATE
-          - START_DATE
-          type: string
-        scope:
-          default:
-          - ONLINE_STORE
-          type: array
-          items:
-            type: string
-            enum:
-            - ONLINE_STORE
-            - DASHBOARD
-      required:
-      - discountInPercentage
-      - startDate
-      - endDate
-      - applicableDate
-    CompanyVatNameDto:
-      type: object
-      properties:
-        vatName:
-          type: string
-      required:
-      - vatName
+      - companyTimezone
     UniverseMinimumPrice:
       type: object
       properties:
@@ -2712,116 +3803,88 @@ components:
       required:
       - type
       - id
-    TulipOptionProduct:
+    PartPaymentDto:
       type: object
       properties:
-        product_type:
-          type: string
-        translations:
-          $ref: '#/components/schemas/TulipTranslation'
-        product_subtypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/TulipOptionProductContentSubType'
-      required:
-      - product_type
-      - translations
-      - product_subtypes
-    CompanyShowcaseProductDto:
-      type: object
-      properties:
-        id:
-          type: string
-        price:
+        partPaymentAmount:
           type: number
       required:
-      - id
-      - price
-    TulipTranslation:
+      - partPaymentAmount
+    LPTermConditionV0102:
       type: object
       properties:
-        en:
+        date:
+          format: date-time
           type: string
-        fr:
-          type: string
+        fee:
+          $ref: '#/components/schemas/CompanyGlobalFee'
       required:
-      - en
-      - fr
-    UpdateCompanyOrderReminderDto:
+      - date
+      - fee
+    AllowedCompanyAccessPropertiesDto:
       type: object
       properties:
-        companyOrderReminder:
-          $ref: '#/components/schemas/CompanyOrderReminder'
-      required:
-      - companyOrderReminder
-    UpdateCompanyOnlineStorePhoneNumberDto:
+        useOnlineBail:
+          type: boolean
+        lldOnlineBail:
+          type: boolean
+        quoteRequests:
+          type: boolean
+    RentalPlaceFooterLinkSocial:
       type: object
       properties:
-        phoneNumber:
-          type: string
-      required:
-      - phoneNumber
-    SquareDevices:
-      type: object
-      properties:
-        id:
-          type: string
         name:
           type: string
-        deviceId:
+        icon:
           type: string
-        status:
+        link:
           type: string
-        code:
+        id:
           type: string
-        pairBy:
-          type: string
-      required:
-      - id
-      - name
-      - deviceId
-      - status
-    RentalPlaceMainInfo:
-      type: object
-      properties:
-        font:
-          type: string
-          enum:
-          - DM Sans
-          - MontSerrat
-          - Open Sans
-          - Roboto Condensed
-          - Roboto
-          - PT Sans
-          - Poppins
-          - Lato
-          - Raleway
-          - Ubuntu
-          - Source Sans Pro
-        accentColor:
-          type: string
-        textColor:
-          type: string
-        backgroundColor:
-          type: string
-        favicon:
-          $ref: '#/components/schemas/RentalPlaceFile'
-        logo:
-          $ref: '#/components/schemas/RentalPlaceFile'
-      required:
-      - font
-      - accentColor
-      - textColor
-      - backgroundColor
-      - favicon
-      - logo
-    ProposedRentalPlaceCommissionDto:
-      type: object
-      properties:
-        requiresSignature:
+        available:
           type: boolean
       required:
-      - requiresSignature
+      - name
+      - icon
+      - link
+      - id
+      - available
+    TulipRenter:
+      type: object
+      properties:
+        uid:
+          type: string
+        company:
+          $ref: '#/components/schemas/TulipCompanyInfo'
+        options:
+          $ref: '#/components/schemas/TulipOptions'
+      required:
+      - uid
+      - company
+      - options
+    CompanyActivateNewOnlineStoreDesignDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
+    UpdateOpeningHoursDto:
+      type: object
+      properties:
+        openingHours:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningHoursRange'
+      required:
+      - openingHours
+    UpdateCompanyAccessOnlineContractDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+      required:
+      - activated
     CompanyEventUniversesUpdateDto:
       type: object
       properties:
@@ -2831,25 +3894,162 @@ components:
             type: object
       required:
       - eventUniverses
-    CompanyFeePayments:
+    SelfTestUtmInfos:
       type: object
       properties:
-        standard:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        premium:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        uk:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        outOfUkUe:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        ancv:
-          $ref: '#/components/schemas/CompanyFeePayment'
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    CompanyDefaultQuickOrderMode:
+      type: object
+      properties:
+        booking:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        bookingUpdate:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        readyToGo:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        return:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        exchange:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        showDelivery:
+          type: boolean
+        showSurvey:
+          type: boolean
+        showUnavailability:
+          type: boolean
+        showUnavailabilityOnUpdate:
+          type: boolean
       required:
-      - standard
-      - premium
-      - uk
-      - outOfUkUe
-      - ancv
+      - booking
+      - bookingUpdate
+      - readyToGo
+      - return
+      - exchange
+      - showDelivery
+      - showSurvey
+      - showUnavailability
+      - showUnavailabilityOnUpdate
+    CompanyPlaceIdDto:
+      type: object
+      properties:
+        placeId:
+          type: string
+      required:
+      - placeId
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    RentalPlaceNetworkUpdatedBy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    OnlineStoreCompanyAdyenPayment:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: adyen
+          enum:
+          - adyen
+        clientKey:
+          type: string
+      required:
+      - provider
+      - clientKey
+    UpdateCompanyBannerScrollDto:
+      type: object
+      properties:
+        bannerScroll:
+          type: number
+      required:
+      - bannerScroll
+    UpdateCompanyOfflinePinDto:
+      type: object
+      properties:
+        offlinePin:
+          type: string
+      required:
+      - offlinePin
+    UpdateCompanyTulipConfigDto:
+      type: object
+      properties:
+        hideInclusive:
+          type: boolean
+        activated:
+          type: boolean
+      required:
+      - hideInclusive
+      - activated
+    DateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - from
+      - to
+    TulipOptionProductContentSubType:
+      type: object
+      properties:
+        type:
+          type: string
+        translations:
+          $ref: '#/components/schemas/TulipTranslation'
+      required:
+      - type
+      - translations
     CompanyDocumentCustomField:
       type: object
       properties:
@@ -2863,155 +4063,47 @@ components:
       - fieldName
       - fieldValue
       - id
-    OpeningTimeFrame:
+    CompanyOnlineStoreSlot:
       type: object
       properties:
+        hours:
+          type: number
+        minutes:
+          type: number
+        label:
+          type: string
         id:
           type: string
-        day:
-          type: string
-          enum:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          - saturday
-          - sunday
-          - ALL
-        isOpen:
-          type: boolean
-        from:
-          type: string
-        to:
-          type: string
       required:
+      - hours
+      - minutes
+      - label
       - id
-      - day
-      - isOpen
-    UpdateCompanyMailSenderDto:
+    RentalPlaceFooter:
       type: object
       properties:
-        name:
-          type: string
-        replyToEmailAddress:
-          type: string
-      required:
-      - name
-      - replyToEmailAddress
-    UpdateCompanyAccessOnlineContractDto:
-      type: object
-      properties:
-        activated:
-          type: boolean
-      required:
-      - activated
-    UpdateVatWorkshopDto:
-      type: object
-      properties:
-        vatWorkshop:
-          type: number
-      required:
-      - vatWorkshop
-    CompanyRetro2022Infos:
-      type: object
-      properties:
-        googleRating:
-          type: number
-        totalOrders:
-          type: number
-        bestMonth:
-          type: number
-      required:
-      - googleRating
-      - totalOrders
-      - bestMonth
-    UpdateCsSupportRequestedDto:
-      type: object
-      properties:
-        requested:
-          type: boolean
-      required:
-      - requested
-    PartPayment:
-      type: object
-      properties:
-        isActive:
-          type: boolean
-        percentage:
-          type: number
-      required:
-      - isActive
-      - percentage
-    TagValue:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-        activated:
-          type: boolean
-        universeId:
-          type: string
-      required:
-      - id
-      - value
-      - activated
-    CompanyCategoryDiscount:
-      type: object
-      properties:
-        categoryIds:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        linkColOne:
           type: array
           items:
-            type: string
-        ranges:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkColTwo:
           type: array
           items:
-            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkSocial:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkSocial'
       required:
-      - categoryIds
-      - ranges
-    LokkiPaymentMethods:
-      type: object
-      properties:
-        card:
-          type: boolean
-        applePay:
-          type: boolean
-        googlePay:
-          type: boolean
-        ancvConnect:
-          type: boolean
-        sepa:
-          type: boolean
-        ideal:
-          type: boolean
-        bancontact:
-          type: boolean
-        giroPay:
-          type: boolean
-        p24:
-          type: boolean
-        blik:
-          type: boolean
-        multibanco:
-          type: boolean
-        eps:
-          type: boolean
-      required:
-      - card
-      - applePay
-      - googlePay
-      - ancvConnect
-      - sepa
-      - ideal
-      - bancontact
-      - giroPay
-      - p24
-      - blik
-      - multibanco
-      - eps
+      - style
+      - textStyle
+      - linkColOne
+      - linkColTwo
+      - linkSocial
     OnlineStoreCompanyAccessDto:
       type: object
       properties:
@@ -3064,92 +4156,235 @@ components:
       - onlineHideHeader
       - rentalPlace
       - lokkiPayment
-    CompanyUser:
+    CompanyLLDBillingDto:
+      type: object
+      properties:
+        lldBilling:
+          type: boolean
+      required:
+      - lldBilling
+    CreateCompanySquareDeviceDto:
+      type: object
+      properties:
+        deviceName:
+          type: string
+      required:
+      - deviceName
+    CompanyUpdateDto:
+      type: object
+      properties:
+        proposedRentalPlaceCommission:
+          $ref: '#/components/schemas/ProposedRentalPlaceCommissionDto'
+        lifecycleEvents:
+          $ref: '#/components/schemas/CompanyLifecycleEvents'
+    SquareCredentials:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        token:
+          type: string
+        locationId:
+          type: string
+        locationName:
+          type: string
+        refreshToken:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        oAuthState:
+          type: string
+      required:
+      - isActive
+      - token
+      - locationId
+      - locationName
+      - refreshToken
+      - expiresAt
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    UnsubscribeToModuleDto:
+      type: object
+      properties:
+        module:
+          type: string
+          enum:
+          - ORDER_EVENT
+          - ANCV_CONNECT
+          - MULTIPLE_FUNDS_TRANSFER
+      required:
+      - module
+    UpdateCompanyOnlineStoreFeaturedIdsDto:
+      type: object
+      properties:
+        featuredIds:
+          type: array
+          items:
+            type: string
+      required:
+      - featuredIds
+    CompanyTimezone:
+      type: object
+      properties:
+        timezone:
+          type: string
+      required:
+      - timezone
+    TagValue:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+        activated:
+          type: boolean
+        universeId:
+          type: string
+      required:
+      - id
+      - value
+      - activated
+    CompanyGlobalFee:
+      type: object
+      properties:
+        rentalPlace:
+          $ref: '#/components/schemas/CompanyFee'
+        global:
+          $ref: '#/components/schemas/CompanyFee'
+        lld:
+          $ref: '#/components/schemas/CompanyFee'
+      required:
+      - rentalPlace
+      - global
+      - lld
+    CompanyCategoryDiscount:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - categoryIds
+      - ranges
+    CompanyEventTagUpdateDto:
+      type: object
+      properties:
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+      required:
+      - eventTags
+    LokkiPaymentTermsConditionsHistory:
+      type: object
+      properties:
+        v0101:
+          format: date-time
+          type: string
+        v0102:
+          $ref: '#/components/schemas/LPTermConditionV0102'
+      required:
+      - v0101
+      - v0102
+    RentalPlaceNetwork:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        updatedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        updatedBy:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceNetworkUpdatedBy'
+      required:
+      - enabled
+      - updatedAt
+      - updatedBy
+    CancellationPolicyDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        onlineRequests:
+          type: boolean
+        automaticRefunds:
+          type: boolean
+        policyType:
+          enum:
+          - FLEXIBLE
+          - MODERATE
+          - STRICT
+          - CUSTOM
+          type: string
+        lastMinuteThreshold:
+          type: number
+          minimum: 0
+        inAdvanceThreshold:
+          type: number
+          minimum: 0
+        lowRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+        midRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+        highRefundRate:
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+      - activated
+      - onlineRequests
+      - automaticRefunds
+      - policyType
+      - lastMinuteThreshold
+      - inAdvanceThreshold
+      - lowRefundRate
+      - midRefundRate
+      - highRefundRate
+    UpdateCompanyMainInfosDto:
       type: object
       properties:
         name:
           type: string
-        email:
+        siret:
           type: string
-        id:
+        legalName:
           type: string
-        lastConnected:
-          format: date-time
-          type: string
-        connectionDates:
-          type: array
-          items:
-            format: date-time
-            type: string
-        isAccountActivated:
-          type: boolean
-        role:
-          type: string
-        signedUpWith:
-          type: string
-          enum:
-          - google
-          - apple
-      required:
-      - name
-      - email
-      - id
-    TulipCompanyInfo:
-      type: object
-      properties:
-        company_name:
-          type: string
-        last_name:
-          type: string
-        first_name:
-          type: string
-        email:
-          type: string
-        phone_number:
+        headquartersAddress:
           type: string
         address:
           type: string
-        city:
+        addressComponents:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        longitude:
+          type: number
+        latitude:
+          type: number
+        phone:
           type: string
-        zipcode:
-          type: string
-        country:
-          type: string
-      required:
-      - company_name
-      - last_name
-      - first_name
-      - email
-      - phone_number
-      - address
-      - city
-      - zipcode
-      - country
-    CompanyUploadImageDto:
-      type: object
-      properties:
-        files:
-          type: array
-          items:
-            type: string
-            format: binary
-        names:
-          type: array
-          items:
-            type: string
-        indexes:
-          type: array
-          items:
-            type: number
-        indexesToDelete:
-          type: array
-          items:
-            type: number
-      required:
-      - files
-      - names
-      - indexes
-      - indexesToDelete
+        addressComponentsMachine:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
     MultipleFundsTransfer:
       type: object
       properties:
@@ -3166,545 +4401,6 @@ components:
           type: string
       required:
       - activated
-    UpdateCompanyAddressComponentsDto:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-        placeId:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-      - placeId
-    CompanyLifecycleEvents:
-      type: object
-      properties:
-        catalogMarkedCompleteAt:
-          format: date-time
-          type: string
-    CompanyMailSender:
-      type: object
-      properties:
-        name:
-          type: string
-        replyToEmailAddress:
-          type: string
-      required:
-      - name
-      - replyToEmailAddress
-    DeliveryRange:
-      type: object
-      properties:
-        min:
-          type: number
-        max:
-          type: number
-        price:
-          type: number
-        specificPrices:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
-      required:
-      - min
-      - max
-      - price
-      - specificPrices
-    UpdateCompanyRentalPointDto:
-      type: object
-      properties:
-        id:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        name:
-          type: string
-        slug:
-          type: string
-        fullAddress:
-          type: string
-        addressComponents:
-          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
-        addressComponentsMachine:
-          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
-        city:
-          type: string
-        country:
-          type: string
-        address:
-          type: string
-        zipcode:
-          type: string
-    UpdateCompanyOnlineStoreCustomFeaturedModeDto:
-      type: object
-      properties:
-        customFeaturedMode:
-          type: boolean
-      required:
-      - customFeaturedMode
-    UpdateCompanyMultipleFundsTransferDto:
-      type: object
-      properties:
-        multipleFundsTransfer:
-          $ref: '#/components/schemas/MultipleFundsTransfer'
-      required:
-      - multipleFundsTransfer
-    SocialMedia:
-      type: object
-      properties:
-        facebook:
-          type: string
-        twitter:
-          type: string
-        instagram:
-          type: string
-        linkedIn:
-          type: string
-        tiktok:
-          type: string
-      required:
-      - facebook
-      - twitter
-      - instagram
-      - linkedIn
-      - tiktok
-    TulipOptions:
-      type: object
-      properties:
-        option:
-          type: boolean
-        inclusion:
-          type: boolean
-        LCD:
-          type: boolean
-        LMD:
-          type: boolean
-        LLD:
-          type: boolean
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/TulipOptionProduct'
-      required:
-      - option
-      - inclusion
-      - LCD
-      - LMD
-      - LLD
-      - products
-    UpdateOpeningHoursDto:
-      type: object
-      properties:
-        openingHours:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpeningHoursRange'
-      required:
-      - openingHours
-    CompanyRentalPlaceUniversesDto:
-      type: object
-      properties:
-        id:
-          type: string
-        categoryIds:
-          type: array
-          items:
-            type: string
-        pack:
-          type: boolean
-      required:
-      - id
-      - categoryIds
-      - pack
-    CompanyCurrency:
-      type: object
-      properties:
-        isoName:
-          type: string
-        symbol:
-          type: string
-      required:
-      - isoName
-      - symbol
-    Item:
-      type: object
-      properties:
-        itemId:
-          type: string
-        type:
-          type: string
-          enum:
-          - SERVICE
-          - PRODUCT
-        price:
-          type: number
-      required:
-      - itemId
-      - type
-      - price
-    CompanyResponseDuration:
-      type: object
-      properties:
-        average:
-          type: number
-        median:
-          type: number
-        min:
-          type: number
-        max:
-          type: number
-        count:
-          type: number
-        fetchedAt:
-          format: date-time
-          type: string
-      required:
-      - average
-      - median
-      - min
-      - max
-      - count
-      - fetchedAt
-    CompanyOpinionBooster:
-      type: object
-      properties:
-        googleBusinessLink:
-          type: string
-        activated:
-          type: boolean
-        daysBeforeSend:
-          type: number
-        emailTemplateId:
-          type: string
-      required:
-      - googleBusinessLink
-      - activated
-      - daysBeforeSend
-      - emailTemplateId
-    RegisterShopIdBodyDto:
-      type: object
-      properties:
-        shopId:
-          type: string
-      required:
-      - shopId
-    DeliveryRangeSpecificPrice:
-      type: object
-      properties:
-        price:
-          type: number
-        cities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
-      - price
-      - cities
-    CompanyShowStockDto:
-      type: object
-      properties:
-        showStock:
-          type: boolean
-      required:
-      - showStock
-    ReservationRange:
-      type: object
-      properties:
-        nbHours:
-          type: number
-        activated:
-          type: boolean
-      required:
-      - nbHours
-      - activated
-    LowSeasonDateRange:
-      type: object
-      properties:
-        id:
-          type: string
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-      required:
-      - id
-      - startDate
-      - endDate
-    DateRange:
-      type: object
-      properties:
-        id:
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - from
-      - to
-    UpdateSubscriptionModulePrice:
-      type: object
-      properties:
-        module:
-          type: string
-          enum:
-          - ORDER_EVENT
-          - ANCV_CONNECT
-          - MULTIPLE_FUNDS_TRANSFER
-        prices:
-          type: array
-          items:
-            type: object
-        createIfNotExists:
-          type: boolean
-      required:
-      - module
-      - prices
-    CompanyFeePayment:
-      type: object
-      properties:
-        percentage:
-          type: number
-        amount:
-          type: number
-      required:
-      - percentage
-      - amount
-    GoogleReview:
-      type: object
-      properties:
-        rating:
-          type: number
-        name:
-          type: string
-        comment:
-          type: string
-        authorPhotoUrl:
-          type:
-          - string
-          - 'null'
-        publishTime:
-          format: date-time
-          type: string
-      required:
-      - rating
-      - name
-      - comment
-      - authorPhotoUrl
-      - publishTime
-    CompanyActivateRentalPlaceDto:
-      type: object
-      properties:
-        active:
-          type: boolean
-      required:
-      - active
-    TulipSettings:
-      type: object
-      properties:
-        state:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
-          type: string
-        initialState:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
-          type: string
-        renterId:
-          type: string
-        verified:
-          type: boolean
-        i18nName:
-          $ref: '#/components/schemas/LocalizedContent'
-        i18nContent:
-          $ref: '#/components/schemas/LocalizedContent'
-        i18nTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        displayedOptions:
-          type: array
-          items:
-            type: string
-            enum:
-            - theft
-            - break
-      required:
-      - state
-      - initialState
-      - renterId
-      - verified
-      - i18nName
-      - i18nContent
-      - i18nTitle
-      - displayedOptions
-    UpdateCompanyReservationTimesDto:
-      type: object
-      properties:
-        reservationTimes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationTime'
-      required:
-      - reservationTimes
-    UpdateFeaturedSectionTitleDto:
-      type: object
-      properties:
-        sectionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - sectionTitle
-    CompanyEventTagUpdateDto:
-      type: object
-      properties:
-        eventTags:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventTag'
-      required:
-      - eventTags
-    CompanyDelivery:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRange'
-        deliveryOnly:
-          type: boolean
-        returnDelivery:
-          type: boolean
-        freeDeliveryActivated:
-          type: boolean
-        freeDeliveryMinimumType:
-          type: string
-          enum:
-          - MINUTES
-          - SUBTOTAL
-        freeDeliveryMinimumVal:
-          type: number
-        excludedCities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
-      - activated
-      - ranges
-      - deliveryOnly
-      - returnDelivery
-      - freeDeliveryActivated
-      - freeDeliveryMinimumType
-      - freeDeliveryMinimumVal
-      - excludedCities
-    UpdateCompanyDeliveryDto:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRange'
-        deliveryOnly:
-          type: boolean
-        returnDelivery:
-          type: boolean
-        freeDeliveryActivated:
-          type: boolean
-        freeDeliveryMinimumType:
-          type: string
-          enum:
-          - MINUTES
-          - SUBTOTAL
-        freeDeliveryMinimumVal:
-          type: number
-        showDeliveryInternal:
-          type: boolean
-        excludedCities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-        displayAddressOnlineStore:
-          type: boolean
-    CompanyOnlineStoreSlot:
-      type: object
-      properties:
-        hours:
-          type: number
-        minutes:
-          type: number
-        label:
-          type: string
-        id:
-          type: string
-      required:
-      - hours
-      - minutes
-      - label
-      - id
-    SelfTestUtmInfos:
-      type: object
-      properties:
-        utm_source:
-          type: string
-        utm_medium:
-          type: string
-        utm_campaign:
-          type: string
-        utm_content:
-          type: string
-        utm_term:
-          type: string
-        device:
-          type: string
-        matchtype:
-          type: string
-        campaign_id:
-          type: string
-        adset_id:
-          type: string
-        ad_id:
-          type: string
-        GeoLoc:
-          type: string
-    PartPaymentDto:
-      type: object
-      properties:
-        partPaymentAmount:
-          type: number
-      required:
-      - partPaymentAmount
     UpdateNumberHoursOrderDto:
       type: object
       properties:
@@ -3715,165 +4411,28 @@ components:
       required:
       - minimum
       - maximum
-    CompanyEventUniversesTagDto:
+    CompanyDocumentCustomFieldsDto:
       type: object
       properties:
-        tagId:
-          type: string
-      required:
-      - tagId
-    GoogleRating:
-      type: object
-      properties:
-        localizedReviews:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocalizedReview'
-        rating:
-          type: number
-        reviewNb:
-          type: number
-        placeId:
-          type: string
-        mapsUrl:
-          type: string
-        fetchedAt:
-          format: date-time
-          type: string
-      required:
-      - localizedReviews
-      - rating
-      - reviewNb
-      - placeId
-      - mapsUrl
-      - fetchedAt
-    UpdateSquareCredentialLocationDto:
-      type: object
-      properties:
-        locationId:
-          type: string
-        locationName:
-          type: string
-      required:
-      - locationId
-      - locationName
-    UpdateCompanyProductStateInfosDto:
-      type: object
-      properties:
-        name:
-          type: string
-        displayGeneralConditions:
-          type: boolean
-        legalNotices:
-          type: string
-        useLegalCompanyInfo:
-          type: boolean
-      required:
-      - name
-      - displayGeneralConditions
-      - legalNotices
-      - useLegalCompanyInfo
-    UpdateCompanyQuickOrderDefaultModeDto:
-      type: object
-      properties:
-        booking:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        bookingUpdate:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        readyToGo:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        return:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        exchange:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        showDelivery:
-          type: boolean
-        showSurvey:
-          type: boolean
-        showUnavailability:
-          type: boolean
-        showUnavailabilityOnUpdate:
-          type: boolean
-      required:
-      - booking
-      - bookingUpdate
-      - readyToGo
-      - return
-      - exchange
-      - showDelivery
-      - showSurvey
-      - showUnavailability
-      - showUnavailabilityOnUpdate
-    UpdateSocialMediaDto:
-      type: object
-      properties:
-        facebook:
-          type: string
-        instagram:
-          type: string
-        twitter:
-          type: string
-        linkedIn:
-          type: string
-        tiktok:
-          type: string
-      required:
-      - facebook
-      - instagram
-      - twitter
-      - linkedIn
-      - tiktok
-    Category:
-      type: object
-      properties:
-        item:
+        fields:
           type: array
           items:
-            $ref: '#/components/schemas/Item'
-        name:
+            $ref: '#/components/schemas/CompanyDocumentCustomField'
+      required:
+      - fields
+    ThemeMainStyles:
+      type: object
+      properties:
+        radius:
           type: string
-        id:
+        backgroundColor:
+          type: string
+        fontFamily:
           type: string
       required:
-      - item
-      - name
-      - id
-    ThemeCompanyName:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/ThemeTextStyle'
-      required:
-      - style
-    UpdateSquareIsActiveDto:
-      type: object
-      properties:
-        isActive:
-          type: boolean
-      required:
-      - isActive
-    CompanyShowPricingDto:
-      type: object
-      properties:
-        showPricing:
-          type: boolean
-      required:
-      - showPricing
+      - radius
+      - backgroundColor
+      - fontFamily
     UpdateCompanyTulipSettingsWordingDto:
       type: object
       properties:
@@ -3884,281 +4443,16 @@ components:
       required:
       - i18nContent
       - i18nTitle
-    CompanyUpdateDto:
+    UpdateSquareCredentialLocationDto:
       type: object
       properties:
-        proposedRentalPlaceCommission:
-          $ref: '#/components/schemas/ProposedRentalPlaceCommissionDto'
-        lifecycleEvents:
-          $ref: '#/components/schemas/CompanyLifecycleEvents'
-    UpdateCompanyOnlineStoreSlotsDto:
-      type: object
-      properties:
-        companyOnlineStoreSlots:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
-      required:
-      - companyOnlineStoreSlots
-    CompanyEventUniversesActivatedDto:
-      type: object
-      properties:
-        isActivated:
-          type: boolean
-      required:
-      - isActivated
-    UpdateCompanyTimezoneDto:
-      type: object
-      properties:
-        companyTimezone:
-          $ref: '#/components/schemas/CompanyTimezone'
-      required:
-      - companyTimezone
-    CompanySlugDto:
-      type: object
-      properties:
-        slug:
+        locationId:
+          type: string
+        locationName:
           type: string
       required:
-      - slug
-    SubscribeToModuleDto:
-      type: object
-      properties:
-        module:
-          type: string
-          enum:
-          - ORDER_EVENT
-          - ANCV_CONNECT
-          - MULTIPLE_FUNDS_TRANSFER
-      required:
-      - module
-    UpdateClosedDatesDto:
-      type: object
-      properties:
-        closedDates:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClosedDatesRange'
-      required:
-      - closedDates
-    CompanyTrialInfos:
-      type: object
-      properties:
-        productsNumber:
-          type: string
-          enum:
-          - '0'
-          - 1 - 10
-          - 11 - 20
-          - 21 - 50
-          - 51 - 100
-          - 101 - 250
-          - '> 250'
-        trialEndsAt:
-          format: date-time
-          type: string
-        hasRentalActivity:
-          type: boolean
-        launchDate:
-          format: date-time
-          type: string
-      required:
-      - trialEndsAt
-    RentalPlaceTextStyle:
-      type: object
-      properties:
-        color:
-          type: string
-        fontSize:
-          type: string
-        fontWeight:
-          type: string
-        fontStyle:
-          type: string
-    AncvConnectSettings:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        shopId:
-          type:
-          - string
-          - 'null'
-      required:
-      - activated
-      - shopId
-    ThemeButton:
-      type: object
-      properties:
-        textStyle:
-          $ref: '#/components/schemas/ThemeTextStyle'
-        style:
-          $ref: '#/components/schemas/ThemeButtonStyle'
-      required:
-      - textStyle
-      - style
-    CompanyUpdateDefaultPhoneCodeDto:
-      type: object
-      properties:
-        defaultPhoneCode:
-          type: string
-      required:
-      - defaultPhoneCode
-    CompanyGlobalFee:
-      type: object
-      properties:
-        rentalPlace:
-          $ref: '#/components/schemas/CompanyFee'
-        global:
-          $ref: '#/components/schemas/CompanyFee'
-        lld:
-          $ref: '#/components/schemas/CompanyFee'
-      required:
-      - rentalPlace
-      - global
-      - lld
-    UnsubscribeToModuleDto:
-      type: object
-      properties:
-        module:
-          type: string
-          enum:
-          - ORDER_EVENT
-          - ANCV_CONNECT
-          - MULTIPLE_FUNDS_TRANSFER
-      required:
-      - module
-    ThemeButtonStyle:
-      type: object
-      properties:
-        backgroundColor:
-          type: string
-        borderRadius:
-          type: string
-        padding:
-          type: string
-      required:
-      - backgroundColor
-      - borderRadius
-      - padding
-    CompanyCsSupportRequested:
-      type: object
-      properties:
-        requested:
-          type: boolean
-        requestedAt:
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - requested
-      - requestedAt
-    UpdateCompanyTulipSettingsNameDto:
-      type: object
-      properties:
-        i18nName:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - i18nName
-    CompanyOrderReminder:
-      type: object
-      properties:
-        emailOneDayBeforeOrderStart:
-          type: boolean
-        emailTemplateId:
-          type:
-          - string
-          - 'null'
-        bailLinkInEmail:
-          type: boolean
-        emailOneDayBeforeOrderEnd:
-          type: boolean
-        emailOnLokkiPayment:
-          type: boolean
-        emailOnFundsTransfer:
-          type: boolean
-        oneDayBeforeOrderEndEmailTemplateId:
-          type:
-          - string
-          - 'null'
-      required:
-      - emailOneDayBeforeOrderStart
-      - emailTemplateId
-      - bailLinkInEmail
-      - emailOneDayBeforeOrderEnd
-      - emailOnLokkiPayment
-      - emailOnFundsTransfer
-      - oneDayBeforeOrderEndEmailTemplateId
-    CompanyFee:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - LOKKI_PAYMENT_ISO_STRIPE
-          - LOKKI_PAYMENT
-          - CUSTOM
-          - CUSTOM_BY_PAYMENT
-        percentage:
-          type: number
-        amount:
-          type: number
-        payments:
-          $ref: '#/components/schemas/CompanyFeePayments'
-      required:
-      - type
-      - percentage
-      - amount
-    RentalPlaceFooterLinkSocial:
-      type: object
-      properties:
-        name:
-          type: string
-        icon:
-          type: string
-        link:
-          type: string
-        id:
-          type: string
-        available:
-          type: boolean
-      required:
-      - name
-      - icon
-      - link
-      - id
-      - available
-    CompanyAutomaticInternalStartDateAttributionDto:
-      type: object
-      properties:
-        automaticInternalStartDateAttribution:
-          type: boolean
-      required:
-      - automaticInternalStartDateAttribution
-    ProposedRentalPlaceCommission:
-      type: object
-      properties:
-        commissionRate:
-          type: number
-        requiresSignature:
-          type: boolean
-        batchDate:
-          type: string
-      required:
-      - commissionRate
-      - requiresSignature
-      - batchDate
-    SquareLocation:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
+      - locationId
+      - locationName
     CompanyHyperlineSubscriptionData:
       type: object
       properties:
@@ -4191,75 +4485,26 @@ components:
       - usageCustomerId
       - usageSubscriptionId
       - subscriptionCheckoutStatus
-    TulipRenter:
+    UpdateCompanyOnlineStorePaymentDto:
       type: object
       properties:
-        uid:
+        onlineStorePayment:
+          type: boolean
+      required:
+      - onlineStorePayment
+    CompanyLifecycleEvents:
+      type: object
+      properties:
+        catalogMarkedCompleteAt:
+          format: date-time
           type: string
-        company:
-          $ref: '#/components/schemas/TulipCompanyInfo'
-        options:
-          $ref: '#/components/schemas/TulipOptions'
-      required:
-      - uid
-      - company
-      - options
-    RentalPlaceFooter:
+    CompanyUpdateDefaultPhoneCodeDto:
       type: object
       properties:
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        textStyle:
-          $ref: '#/components/schemas/RentalPlaceTextStyle'
-        linkColOne:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
-        linkColTwo:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
-        linkSocial:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceFooterLinkSocial'
-      required:
-      - style
-      - textStyle
-      - linkColOne
-      - linkColTwo
-      - linkSocial
-    EventTag:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - id
-      - name
-    UpdateCompanyOnlineStoreDescriptionDto:
-      type: object
-      properties:
-        onlineStoreDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - onlineStoreDescription
-    CompanyTimezone:
-      type: object
-      properties:
-        timezone:
+        defaultPhoneCode:
           type: string
       required:
-      - timezone
-    UpdateCompanyOpinionBooster:
-      type: object
-      properties:
-        companyOpinionBooster:
-          $ref: '#/components/schemas/CompanyOpinionBooster'
-      required:
-      - companyOpinionBooster
+      - defaultPhoneCode
     PeriodicDiscount:
       type: object
       properties:
@@ -4297,16 +4542,383 @@ components:
       - startDate
       - endDate
       - applicableDate
-    CompanyBailMaxAmount:
+    ProposedRentalPlaceCommission:
       type: object
       properties:
-        activated:
+        commissionRate:
+          type: number
+        requiresSignature:
           type: boolean
-        maxAmount:
+        batchDate:
+          type: string
+      required:
+      - commissionRate
+      - requiresSignature
+      - batchDate
+    OnlineStoreConfig:
+      type: object
+      properties:
+        newOnlineStoreDesign:
+          type: boolean
+        customerTextRGPD:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        featuredSectionTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        eventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        openingTimeFrames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingTimeFramesLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        lowSeasonRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        bannerURL:
+          type: array
+          items:
+            type: string
+        featuredIds:
+          type: array
+          items:
+            type: string
+        bannerScroll:
+          type: number
+        reservationRanges:
+          $ref: '#/components/schemas/ReservationRanges'
+        timeLapsBeforeBookingInHours:
+          type: number
+        delivery:
+          $ref: '#/components/schemas/CompanyDelivery'
+        reservationTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationTime'
+        insuranceActivated:
+          type: boolean
+        eventActivated:
+          type: boolean
+        customFeaturedMode:
+          type: boolean
+        hideOnlineStoreLCD:
+          type: boolean
+        hideOnlineStoreLLD:
+          type: boolean
+        displayAddressOnlineStore:
+          type: boolean
+        eventDirectOrder:
+          type: boolean
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+        eventUniverses:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventUniverse'
+        eventUniversesActivated:
+          type: boolean
+        eventUniversesTag:
+          type: string
+        phoneNumber:
+          type: string
+        displayPhoneNumber:
+          type: boolean
+        script:
+          type: string
+        defaultPhoneCode:
+          type: string
+        showPricing:
+          type: boolean
+        showStock:
+          type: boolean
+        lldBilling:
+          type: boolean
+      required:
+      - newOnlineStoreDesign
+      - customerTextRGPD
+      - description
+      - featuredSectionTitle
+      - eventsTitle
+      - openingTimeFrames
+      - openingTimeFramesLowSeason
+      - closedDates
+      - lowSeasonRanges
+      - bannerURL
+      - featuredIds
+      - bannerScroll
+      - reservationRanges
+      - timeLapsBeforeBookingInHours
+      - delivery
+      - reservationTimes
+      - insuranceActivated
+      - eventActivated
+      - customFeaturedMode
+      - hideOnlineStoreLCD
+      - hideOnlineStoreLLD
+      - displayAddressOnlineStore
+      - eventDirectOrder
+      - eventTags
+      - eventUniverses
+      - eventUniversesActivated
+      - eventUniversesTag
+      - phoneNumber
+      - displayPhoneNumber
+      - script
+      - defaultPhoneCode
+      - showPricing
+      - showStock
+      - lldBilling
+    TulipOptions:
+      type: object
+      properties:
+        option:
+          type: boolean
+        inclusion:
+          type: boolean
+        LCD:
+          type: boolean
+        LMD:
+          type: boolean
+        LLD:
+          type: boolean
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/TulipOptionProduct'
+      required:
+      - option
+      - inclusion
+      - LCD
+      - LMD
+      - LLD
+      - products
+    RentalPlaceFile:
+      type: object
+      properties:
+        id:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+      required:
+      - filename
+      - url
+    CompanyTrialInfos:
+      type: object
+      properties:
+        productsNumber:
+          type: string
+          enum:
+          - '0'
+          - 1 - 10
+          - 11 - 20
+          - 21 - 50
+          - 51 - 100
+          - 101 - 250
+          - '> 250'
+        trialEndsAt:
+          format: date-time
+          type: string
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          format: date-time
+          type: string
+      required:
+      - trialEndsAt
+    TulipCompanyInfo:
+      type: object
+      properties:
+        company_name:
+          type: string
+        last_name:
+          type: string
+        first_name:
+          type: string
+        email:
+          type: string
+        phone_number:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        country:
+          type: string
+      required:
+      - company_name
+      - last_name
+      - first_name
+      - email
+      - phone_number
+      - address
+      - city
+      - zipcode
+      - country
+    Category:
+      type: object
+      properties:
+        item:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        name:
+          type: string
+        id:
+          type: string
+      required:
+      - item
+      - name
+      - id
+    EventUniverse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+      required:
+      - id
+      - name
+      - imageUrl
+    WorkshopLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - id
+      - name
+      - city
+      - country
+      - address
+      - zipcode
+    UpdateCompanyTulipSettingsDisplayedOptionsDto:
+      type: object
+      properties:
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+      required:
+      - displayedOptions
+    CompanyRentalPlaceDescriptionsDto:
+      type: object
+      properties:
+        fr:
+          type: string
+        en:
+          type: string
+      required:
+      - fr
+      - en
+    CompanyRentalPlaceUniversesDto:
+      type: object
+      properties:
+        id:
+          type: string
+        categoryIds:
+          type: array
+          items:
+            type: string
+        pack:
+          type: boolean
+      required:
+      - id
+      - categoryIds
+      - pack
+    LocalizedReview:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleReview'
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - reviews
+    UpdateCompanyDayTypeDto:
+      type: object
+      properties:
+        dayType:
+          type: string
+          enum:
+          - full-24h
+          - opening-hours
+      required:
+      - dayType
+    ThemeCompanyName:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
+      required:
+      - style
+    CompanyRetro2022Infos:
+      type: object
+      properties:
+        googleRating:
+          type: number
+        totalOrders:
+          type: number
+        bestMonth:
           type: number
       required:
-      - activated
-      - maxAmount
+      - googleRating
+      - totalOrders
+      - bestMonth
+    UpdateCompanyOnlineStorePhoneNumberDto:
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+      required:
+      - phoneNumber
+    CompanyHideOnlineStoreLCDDto:
+      type: object
+      properties:
+        hideOnlineStoreLCD:
+          type: boolean
+      required:
+      - hideOnlineStoreLCD
+    UpdateTimeLapseBeforeBookingDto:
+      type: object
+      properties:
+        timeLapsBeforeBooking:
+          type: number
+      required:
+      - timeLapsBeforeBooking
     ClosedDatesRange:
       type: object
       properties:
@@ -4322,36 +4934,349 @@ components:
       - id
       - startDate
       - endDate
-    CompanyCustomerTextRGPDDto:
+    CompanyCsSupportRequested:
       type: object
       properties:
-        rgpdText:
-          $ref: '#/components/schemas/LocalizedContent'
+        requested:
+          type: boolean
+        requestedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
       required:
-      - rgpdText
-    UpdateCompanyMainInfosDto:
+      - requested
+      - requestedAt
+    ProductStateInfo:
       type: object
       properties:
         name:
           type: string
-        siret:
+        displayGeneralConditions:
+          type: boolean
+        legalNotices:
           type: string
-        legalName:
-          type: string
-        headquartersAddress:
-          type: string
-        address:
-          type: string
-        addressComponents:
-          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
-        longitude:
+        numberCreated:
           type: number
-        latitude:
-          type: number
-        phone:
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - displayGeneralConditions
+      - legalNotices
+      - numberCreated
+      - useLegalCompanyInfo
+    EventStatsOnlineStore:
+      type: object
+      properties:
+        id:
           type: string
-        addressComponentsMachine:
-          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        sessionEventsNb:
+          type: number
+        pricing:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pricing'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        bailAmount:
+          type: number
+        createdDate:
+          format: date-time
+          type: string
+        earliestSession:
+          format: date-time
+          type: string
+        earliestSessionNbSeats:
+          type: number
+        earliestSessionDuration:
+          type: number
+        productSurveyId:
+          type: string
+        vat:
+          type: number
+        tagValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagValue'
+        noEquipment:
+          type: boolean
+      required:
+      - id
+      - description
+      - name
+      - imageUrl
+      - sessionEventsNb
+      - pricing
+      - categories
+      - bailAmount
+      - createdDate
+      - productSurveyId
+      - vat
+      - tagValues
+      - noEquipment
+    PartPayment:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        percentage:
+          type: number
+      required:
+      - isActive
+      - percentage
+    UpdateOnlineStoreRentalPointTypeDto:
+      type: object
+      properties:
+        onlineStoreRentalPointType:
+          type: string
+          enum:
+          - SAME
+          - DIFFERENT
+      required:
+      - onlineStoreRentalPointType
+    DeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - price
+      - cities
+    RentalPlaceMainInfo:
+      type: object
+      properties:
+        font:
+          type: string
+          enum:
+          - DM Sans
+          - MontSerrat
+          - Open Sans
+          - Roboto Condensed
+          - Roboto
+          - PT Sans
+          - Poppins
+          - Lato
+          - Raleway
+          - Ubuntu
+          - Source Sans Pro
+        accentColor:
+          type: string
+        textColor:
+          type: string
+        backgroundColor:
+          type: string
+        favicon:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        logo:
+          $ref: '#/components/schemas/RentalPlaceFile'
+      required:
+      - font
+      - accentColor
+      - textColor
+      - backgroundColor
+      - favicon
+      - logo
+    UpdateCompanyRentalPointsDto:
+      type: object
+      properties:
+        rentalPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateCompanyRentalPointDto'
+      required:
+      - rentalPoints
+    UpdateCompanyOpinionBooster:
+      type: object
+      properties:
+        companyOpinionBooster:
+          $ref: '#/components/schemas/CompanyOpinionBooster'
+      required:
+      - companyOpinionBooster
+    CompanySkisetInfos:
+      type: object
+      properties:
+        id:
+          type: number
+        trademark:
+          type: string
+        resort_id:
+          type: number
+        country_id:
+          type: number
+        member_id:
+          type: number
+        name:
+          type: string
+        member:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+      - id
+      - trademark
+      - resort_id
+      - country_id
+      - member_id
+      - name
+      - member
+      - city
+      - country
+    SquareDevices:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        deviceId:
+          type: string
+        status:
+          type: string
+        code:
+          type: string
+        pairBy:
+          type: string
+      required:
+      - id
+      - name
+      - deviceId
+      - status
+    CompanyMailSender:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    RentalPlaceFooterLinkCol:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        link:
+          type: string
+        id:
+          type: string
+        isScript:
+          type: boolean
+      required:
+      - text
+      - link
+      - id
+      - isScript
+    Trackers:
+      type: object
+      properties:
+        ga4Id:
+          type:
+          - string
+          - 'null'
+          pattern: ga4Pattern
+        googleAdsId:
+          type:
+          - string
+          - 'null'
+          pattern: googleAdsPattern
+        metaPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: metaPixelPattern
+        tiktokPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: tiktokPixelPattern
+        linkedinPartnerId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinPartnerPattern
+        linkedinConversionId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinConversionPattern
+        lastUpdatedBy:
+          type: string
+        lastUpdatedAt:
+          format: date-time
+          type: string
+    EventTag:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - name
+    CompanyResponseDuration:
+      type: object
+      properties:
+        average:
+          type: number
+        median:
+          type: number
+        min:
+          type: number
+        max:
+          type: number
+        count:
+          type: number
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - average
+      - median
+      - min
+      - max
+      - count
+      - fetchedAt
+    GoogleReview:
+      type: object
+      properties:
+        rating:
+          type: number
+        name:
+          type: string
+        comment:
+          type: string
+        authorPhotoUrl:
+          type:
+          - string
+          - 'null'
+        publishTime:
+          format: date-time
+          type: string
+      required:
+      - rating
+      - name
+      - comment
+      - authorPhotoUrl
+      - publishTime
     OnlineStoreMarketingTrackers:
       type: object
       properties:
@@ -4367,6 +5292,135 @@ components:
           type: string
         linkedinConversionId:
           type: string
+    UpdateCompanyCurrencyDto:
+      type: object
+      properties:
+        companyCurrency:
+          $ref: '#/components/schemas/CompanyCurrency'
+      required:
+      - companyCurrency
+    UpdateCompanyRentalPointDto:
+      type: object
+      properties:
+        id:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        name:
+          type: string
+        slug:
+          type: string
+        fullAddress:
+          type: string
+        addressComponents:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        addressComponentsMachine:
+          $ref: '#/components/schemas/UpdateCompanyAddressComponentsDto'
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+    CompanyStripeCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: stripe
+          enum:
+          - stripe
+        account:
+          type: string
+        type:
+          enum:
+          - EXPRESS
+          - STANDARD
+          type: string
+        status:
+          enum:
+          - ONBOARDING
+          - ACTIVE
+          type: string
+        onboardingDate:
+          format: date-time
+          type: string
+      required:
+      - provider
+      - account
+      - type
+      - status
+    CreateUpdatePeriodicDiscountDto:
+      type: object
+      properties:
+        discountInPercentage:
+          type: number
+          minimum: 0
+          maximum: 100
+        startDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        endDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        applicableDate:
+          enum:
+          - CREATED_DATE
+          - START_DATE
+          type: string
+        scope:
+          default:
+          - ONLINE_STORE
+          type: array
+          items:
+            type: string
+            enum:
+            - ONLINE_STORE
+            - DASHBOARD
+      required:
+      - discountInPercentage
+      - startDate
+      - endDate
+      - applicableDate
+    UpdateCompanyMailSenderDto:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    UpdateCompanyOnlineStoreCustomFeaturedModeDto:
+      type: object
+      properties:
+        customFeaturedMode:
+          type: boolean
+      required:
+      - customFeaturedMode
+    UpdateVatWorkshopDto:
+      type: object
+      properties:
+        vatWorkshop:
+          type: number
+      required:
+      - vatWorkshop
+    CompanyHideOnlineStoreLLDDto:
+      type: object
+      properties:
+        hideOnlineStoreLLD:
+          type: boolean
+      required:
+      - hideOnlineStoreLLD
     OnlineStoreCompanyDto:
       type: object
       properties:
@@ -4689,441 +5743,79 @@ components:
       - lldBilling
       - ancvPaymentActive
       - hasShopId
-    Pricing:
+    SubscribeToModuleDto:
       type: object
       properties:
-        label:
+        module:
           type: string
-        amount:
-          type: number
-        id:
-          type: string
-      required:
-      - label
-      - amount
-      - id
-    UpdateCompanyOnlineStoreEventsTitleDto:
-      type: object
-      properties:
-        onlineStoreEventsTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - onlineStoreEventsTitle
-    CompanyRentalPlaceDescriptionsDto:
-      type: object
-      properties:
-        fr:
-          type: string
-        en:
-          type: string
-      required:
-      - fr
-      - en
-    Coordinate:
-      type: object
-      properties:
-        lng:
-          type: string
-        lat:
-          type: string
-      required:
-      - lng
-      - lat
-    GetSquareOAuthStateDto:
-      type: object
-      properties:
-        state:
-          type: string
-        env:
-          type: string
-      required:
-      - state
-      - env
-    OnlineStoreCompanyAdyenPayment:
-      type: object
-      properties:
-        provider:
-          type: string
-          default: adyen
           enum:
-          - adyen
-        clientKey:
-          type: string
+          - ORDER_EVENT
+          - ANCV_CONNECT
+          - MULTIPLE_FUNDS_TRANSFER
       required:
-      - provider
-      - clientKey
-    CompanyUpdateCategoryDiscountsDto:
+      - module
+    UpdateCompanyProductAvailabilityDto:
       type: object
       properties:
-        categoryDiscounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyCategoryDiscount'
-      required:
-      - categoryDiscounts
-    Trackers:
-      type: object
-      properties:
-        ga4Id:
-          type:
-          - string
-          - 'null'
-          pattern: ga4Pattern
-        googleAdsId:
-          type:
-          - string
-          - 'null'
-          pattern: googleAdsPattern
-        metaPixelId:
-          type:
-          - string
-          - 'null'
-          pattern: metaPixelPattern
-        tiktokPixelId:
-          type:
-          - string
-          - 'null'
-          pattern: tiktokPixelPattern
-        linkedinPartnerId:
-          type:
-          - string
-          - 'null'
-          pattern: linkedinPartnerPattern
-        linkedinConversionId:
-          type:
-          - string
-          - 'null'
-          pattern: linkedinConversionPattern
-        lastUpdatedBy:
-          type: string
-        lastUpdatedAt:
-          format: date-time
-          type: string
-    Company:
-      type: object
-      properties:
-        addressComponents:
-          $ref: '#/components/schemas/CompanyAddressComponentsDto'
-        addressComponentsMachine:
-          $ref: '#/components/schemas/CompanyAddressComponentsDto'
-        paymentProvider:
-          oneOf:
-          - $ref: '#/components/schemas/CompanyAdyenCredentials'
-          - $ref: '#/components/schemas/CompanyStripeCredentials'
-        paymentProviderEvent:
-          oneOf:
-          - $ref: '#/components/schemas/CompanyAdyenCredentials'
-          - $ref: '#/components/schemas/CompanyStripeCredentials'
-        id:
-          type: string
-        slug:
-          type: string
-        redirectSlugs:
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-        description:
-          type: string
-        address:
-          type: string
-        addressLatitude:
-          type: string
-        addressLongitude:
-          type: string
-        logoURL:
-          type: string
-        vat:
-          type: number
-        vatName:
-          type: string
-        vatWorkshop:
-          type: number
-        hyperlineTaxRate:
-          type: number
-        generalConditions:
-          $ref: '#/components/schemas/LocalizedContent'
-        generalConditionsLLD:
-          $ref: '#/components/schemas/LocalizedContent'
-        cancellationPolicy:
-          $ref: '#/components/schemas/CancellationPolicyDto'
-        newsletterSubscription:
-          type: boolean
-        onlineStoreConfig:
-          $ref: '#/components/schemas/OnlineStoreConfig'
-        isGeneralConditionsLCDModified:
-          type: boolean
-        isDemo:
-          type: boolean
-        accountStatus:
-          enum:
-          - ACTIVE
-          - DEMO
-          - TRIAL
-          - ARCHIVED
-          type: string
-        accountType:
-          enum:
-          - PLATFORM
-          - VISIBILITY_ONE
-          type: string
-        calendarView:
-          type: string
-        user:
-          $ref: '#/components/schemas/CompanyUser'
-        phoneNumber:
-          type: string
-        companyMailSender:
-          $ref: '#/components/schemas/CompanyMailSender'
-        companyAccess:
-          $ref: '#/components/schemas/CompanyAccess'
-        siret:
-          type: string
-        legalName:
-          type: string
-        headquartersAddress:
-          type: string
-        companyBailMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        companyBailEventMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        companyBailLLDMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        internalCompanyBailMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        internalCompanyBailEventMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        internalCompanyBailLLDMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        group:
-          type: string
-        companyCurrency:
-          $ref: '#/components/schemas/CompanyCurrency'
-        timezone:
-          type: string
-        companyOpinionBooster:
-          $ref: '#/components/schemas/CompanyOpinionBooster'
-        orderReminder:
-          $ref: '#/components/schemas/CompanyOrderReminder'
-        rentalPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPoint'
-        workshopLocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopLocation'
-        onlineStoreRentalPointType:
-          enum:
-          - SAME
-          - DIFFERENT
-          type: string
-        partPayment:
-          $ref: '#/components/schemas/PartPayment'
-        partPaymentEvent:
-          $ref: '#/components/schemas/PartPayment'
-        onlineStoreSlots:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyOnlineStoreSlot'
         timeProductsUnavailableAfterOrder:
           type: string
         dayProductsUnavailableAfterOrder:
           type: number
-        dayType:
-          enum:
-          - full-24h
-          - opening-hours
-          type: string
         timeProductsUnavailableBeforeOrder:
           type: string
         dayProductsUnavailableBeforeOrder:
           type: number
-        magicSchedule:
-          type: boolean
-        enableQrCode:
-          type: boolean
-        templateEmailIdOnlineStore:
-          type: string
-        rentalPlaceInfos:
-          $ref: '#/components/schemas/CompanyRentalPlaceDto'
-        tulipSettings:
-          $ref: '#/components/schemas/TulipSettings'
-        ancvConnectSettings:
-          $ref: '#/components/schemas/AncvConnectSettings'
-        productStateInfo:
-          $ref: '#/components/schemas/ProductStateInfo'
-        eventCgu:
-          $ref: '#/components/schemas/LocalizedContent'
-        documentCustomFields:
-          $ref: '#/components/schemas/CompanyDocumentCustomFieldsDto'
-        categoryDiscounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyCategoryDiscount'
-        isArchived:
-          type: boolean
-        hasRentalPlaceOrder:
-          type: boolean
-        lifecycleEvents:
-          $ref: '#/components/schemas/CompanyLifecycleEvents'
-        csInfos:
-          $ref: '#/components/schemas/CompanyCsInfos'
-        squareCredentials:
-          allOf:
-          - $ref: '#/components/schemas/SquareCredentials'
-        googleRating:
-          $ref: '#/components/schemas/GoogleRating'
-        responseDuration:
-          $ref: '#/components/schemas/CompanyResponseDuration'
-        openTime:
-          type: string
-        closeTime:
-          type: string
-        skisetInfos:
-          $ref: '#/components/schemas/CompanySkisetInfos'
-        createdAt:
-          format: date-time
-          type: string
-        documentColor:
-          type: string
-        quickOrderDefaultMode:
-          $ref: '#/components/schemas/CompanyDefaultQuickOrderMode'
-        automaticInternalStartDateAttribution:
-          type: boolean
-        socialMedia:
-          $ref: '#/components/schemas/SocialMedia'
-        offlinePin:
-          type: string
-        internalPaymentMethods:
-          $ref: '#/components/schemas/LokkiPaymentMethods'
-        onlineStorePaymentMethods:
-          $ref: '#/components/schemas/LokkiPaymentMethods'
-        lokkiPaymentTermsConditionsHistory:
-          $ref: '#/components/schemas/LokkiPaymentTermsConditionsHistory'
-        fee:
-          $ref: '#/components/schemas/CompanyGlobalFee'
-        proposedRentalPlaceCommission:
-          $ref: '#/components/schemas/ProposedRentalPlaceCommission'
-        trialInfos:
-          $ref: '#/components/schemas/CompanyTrialInfos'
-        marketing:
-          $ref: '#/components/schemas/MarketingSettings'
-        periodicDiscounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/PeriodicDiscount'
-        hasOrders:
-          type: boolean
       required:
-      - id
-      - slug
-      - redirectSlugs
-      - name
-      - description
-      - address
-      - addressLatitude
-      - addressLongitude
-      - logoURL
-      - vat
-      - vatName
-      - vatWorkshop
-      - hyperlineTaxRate
-      - generalConditions
-      - generalConditionsLLD
-      - cancellationPolicy
-      - newsletterSubscription
-      - onlineStoreConfig
-      - isDemo
-      - accountStatus
-      - accountType
-      - calendarView
-      - user
-      - phoneNumber
-      - companyMailSender
-      - companyAccess
-      - siret
-      - legalName
-      - headquartersAddress
-      - companyBailMaxAmount
-      - companyBailEventMaxAmount
-      - companyBailLLDMaxAmount
-      - internalCompanyBailMaxAmount
-      - internalCompanyBailEventMaxAmount
-      - internalCompanyBailLLDMaxAmount
-      - group
-      - companyCurrency
-      - timezone
-      - companyOpinionBooster
-      - orderReminder
-      - rentalPoints
-      - workshopLocations
-      - onlineStoreRentalPointType
-      - partPayment
-      - partPaymentEvent
-      - onlineStoreSlots
       - timeProductsUnavailableAfterOrder
       - dayProductsUnavailableAfterOrder
       - timeProductsUnavailableBeforeOrder
       - dayProductsUnavailableBeforeOrder
-      - magicSchedule
-      - enableQrCode
-      - templateEmailIdOnlineStore
-      - rentalPlaceInfos
-      - tulipSettings
-      - ancvConnectSettings
-      - productStateInfo
-      - eventCgu
-      - documentCustomFields
-      - categoryDiscounts
-      - isArchived
-      - squareCredentials
-      - openTime
-      - closeTime
-      - createdAt
-      - documentColor
-      - quickOrderDefaultMode
-      - automaticInternalStartDateAttribution
-      - socialMedia
-      - lokkiPaymentTermsConditionsHistory
-      - fee
-    LokkiPaymentTermsConditionsHistory:
+    CompanyDocumentColorDto:
       type: object
       properties:
-        v0101:
+        documentColor:
+          type: string
+      required:
+      - documentColor
+    CompanyOnboarding:
+      type: object
+      properties:
+        startDate:
           format: date-time
           type: string
-        v0102:
-          $ref: '#/components/schemas/LPTermConditionV0102'
-      required:
-      - v0101
-      - v0102
-    CompanyAdyenCredentials:
+        endDate:
+          format: date-time
+          type: string
+        visibility:
+          type: boolean
+    CompanyEventDirectOrderDto:
       type: object
       properties:
-        provider:
-          type: string
-          default: adyen
-          enum:
-          - adyen
-        apiKey:
-          type: string
-        merchantAccount:
-          type: string
-        clientKey:
-          type: string
-        liveEndpointUrlPrefix:
-          type: string
-        store:
-          type: string
+        eventDirectOrder:
+          type: boolean
       required:
-      - provider
-      - apiKey
-      - merchantAccount
-      - clientKey
-      - liveEndpointUrlPrefix
-      - store
+      - eventDirectOrder
+    CompanyAutomaticInternalStartDateAttributionDto:
+      type: object
+      properties:
+        automaticInternalStartDateAttribution:
+          type: boolean
+      required:
+      - automaticInternalStartDateAttribution
+    ThemeTitle:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
+      required:
+      - style
+    CompanyActivateRentalPlaceDto:
+      type: object
+      properties:
+        active:
+          type: boolean
+      required:
+      - active
     CompanyCsInfos:
       type: object
       properties:
@@ -5235,6 +5927,211 @@ components:
       - websiteLink
       - hyperlineSubscriptionData
       - subscriptionSalesOwnerEmail
+    ThemeBlockColor:
+      type: object
+      properties:
+        color:
+          type: string
+        backgroundColor:
+          type: string
+      required:
+      - color
+      - backgroundColor
+    TulipTranslation:
+      type: object
+      properties:
+        en:
+          type: string
+        fr:
+          type: string
+      required:
+      - en
+      - fr
+    TulipOptionProduct:
+      type: object
+      properties:
+        product_type:
+          type: string
+        translations:
+          $ref: '#/components/schemas/TulipTranslation'
+        product_subtypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TulipOptionProductContentSubType'
+      required:
+      - product_type
+      - translations
+      - product_subtypes
+    UpdateCompanyDeliveryDto:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+        freeDeliveryActivated:
+          type: boolean
+        freeDeliveryMinimumType:
+          type: string
+          enum:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
+          type: number
+        showDeliveryInternal:
+          type: boolean
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+        displayAddressOnlineStore:
+          type: boolean
+    OnlineStoreCompanyStripePayment:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: stripe
+          enum:
+          - stripe
+        account:
+          type: string
+        isExpress:
+          type: boolean
+      required:
+      - provider
+      - account
+      - isExpress
+    UpdateCompanyMultipleFundsTransferDto:
+      type: object
+      properties:
+        multipleFundsTransfer:
+          $ref: '#/components/schemas/MultipleFundsTransfer'
+      required:
+      - multipleFundsTransfer
+    TulipSettingsWithRenter:
+      type: object
+      properties:
+        state:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        initialState:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nContent:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+        renter:
+          allOf:
+          - $ref: '#/components/schemas/TulipRenter'
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+      - i18nName
+      - i18nContent
+      - i18nTitle
+      - displayedOptions
+      - renter
+    CompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
+    Item:
+      type: object
+      properties:
+        itemId:
+          type: string
+        type:
+          type: string
+          enum:
+          - SERVICE
+          - PRODUCT
+        price:
+          type: number
+      required:
+      - itemId
+      - type
+      - price
+    OnlineStoreUniverseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          $ref: '#/components/schemas/LocalizedContent'
+        pictureURL:
+          type: string
+        productModelIds:
+          type: array
+          items:
+            type: string
+        minimumPrice:
+          $ref: '#/components/schemas/UniverseMinimumPrice'
+        ranking:
+          type: number
+      required:
+      - id
+      - title
+      - pictureURL
+      - productModelIds
+      - minimumPrice
+      - ranking
     RentalPoint:
       type: object
       properties:
@@ -5267,903 +6164,6 @@ components:
       - name
       - slug
       - fullAddress
-      - city
-      - country
-      - address
-      - zipcode
-    OnlineStoreCompanyStripePayment:
-      type: object
-      properties:
-        provider:
-          type: string
-          default: stripe
-          enum:
-          - stripe
-        account:
-          type: string
-        isExpress:
-          type: boolean
-      required:
-      - provider
-      - account
-      - isExpress
-    RentalPlaceStyle:
-      type: object
-      properties:
-        backgroundColor:
-          type: string
-        borderRadius:
-          type: string
-        borderColor:
-          type: string
-        padding:
-          type: string
-    RentalPlaceFooterLinkCol:
-      type: object
-      properties:
-        text:
-          $ref: '#/components/schemas/LocalizedContent'
-        link:
-          type: string
-        id:
-          type: string
-        isScript:
-          type: boolean
-      required:
-      - text
-      - link
-      - id
-      - isScript
-    CompanyHideOnlineStoreLLDDto:
-      type: object
-      properties:
-        hideOnlineStoreLLD:
-          type: boolean
-      required:
-      - hideOnlineStoreLLD
-    ThemeColors:
-      type: object
-      properties:
-        primary:
-          type: string
-        secondary:
-          type: string
-        ternary:
-          type: string
-        priceColor:
-          type: string
-        priceColorText:
-          type: string
-        blockColor:
-          $ref: '#/components/schemas/ThemeBlockColor'
-        textColor:
-          type: string
-        danger:
-          type: string
-        header:
-          type: string
-      required:
-      - primary
-      - secondary
-      - ternary
-      - priceColor
-      - priceColorText
-      - blockColor
-      - textColor
-      - danger
-      - header
-    UpdateTimeLapseBeforeBookingDto:
-      type: object
-      properties:
-        timeLapsBeforeBooking:
-          type: number
-      required:
-      - timeLapsBeforeBooking
-    UpdateCompanyTulipSettingsDto:
-      type: object
-      properties:
-        state:
-          type: string
-        initialState:
-          type: string
-        renterId:
-          type: string
-        verified:
-          type: boolean
-      required:
-      - state
-      - initialState
-      - renterId
-      - verified
-    ThemeMainStyles:
-      type: object
-      properties:
-        radius:
-          type: string
-        backgroundColor:
-          type: string
-        fontFamily:
-          type: string
-      required:
-      - radius
-      - backgroundColor
-      - fontFamily
-    CompanyDocumentColorDto:
-      type: object
-      properties:
-        documentColor:
-          type: string
-      required:
-      - documentColor
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    UpdateCompanyProductAvailabilityDto:
-      type: object
-      properties:
-        timeProductsUnavailableAfterOrder:
-          type: string
-        dayProductsUnavailableAfterOrder:
-          type: number
-        timeProductsUnavailableBeforeOrder:
-          type: string
-        dayProductsUnavailableBeforeOrder:
-          type: number
-      required:
-      - timeProductsUnavailableAfterOrder
-      - dayProductsUnavailableAfterOrder
-      - timeProductsUnavailableBeforeOrder
-      - dayProductsUnavailableBeforeOrder
-    ReservationTime:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - start
-          - end
-        time:
-          type: string
-      required:
-      - id
-      - type
-      - time
-    SquareCredentials:
-      type: object
-      properties:
-        isActive:
-          type: boolean
-        token:
-          type: string
-        locationId:
-          type: string
-        locationName:
-          type: string
-        refreshToken:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-        oAuthState:
-          type: string
-      required:
-      - isActive
-      - token
-      - locationId
-      - locationName
-      - refreshToken
-      - expiresAt
-    UpdateCompanyDayTypeDto:
-      type: object
-      properties:
-        dayType:
-          type: string
-          enum:
-          - full-24h
-          - opening-hours
-      required:
-      - dayType
-    CompanyDeliveryCity:
-      type: object
-      properties:
-        cityName:
-          type: string
-        sublocalityName:
-          type: string
-        zipCode:
-          type: string
-        placeId:
-          type: string
-        hasMultiplePostcodeLocalities:
-          type: boolean
-      required:
-      - cityName
-      - sublocalityName
-      - zipCode
-      - placeId
-      - hasMultiplePostcodeLocalities
-    ProductStateInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        displayGeneralConditions:
-          type: boolean
-        legalNotices:
-          type: string
-        numberCreated:
-          type: number
-        useLegalCompanyInfo:
-          type: boolean
-      required:
-      - name
-      - displayGeneralConditions
-      - legalNotices
-      - numberCreated
-      - useLegalCompanyInfo
-    RentalPlaceNetwork:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        updatedAt:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        updatedBy:
-          allOf:
-          - $ref: '#/components/schemas/RentalPlaceNetworkUpdatedBy'
-      required:
-      - enabled
-      - updatedAt
-      - updatedBy
-    CompanyAddressComponentsDto:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-        placeId:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-      - placeId
-    AllowedCompanyAccessPropertiesDto:
-      type: object
-      properties:
-        useOnlineBail:
-          type: boolean
-        lldOnlineBail:
-          type: boolean
-        quoteRequests:
-          type: boolean
-    CompanyVatDto:
-      type: object
-      properties:
-        vat:
-          type: number
-      required:
-      - vat
-    OnlineStoreConfig:
-      type: object
-      properties:
-        newOnlineStoreDesign:
-          type: boolean
-        customerTextRGPD:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        featuredSectionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        eventsTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        openingTimeFrames:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpeningTimeFrame'
-        openingTimeFramesLowSeason:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpeningTimeFrame'
-        closedDates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DateRange'
-        lowSeasonRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DateRange'
-        bannerURL:
-          type: array
-          items:
-            type: string
-        featuredIds:
-          type: array
-          items:
-            type: string
-        bannerScroll:
-          type: number
-        reservationRanges:
-          $ref: '#/components/schemas/ReservationRanges'
-        timeLapsBeforeBookingInHours:
-          type: number
-        delivery:
-          $ref: '#/components/schemas/CompanyDelivery'
-        reservationTimes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationTime'
-        insuranceActivated:
-          type: boolean
-        eventActivated:
-          type: boolean
-        customFeaturedMode:
-          type: boolean
-        hideOnlineStoreLCD:
-          type: boolean
-        hideOnlineStoreLLD:
-          type: boolean
-        displayAddressOnlineStore:
-          type: boolean
-        eventDirectOrder:
-          type: boolean
-        eventTags:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventTag'
-        eventUniverses:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventUniverse'
-        eventUniversesActivated:
-          type: boolean
-        eventUniversesTag:
-          type: string
-        phoneNumber:
-          type: string
-        displayPhoneNumber:
-          type: boolean
-        script:
-          type: string
-        defaultPhoneCode:
-          type: string
-        showPricing:
-          type: boolean
-        showStock:
-          type: boolean
-        lldBilling:
-          type: boolean
-      required:
-      - newOnlineStoreDesign
-      - customerTextRGPD
-      - description
-      - featuredSectionTitle
-      - eventsTitle
-      - openingTimeFrames
-      - openingTimeFramesLowSeason
-      - closedDates
-      - lowSeasonRanges
-      - bannerURL
-      - featuredIds
-      - bannerScroll
-      - reservationRanges
-      - timeLapsBeforeBookingInHours
-      - delivery
-      - reservationTimes
-      - insuranceActivated
-      - eventActivated
-      - customFeaturedMode
-      - hideOnlineStoreLCD
-      - hideOnlineStoreLLD
-      - displayAddressOnlineStore
-      - eventDirectOrder
-      - eventTags
-      - eventUniverses
-      - eventUniversesActivated
-      - eventUniversesTag
-      - phoneNumber
-      - displayPhoneNumber
-      - script
-      - defaultPhoneCode
-      - showPricing
-      - showStock
-      - lldBilling
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-      - file
-    ThemeTitle:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/ThemeTextStyle'
-      required:
-      - style
-    UpdateCompanyRentalPointsDto:
-      type: object
-      properties:
-        rentalPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateCompanyRentalPointDto'
-      required:
-      - rentalPoints
-    UpdateLowSeasonDateDto:
-      type: object
-      properties:
-        lowSeasonDates:
-          type: array
-          items:
-            $ref: '#/components/schemas/LowSeasonDateRange'
-      required:
-      - lowSeasonDates
-    CompanyHideOnlineStoreLCDDto:
-      type: object
-      properties:
-        hideOnlineStoreLCD:
-          type: boolean
-      required:
-      - hideOnlineStoreLCD
-    CompanyDefaultQuickOrderMode:
-      type: object
-      properties:
-        booking:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        bookingUpdate:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        readyToGo:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        return:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        exchange:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        showDelivery:
-          type: boolean
-        showSurvey:
-          type: boolean
-        showUnavailability:
-          type: boolean
-        showUnavailabilityOnUpdate:
-          type: boolean
-      required:
-      - booking
-      - bookingUpdate
-      - readyToGo
-      - return
-      - exchange
-      - showDelivery
-      - showSurvey
-      - showUnavailability
-      - showUnavailabilityOnUpdate
-    ReservationRanges:
-      type: object
-      properties:
-        minimum:
-          $ref: '#/components/schemas/ReservationRange'
-        maximum:
-          $ref: '#/components/schemas/ReservationRange'
-      required:
-      - minimum
-      - maximum
-    RentalPlaceNetworkUpdatedBy:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-    TulipOptionProductContentSubType:
-      type: object
-      properties:
-        type:
-          type: string
-        translations:
-          $ref: '#/components/schemas/TulipTranslation'
-      required:
-      - type
-      - translations
-    OpeningHoursRange:
-      type: object
-      properties:
-        id:
-          type: string
-        day:
-          type: string
-        open:
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - day
-      - open
-      - from
-      - to
-    CompanyActivateNewOnlineStoreDesignDto:
-      type: object
-      properties:
-        active:
-          type: boolean
-      required:
-      - active
-    EventStatsOnlineStore:
-      type: object
-      properties:
-        id:
-          type: string
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        sessionEventsNb:
-          type: number
-        pricing:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pricing'
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
-        bailAmount:
-          type: number
-        createdDate:
-          format: date-time
-          type: string
-        earliestSession:
-          format: date-time
-          type: string
-        earliestSessionNbSeats:
-          type: number
-        earliestSessionDuration:
-          type: number
-        productSurveyId:
-          type: string
-        vat:
-          type: number
-        tagValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagValue'
-        noEquipment:
-          type: boolean
-      required:
-      - id
-      - description
-      - name
-      - imageUrl
-      - sessionEventsNb
-      - pricing
-      - categories
-      - bailAmount
-      - createdDate
-      - productSurveyId
-      - vat
-      - tagValues
-      - noEquipment
-    UpdateCompanyCurrencyDto:
-      type: object
-      properties:
-        companyCurrency:
-          $ref: '#/components/schemas/CompanyCurrency'
-      required:
-      - companyCurrency
-    UpdateCompanyOfflinePinDto:
-      type: object
-      properties:
-        offlinePin:
-          type: string
-      required:
-      - offlinePin
-    LocalizedReview:
-      type: object
-      properties:
-        reviews:
-          type: array
-          items:
-            $ref: '#/components/schemas/GoogleReview'
-        fetchedAt:
-          format: date-time
-          type: string
-      required:
-      - reviews
-    ThemeTextStyle:
-      type: object
-      properties:
-        color:
-          type: string
-        fontSize:
-          type: string
-        fontWeight:
-          type: string
-        fontStyle:
-          type: string
-      required:
-      - color
-      - fontSize
-      - fontWeight
-      - fontStyle
-    CompanyRentalPlaceDto:
-      type: object
-      properties:
-        image:
-          type: string
-        additionalImages:
-          type: array
-          items:
-            type: string
-        descriptions:
-          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
-        universes:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        showcaseProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyShowcaseProductDto'
-        team:
-          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
-        lokkiComment:
-          type: string
-      required:
-      - image
-      - additionalImages
-      - descriptions
-      - universes
-      - verticales
-      - showcaseProducts
-      - team
-      - lokkiComment
-    CompanyRentalPlaceTeamDto:
-      type: object
-      properties:
-        descriptions:
-          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
-        image:
-          type: string
-        video:
-          type: string
-        teamName:
-          type: string
-      required:
-      - descriptions
-      - image
-      - video
-      - teamName
-    BailMaxValueDto:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        amount:
-          type: number
-      required:
-      - activated
-      - amount
-    PatchCompanySettingsDto:
-      type: object
-      properties:
-        companyAccess:
-          $ref: '#/components/schemas/AllowedCompanyAccessPropertiesDto'
-        marketing:
-          $ref: '#/components/schemas/MarketingSettings'
-        companyBailMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        companyBailEventMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        companyBailLLDMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        internalCompanyBailMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        internalCompanyBailEventMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-        internalCompanyBailLLDMaxAmount:
-          $ref: '#/components/schemas/CompanyBailMaxAmount'
-    CompanyDocumentCustomFieldsDto:
-      type: object
-      properties:
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDocumentCustomField'
-      required:
-      - fields
-    CompanyCategoryDiscountRange:
-      type: object
-      properties:
-        discount:
-          type: number
-          description: Discount value for the range
-        discountType:
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-          type: string
-          description: Type of discount applied (amount or percentage)
-        rangeFrom:
-          type:
-          - number
-          - 'null'
-          description: Minimum value of the range (Quantity of items)
-        rangeTo:
-          type:
-          - number
-          - 'null'
-          description: Maximum value of the range (Quantity of items)
-        infiniteTo:
-          type: boolean
-          description: Indicates if the range has no upper limit
-      required:
-      - discount
-      - discountType
-      - rangeFrom
-      - rangeTo
-      - infiniteTo
-    UpdateCompanyTulipSettingsDisplayedOptionsDto:
-      type: object
-      properties:
-        displayedOptions:
-          type: array
-          items:
-            type: string
-            enum:
-            - theft
-            - break
-      required:
-      - displayedOptions
-    RentalPlaceFile:
-      type: object
-      properties:
-        id:
-          type: string
-        filename:
-          type: string
-        url:
-          type: string
-      required:
-      - filename
-      - url
-    OnlineStoreUniverseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          $ref: '#/components/schemas/LocalizedContent'
-        pictureURL:
-          type: string
-        productModelIds:
-          type: array
-          items:
-            type: string
-        minimumPrice:
-          $ref: '#/components/schemas/UniverseMinimumPrice'
-        ranking:
-          type: number
-      required:
-      - id
-      - title
-      - pictureURL
-      - productModelIds
-      - minimumPrice
-      - ranking
-    CompanyOnboarding:
-      type: object
-      properties:
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        visibility:
-          type: boolean
-    CompanyPlaceIdDto:
-      type: object
-      properties:
-        placeId:
-          type: string
-      required:
-      - placeId
-    ThemeBlockColor:
-      type: object
-      properties:
-        color:
-          type: string
-        backgroundColor:
-          type: string
-      required:
-      - color
-      - backgroundColor
-    WorkshopLocation:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        address:
-          type: string
-        zipcode:
-          type: string
-      required:
-      - id
-      - name
       - city
       - country
       - address

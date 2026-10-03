@@ -151,12 +151,145 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ActionLogActor:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ActionLogActorType'
+        systemSource:
+          $ref: '#/components/schemas/ActionLogSystemSource'
+        userId:
+          type: string
+        email:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        impersonatorUserId:
+          type:
+          - string
+          - 'null'
+        impersonatorEmail:
+          type:
+          - string
+          - 'null'
+      required:
+      - type
+      - systemSource
+      - userId
+      - email
+      - name
+      - impersonatorUserId
+      - impersonatorEmail
+    ActionLogOperation:
+      type: string
+      enum:
+      - create
+      - update
+      - delete
+    ActionLogEntryChange:
+      type: object
+      properties:
+        operation:
+          $ref: '#/components/schemas/ActionLogOperation'
+        diff:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        collectionName:
+          type: string
+        documentId:
+          type: string
+        truncated:
+          type: boolean
+      required:
+      - operation
+      - diff
+      - collectionName
+      - documentId
+      - truncated
+    ActionLogsPage:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionLogEntry'
+        hasNextPage:
+          type: boolean
+      required:
+      - entries
+      - hasNextPage
     ActionLogSystemSource:
       type: string
       enum:
       - STRIPE_WEBHOOK
       - PAYOUT_GENERATION
       - PAYMENT_CAPTURE
+    RevertActionLogChangeDto:
+      type: object
+      properties:
+        actionLogId:
+          type: string
+        collectionName:
+          type: string
+        documentId:
+          type: string
+      required:
+      - actionLogId
+      - collectionName
+      - documentId
+    ActionLogHistoryEntry:
+      type: object
+      properties:
+        operation:
+          $ref: '#/components/schemas/ActionLogOperation'
+        diff:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        actionName:
+          type: string
+        method:
+          type: string
+        routePath:
+          type: string
+        actor:
+          $ref: '#/components/schemas/ActionLogActor'
+        truncated:
+          type: boolean
+      required:
+      - operation
+      - diff
+      - id
+      - createdAt
+      - actionName
+      - method
+      - routePath
+      - actor
+      - truncated
+    ActionLogHistoryPage:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionLogHistoryEntry'
+        hasNextPage:
+          type: boolean
+      required:
+      - entries
+      - hasNextPage
     ActionLogEntry:
       type: object
       properties:
@@ -210,120 +343,11 @@ components:
       - companyId
       - companyName
       - actor
-    ActionLogHistoryPage:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionLogHistoryEntry'
-        hasNextPage:
-          type: boolean
-      required:
-      - entries
-      - hasNextPage
-    ActionLogEntryChange:
-      type: object
-      properties:
-        operation:
-          $ref: '#/components/schemas/ActionLogOperation'
-        diff:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        collectionName:
-          type: string
-        documentId:
-          type: string
-        truncated:
-          type: boolean
-      required:
-      - operation
-      - diff
-      - collectionName
-      - documentId
-      - truncated
-    ActionLogHistoryEntry:
-      type: object
-      properties:
-        operation:
-          $ref: '#/components/schemas/ActionLogOperation'
-        diff:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        id:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        actionName:
-          type: string
-        method:
-          type: string
-        routePath:
-          type: string
-        actor:
-          $ref: '#/components/schemas/ActionLogActor'
-        truncated:
-          type: boolean
-      required:
-      - operation
-      - diff
-      - id
-      - createdAt
-      - actionName
-      - method
-      - routePath
-      - actor
-      - truncated
-    RevertActionLogChangeResult:
-      type: object
-      properties:
-        revertedFields:
-          type: array
-          items:
-            type: string
-      required:
-      - revertedFields
-    ActionLogsPage:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionLogEntry'
-        hasNextPage:
-          type: boolean
-      required:
-      - entries
-      - hasNextPage
-    ActionLogOperation:
-      type: string
-      enum:
-      - create
-      - update
-      - delete
     ActionLogSource:
       type: string
       enum:
       - DECORATOR
       - AUTO
-    RevertActionLogChangeDto:
-      type: object
-      properties:
-        actionLogId:
-          type: string
-        collectionName:
-          type: string
-        documentId:
-          type: string
-      required:
-      - actionLogId
-      - collectionName
-      - documentId
     ActionLogActorType:
       type: string
       enum:
@@ -333,39 +357,15 @@ components:
       - ADMIN_IMPERSONATING
       - SYSTEM
       - UNKNOWN
-    ActionLogActor:
+    RevertActionLogChangeResult:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/ActionLogActorType'
-        systemSource:
-          $ref: '#/components/schemas/ActionLogSystemSource'
-        userId:
-          type: string
-        email:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        impersonatorUserId:
-          type:
-          - string
-          - 'null'
-        impersonatorEmail:
-          type:
-          - string
-          - 'null'
+        revertedFields:
+          type: array
+          items:
+            type: string
       required:
-      - type
-      - systemSource
-      - userId
-      - email
-      - name
-      - impersonatorUserId
-      - impersonatorEmail
+      - revertedFields
   securitySchemes:
     x-access-token:
       scheme: bearer

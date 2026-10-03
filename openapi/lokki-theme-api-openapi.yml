@@ -47,13 +47,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ThemeCompanyName:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/ThemeTextStyle'
-      required:
-      - style
     ThemeColors:
       type: object
       properties:
@@ -85,6 +78,33 @@ components:
       - textColor
       - danger
       - header
+    ThemeBlockColor:
+      type: object
+      properties:
+        color:
+          type: string
+        backgroundColor:
+          type: string
+      required:
+      - color
+      - backgroundColor
+    ThemeButton:
+      type: object
+      properties:
+        textStyle:
+          $ref: '#/components/schemas/ThemeTextStyle'
+        style:
+          $ref: '#/components/schemas/ThemeButtonStyle'
+      required:
+      - textStyle
+      - style
+    ThemeCompanyName:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/ThemeTextStyle'
+      required:
+      - style
     ThemeTextStyle:
       type: object
       properties:
@@ -101,26 +121,19 @@ components:
       - fontSize
       - fontWeight
       - fontStyle
-    ThemeTitle:
+    ThemeButtonStyle:
       type: object
       properties:
-        style:
-          $ref: '#/components/schemas/ThemeTextStyle'
-      required:
-      - style
-    ThemeMainStyles:
-      type: object
-      properties:
-        radius:
-          type: string
         backgroundColor:
           type: string
-        fontFamily:
+        borderRadius:
+          type: string
+        padding:
           type: string
       required:
-      - radius
       - backgroundColor
-      - fontFamily
+      - borderRadius
+      - padding
     CompanyTheme:
       type: object
       properties:
@@ -142,39 +155,26 @@ components:
       - companyName
       - title
       - colors
-    ThemeButtonStyle:
+    ThemeMainStyles:
       type: object
       properties:
+        radius:
+          type: string
         backgroundColor:
           type: string
-        borderRadius:
-          type: string
-        padding:
+        fontFamily:
           type: string
       required:
+      - radius
       - backgroundColor
-      - borderRadius
-      - padding
-    ThemeButton:
+      - fontFamily
+    ThemeTitle:
       type: object
       properties:
-        textStyle:
-          $ref: '#/components/schemas/ThemeTextStyle'
         style:
-          $ref: '#/components/schemas/ThemeButtonStyle'
+          $ref: '#/components/schemas/ThemeTextStyle'
       required:
-      - textStyle
       - style
-    ThemeBlockColor:
-      type: object
-      properties:
-        color:
-          type: string
-        backgroundColor:
-          type: string
-      required:
-      - color
-      - backgroundColor
   securitySchemes:
     x-access-token:
       scheme: bearer

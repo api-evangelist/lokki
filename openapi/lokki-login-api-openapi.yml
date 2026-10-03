@@ -398,63 +398,100 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ResendValidationEmailDto:
+    OrderRelation:
       type: object
       properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderRP'
+        companyId:
+          type: string
+      required:
+      - orders
+      - companyId
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
         email:
           type: string
-        encrypted:
-          type: boolean
-        origin:
+        phone:
           type: string
+        picture:
+          type: string
+        role:
           enum:
-          - plg
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-      required:
-      - email
-      - encrypted
-      - origin
-      - lang
-    OrderRP:
-      type: object
-      properties:
-        orderId:
-          type: string
-        customerId:
-          type: string
-        type:
-          type: string
-          enum:
-          - LCD
-          - LLD
-          - Event
-          - LCDRequest
-          - LCDRequestAccepted
-      required:
-      - orderId
-      - type
-    LoginDto:
-      type: object
-      properties:
-        email:
+          - user
+          - manager
+          - admin
+          - reconditioner
           type: string
         password:
           type: string
-        lang:
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
           type: string
       required:
+      - id
+      - name
       - email
-      - password
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    AvailableEmailDto:
+      type: object
+      properties:
+        isAvailable:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+      required:
+      - isAvailable
+      - isAccountActivated
     RentalPlaceUserDto:
       type: object
       properties:
@@ -563,41 +600,55 @@ components:
       - avatar
       - signedUpWith
       - newsletters
-    RentalPlaceUserAddressComponents:
+    ResetPasswordDto:
       type: object
       properties:
-        streetNumber:
+        token:
           type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
+        password:
           type: string
       required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-    AvailableEmailDto:
+      - token
+      - password
+    LoginDto:
       type: object
       properties:
-        isAvailable:
-          type: boolean
-        isAccountActivated:
-          type: boolean
+        email:
+          type: string
+        password:
+          type: string
+        lang:
+          type: string
       required:
-      - isAvailable
-      - isAccountActivated
+      - email
+      - password
+    RentalPlaceUserNewsletters:
+      type: object
+      properties:
+        support:
+          $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
+      required:
+      - support
+    ForgotPasswordDto:
+      type: object
+      properties:
+        email:
+          type: string
+        lang:
+          type: string
+      required:
+      - email
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
     CheckTokenDashboardResponseDto:
       type: object
       properties:
@@ -623,6 +674,51 @@ components:
       - isLoggedIn
       - role
       - connectTo
+    OrderRP:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        type:
+          type: string
+          enum:
+          - LCD
+          - LLD
+          - Event
+          - LCDRequest
+          - LCDRequestAccepted
+      required:
+      - orderId
+      - type
+    ResendValidationEmailDto:
+      type: object
+      properties:
+        email:
+          type: string
+        encrypted:
+          type: boolean
+        origin:
+          type: string
+          enum:
+          - plg
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+      required:
+      - email
+      - encrypted
+      - origin
+      - lang
     ValidateAccountCodeDto:
       type: object
       properties:
@@ -653,6 +749,19 @@ components:
       - code
       - origin
       - lang
+    RentalPlaceUserNewslettersSupport:
+      type: object
+      properties:
+        email:
+          type: boolean
+        sms:
+          type: boolean
+        push:
+          type: boolean
+      required:
+      - email
+      - sms
+      - push
     LoginUserDto:
       type: object
       properties:
@@ -686,140 +795,31 @@ components:
       - role
       - connectTo
       - availableTools
-    ResetPasswordDto:
+    RentalPlaceUserAddressComponents:
       type: object
       properties:
-        token:
+        streetNumber:
           type: string
-        password:
+        street:
           type: string
-      required:
-      - token
-      - password
-    OrderRelation:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderRP'
-        companyId:
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
           type: string
       required:
-      - orders
-      - companyId
-    RentalPlaceUserNewsletters:
-      type: object
-      properties:
-        support:
-          $ref: '#/components/schemas/RentalPlaceUserNewslettersSupport'
-      required:
-      - support
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    RentalPlaceUserNewslettersSupport:
-      type: object
-      properties:
-        email:
-          type: boolean
-        sms:
-          type: boolean
-        push:
-          type: boolean
-      required:
-      - email
-      - sms
-      - push
-    ForgotPasswordDto:
-      type: object
-      properties:
-        email:
-          type: string
-        lang:
-          type: string
-      required:
-      - email
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        picture:
-          type: string
-        role:
-          enum:
-          - user
-          - manager
-          - admin
-          - reconditioner
-          type: string
-        password:
-          type: string
-        validationCode:
-          $ref: '#/components/schemas/UserValidationCode'
-        isDemoAccount:
-          type: boolean
-        isAccountActivated:
-          type: boolean
-        lastConnection:
-          format: date-time
-          type: string
-        createdFrom:
-          enum:
-          - admin_dashboard
-          - employee
-          - lokkit
-          - visibility
-          - self_test
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        connectionAttempt:
-          type: number
-        availableTools:
-          type: array
-          items:
-            type: string
-            enum:
-            - dashboard
-            - lokkit
-            - visibility
-            - visibility_one
-            - reconditioning
-        signedUpWith:
-          enum:
-          - google
-          - apple
-          type: string
-      required:
-      - id
-      - name
-      - email
-      - phone
-      - picture
-      - role
-      - isDemoAccount
-      - isAccountActivated
-      - createdFrom
-      - createdAt
-      - connectionAttempt
-      - availableTools
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
   securitySchemes:
     x-access-token:
       scheme: bearer
