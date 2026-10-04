@@ -116,11 +116,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ProductSurveyField:
+    UpdateProductSurveyFieldDto:
       type: object
       properties:
         id:
-          type: string
+          type:
+          - string
+          - 'null'
         value:
           type: string
         type:
@@ -139,13 +141,33 @@ components:
       - value
       - type
       - selectAnswers
-    UpdateProductSurveyFieldDto:
+    ProductSurvey:
       type: object
       properties:
         id:
-          type:
-          - string
-          - 'null'
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductSurveyField'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - companyId
+      - name
+      - fields
+      - createdAt
+    ProductSurveyField:
+      type: object
+      properties:
+        id:
+          type: string
         value:
           type: string
         type:
@@ -196,28 +218,6 @@ components:
       - value
       - type
       - selectAnswers
-    ProductSurvey:
-      type: object
-      properties:
-        id:
-          type: string
-        companyId:
-          type: string
-        name:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductSurveyField'
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - companyId
-      - name
-      - fields
-      - createdAt
     CreateProductSurveyDto:
       type: object
       properties:

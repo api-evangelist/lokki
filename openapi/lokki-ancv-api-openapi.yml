@@ -78,16 +78,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AncvAmount:
-      type: object
-      properties:
-        total:
-          type: number
-        currency:
-          type: string
-      required:
-      - total
-      - currency
     AncvPaymentMethod:
       type: object
       properties:
@@ -162,6 +152,19 @@ components:
           type: string
       required:
       - shopId
+    AncvOrder:
+      type: object
+      properties:
+        id:
+          type: string
+        paymentId:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+      required:
+      - id
+      - paymentId
+      - amount
     AncvPayerAuthorization:
       type: object
       properties:
@@ -181,34 +184,6 @@ components:
       - amount
       - validationDate
       - holder
-    AncvPayer:
-      type: object
-      properties:
-        beneficiaryId:
-          type: string
-        amount:
-          $ref: '#/components/schemas/AncvAmount'
-        authorizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/AncvPayerAuthorization'
-      required:
-      - beneficiaryId
-      - amount
-      - authorizations
-    AncvOrder:
-      type: object
-      properties:
-        id:
-          type: string
-        paymentId:
-          type: string
-        amount:
-          $ref: '#/components/schemas/AncvAmount'
-      required:
-      - id
-      - paymentId
-      - amount
     AuthenticateTransactionBodyDto:
       type: object
       properties:
@@ -233,6 +208,31 @@ components:
           type:
           - string
           - 'null'
+    AncvPayer:
+      type: object
+      properties:
+        beneficiaryId:
+          type: string
+        amount:
+          $ref: '#/components/schemas/AncvAmount'
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AncvPayerAuthorization'
+      required:
+      - beneficiaryId
+      - amount
+      - authorizations
+    AncvAmount:
+      type: object
+      properties:
+        total:
+          type: number
+        currency:
+          type: string
+      required:
+      - total
+      - currency
   securitySchemes:
     x-access-token:
       scheme: bearer

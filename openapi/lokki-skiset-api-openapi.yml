@@ -64,617 +64,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WorkshopLocation:
+    CompanyShowcaseProductDto:
       type: object
       properties:
         id:
           type: string
-        name:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        address:
-          type: string
-        zipcode:
-          type: string
-      required:
-      - id
-      - name
-      - city
-      - country
-      - address
-      - zipcode
-    DateRange:
-      type: object
-      properties:
-        id:
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - from
-      - to
-    CompanyRentalPlaceDescriptionsDto:
-      type: object
-      properties:
-        fr:
-          type: string
-        en:
-          type: string
-      required:
-      - fr
-      - en
-    CompanyFeePayment:
-      type: object
-      properties:
-        percentage:
-          type: number
-        amount:
-          type: number
-      required:
-      - percentage
-      - amount
-    CompanyRentalPlaceUniversesDto:
-      type: object
-      properties:
-        id:
-          type: string
-        categoryIds:
-          type: array
-          items:
-            type: string
-        pack:
-          type: boolean
-      required:
-      - id
-      - categoryIds
-      - pack
-    LocalizedReview:
-      type: object
-      properties:
-        reviews:
-          type: array
-          items:
-            $ref: '#/components/schemas/GoogleReview'
-        fetchedAt:
-          format: date-time
-          type: string
-      required:
-      - reviews
-    CompanyDocumentCustomField:
-      type: object
-      properties:
-        fieldName:
-          type: string
-        fieldValue:
-          type: string
-        id:
-          type: string
-      required:
-      - fieldName
-      - fieldValue
-      - id
-    SocialMedia:
-      type: object
-      properties:
-        facebook:
-          type: string
-        twitter:
-          type: string
-        instagram:
-          type: string
-        linkedIn:
-          type: string
-        tiktok:
-          type: string
-      required:
-      - facebook
-      - twitter
-      - instagram
-      - linkedIn
-      - tiktok
-    CompanyAdyenCredentials:
-      type: object
-      properties:
-        provider:
-          type: string
-          default: adyen
-          enum:
-          - adyen
-        apiKey:
-          type: string
-        merchantAccount:
-          type: string
-        clientKey:
-          type: string
-        liveEndpointUrlPrefix:
-          type: string
-        store:
-          type: string
-      required:
-      - provider
-      - apiKey
-      - merchantAccount
-      - clientKey
-      - liveEndpointUrlPrefix
-      - store
-    ReservationRange:
-      type: object
-      properties:
-        nbHours:
-          type: number
-        activated:
-          type: boolean
-      required:
-      - nbHours
-      - activated
-    CompanyDelivery:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRange'
-        deliveryOnly:
-          type: boolean
-        returnDelivery:
-          type: boolean
-        freeDeliveryActivated:
-          type: boolean
-        freeDeliveryMinimumType:
-          type: string
-          enum:
-          - MINUTES
-          - SUBTOTAL
-        freeDeliveryMinimumVal:
-          type: number
-        excludedCities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
-      - activated
-      - ranges
-      - deliveryOnly
-      - returnDelivery
-      - freeDeliveryActivated
-      - freeDeliveryMinimumType
-      - freeDeliveryMinimumVal
-      - excludedCities
-    CompanyRentalPlaceDto:
-      type: object
-      properties:
-        image:
-          type: string
-        additionalImages:
-          type: array
-          items:
-            type: string
-        descriptions:
-          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
-        universes:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        showcaseProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyShowcaseProductDto'
-        team:
-          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
-        lokkiComment:
-          type: string
-      required:
-      - image
-      - additionalImages
-      - descriptions
-      - universes
-      - verticales
-      - showcaseProducts
-      - team
-      - lokkiComment
-    AncvConnectSettings:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        shopId:
-          type:
-          - string
-          - 'null'
-      required:
-      - activated
-      - shopId
-    SetSkisetIdDto:
-      type: object
-      properties:
-        id:
-          type: string
-      required:
-      - id
-    MarketingSettings:
-      type: object
-      properties:
-        trackers:
-          $ref: '#/components/schemas/Trackers'
-      required:
-      - trackers
-    CompanyOnlineStoreSlot:
-      type: object
-      properties:
-        hours:
-          type: number
-        minutes:
-          type: number
-        label:
-          type: string
-        id:
-          type: string
-      required:
-      - hours
-      - minutes
-      - label
-      - id
-    DeliveryRange:
-      type: object
-      properties:
-        min:
-          type: number
-        max:
-          type: number
         price:
           type: number
-        specificPrices:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
-      required:
-      - min
-      - max
-      - price
-      - specificPrices
-    CompanyAccess:
-      type: object
-      properties:
-        onlineStoreCreateOrder:
-          type: boolean
-        onlineStoreCreateOrderLLD:
-          type: boolean
-        productsUnavailableAfterOrder:
-          type: boolean
-        lcd:
-          type: boolean
-        lld:
-          type: boolean
-        priceExcludingTaxes:
-          type: boolean
-        useSeveralRentalPoints:
-          type: boolean
-        useOnlineStoreContract:
-          type: boolean
-        multipleFundsTransfer:
-          $ref: '#/components/schemas/MultipleFundsTransfer'
-        useOnlineBail:
-          type: boolean
-        lldOnlineBail:
-          type: boolean
-        payOnSite:
-          type: boolean
-        onlineStorePayment:
-          type: boolean
-        assuranceTulipInclusion:
-          type: boolean
-        assuranceTulip:
-          type: boolean
-        onlineStoreSlots:
-          type: boolean
-        lokkiEvent:
-          type: boolean
-        onlineHideHeader:
-          type: boolean
-        rentalPlace:
-          type: boolean
-        advancedStatistics:
-          type: boolean
-        checkoutSoftware:
-          type: string
-          enum:
-          - NONE
-          - G8
-          - SQUARE
-          - SHIFTER
-        lokkiWorkshop:
-          type: boolean
-        onlineStoreStyle:
-          type: string
-          enum:
-          - none
-          - basic
-          - advanced
-        orderAdditionalTime:
-          type: boolean
-        severalRentalPoints:
-          type: boolean
-        customerB2B:
-          type: boolean
-        corporate:
-          type: string
-          enum:
-          - NONE
-          - BMW
-          - BOULANGER
-          - CARREFOUR
-          - DECATHLON
-          - DECATHLON_CANADA
-          - DECATHLON_REUNION
-          - ESPACE_EMERAUDE
-          - LECLERC
-          - MONOPRIX
-          - PELLENC
-          - STATION_BEES
-          - SKISET
-          - SKIMIUM
-          - MWHEEL
-          - NATURA_PRO
-          - MR_BRICOLAGE
-          - CORA
-          - MR_JARDINAGE
-          - CAMARA
-          - NETSKI
-          - SPORT_2000
-        lokkiOffline:
-          type: boolean
-        lokkiPayment:
-          type: boolean
-        onlineStoreVersion:
-          type: string
-          enum:
-          - V1_SUBDOMAIN
-          - V2_RENTALPLACE
-        rentalPlaceNetwork:
-          $ref: '#/components/schemas/RentalPlaceNetwork'
-        rentalPlaceShowBreadcrumb:
-          type: boolean
-        quoteRequests:
-          type: boolean
-      required:
-      - onlineStoreCreateOrder
-      - onlineStoreCreateOrderLLD
-      - productsUnavailableAfterOrder
-      - lcd
-      - lld
-      - priceExcludingTaxes
-      - useSeveralRentalPoints
-      - useOnlineStoreContract
-      - multipleFundsTransfer
-      - useOnlineBail
-      - lldOnlineBail
-      - payOnSite
-      - onlineStorePayment
-      - assuranceTulipInclusion
-      - assuranceTulip
-      - onlineStoreSlots
-      - lokkiEvent
-      - onlineHideHeader
-      - rentalPlace
-      - advancedStatistics
-      - checkoutSoftware
-      - lokkiWorkshop
-      - onlineStoreStyle
-      - orderAdditionalTime
-      - severalRentalPoints
-      - customerB2B
-      - corporate
-      - lokkiOffline
-      - lokkiPayment
-      - onlineStoreVersion
-      - rentalPlaceNetwork
-      - rentalPlaceShowBreadcrumb
-      - quoteRequests
-    SquareCredentials:
-      type: object
-      properties:
-        isActive:
-          type: boolean
-        token:
-          type: string
-        locationId:
-          type: string
-        locationName:
-          type: string
-        refreshToken:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-        oAuthState:
-          type: string
-      required:
-      - isActive
-      - token
-      - locationId
-      - locationName
-      - refreshToken
-      - expiresAt
-    CompanyCurrency:
-      type: object
-      properties:
-        isoName:
-          type: string
-        symbol:
-          type: string
-      required:
-      - isoName
-      - symbol
-    CompanyCsSupportRequested:
-      type: object
-      properties:
-        requested:
-          type: boolean
-        requestedAt:
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - requested
-      - requestedAt
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    OpeningTimeFrame:
-      type: object
-      properties:
-        id:
-          type: string
-        day:
-          type: string
-          enum:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          - saturday
-          - sunday
-          - ALL
-        isOpen:
-          type: boolean
-        from:
-          type: string
-        to:
-          type: string
       required:
       - id
-      - day
-      - isOpen
-    ProductStateInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        displayGeneralConditions:
-          type: boolean
-        legalNotices:
-          type: string
-        numberCreated:
-          type: number
-        useLegalCompanyInfo:
-          type: boolean
-      required:
-      - name
-      - displayGeneralConditions
-      - legalNotices
-      - numberCreated
-      - useLegalCompanyInfo
-    PartPayment:
-      type: object
-      properties:
-        isActive:
-          type: boolean
-        percentage:
-          type: number
-      required:
-      - isActive
-      - percentage
-    CompanyOpinionBooster:
-      type: object
-      properties:
-        googleBusinessLink:
-          type: string
-        activated:
-          type: boolean
-        daysBeforeSend:
-          type: number
-        emailTemplateId:
-          type: string
-      required:
-      - googleBusinessLink
-      - activated
-      - daysBeforeSend
-      - emailTemplateId
-    DeliveryRangeSpecificPrice:
-      type: object
-      properties:
-        price:
-          type: number
-        cities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
       - price
-      - cities
-    CompanySkisetInfos:
-      type: object
-      properties:
-        id:
-          type: number
-        trademark:
-          type: string
-        resort_id:
-          type: number
-        country_id:
-          type: number
-        member_id:
-          type: number
-        name:
-          type: string
-        member:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-      required:
-      - id
-      - trademark
-      - resort_id
-      - country_id
-      - member_id
-      - name
-      - member
-      - city
-      - country
-    CompanyMailSender:
-      type: object
-      properties:
-        name:
-          type: string
-        replyToEmailAddress:
-          type: string
-      required:
-      - name
-      - replyToEmailAddress
     CompanyOrderReminder:
       type: object
       properties:
@@ -704,261 +103,22 @@ components:
       - emailOnLokkiPayment
       - emailOnFundsTransfer
       - oneDayBeforeOrderEndEmailTemplateId
-    CompanyUser:
+    MultipleFundsTransfer:
       type: object
       properties:
-        name:
-          type: string
-        email:
-          type: string
-        id:
-          type: string
-        lastConnected:
-          format: date-time
-          type: string
-        connectionDates:
+        activated:
+          type: boolean
+        isFree:
+          type: boolean
+        transferDays:
           type: array
           items:
-            format: date-time
-            type: string
-        isAccountActivated:
-          type: boolean
-        role:
-          type: string
-        signedUpWith:
-          type: string
-          enum:
-          - google
-          - apple
-      required:
-      - name
-      - email
-      - id
-    CompanyGlobalFee:
-      type: object
-      properties:
-        rentalPlace:
-          $ref: '#/components/schemas/CompanyFee'
-        global:
-          $ref: '#/components/schemas/CompanyFee'
-        lld:
-          $ref: '#/components/schemas/CompanyFee'
-      required:
-      - rentalPlace
-      - global
-      - lld
-    CompanyCategoryDiscount:
-      type: object
-      properties:
-        categoryIds:
-          type: array
-          items:
-            type: string
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
-      required:
-      - categoryIds
-      - ranges
-    LPTermConditionV0102:
-      type: object
-      properties:
-        date:
-          format: date-time
-          type: string
-        fee:
-          $ref: '#/components/schemas/CompanyGlobalFee'
-      required:
-      - date
-      - fee
-    Trackers:
-      type: object
-      properties:
-        ga4Id:
-          type:
-          - string
-          - 'null'
-          pattern: ga4Pattern
-        googleAdsId:
-          type:
-          - string
-          - 'null'
-          pattern: googleAdsPattern
-        metaPixelId:
-          type:
-          - string
-          - 'null'
-          pattern: metaPixelPattern
-        tiktokPixelId:
-          type:
-          - string
-          - 'null'
-          pattern: tiktokPixelPattern
-        linkedinPartnerId:
-          type:
-          - string
-          - 'null'
-          pattern: linkedinPartnerPattern
-        linkedinConversionId:
-          type:
-          - string
-          - 'null'
-          pattern: linkedinConversionPattern
-        lastUpdatedBy:
-          type: string
-        lastUpdatedAt:
-          format: date-time
-          type: string
-    EventTag:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - id
-      - name
-    LokkiPaymentTermsConditionsHistory:
-      type: object
-      properties:
-        v0101:
-          format: date-time
-          type: string
-        v0102:
-          $ref: '#/components/schemas/LPTermConditionV0102'
-      required:
-      - v0101
-      - v0102
-    CompanyResponseDuration:
-      type: object
-      properties:
-        average:
-          type: number
-        median:
-          type: number
-        min:
-          type: number
-        max:
-          type: number
-        count:
-          type: number
-        fetchedAt:
+            type: number
+        activatedDate:
           format: date-time
           type: string
       required:
-      - average
-      - median
-      - min
-      - max
-      - count
-      - fetchedAt
-    CompanyFeePayments:
-      type: object
-      properties:
-        standard:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        premium:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        uk:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        outOfUkUe:
-          $ref: '#/components/schemas/CompanyFeePayment'
-        ancv:
-          $ref: '#/components/schemas/CompanyFeePayment'
-      required:
-      - standard
-      - premium
-      - uk
-      - outOfUkUe
-      - ancv
-    GoogleReview:
-      type: object
-      properties:
-        rating:
-          type: number
-        name:
-          type: string
-        comment:
-          type: string
-        authorPhotoUrl:
-          type:
-          - string
-          - 'null'
-        publishTime:
-          format: date-time
-          type: string
-      required:
-      - rating
-      - name
-      - comment
-      - authorPhotoUrl
-      - publishTime
-    CompanyStripeCredentials:
-      type: object
-      properties:
-        provider:
-          type: string
-          default: stripe
-          enum:
-          - stripe
-        account:
-          type: string
-        type:
-          enum:
-          - EXPRESS
-          - STANDARD
-          type: string
-        status:
-          enum:
-          - ONBOARDING
-          - ACTIVE
-          type: string
-        onboardingDate:
-          format: date-time
-          type: string
-      required:
-      - provider
-      - account
-      - type
-      - status
-    RentalPlaceNetwork:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        updatedAt:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        updatedBy:
-          allOf:
-          - $ref: '#/components/schemas/RentalPlaceNetworkUpdatedBy'
-      required:
-      - enabled
-      - updatedAt
-      - updatedBy
-    CompanyDeliveryCity:
-      type: object
-      properties:
-        cityName:
-          type: string
-        sublocalityName:
-          type: string
-        zipCode:
-          type: string
-        placeId:
-          type: string
-        hasMultiplePostcodeLocalities:
-          type: boolean
-      required:
-      - cityName
-      - sublocalityName
-      - zipCode
-      - placeId
-      - hasMultiplePostcodeLocalities
+      - activated
     CancellationPolicyDto:
       type: object
       properties:
@@ -1003,301 +163,243 @@ components:
       - lowRefundRate
       - midRefundRate
       - highRefundRate
-    GoogleRating:
+    EventTag:
       type: object
       properties:
-        localizedReviews:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocalizedReview'
+        id:
+          type: string
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - name
+    SetSkisetIdDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+      - id
+    CompanyAdyenCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: adyen
+          enum:
+          - adyen
+        apiKey:
+          type: string
+        merchantAccount:
+          type: string
+        clientKey:
+          type: string
+        liveEndpointUrlPrefix:
+          type: string
+        store:
+          type: string
+      required:
+      - provider
+      - apiKey
+      - merchantAccount
+      - clientKey
+      - liveEndpointUrlPrefix
+      - store
+    SocialMedia:
+      type: object
+      properties:
+        facebook:
+          type: string
+        twitter:
+          type: string
+        instagram:
+          type: string
+        linkedIn:
+          type: string
+        tiktok:
+          type: string
+      required:
+      - facebook
+      - twitter
+      - instagram
+      - linkedIn
+      - tiktok
+    GoogleReview:
+      type: object
+      properties:
         rating:
           type: number
-        reviewNb:
-          type: number
-        placeId:
+        name:
           type: string
-        mapsUrl:
+        comment:
           type: string
-        fetchedAt:
+        authorPhotoUrl:
+          type:
+          - string
+          - 'null'
+        publishTime:
           format: date-time
           type: string
       required:
-      - localizedReviews
       - rating
-      - reviewNb
-      - placeId
-      - mapsUrl
-      - fetchedAt
-    TulipSettings:
+      - name
+      - comment
+      - authorPhotoUrl
+      - publishTime
+    LokkiPaymentTermsConditionsHistory:
       type: object
       properties:
-        state:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
+        v0101:
+          format: date-time
           type: string
-        initialState:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
-          type: string
-        renterId:
-          type: string
-        verified:
+        v0102:
+          $ref: '#/components/schemas/LPTermConditionV0102'
+      required:
+      - v0101
+      - v0102
+    OnlineStoreConfig:
+      type: object
+      properties:
+        newOnlineStoreDesign:
           type: boolean
-        i18nName:
+        customerTextRGPD:
           $ref: '#/components/schemas/LocalizedContent'
-        i18nContent:
+        description:
           $ref: '#/components/schemas/LocalizedContent'
-        i18nTitle:
+        featuredSectionTitle:
           $ref: '#/components/schemas/LocalizedContent'
-        displayedOptions:
+        eventsTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        openingTimeFrames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        openingTimeFramesLowSeason:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpeningTimeFrame'
+        closedDates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        lowSeasonRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateRange'
+        bannerURL:
           type: array
           items:
             type: string
-            enum:
-            - theft
-            - break
-      required:
-      - state
-      - initialState
-      - renterId
-      - verified
-      - i18nName
-      - i18nContent
-      - i18nTitle
-      - displayedOptions
-    CompanyShowcaseProductDto:
-      type: object
-      properties:
-        id:
-          type: string
-        price:
-          type: number
-      required:
-      - id
-      - price
-    MultipleFundsTransfer:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        isFree:
-          type: boolean
-        transferDays:
+        featuredIds:
           type: array
           items:
-            type: number
-        activatedDate:
-          format: date-time
-          type: string
-      required:
-      - activated
-    CompanyOnboarding:
-      type: object
-      properties:
-        startDate:
-          format: date-time
-          type: string
-        endDate:
-          format: date-time
-          type: string
-        visibility:
-          type: boolean
-    SelfTestUtmInfos:
-      type: object
-      properties:
-        utm_source:
-          type: string
-        utm_medium:
-          type: string
-        utm_campaign:
-          type: string
-        utm_content:
-          type: string
-        utm_term:
-          type: string
-        device:
-          type: string
-        matchtype:
-          type: string
-        campaign_id:
-          type: string
-        adset_id:
-          type: string
-        ad_id:
-          type: string
-        GeoLoc:
-          type: string
-    LokkiPaymentMethods:
-      type: object
-      properties:
-        card:
-          type: boolean
-        applePay:
-          type: boolean
-        googlePay:
-          type: boolean
-        ancvConnect:
-          type: boolean
-        sepa:
-          type: boolean
-        ideal:
-          type: boolean
-        bancontact:
-          type: boolean
-        giroPay:
-          type: boolean
-        p24:
-          type: boolean
-        blik:
-          type: boolean
-        multibanco:
-          type: boolean
-        eps:
-          type: boolean
-      required:
-      - card
-      - applePay
-      - googlePay
-      - ancvConnect
-      - sepa
-      - ideal
-      - bancontact
-      - giroPay
-      - p24
-      - blik
-      - multibanco
-      - eps
-    CompanyDefaultQuickOrderMode:
-      type: object
-      properties:
-        booking:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        bookingUpdate:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        readyToGo:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        return:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        exchange:
-          type: string
-          enum:
-          - QR_SCANNING
-          - MANUAL
-        showDelivery:
-          type: boolean
-        showSurvey:
-          type: boolean
-        showUnavailability:
-          type: boolean
-        showUnavailabilityOnUpdate:
-          type: boolean
-      required:
-      - booking
-      - bookingUpdate
-      - readyToGo
-      - return
-      - exchange
-      - showDelivery
-      - showSurvey
-      - showUnavailability
-      - showUnavailabilityOnUpdate
-    CompanyDocumentCustomFieldsDto:
-      type: object
-      properties:
-        fields:
+            type: string
+        bannerScroll:
+          type: number
+        reservationRanges:
+          $ref: '#/components/schemas/ReservationRanges'
+        timeLapsBeforeBookingInHours:
+          type: number
+        delivery:
+          $ref: '#/components/schemas/CompanyDelivery'
+        reservationTimes:
           type: array
           items:
-            $ref: '#/components/schemas/CompanyDocumentCustomField'
-      required:
-      - fields
-    ReservationRanges:
-      type: object
-      properties:
-        minimum:
-          $ref: '#/components/schemas/ReservationRange'
-        maximum:
-          $ref: '#/components/schemas/ReservationRange'
-      required:
-      - minimum
-      - maximum
-    CompanyBailMaxAmount:
-      type: object
-      properties:
-        activated:
+            $ref: '#/components/schemas/ReservationTime'
+        insuranceActivated:
           type: boolean
-        maxAmount:
+        eventActivated:
+          type: boolean
+        customFeaturedMode:
+          type: boolean
+        hideOnlineStoreLCD:
+          type: boolean
+        hideOnlineStoreLLD:
+          type: boolean
+        displayAddressOnlineStore:
+          type: boolean
+        eventDirectOrder:
+          type: boolean
+        eventTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventTag'
+        eventUniverses:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventUniverse'
+        eventUniversesActivated:
+          type: boolean
+        eventUniversesTag:
+          type: string
+        phoneNumber:
+          type: string
+        displayPhoneNumber:
+          type: boolean
+        script:
+          type: string
+        defaultPhoneCode:
+          type: string
+        showPricing:
+          type: boolean
+        showStock:
+          type: boolean
+        lldBilling:
+          type: boolean
+      required:
+      - newOnlineStoreDesign
+      - customerTextRGPD
+      - description
+      - featuredSectionTitle
+      - eventsTitle
+      - openingTimeFrames
+      - openingTimeFramesLowSeason
+      - closedDates
+      - lowSeasonRanges
+      - bannerURL
+      - featuredIds
+      - bannerScroll
+      - reservationRanges
+      - timeLapsBeforeBookingInHours
+      - delivery
+      - reservationTimes
+      - insuranceActivated
+      - eventActivated
+      - customFeaturedMode
+      - hideOnlineStoreLCD
+      - hideOnlineStoreLLD
+      - displayAddressOnlineStore
+      - eventDirectOrder
+      - eventTags
+      - eventUniverses
+      - eventUniversesActivated
+      - eventUniversesTag
+      - phoneNumber
+      - displayPhoneNumber
+      - script
+      - defaultPhoneCode
+      - showPricing
+      - showStock
+      - lldBilling
+    ProductStateInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        displayGeneralConditions:
+          type: boolean
+        legalNotices:
+          type: string
+        numberCreated:
           type: number
-      required:
-      - activated
-      - maxAmount
-    CompanyHyperlineSubscriptionData:
-      type: object
-      properties:
-        isPaidByThirdParty:
+        useLegalCompanyInfo:
           type: boolean
-        customerId:
-          type: string
-        subscriptionId:
-          type: string
-        usageCustomerId:
-          type:
-          - string
-          - 'null'
-        usageSubscriptionId:
-          type:
-          - string
-          - 'null'
-        subscriptionCheckoutStatus:
-          type:
-          - string
-          - 'null'
-          enum:
-          - PENDING
-          - COMPLETED
-          - FAILED
       required:
-      - isPaidByThirdParty
-      - customerId
-      - subscriptionId
-      - usageCustomerId
-      - usageSubscriptionId
-      - subscriptionCheckoutStatus
-    ReservationTime:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - start
-          - end
-        time:
-          type: string
-      required:
-      - id
-      - type
-      - time
+      - name
+      - displayGeneralConditions
+      - legalNotices
+      - numberCreated
+      - useLegalCompanyInfo
     CompanyFee:
       type: object
       properties:
@@ -1318,6 +420,155 @@ components:
       - type
       - percentage
       - amount
+    CompanyFeePayment:
+      type: object
+      properties:
+        percentage:
+          type: number
+        amount:
+          type: number
+      required:
+      - percentage
+      - amount
+    PeriodicDiscount:
+      type: object
+      properties:
+        _id:
+          type: string
+        discountInPercentage:
+          type: number
+        startDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        endDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        applicableDate:
+          enum:
+          - CREATED_DATE
+          - START_DATE
+          type: string
+        scope:
+          default:
+          - ONLINE_STORE
+          type: array
+          items:
+            type: string
+            enum:
+            - ONLINE_STORE
+            - DASHBOARD
+      required:
+      - _id
+      - discountInPercentage
+      - startDate
+      - endDate
+      - applicableDate
+    Trackers:
+      type: object
+      properties:
+        ga4Id:
+          type:
+          - string
+          - 'null'
+          pattern: ga4Pattern
+        googleAdsId:
+          type:
+          - string
+          - 'null'
+          pattern: googleAdsPattern
+        metaPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: metaPixelPattern
+        tiktokPixelId:
+          type:
+          - string
+          - 'null'
+          pattern: tiktokPixelPattern
+        linkedinPartnerId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinPartnerPattern
+        linkedinConversionId:
+          type:
+          - string
+          - 'null'
+          pattern: linkedinConversionPattern
+        lastUpdatedBy:
+          type: string
+        lastUpdatedAt:
+          format: date-time
+          type: string
+    ReservationRange:
+      type: object
+      properties:
+        nbHours:
+          type: number
+        activated:
+          type: boolean
+      required:
+      - nbHours
+      - activated
+    DeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - price
+      - cities
+    DateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - from
+      - to
+    ReservationRanges:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/ReservationRange'
+        maximum:
+          $ref: '#/components/schemas/ReservationRange'
+      required:
+      - minimum
+      - maximum
+    CompanyDeliveryCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+        sublocalityName:
+          type: string
+        zipCode:
+          type: string
+        placeId:
+          type: string
+        hasMultiplePostcodeLocalities:
+          type: boolean
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
     Company:
       type: object
       properties:
@@ -1607,6 +858,666 @@ components:
       - socialMedia
       - lokkiPaymentTermsConditionsHistory
       - fee
+    CompanyOpinionBooster:
+      type: object
+      properties:
+        googleBusinessLink:
+          type: string
+        activated:
+          type: boolean
+        daysBeforeSend:
+          type: number
+        emailTemplateId:
+          type: string
+      required:
+      - googleBusinessLink
+      - activated
+      - daysBeforeSend
+      - emailTemplateId
+    CompanyStripeCredentials:
+      type: object
+      properties:
+        provider:
+          type: string
+          default: stripe
+          enum:
+          - stripe
+        account:
+          type: string
+        type:
+          enum:
+          - EXPRESS
+          - STANDARD
+          type: string
+        status:
+          enum:
+          - ONBOARDING
+          - ACTIVE
+          type: string
+        onboardingDate:
+          format: date-time
+          type: string
+      required:
+      - provider
+      - account
+      - type
+      - status
+    CompanyHyperlineSubscriptionData:
+      type: object
+      properties:
+        isPaidByThirdParty:
+          type: boolean
+        customerId:
+          type: string
+        subscriptionId:
+          type: string
+        usageCustomerId:
+          type:
+          - string
+          - 'null'
+        usageSubscriptionId:
+          type:
+          - string
+          - 'null'
+        subscriptionCheckoutStatus:
+          type:
+          - string
+          - 'null'
+          enum:
+          - PENDING
+          - COMPLETED
+          - FAILED
+      required:
+      - isPaidByThirdParty
+      - customerId
+      - subscriptionId
+      - usageCustomerId
+      - usageSubscriptionId
+      - subscriptionCheckoutStatus
+    CompanyRentalPlaceDescriptionsDto:
+      type: object
+      properties:
+        fr:
+          type: string
+        en:
+          type: string
+      required:
+      - fr
+      - en
+    GoogleRating:
+      type: object
+      properties:
+        localizedReviews:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocalizedReview'
+        rating:
+          type: number
+        reviewNb:
+          type: number
+        placeId:
+          type: string
+        mapsUrl:
+          type: string
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - localizedReviews
+      - rating
+      - reviewNb
+      - placeId
+      - mapsUrl
+      - fetchedAt
+    DeliveryRange:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        price:
+          type: number
+        specificPrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
+      required:
+      - min
+      - max
+      - price
+      - specificPrices
+    CompanyOnboarding:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        visibility:
+          type: boolean
+    CompanyRentalPlaceTeamDto:
+      type: object
+      properties:
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        image:
+          type: string
+        video:
+          type: string
+        teamName:
+          type: string
+      required:
+      - descriptions
+      - image
+      - video
+      - teamName
+    SquareCredentials:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        token:
+          type: string
+        locationId:
+          type: string
+        locationName:
+          type: string
+        refreshToken:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        oAuthState:
+          type: string
+      required:
+      - isActive
+      - token
+      - locationId
+      - locationName
+      - refreshToken
+      - expiresAt
+    CompanyDefaultQuickOrderMode:
+      type: object
+      properties:
+        booking:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        bookingUpdate:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        readyToGo:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        return:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        exchange:
+          type: string
+          enum:
+          - QR_SCANNING
+          - MANUAL
+        showDelivery:
+          type: boolean
+        showSurvey:
+          type: boolean
+        showUnavailability:
+          type: boolean
+        showUnavailabilityOnUpdate:
+          type: boolean
+      required:
+      - booking
+      - bookingUpdate
+      - readyToGo
+      - return
+      - exchange
+      - showDelivery
+      - showSurvey
+      - showUnavailability
+      - showUnavailabilityOnUpdate
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    PartPayment:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+        percentage:
+          type: number
+      required:
+      - isActive
+      - percentage
+    CompanySkisetInfos:
+      type: object
+      properties:
+        id:
+          type: number
+        trademark:
+          type: string
+        resort_id:
+          type: number
+        country_id:
+          type: number
+        member_id:
+          type: number
+        name:
+          type: string
+        member:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+      - id
+      - trademark
+      - resort_id
+      - country_id
+      - member_id
+      - name
+      - member
+      - city
+      - country
+    RentalPoint:
+      type: object
+      properties:
+        addressComponents:
+          $ref: '#/components/schemas/CompanyAddressComponentsDto'
+        id:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        name:
+          type: string
+        slug:
+          type: string
+        fullAddress:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - id
+      - lat
+      - lng
+      - name
+      - slug
+      - fullAddress
+      - city
+      - country
+      - address
+      - zipcode
+    LokkiPaymentMethods:
+      type: object
+      properties:
+        card:
+          type: boolean
+        applePay:
+          type: boolean
+        googlePay:
+          type: boolean
+        ancvConnect:
+          type: boolean
+        sepa:
+          type: boolean
+        ideal:
+          type: boolean
+        bancontact:
+          type: boolean
+        giroPay:
+          type: boolean
+        p24:
+          type: boolean
+        blik:
+          type: boolean
+        multibanco:
+          type: boolean
+        eps:
+          type: boolean
+      required:
+      - card
+      - applePay
+      - googlePay
+      - ancvConnect
+      - sepa
+      - ideal
+      - bancontact
+      - giroPay
+      - p24
+      - blik
+      - multibanco
+      - eps
+    CompanyMailSender:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
+    ReservationTime:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - start
+          - end
+        time:
+          type: string
+      required:
+      - id
+      - type
+      - time
+    CompanyCategoryDiscountRange:
+      type: object
+      properties:
+        discount:
+          type: number
+          description: Discount value for the range
+        discountType:
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          type: string
+          description: Type of discount applied (amount or percentage)
+        rangeFrom:
+          type:
+          - number
+          - 'null'
+          description: Minimum value of the range (Quantity of items)
+        rangeTo:
+          type:
+          - number
+          - 'null'
+          description: Maximum value of the range (Quantity of items)
+        infiniteTo:
+          type: boolean
+          description: Indicates if the range has no upper limit
+      required:
+      - discount
+      - discountType
+      - rangeFrom
+      - rangeTo
+      - infiniteTo
+    WorkshopLocation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        address:
+          type: string
+        zipcode:
+          type: string
+      required:
+      - id
+      - name
+      - city
+      - country
+      - address
+      - zipcode
+    CompanyGlobalFee:
+      type: object
+      properties:
+        rentalPlace:
+          $ref: '#/components/schemas/CompanyFee'
+        global:
+          $ref: '#/components/schemas/CompanyFee'
+        lld:
+          $ref: '#/components/schemas/CompanyFee'
+      required:
+      - rentalPlace
+      - global
+      - lld
+    EventUniverse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+      required:
+      - id
+      - name
+      - imageUrl
+    CompanyOnlineStoreSlot:
+      type: object
+      properties:
+        hours:
+          type: number
+        minutes:
+          type: number
+        label:
+          type: string
+        id:
+          type: string
+      required:
+      - hours
+      - minutes
+      - label
+      - id
+    CompanyDocumentCustomField:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        fieldValue:
+          type: string
+        id:
+          type: string
+      required:
+      - fieldName
+      - fieldValue
+      - id
+    CompanyTrialInfos:
+      type: object
+      properties:
+        productsNumber:
+          type: string
+          enum:
+          - '0'
+          - 1 - 10
+          - 11 - 20
+          - 21 - 50
+          - 51 - 100
+          - 101 - 250
+          - '> 250'
+        trialEndsAt:
+          format: date-time
+          type: string
+        hasRentalActivity:
+          type: boolean
+        launchDate:
+          format: date-time
+          type: string
+      required:
+      - trialEndsAt
+    LocalizedReview:
+      type: object
+      properties:
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleReview'
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - reviews
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    CompanyCsSupportRequested:
+      type: object
+      properties:
+        requested:
+          type: boolean
+        requestedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - requested
+      - requestedAt
+    RentalPlaceNetwork:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        updatedAt:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        updatedBy:
+          allOf:
+          - $ref: '#/components/schemas/RentalPlaceNetworkUpdatedBy'
+      required:
+      - enabled
+      - updatedAt
+      - updatedBy
+    CompanyCategoryDiscount:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
+      required:
+      - categoryIds
+      - ranges
+    TulipSettings:
+      type: object
+      properties:
+        state:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        initialState:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+        renterId:
+          type: string
+        verified:
+          type: boolean
+        i18nName:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nContent:
+          $ref: '#/components/schemas/LocalizedContent'
+        i18nTitle:
+          $ref: '#/components/schemas/LocalizedContent'
+        displayedOptions:
+          type: array
+          items:
+            type: string
+            enum:
+            - theft
+            - break
+      required:
+      - state
+      - initialState
+      - renterId
+      - verified
+      - i18nName
+      - i18nContent
+      - i18nTitle
+      - displayedOptions
+    CompanyResponseDuration:
+      type: object
+      properties:
+        average:
+          type: number
+        median:
+          type: number
+        min:
+          type: number
+        max:
+          type: number
+        count:
+          type: number
+        fetchedAt:
+          format: date-time
+          type: string
+      required:
+      - average
+      - median
+      - min
+      - max
+      - count
+      - fetchedAt
     ProposedRentalPlaceCommission:
       type: object
       properties:
@@ -1620,6 +1531,380 @@ components:
       - commissionRate
       - requiresSignature
       - batchDate
+    CompanyAccess:
+      type: object
+      properties:
+        onlineStoreCreateOrder:
+          type: boolean
+        onlineStoreCreateOrderLLD:
+          type: boolean
+        productsUnavailableAfterOrder:
+          type: boolean
+        lcd:
+          type: boolean
+        lld:
+          type: boolean
+        priceExcludingTaxes:
+          type: boolean
+        useSeveralRentalPoints:
+          type: boolean
+        useOnlineStoreContract:
+          type: boolean
+        multipleFundsTransfer:
+          $ref: '#/components/schemas/MultipleFundsTransfer'
+        useOnlineBail:
+          type: boolean
+        lldOnlineBail:
+          type: boolean
+        payOnSite:
+          type: boolean
+        onlineStorePayment:
+          type: boolean
+        assuranceTulipInclusion:
+          type: boolean
+        assuranceTulip:
+          type: boolean
+        onlineStoreSlots:
+          type: boolean
+        lokkiEvent:
+          type: boolean
+        onlineHideHeader:
+          type: boolean
+        rentalPlace:
+          type: boolean
+        advancedStatistics:
+          type: boolean
+        checkoutSoftware:
+          type: string
+          enum:
+          - NONE
+          - G8
+          - SQUARE
+          - SHIFTER
+        lokkiWorkshop:
+          type: boolean
+        onlineStoreStyle:
+          type: string
+          enum:
+          - none
+          - basic
+          - advanced
+        orderAdditionalTime:
+          type: boolean
+        severalRentalPoints:
+          type: boolean
+        customerB2B:
+          type: boolean
+        corporate:
+          type: string
+          enum:
+          - NONE
+          - BMW
+          - BOULANGER
+          - CARREFOUR
+          - DECATHLON
+          - DECATHLON_CANADA
+          - DECATHLON_REUNION
+          - ESPACE_EMERAUDE
+          - LECLERC
+          - MONOPRIX
+          - PELLENC
+          - STATION_BEES
+          - SKISET
+          - SKIMIUM
+          - MWHEEL
+          - NATURA_PRO
+          - MR_BRICOLAGE
+          - CORA
+          - MR_JARDINAGE
+          - CAMARA
+          - NETSKI
+          - SPORT_2000
+        lokkiOffline:
+          type: boolean
+        lokkiPayment:
+          type: boolean
+        onlineStoreVersion:
+          type: string
+          enum:
+          - V1_SUBDOMAIN
+          - V2_RENTALPLACE
+        rentalPlaceNetwork:
+          $ref: '#/components/schemas/RentalPlaceNetwork'
+        rentalPlaceShowBreadcrumb:
+          type: boolean
+        quoteRequests:
+          type: boolean
+      required:
+      - onlineStoreCreateOrder
+      - onlineStoreCreateOrderLLD
+      - productsUnavailableAfterOrder
+      - lcd
+      - lld
+      - priceExcludingTaxes
+      - useSeveralRentalPoints
+      - useOnlineStoreContract
+      - multipleFundsTransfer
+      - useOnlineBail
+      - lldOnlineBail
+      - payOnSite
+      - onlineStorePayment
+      - assuranceTulipInclusion
+      - assuranceTulip
+      - onlineStoreSlots
+      - lokkiEvent
+      - onlineHideHeader
+      - rentalPlace
+      - advancedStatistics
+      - checkoutSoftware
+      - lokkiWorkshop
+      - onlineStoreStyle
+      - orderAdditionalTime
+      - severalRentalPoints
+      - customerB2B
+      - corporate
+      - lokkiOffline
+      - lokkiPayment
+      - onlineStoreVersion
+      - rentalPlaceNetwork
+      - rentalPlaceShowBreadcrumb
+      - quoteRequests
+    RentalPlaceNetworkUpdatedBy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    LPTermConditionV0102:
+      type: object
+      properties:
+        date:
+          format: date-time
+          type: string
+        fee:
+          $ref: '#/components/schemas/CompanyGlobalFee'
+      required:
+      - date
+      - fee
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    CompanyFeePayments:
+      type: object
+      properties:
+        standard:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        premium:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        uk:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        outOfUkUe:
+          $ref: '#/components/schemas/CompanyFeePayment'
+        ancv:
+          $ref: '#/components/schemas/CompanyFeePayment'
+      required:
+      - standard
+      - premium
+      - uk
+      - outOfUkUe
+      - ancv
+    CompanyUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        lastConnected:
+          format: date-time
+          type: string
+        connectionDates:
+          type: array
+          items:
+            format: date-time
+            type: string
+        isAccountActivated:
+          type: boolean
+        role:
+          type: string
+        signedUpWith:
+          type: string
+          enum:
+          - google
+          - apple
+      required:
+      - name
+      - email
+      - id
+    CompanyRentalPlaceUniversesDto:
+      type: object
+      properties:
+        id:
+          type: string
+        categoryIds:
+          type: array
+          items:
+            type: string
+        pack:
+          type: boolean
+      required:
+      - id
+      - categoryIds
+      - pack
+    CompanyRentalPlaceDto:
+      type: object
+      properties:
+        image:
+          type: string
+        additionalImages:
+          type: array
+          items:
+            type: string
+        descriptions:
+          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyRentalPlaceUniversesDto'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        showcaseProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyShowcaseProductDto'
+        team:
+          $ref: '#/components/schemas/CompanyRentalPlaceTeamDto'
+        lokkiComment:
+          type: string
+      required:
+      - image
+      - additionalImages
+      - descriptions
+      - universes
+      - verticales
+      - showcaseProducts
+      - team
+      - lokkiComment
+    CompanyLifecycleEvents:
+      type: object
+      properties:
+        catalogMarkedCompleteAt:
+          format: date-time
+          type: string
+    AncvConnectSettings:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        shopId:
+          type:
+          - string
+          - 'null'
+      required:
+      - activated
+      - shopId
+    CompanyBailMaxAmount:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        maxAmount:
+          type: number
+      required:
+      - activated
+      - maxAmount
+    CompanyDocumentCustomFieldsDto:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDocumentCustomField'
+      required:
+      - fields
+    MarketingSettings:
+      type: object
+      properties:
+        trackers:
+          $ref: '#/components/schemas/Trackers'
+      required:
+      - trackers
+    CompanyAddressComponentsDto:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+      - placeId
     CompanyCsInfos:
       type: object
       properties:
@@ -1731,330 +2016,45 @@ components:
       - websiteLink
       - hyperlineSubscriptionData
       - subscriptionSalesOwnerEmail
-    PeriodicDiscount:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CompanyDelivery:
       type: object
       properties:
-        _id:
-          type: string
-        discountInPercentage:
-          type: number
-        startDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        endDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        applicableDate:
-          enum:
-          - CREATED_DATE
-          - START_DATE
-          type: string
-        scope:
-          default:
-          - ONLINE_STORE
+        activated:
+          type: boolean
+        ranges:
           type: array
           items:
-            type: string
-            enum:
-            - ONLINE_STORE
-            - DASHBOARD
-      required:
-      - _id
-      - discountInPercentage
-      - startDate
-      - endDate
-      - applicableDate
-    CompanyLifecycleEvents:
-      type: object
-      properties:
-        catalogMarkedCompleteAt:
-          format: date-time
-          type: string
-    CompanyCategoryDiscountRange:
-      type: object
-      properties:
-        discount:
-          type: number
-          description: Discount value for the range
-        discountType:
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-          type: string
-          description: Type of discount applied (amount or percentage)
-        rangeFrom:
-          type:
-          - number
-          - 'null'
-          description: Minimum value of the range (Quantity of items)
-        rangeTo:
-          type:
-          - number
-          - 'null'
-          description: Maximum value of the range (Quantity of items)
-        infiniteTo:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
           type: boolean
-          description: Indicates if the range has no upper limit
-      required:
-      - discount
-      - discountType
-      - rangeFrom
-      - rangeTo
-      - infiniteTo
-    RentalPlaceNetworkUpdatedBy:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-    OnlineStoreConfig:
-      type: object
-      properties:
-        newOnlineStoreDesign:
+        returnDelivery:
           type: boolean
-        customerTextRGPD:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-        featuredSectionTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        eventsTitle:
-          $ref: '#/components/schemas/LocalizedContent'
-        openingTimeFrames:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpeningTimeFrame'
-        openingTimeFramesLowSeason:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpeningTimeFrame'
-        closedDates:
-          type: array
-          items:
-            $ref: '#/components/schemas/DateRange'
-        lowSeasonRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DateRange'
-        bannerURL:
-          type: array
-          items:
-            type: string
-        featuredIds:
-          type: array
-          items:
-            type: string
-        bannerScroll:
-          type: number
-        reservationRanges:
-          $ref: '#/components/schemas/ReservationRanges'
-        timeLapsBeforeBookingInHours:
-          type: number
-        delivery:
-          $ref: '#/components/schemas/CompanyDelivery'
-        reservationTimes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationTime'
-        insuranceActivated:
+        freeDeliveryActivated:
           type: boolean
-        eventActivated:
-          type: boolean
-        customFeaturedMode:
-          type: boolean
-        hideOnlineStoreLCD:
-          type: boolean
-        hideOnlineStoreLLD:
-          type: boolean
-        displayAddressOnlineStore:
-          type: boolean
-        eventDirectOrder:
-          type: boolean
-        eventTags:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventTag'
-        eventUniverses:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventUniverse'
-        eventUniversesActivated:
-          type: boolean
-        eventUniversesTag:
-          type: string
-        phoneNumber:
-          type: string
-        displayPhoneNumber:
-          type: boolean
-        script:
-          type: string
-        defaultPhoneCode:
-          type: string
-        showPricing:
-          type: boolean
-        showStock:
-          type: boolean
-        lldBilling:
-          type: boolean
-      required:
-      - newOnlineStoreDesign
-      - customerTextRGPD
-      - description
-      - featuredSectionTitle
-      - eventsTitle
-      - openingTimeFrames
-      - openingTimeFramesLowSeason
-      - closedDates
-      - lowSeasonRanges
-      - bannerURL
-      - featuredIds
-      - bannerScroll
-      - reservationRanges
-      - timeLapsBeforeBookingInHours
-      - delivery
-      - reservationTimes
-      - insuranceActivated
-      - eventActivated
-      - customFeaturedMode
-      - hideOnlineStoreLCD
-      - hideOnlineStoreLLD
-      - displayAddressOnlineStore
-      - eventDirectOrder
-      - eventTags
-      - eventUniverses
-      - eventUniversesActivated
-      - eventUniversesTag
-      - phoneNumber
-      - displayPhoneNumber
-      - script
-      - defaultPhoneCode
-      - showPricing
-      - showStock
-      - lldBilling
-    CompanyRentalPlaceTeamDto:
-      type: object
-      properties:
-        descriptions:
-          $ref: '#/components/schemas/CompanyRentalPlaceDescriptionsDto'
-        image:
-          type: string
-        video:
-          type: string
-        teamName:
-          type: string
-      required:
-      - descriptions
-      - image
-      - video
-      - teamName
-    CompanyAddressComponentsDto:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-        placeId:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-      - placeId
-    CompanyTrialInfos:
-      type: object
-      properties:
-        productsNumber:
+        freeDeliveryMinimumType:
           type: string
           enum:
-          - '0'
-          - 1 - 10
-          - 11 - 20
-          - 21 - 50
-          - 51 - 100
-          - 101 - 250
-          - '> 250'
-        trialEndsAt:
-          format: date-time
-          type: string
-        hasRentalActivity:
-          type: boolean
-        launchDate:
-          format: date-time
-          type: string
-      required:
-      - trialEndsAt
-    EventUniverse:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        imageUrl:
-          type: string
-      required:
-      - id
-      - name
-      - imageUrl
-    RentalPoint:
-      type: object
-      properties:
-        addressComponents:
-          $ref: '#/components/schemas/CompanyAddressComponentsDto'
-        id:
-          type: string
-        lat:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
           type: number
-        lng:
-          type: number
-        name:
-          type: string
-        slug:
-          type: string
-        fullAddress:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        address:
-          type: string
-        zipcode:
-          type: string
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
       required:
-      - id
-      - lat
-      - lng
-      - name
-      - slug
-      - fullAddress
-      - city
-      - country
-      - address
-      - zipcode
+      - activated
+      - ranges
+      - deliveryOnly
+      - returnDelivery
+      - freeDeliveryActivated
+      - freeDeliveryMinimumType
+      - freeDeliveryMinimumVal
+      - excludedCities
   securitySchemes:
     x-access-token:
       scheme: bearer

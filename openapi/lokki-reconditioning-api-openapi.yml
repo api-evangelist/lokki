@@ -230,64 +230,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateUpdateReconditioningSaleDto:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        verticale:
-          enum:
-          - BIKE
-          - ELECTRIC_BIKE
-          - MOPED
-          - MOTORCYCLE
-          - CAR
-          - SCOOTER
-          - SKI
-          - CLIMBING
-          - SNOWSHOES
-          - SURF
-          - PADDLE
-          - CANOE_KAYAK
-          - BOAT
-          - EVENT
-          - MOTOCULTURE
-          - TOOLING
-          type: string
-        productId:
-          type: string
-        productName:
-          type: string
-        price:
-          type: number
-        availabilityDate:
-          format: date-time
-          type: string
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateReconditioningSaleSubProductDto'
-      required:
-      - title
-      - description
-      - verticale
-      - productId
-      - productName
-      - price
-      - availabilityDate
-      - subProducts
-    CompanyCurrency:
-      type: object
-      properties:
-        isoName:
-          type: string
-        symbol:
-          type: string
-      required:
-      - isoName
-      - symbol
     ReconditioningSale:
       type: object
       properties:
@@ -364,7 +306,32 @@ components:
       - subProducts
       - offers
       - createdAt
-    ReconditioningSaleSubProduct:
+    ReconditioningSaleCompanyDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        currency:
+          $ref: '#/components/schemas/CompanyCurrency'
+        address:
+          type: string
+        name:
+          type: string
+        companyMailSender:
+          $ref: '#/components/schemas/CompanyMailSender'
+        phone:
+          type: string
+        logoURL:
+          type: string
+      required:
+      - id
+      - currency
+      - address
+      - name
+      - companyMailSender
+      - phone
+      - logoURL
+    CreateUpdateReconditioningSaleSubProductDto:
       type: object
       properties:
         subProductId:
@@ -408,50 +375,54 @@ components:
       - comment
       - pictures
       - certificate
-    ReconditioningSaleList:
+    CreateUpdateReconditioningSaleDto:
       type: object
       properties:
-        sales:
+        title:
+          type: string
+        description:
+          type: string
+        verticale:
+          enum:
+          - BIKE
+          - ELECTRIC_BIKE
+          - MOPED
+          - MOTORCYCLE
+          - CAR
+          - SCOOTER
+          - SKI
+          - CLIMBING
+          - SNOWSHOES
+          - SURF
+          - PADDLE
+          - CANOE_KAYAK
+          - BOAT
+          - EVENT
+          - MOTOCULTURE
+          - TOOLING
+          type: string
+        productId:
+          type: string
+        productName:
+          type: string
+        price:
+          type: number
+        availabilityDate:
+          format: date-time
+          type: string
+        subProducts:
           type: array
           items:
-            $ref: '#/components/schemas/ReconditioningSale'
+            $ref: '#/components/schemas/CreateUpdateReconditioningSaleSubProductDto'
       required:
-      - sales
-    ReconditioningSaleCompanyDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        currency:
-          $ref: '#/components/schemas/CompanyCurrency'
-        address:
-          type: string
-        name:
-          type: string
-        companyMailSender:
-          $ref: '#/components/schemas/CompanyMailSender'
-        phone:
-          type: string
-        logoURL:
-          type: string
-      required:
-      - id
-      - currency
-      - address
-      - name
-      - companyMailSender
-      - phone
-      - logoURL
-    CompanyMailSender:
-      type: object
-      properties:
-        name:
-          type: string
-        replyToEmailAddress:
-          type: string
-      required:
-      - name
-      - replyToEmailAddress
+      - title
+      - description
+      - verticale
+      - productId
+      - productName
+      - price
+      - availabilityDate
+      - subProducts
     ReconditioningSaleOfferUserDetails:
       type: object
       properties:
@@ -481,16 +452,7 @@ components:
       required:
       - subProductId
       - comment
-    ReconditioningSaleOfferCustomizationsDto:
-      type: object
-      properties:
-        customizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
-      required:
-      - customizations
-    CreateUpdateReconditioningSaleSubProductDto:
+    ReconditioningSaleSubProduct:
       type: object
       properties:
         subProductId:
@@ -544,6 +506,44 @@ components:
       required:
       - subProductId
       - comment
+    ReconditioningSaleList:
+      type: object
+      properties:
+        sales:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSale'
+      required:
+      - sales
+    ReconditioningSaleOfferCustomizationsDto:
+      type: object
+      properties:
+        customizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconditioningSaleOfferCustomizationDto'
+      required:
+      - customizations
+    CompanyCurrency:
+      type: object
+      properties:
+        isoName:
+          type: string
+        symbol:
+          type: string
+      required:
+      - isoName
+      - symbol
+    CompanyMailSender:
+      type: object
+      properties:
+        name:
+          type: string
+        replyToEmailAddress:
+          type: string
+      required:
+      - name
+      - replyToEmailAddress
     ReconditioningSaleOffer:
       type: object
       properties:

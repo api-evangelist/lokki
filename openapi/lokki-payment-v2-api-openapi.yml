@@ -1187,67 +1187,9 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    StripePayment:
+    AncvConnectPaymentDetail:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentProvider'
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/StripePaymentPayment'
-          - $ref: '#/components/schemas/StripePaymentRefund'
-          - $ref: '#/components/schemas/StripePaymentLongTermDeposit'
-          - $ref: '#/components/schemas/StripePaymentShortTermDeposit'
-          - $ref: '#/components/schemas/StripePaymentSubscription'
-          - $ref: '#/components/schemas/StripePaymentLokkiTransfer'
-          - $ref: '#/components/schemas/StripePaymentLokkiTransferRefund'
-        errorStatus:
-          $ref: '#/components/schemas/StripePaymentErrorStatus'
-        fees:
-          allOf:
-          - $ref: '#/components/schemas/PaymentFees'
-        paymentMethodDetails:
-          allOf:
-          - $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
-        errorCode:
-          type: object
-        errorMessage:
-          type:
-          - string
-          - 'null'
-      required:
-      - type
-      - details
-      - fees
-      - paymentMethodDetails
-      - errorCode
-      - errorMessage
-    PaymentFees:
-      type: object
-      properties:
-        applicationFeeHT:
-          type: number
-        applicationFeeTVA:
-          type: number
-        applicationFee:
-          type: number
-        stripeFee:
-          type: number
-      required:
-      - applicationFee
-      - stripeFee
-    CreateAncvConnectPaymentBodyDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/AncvPaymentProvider'
-        origin:
-          type: string
-          enum:
-          - ONLINE_STORE
-          - PAYMENT_LINK
-          - LOKKI_TRANSFER
-          - RENTAL_PLACE
         preTransactionId:
           type: string
         qrCodeTransactionId:
@@ -1255,13 +1197,76 @@ components:
         transactionId:
           type: string
         method:
-          type: string
           enum:
           - QR_CODE
           - AUTHENTIFICATION
+          type: string
+    CreateStripePaymentRefundBodyDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentRefundType'
+        refundedPaymentId:
+          type: string
+        refundReason:
+          type: string
+          enum:
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
+      required:
+      - type
+      - refundedPaymentId
+      - refundReason
+    CreateStripePaymentShortTermDepositBodyDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentShortTermDepositType'
+        origin:
+          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
+        description:
+          type: string
+        stripeCustomerId:
+          type: string
       required:
       - type
       - origin
+      - description
+    StripePaymentLokkiTransferType:
+      type: string
+      enum:
+      - LOKKI_TRANSFER
+    GetManyPaymentsResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentV2'
+      required:
+      - total
+      - docs
+    GetPaymentStatusResponseDto:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/GetPaymentV2StatusEnum'
+        failureReason:
+          type: string
+          description: Stable failure code when status is FAILED (e.g. "prepaid_card_not_accepted").
+      required:
+      - status
+    AncvPaymentProvider:
+      type: string
+      enum:
+      - ANCV
     PaymentV2:
       type: object
       properties:
@@ -1379,10 +1384,38 @@ components:
       - captureDate
       - cancelDate
       - expirationDate
-    StripePaymentPaymentType:
-      type: string
-      enum:
-      - PAYMENT
+    CreateStripePaymentPaymentBodyDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentPaymentType'
+        origin:
+          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
+        context:
+          type: string
+          enum:
+          - ONLINE_STORE
+          - PAYMENT_LINK
+          - RENTAL_PLACE
+          - LOKKI_TRANSFER
+          - OFFLINE
+        description:
+          type: string
+      required:
+      - type
+      - origin
+      - context
+      - description
+    PaymentSquareRef:
+      type: object
+      properties:
+        squarePaymentId:
+          type: string
+        squareOrderId:
+          type: string
+      required:
+      - squarePaymentId
+      - squareOrderId
     AncvConnectFees:
       type: object
       properties:
@@ -1396,33 +1429,88 @@ components:
       - amountTTC
       - amountHT
       - tva
-    CreateOfflinePaymentBodyDto:
+    StripePaymentLokkiTransferPromoCodeType:
+      type: string
+      enum:
+      - PROMO_CODE
+    CapturePaymentV2DepositDto:
+      type: object
+      properties:
+        amountToCapture:
+          type: number
+        reason:
+          type: string
+      required:
+      - amountToCapture
+      - reason
+    OfflinePaymentProvider:
+      type: string
+      enum:
+      - OFFLINE
+    CreateManyPaymentV2BodyDto:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatePaymentBodyDto'
+      required:
+      - payments
+    StripePaymentPaymentOrigin:
+      type: string
+      enum:
+      - PAYMENT_LINK
+      - ONLINE_STORE
+    StripePaymentShortTermDeposit:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/OfflinePaymentProvider'
-        method:
+          $ref: '#/components/schemas/StripePaymentShortTermDepositType'
+        origin:
+          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
+        paymentIntentId:
+          type:
+          - string
+          - 'null'
+        stripeCustomerId:
           type: string
-          enum:
-          - CARD
-          - CASH
-          - CHECK
-          - CHECK_VACANCES
-          - TRANSFER
-          - SQUARE_TERMINAL
-          - OTHER
-        refundedPaymentId:
+        description:
           type: string
-        refundReason:
-          type: string
-          enum:
-          - DUPLICATE
-          - FRAUDULENT
-          - REQUESTED_BY_CUSTOMER
-          - OTHER
+        reason:
+          type:
+          - string
+          - 'null'
       required:
       - type
-      - method
+      - origin
+      - paymentIntentId
+      - stripeCustomerId
+      - description
+      - reason
+    StripePaymentResultDto:
+      type: object
+      properties:
+        clientSecret:
+          type: string
+        ref:
+          type: string
+        errorStatus:
+          enum:
+          - requires_action
+          - requires_confirmation
+          - requires_payment_method
+          type: string
+      required:
+      - clientSecret
+      - ref
+    StripePaymentSubscriptionType:
+      type: string
+      enum:
+      - SUBSCRIPTION
+    StripePaymentShortTermDepositType:
+      type: string
+      enum:
+      - SHORT_TERM_DEPOSIT
     CreateSquarePaymentV2Dto:
       type: object
       properties:
@@ -1430,6 +1518,60 @@ components:
           type: string
       required:
       - paymentId
+    StripePaymentLokkiTransferPromoCode:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCodeType'
+        promoCode:
+          type: string
+        discountAmount:
+          type: number
+        discountType:
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+          type: string
+        linkedStripePaymentId:
+          type: string
+        linkedAncvPaymentIds:
+          type: array
+          items:
+            type: string
+      required:
+      - type
+      - promoCode
+      - discountAmount
+      - discountType
+      - linkedStripePaymentId
+      - linkedAncvPaymentIds
+    CreateDepositLinkDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+        amount:
+          type: number
+          minimum: 1
+        orderType:
+          type: string
+          enum:
+          - ORDER_LCD
+          - ORDER_LLD
+          - ORDER_EVENT
+        description:
+          type: string
+        customerRef:
+          $ref: '#/components/schemas/CustomerRef'
+        orderRef:
+          $ref: '#/components/schemas/OrderRef'
+      required:
+      - orderId
+      - amount
+      - orderType
+      - description
+      - customerRef
+      - orderRef
     StripePaymentLongTermDeposit:
       type: object
       properties:
@@ -1453,6 +1595,118 @@ components:
       - stripeCustomerId
       - paymentIntentId
       - reason
+    CreateStripePaymentLokkiTransferRefundDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentLokkiTransferRefundType'
+        refundedPaymentId:
+          type: string
+      required:
+      - type
+      - refundedPaymentId
+    StripePaymentLokkiTransferRefund:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentLokkiTransferRefundType'
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCode'
+          allOf:
+          - $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCode'
+        transferReversalId:
+          type: string
+        transferId:
+          type: string
+        refundedPaymentId:
+          type: string
+      required:
+      - type
+      - details
+      - transferReversalId
+      - transferId
+      - refundedPaymentId
+    AncvConnectPayment:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AncvPaymentProvider'
+        fees:
+          allOf:
+          - $ref: '#/components/schemas/AncvConnectFees'
+        origin:
+          enum:
+          - ONLINE_STORE
+          - PAYMENT_LINK
+          - LOKKI_TRANSFER
+          - RENTAL_PLACE
+          type: string
+        details:
+          $ref: '#/components/schemas/AncvConnectPaymentDetail'
+      required:
+      - type
+      - fees
+      - origin
+      - details
+    StripePaymentPaymentType:
+      type: string
+      enum:
+      - PAYMENT
+    OfflinePayment:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/OfflinePaymentProvider'
+        method:
+          enum:
+          - CARD
+          - CASH
+          - CHECK
+          - CHECK_VACANCES
+          - TRANSFER
+          - SQUARE_TERMINAL
+          - OTHER
+          type: string
+        refundedPaymentId:
+          type: string
+        refundReason:
+          enum:
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
+          type: string
+      required:
+      - type
+      - method
+    CreateStripePaymentLongTermDepositBodyDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentLongTermDepositType'
+        origin:
+          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
+        stripeCustomerId:
+          type: string
+      required:
+      - type
+      - origin
+      - stripeCustomerId
+    AncvConnectPaymentCheckoutDto:
+      type: object
+      properties:
+        preTransactionId:
+          type: string
+        transactionId:
+          type: string
+      required:
+      - preTransactionId
+      - transactionId
+    StripePaymentProvider:
+      type: string
+      enum:
+      - STRIPE
     EnrichedPaymentV2:
       type: object
       properties:
@@ -1575,79 +1829,76 @@ components:
       - captureDate
       - cancelDate
       - expirationDate
-    CustomerRef:
-      type: object
-      properties:
-        id:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        companyName:
-          type: string
-        phone:
-          type: string
-        createdFrom:
-          type: string
-          enum:
-          - DASHBOARD
-          - ONLINE_STORE
-          - RENTAL_PLACE_LOKKI
-      required:
-      - id
-      - firstName
-      - lastName
-      - email
-      - companyName
-      - phone
-      - createdFrom
-    CreateStripePaymentLokkiTransferDto:
+    CreateStripePaymentLokkiTransferPromoCodeDto:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/StripePaymentLokkiTransferType'
-        details:
-          $ref: '#/components/schemas/CreateStripePaymentLokkiTransferPromoCodeDto'
-      required:
-      - type
-      - details
-    CreateStripePaymentShortTermDepositBodyDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentShortTermDepositType'
-        origin:
-          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
-        description:
+          $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCodeType'
+        promoCode:
           type: string
-        stripeCustomerId:
-          type: string
-      required:
-      - type
-      - origin
-      - description
-    AncvPaymentProvider:
-      type: string
-      enum:
-      - ANCV
-    GetManyPaymentsResponseDto:
-      type: object
-      properties:
-        total:
+        discountAmount:
           type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
+        discountType:
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+          type: string
+        linkedStripePaymentId:
+          type: string
+        linkedAncvPaymentIds:
           type: array
           items:
-            $ref: '#/components/schemas/PaymentV2'
+            type: string
       required:
-      - total
-      - docs
+      - type
+      - promoCode
+      - discountAmount
+      - discountType
+      - linkedStripePaymentId
+      - linkedAncvPaymentIds
+    PaymentFees:
+      type: object
+      properties:
+        applicationFeeHT:
+          type: number
+        applicationFeeTVA:
+          type: number
+        applicationFee:
+          type: number
+        stripeFee:
+          type: number
+      required:
+      - applicationFee
+      - stripeFee
+    StripePaymentRefund:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentRefundType'
+        refundId:
+          type: string
+        refundedPaymentId:
+          type: string
+        refundDate:
+          format: date-time
+          type: string
+        refundReason:
+          enum:
+          - DUPLICATE
+          - FRAUDULENT
+          - REQUESTED_BY_CUSTOMER
+          - OTHER
+          type: string
+      required:
+      - type
+      - refundId
+      - refundedPaymentId
+      - refundDate
+      - refundReason
+    StripePaymentLokkiTransferRefundType:
+      type: string
+      enum:
+      - LOKKI_TRANSFER_REFUND
     GetQrCodePaymentStatusResponseDto:
       type: object
       properties:
@@ -1661,54 +1912,21 @@ components:
       required:
       - status
       - restToPay
-    StripePaymentLokkiTransferRefund:
+    StripePaymentRefundType:
+      type: string
+      enum:
+      - REFUND
+    CreateStripePaymentSubscriptionBodyDto:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/StripePaymentLokkiTransferRefundType'
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCode'
-          allOf:
-          - $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCode'
-        transferReversalId:
-          type: string
-        transferId:
-          type: string
-        refundedPaymentId:
-          type: string
+          $ref: '#/components/schemas/StripePaymentSubscriptionType'
       required:
       - type
-      - details
-      - transferReversalId
-      - transferId
-      - refundedPaymentId
-    StripePaymentErrorStatus:
+    StripePaymentLongTermDepositType:
       type: string
       enum:
-      - requires_action
-      - requires_confirmation
-      - requires_payment_method
-    PaymentSquareRef:
-      type: object
-      properties:
-        squarePaymentId:
-          type: string
-        squareOrderId:
-          type: string
-      required:
-      - squarePaymentId
-      - squareOrderId
-    GetPaymentStatusResponseDto:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/GetPaymentV2StatusEnum'
-        failureReason:
-          type: string
-          description: Stable failure code when status is FAILED (e.g. "prepaid_card_not_accepted").
-      required:
-      - status
+      - LONG_TERM_DEPOSIT
     CreatePaymentBodyDto:
       type: object
       properties:
@@ -1786,176 +2004,42 @@ components:
       - orderType
       - context
       - provider
-    StripePaymentLokkiTransferPromoCode:
+    CreateStripePaymentBodyDto:
       type: object
       properties:
         type:
-          $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCodeType'
-        promoCode:
-          type: string
-        discountAmount:
-          type: number
-        discountType:
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-          type: string
-        linkedStripePaymentId:
-          type: string
-        linkedAncvPaymentIds:
-          type: array
-          items:
-            type: string
+          $ref: '#/components/schemas/StripePaymentProvider'
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/CreateStripePaymentPaymentBodyDto'
+          - $ref: '#/components/schemas/CreateStripePaymentRefundBodyDto'
+          - $ref: '#/components/schemas/CreateStripePaymentLongTermDepositBodyDto'
+          - $ref: '#/components/schemas/CreateStripePaymentShortTermDepositBodyDto'
+          - $ref: '#/components/schemas/CreateStripePaymentSubscriptionBodyDto'
+          - $ref: '#/components/schemas/CreateStripePaymentLokkiTransferDto'
+          - $ref: '#/components/schemas/CreateStripePaymentLokkiTransferRefundDto'
+        paymentMethodDetails:
+          allOf:
+          - $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
       required:
       - type
-      - promoCode
-      - discountAmount
-      - discountType
-      - linkedStripePaymentId
-      - linkedAncvPaymentIds
-    StripePaymentProvider:
+      - details
+    CreateStripePaymentLokkiTransferDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentLokkiTransferType'
+        details:
+          $ref: '#/components/schemas/CreateStripePaymentLokkiTransferPromoCodeDto'
+      required:
+      - type
+      - details
+    GetPaymentV2StatusEnum:
       type: string
       enum:
-      - STRIPE
-    StripePaymentRefund:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentRefundType'
-        refundId:
-          type: string
-        refundedPaymentId:
-          type: string
-        refundDate:
-          format: date-time
-          type: string
-        refundReason:
-          enum:
-          - DUPLICATE
-          - FRAUDULENT
-          - REQUESTED_BY_CUSTOMER
-          - OTHER
-          type: string
-      required:
-      - type
-      - refundId
-      - refundedPaymentId
-      - refundDate
-      - refundReason
-    AncvConnectPayment:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/AncvPaymentProvider'
-        fees:
-          allOf:
-          - $ref: '#/components/schemas/AncvConnectFees'
-        origin:
-          enum:
-          - ONLINE_STORE
-          - PAYMENT_LINK
-          - LOKKI_TRANSFER
-          - RENTAL_PLACE
-          type: string
-        details:
-          $ref: '#/components/schemas/AncvConnectPaymentDetail'
-      required:
-      - type
-      - fees
-      - origin
-      - details
-    CreateStripePaymentLongTermDepositBodyDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentLongTermDepositType'
-        origin:
-          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
-        stripeCustomerId:
-          type: string
-      required:
-      - type
-      - origin
-      - stripeCustomerId
-    AncvConnectPaymentCheckoutDto:
-      type: object
-      properties:
-        preTransactionId:
-          type: string
-        transactionId:
-          type: string
-      required:
-      - preTransactionId
-      - transactionId
-    StripeExpressPaymentMethodDetail:
-      type: object
-      properties:
-        cardType:
-          type: string
-          enum:
-          - standard
-          - premium
-        type:
-          type: string
-          enum:
-          - card
-          - Google-Pay
-          - Apple-Pay
-        brand:
-          type: string
-        brandProduct:
-          type: string
-        countryCode:
-          type: string
-        used3DS:
-          type: boolean
-        feeValues:
-          type: object
-      required:
-      - cardType
-      - type
-      - brand
-      - brandProduct
-      - countryCode
-      - used3DS
-      - feeValues
-    CreateStripePaymentLokkiTransferPromoCodeDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentLokkiTransferPromoCodeType'
-        promoCode:
-          type: string
-        discountAmount:
-          type: number
-        discountType:
-          enum:
-          - PERCENTAGE
-          - AMOUNT
-          type: string
-        linkedStripePaymentId:
-          type: string
-        linkedAncvPaymentIds:
-          type: array
-          items:
-            type: string
-      required:
-      - type
-      - promoCode
-      - discountAmount
-      - discountType
-      - linkedStripePaymentId
-      - linkedAncvPaymentIds
-    CreateStripePaymentLokkiTransferRefundDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentLokkiTransferRefundType'
-        refundedPaymentId:
-          type: string
-      required:
-      - type
-      - refundedPaymentId
+      - FAILED
+      - SUCCEEDED
+      - WAITING
     OrderRef:
       type: object
       properties:
@@ -1992,15 +2076,47 @@ components:
       - totalTTC
       - totalHT
       - createdFrom
-    OfflinePaymentProvider:
+    StripePayment:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/StripePaymentProvider'
+        details:
+          oneOf:
+          - $ref: '#/components/schemas/StripePaymentPayment'
+          - $ref: '#/components/schemas/StripePaymentRefund'
+          - $ref: '#/components/schemas/StripePaymentLongTermDeposit'
+          - $ref: '#/components/schemas/StripePaymentShortTermDeposit'
+          - $ref: '#/components/schemas/StripePaymentSubscription'
+          - $ref: '#/components/schemas/StripePaymentLokkiTransfer'
+          - $ref: '#/components/schemas/StripePaymentLokkiTransferRefund'
+        errorStatus:
+          $ref: '#/components/schemas/StripePaymentErrorStatus'
+        fees:
+          allOf:
+          - $ref: '#/components/schemas/PaymentFees'
+        paymentMethodDetails:
+          allOf:
+          - $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
+        errorCode:
+          type: object
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      required:
+      - type
+      - details
+      - fees
+      - paymentMethodDetails
+      - errorCode
+      - errorMessage
+    StripePaymentErrorStatus:
       type: string
       enum:
-      - OFFLINE
-    StripePaymentPaymentOrigin:
-      type: string
-      enum:
-      - PAYMENT_LINK
-      - ONLINE_STORE
+      - requires_action
+      - requires_confirmation
+      - requires_payment_method
     StripePaymentPayment:
       type: object
       properties:
@@ -2019,136 +2135,13 @@ components:
       - origin
       - paymentIntentId
       - description
-    StripePaymentLongTermDepositType:
-      type: string
-      enum:
-      - LONG_TERM_DEPOSIT
-    CreateDepositLinkDto:
-      type: object
-      properties:
-        orderId:
-          type: string
-        amount:
-          type: number
-          minimum: 1
-        orderType:
-          type: string
-          enum:
-          - ORDER_LCD
-          - ORDER_LLD
-          - ORDER_EVENT
-        description:
-          type: string
-        customerRef:
-          $ref: '#/components/schemas/CustomerRef'
-        orderRef:
-          $ref: '#/components/schemas/OrderRef'
-      required:
-      - orderId
-      - amount
-      - orderType
-      - description
-      - customerRef
-      - orderRef
-    StripePaymentRefundType:
-      type: string
-      enum:
-      - REFUND
-    StripePaymentShortTermDeposit:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentShortTermDepositType'
-        origin:
-          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
-        paymentIntentId:
-          type:
-          - string
-          - 'null'
-        stripeCustomerId:
-          type: string
-        description:
-          type: string
-        reason:
-          type:
-          - string
-          - 'null'
-      required:
-      - type
-      - origin
-      - paymentIntentId
-      - stripeCustomerId
-      - description
-      - reason
-    StripePaymentResultDto:
-      type: object
-      properties:
-        clientSecret:
-          type: string
-        ref:
-          type: string
-        errorStatus:
-          enum:
-          - requires_action
-          - requires_confirmation
-          - requires_payment_method
-          type: string
-      required:
-      - clientSecret
-      - ref
-    StripePaymentLokkiTransferPromoCodeType:
-      type: string
-      enum:
-      - PROMO_CODE
-    StripePaymentLokkiTransferRefundType:
-      type: string
-      enum:
-      - LOKKI_TRANSFER_REFUND
-    CreateStripePaymentPaymentBodyDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentPaymentType'
-        origin:
-          $ref: '#/components/schemas/StripePaymentPaymentOrigin'
-        context:
-          type: string
-          enum:
-          - ONLINE_STORE
-          - PAYMENT_LINK
-          - RENTAL_PLACE
-          - LOKKI_TRANSFER
-          - OFFLINE
-        description:
-          type: string
-      required:
-      - type
-      - origin
-      - context
-      - description
-    CreateStripePaymentSubscriptionBodyDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentSubscriptionType'
-      required:
-      - type
-    CapturePaymentV2DepositDto:
-      type: object
-      properties:
-        amountToCapture:
-          type: number
-        reason:
-          type: string
-      required:
-      - amountToCapture
-      - reason
-    OfflinePayment:
+    CreateOfflinePaymentBodyDto:
       type: object
       properties:
         type:
           $ref: '#/components/schemas/OfflinePaymentProvider'
         method:
+          type: string
           enum:
           - CARD
           - CASH
@@ -2157,41 +2150,18 @@ components:
           - TRANSFER
           - SQUARE_TERMINAL
           - OTHER
-          type: string
         refundedPaymentId:
           type: string
         refundReason:
+          type: string
           enum:
           - DUPLICATE
           - FRAUDULENT
           - REQUESTED_BY_CUSTOMER
           - OTHER
-          type: string
       required:
       - type
       - method
-    CreateStripePaymentRefundBodyDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentRefundType'
-        refundedPaymentId:
-          type: string
-        refundReason:
-          type: string
-          enum:
-          - DUPLICATE
-          - FRAUDULENT
-          - REQUESTED_BY_CUSTOMER
-          - OTHER
-      required:
-      - type
-      - refundedPaymentId
-      - refundReason
-    StripePaymentLokkiTransferType:
-      type: string
-      enum:
-      - LOKKI_TRANSFER
     StripePaymentLokkiTransfer:
       type: object
       properties:
@@ -2208,18 +2178,47 @@ components:
       - type
       - details
       - transferId
-    CreateManyPaymentV2BodyDto:
+    CustomerRef:
       type: object
       properties:
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreatePaymentBodyDto'
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        companyName:
+          type: string
+        phone:
+          type: string
+        createdFrom:
+          type: string
+          enum:
+          - DASHBOARD
+          - ONLINE_STORE
+          - RENTAL_PLACE_LOKKI
       required:
-      - payments
-    AncvConnectPaymentDetail:
+      - id
+      - firstName
+      - lastName
+      - email
+      - companyName
+      - phone
+      - createdFrom
+    CreateAncvConnectPaymentBodyDto:
       type: object
       properties:
+        type:
+          $ref: '#/components/schemas/AncvPaymentProvider'
+        origin:
+          type: string
+          enum:
+          - ONLINE_STORE
+          - PAYMENT_LINK
+          - LOKKI_TRANSFER
+          - RENTAL_PLACE
         preTransactionId:
           type: string
         qrCodeTransactionId:
@@ -2227,44 +2226,13 @@ components:
         transactionId:
           type: string
         method:
+          type: string
           enum:
           - QR_CODE
           - AUTHENTIFICATION
-          type: string
-    GetPaymentV2StatusEnum:
-      type: string
-      enum:
-      - FAILED
-      - SUCCEEDED
-      - WAITING
-    StripePaymentSubscriptionType:
-      type: string
-      enum:
-      - SUBSCRIPTION
-    CreateStripePaymentBodyDto:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/StripePaymentProvider'
-        details:
-          oneOf:
-          - $ref: '#/components/schemas/CreateStripePaymentPaymentBodyDto'
-          - $ref: '#/components/schemas/CreateStripePaymentRefundBodyDto'
-          - $ref: '#/components/schemas/CreateStripePaymentLongTermDepositBodyDto'
-          - $ref: '#/components/schemas/CreateStripePaymentShortTermDepositBodyDto'
-          - $ref: '#/components/schemas/CreateStripePaymentSubscriptionBodyDto'
-          - $ref: '#/components/schemas/CreateStripePaymentLokkiTransferDto'
-          - $ref: '#/components/schemas/CreateStripePaymentLokkiTransferRefundDto'
-        paymentMethodDetails:
-          allOf:
-          - $ref: '#/components/schemas/StripeExpressPaymentMethodDetail'
       required:
       - type
-      - details
-    StripePaymentShortTermDepositType:
-      type: string
-      enum:
-      - SHORT_TERM_DEPOSIT
+      - origin
     StripePaymentSubscription:
       type: object
       properties:
@@ -2302,6 +2270,38 @@ components:
       - invoiceId
       - paymentIntentId
       - status
+    StripeExpressPaymentMethodDetail:
+      type: object
+      properties:
+        cardType:
+          type: string
+          enum:
+          - standard
+          - premium
+        type:
+          type: string
+          enum:
+          - card
+          - Google-Pay
+          - Apple-Pay
+        brand:
+          type: string
+        brandProduct:
+          type: string
+        countryCode:
+          type: string
+        used3DS:
+          type: boolean
+        feeValues:
+          type: object
+      required:
+      - cardType
+      - type
+      - brand
+      - brandProduct
+      - countryCode
+      - used3DS
+      - feeValues
   securitySchemes:
     x-access-token:
       scheme: bearer

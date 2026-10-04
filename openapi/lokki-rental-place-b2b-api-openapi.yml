@@ -166,144 +166,53 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RentalPlaceSearchBarButton:
+    RentalPlaceFooterLinkCol:
       type: object
       properties:
-        textStyle:
-          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        link:
+          type: string
+        id:
+          type: string
+        isScript:
+          type: boolean
+      required:
+      - text
+      - link
+      - id
+      - isScript
+    RentalPlaceStyle:
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+        borderRadius:
+          type: string
+        borderColor:
+          type: string
+        padding:
+          type: string
+    RentalPlaceBlockButton:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
         style:
           $ref: '#/components/schemas/RentalPlaceStyle'
       required:
-      - textStyle
+      - text
       - style
-    DateRange:
+    EventTag:
       type: object
       properties:
         id:
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - from
-      - to
-    PublicManagingPlaceUniverses:
-      type: object
-      properties:
-        id:
-          type: string
-        categoryId:
-          type: string
-      required:
-      - id
-      - categoryId
-    RentalPlaceInfos:
-      type: object
-      properties:
-        id:
-          type: string
-        owners:
-          type: array
-          items:
-            type: string
-        navBar:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        mainInfo:
-          $ref: '#/components/schemas/RentalPlaceMainInfo'
-        searchBar:
-          $ref: '#/components/schemas/RentalPlaceSearchBar'
-        mainImages:
-          $ref: '#/components/schemas/RentalPlaceMainImages'
-        texts:
-          $ref: '#/components/schemas/RentalPlaceTexts'
-        categoryTitle:
-          $ref: '#/components/schemas/RentalPlaceText'
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceCategory'
-        ads:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceAd'
-        blockInfo:
-          $ref: '#/components/schemas/RentalPlaceBlockInfo'
-        bannerInfo:
-          $ref: '#/components/schemas/RentalPlaceBannerInfo'
-        footer:
-          $ref: '#/components/schemas/RentalPlaceFooter'
-        myShop:
-          $ref: '#/components/schemas/RentalPlaceMyShop'
-        metaTitle:
-          type: string
-        metaDescription:
-          type: string
-        customScript:
-          type: string
-      required:
-      - id
-      - owners
-      - navBar
-      - mainInfo
-      - searchBar
-      - mainImages
-      - texts
-      - categoryTitle
-      - categories
-      - ads
-      - blockInfo
-      - bannerInfo
-      - footer
-      - myShop
-      - metaTitle
-      - metaDescription
-      - customScript
-    PublicManagingPlaceStore:
-      type: object
-      properties:
-        id:
-          type: string
-        slug:
           type: string
         name:
-          type: string
-        logoURL:
-          type: string
-        description:
-          type: string
-        bannerURL:
-          type: array
-          items:
-            type: string
-        address:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        onlineStoreConfig:
-          $ref: '#/components/schemas/OnlineStoreConfig'
-        distance:
-          type: number
-        universes:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicManagingPlaceUniverses'
+          $ref: '#/components/schemas/LocalizedContent'
       required:
       - id
-      - slug
       - name
-      - logoURL
-      - description
-      - bannerURL
-      - address
-      - lat
-      - lng
-      - onlineStoreConfig
-      - distance
-      - universes
     RentalPlaceMainImages:
       type: object
       properties:
@@ -319,323 +228,6 @@ components:
       - images
       - sliderInterval
       - text
-    ReservationRange:
-      type: object
-      properties:
-        nbHours:
-          type: number
-        activated:
-          type: boolean
-      required:
-      - nbHours
-      - activated
-    RentalPlaceText:
-      type: object
-      properties:
-        text:
-          $ref: '#/components/schemas/LocalizedContent'
-        style:
-          $ref: '#/components/schemas/RentalPlaceTextStyle'
-      required:
-      - text
-      - style
-    CompanyDelivery:
-      type: object
-      properties:
-        activated:
-          type: boolean
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRange'
-        deliveryOnly:
-          type: boolean
-        returnDelivery:
-          type: boolean
-        freeDeliveryActivated:
-          type: boolean
-        freeDeliveryMinimumType:
-          type: string
-          enum:
-          - MINUTES
-          - SUBTOTAL
-        freeDeliveryMinimumVal:
-          type: number
-        excludedCities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
-      - activated
-      - ranges
-      - deliveryOnly
-      - returnDelivery
-      - freeDeliveryActivated
-      - freeDeliveryMinimumType
-      - freeDeliveryMinimumVal
-      - excludedCities
-    RentalPlaceMyShopCardStyle:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        textStyle:
-          $ref: '#/components/schemas/RentalPlaceTextStyle'
-      required:
-      - style
-      - textStyle
-    PublicManagingPlace:
-      type: object
-      properties:
-        id:
-          type: string
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicManagingPlaceStore'
-        rentalPlaceId:
-          type: string
-        name:
-          type: string
-        url:
-          type: string
-        generalConditions:
-          type: string
-        legalMention:
-          type: string
-        termsOfService:
-          type: string
-        dataProtection:
-          type: string
-        cookiePolicy:
-          type: string
-        isLive:
-          type: boolean
-        rentalPlaceInfos:
-          $ref: '#/components/schemas/RentalPlaceInfos'
-      required:
-      - id
-      - companies
-      - rentalPlaceId
-      - name
-      - url
-      - generalConditions
-      - legalMention
-      - termsOfService
-      - dataProtection
-      - cookiePolicy
-      - isLive
-    PatchManagingPlaceReturnDto:
-      type: object
-      properties:
-        managingPlace:
-          $ref: '#/components/schemas/ManagingPlace'
-        errors:
-          $ref: '#/components/schemas/ManagingPlacePatchErrorDto'
-      required:
-      - managingPlace
-      - errors
-    RentalPlaceFooter:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        textStyle:
-          $ref: '#/components/schemas/RentalPlaceTextStyle'
-        linkColOne:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
-        linkColTwo:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
-        linkSocial:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceFooterLinkSocial'
-      required:
-      - style
-      - textStyle
-      - linkColOne
-      - linkColTwo
-      - linkSocial
-    DeliveryRange:
-      type: object
-      properties:
-        min:
-          type: number
-        max:
-          type: number
-        price:
-          type: number
-        specificPrices:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
-      required:
-      - min
-      - max
-      - price
-      - specificPrices
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    OpeningTimeFrame:
-      type: object
-      properties:
-        id:
-          type: string
-        day:
-          type: string
-          enum:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          - saturday
-          - sunday
-          - ALL
-        isOpen:
-          type: boolean
-        from:
-          type: string
-        to:
-          type: string
-      required:
-      - id
-      - day
-      - isOpen
-    RentalPlaceMyShopCard:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        button:
-          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
-        distance:
-          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
-        title:
-          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
-      required:
-      - style
-      - button
-      - distance
-      - title
-    ManagingPlacePatchErrorDto:
-      type: object
-      properties:
-        companies:
-          type: array
-          items:
-            type: string
-    ManagingPlaceUser:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-      required:
-      - name
-      - email
-    DeliveryRangeSpecificPrice:
-      type: object
-      properties:
-        price:
-          type: number
-        cities:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyDeliveryCity'
-      required:
-      - price
-      - cities
-    RentalPlaceBannerInfo:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        block1:
-          $ref: '#/components/schemas/RentalPlaceBlock'
-        block2:
-          $ref: '#/components/schemas/RentalPlaceBlock'
-        block3:
-          $ref: '#/components/schemas/RentalPlaceBlock'
-      required:
-      - style
-      - block1
-      - block2
-      - block3
-    RentalPlaceBlockButton:
-      type: object
-      properties:
-        text:
-          $ref: '#/components/schemas/RentalPlaceText'
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-      required:
-      - text
-      - style
-    RentalPlaceBlock:
-      type: object
-      properties:
-        image:
-          $ref: '#/components/schemas/RentalPlaceFile'
-        text:
-          $ref: '#/components/schemas/LocalizedContent'
-        style:
-          $ref: '#/components/schemas/RentalPlaceTextStyle'
-      required:
-      - image
-      - text
-      - style
-    RentalPlaceMainInfo:
-      type: object
-      properties:
-        font:
-          type: string
-          enum:
-          - DM Sans
-          - MontSerrat
-          - Open Sans
-          - Roboto Condensed
-          - Roboto
-          - PT Sans
-          - Poppins
-          - Lato
-          - Raleway
-          - Ubuntu
-          - Source Sans Pro
-        accentColor:
-          type: string
-        textColor:
-          type: string
-        backgroundColor:
-          type: string
-        favicon:
-          $ref: '#/components/schemas/RentalPlaceFile'
-        logo:
-          $ref: '#/components/schemas/RentalPlaceFile'
-      required:
-      - font
-      - accentColor
-      - textColor
-      - backgroundColor
-      - favicon
-      - logo
-    RentalPlaceAdButton:
-      type: object
-      properties:
-        text:
-          $ref: '#/components/schemas/RentalPlaceText'
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-      required:
-      - text
-      - style
     ManagingPlace:
       type: object
       properties:
@@ -701,274 +293,6 @@ components:
       - group
       - isLive
       - maxCompaniesNb
-    RentalPlaceFooterLinkCol:
-      type: object
-      properties:
-        text:
-          $ref: '#/components/schemas/LocalizedContent'
-        link:
-          type: string
-        id:
-          type: string
-        isScript:
-          type: boolean
-      required:
-      - text
-      - link
-      - id
-      - isScript
-    ManagingPlaceStoresClientCsvDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    EventTag:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - id
-      - name
-    RentalPlaceFooterLinkSocial:
-      type: object
-      properties:
-        name:
-          type: string
-        icon:
-          type: string
-        link:
-          type: string
-        id:
-          type: string
-        available:
-          type: boolean
-      required:
-      - name
-      - icon
-      - link
-      - id
-      - available
-    CompanyDeliveryCity:
-      type: object
-      properties:
-        cityName:
-          type: string
-        sublocalityName:
-          type: string
-        zipCode:
-          type: string
-        placeId:
-          type: string
-        hasMultiplePostcodeLocalities:
-          type: boolean
-      required:
-      - cityName
-      - sublocalityName
-      - zipCode
-      - placeId
-      - hasMultiplePostcodeLocalities
-    RentalPlaceMyShop:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/RentalPlaceText'
-        card:
-          $ref: '#/components/schemas/RentalPlaceMyShopCard'
-      required:
-      - title
-      - card
-    ManagingPlaceCompany:
-      type: object
-      properties:
-        companyId:
-          type: string
-        status:
-          type: string
-      required:
-      - companyId
-      - status
-    PatchManagingPlaceDto:
-      type: object
-      properties:
-        companies:
-          type: array
-          items:
-            type: string
-    RentalPlaceTexts:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/RentalPlaceText'
-        description:
-          $ref: '#/components/schemas/RentalPlaceText'
-      required:
-      - title
-      - description
-    RentalPlaceCategory:
-      type: object
-      properties:
-        id:
-          type: string
-        text:
-          $ref: '#/components/schemas/RentalPlaceText'
-        image:
-          $ref: '#/components/schemas/RentalPlaceFile'
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-      required:
-      - id
-      - text
-      - image
-      - style
-    UpdateDataProtectionTextDto:
-      type: object
-      properties:
-        dataProtectionText:
-          type: string
-      required:
-      - dataProtectionText
-    ReservationRanges:
-      type: object
-      properties:
-        minimum:
-          $ref: '#/components/schemas/ReservationRange'
-        maximum:
-          $ref: '#/components/schemas/ReservationRange'
-      required:
-      - minimum
-      - maximum
-    ReservationTime:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - start
-          - end
-        time:
-          type: string
-      required:
-      - id
-      - type
-      - time
-    RentalPlaceSearchBar:
-      type: object
-      properties:
-        style:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        titleStyle:
-          $ref: '#/components/schemas/RentalPlaceTextStyle'
-        button:
-          $ref: '#/components/schemas/RentalPlaceSearchBarButton'
-      required:
-      - style
-      - titleStyle
-      - button
-    UpdateRentalPlaceB2BDto:
-      type: object
-      properties:
-        navBar:
-          $ref: '#/components/schemas/RentalPlaceStyle'
-        mainInfo:
-          $ref: '#/components/schemas/RentalPlaceMainInfo'
-        searchBar:
-          $ref: '#/components/schemas/RentalPlaceSearchBar'
-        mainImages:
-          $ref: '#/components/schemas/RentalPlaceMainImages'
-        texts:
-          $ref: '#/components/schemas/RentalPlaceTexts'
-        categoryTitle:
-          $ref: '#/components/schemas/RentalPlaceText'
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceCategory'
-        ads:
-          type: array
-          items:
-            $ref: '#/components/schemas/RentalPlaceAd'
-        blockInfo:
-          $ref: '#/components/schemas/RentalPlaceBlockInfo'
-        bannerInfo:
-          $ref: '#/components/schemas/RentalPlaceBannerInfo'
-        footer:
-          $ref: '#/components/schemas/RentalPlaceFooter'
-        myShop:
-          $ref: '#/components/schemas/RentalPlaceMyShop'
-        metaTitle:
-          type: string
-        metaDescription:
-          type: string
-        customScript:
-          type: string
-        rentalPlaceCategoriesToDelete:
-          type: array
-          items:
-            type: string
-      required:
-      - navBar
-      - mainInfo
-      - searchBar
-      - mainImages
-      - texts
-      - categoryTitle
-      - categories
-      - ads
-      - blockInfo
-      - bannerInfo
-      - footer
-      - myShop
-      - metaTitle
-      - metaDescription
-      - customScript
-    RentalPlaceStyle:
-      type: object
-      properties:
-        backgroundColor:
-          type: string
-        borderRadius:
-          type: string
-        borderColor:
-          type: string
-        padding:
-          type: string
-    RentalPlaceAd:
-      type: object
-      properties:
-        id:
-          type: string
-        redirectUrl:
-          type: string
-        image:
-          $ref: '#/components/schemas/RentalPlaceFile'
-        text:
-          $ref: '#/components/schemas/RentalPlaceText'
-        button:
-          $ref: '#/components/schemas/RentalPlaceAdButton'
-      required:
-      - id
-      - redirectUrl
-      - image
-      - text
-      - button
-    UpdateCookiePolicyTextDto:
-      type: object
-      properties:
-        cookiePolicyText:
-          type: string
-      required:
-      - cookiePolicyText
     OnlineStoreConfig:
       type: object
       properties:
@@ -1093,18 +417,6 @@ components:
       - showPricing
       - showStock
       - lldBilling
-    RentalPlaceFile:
-      type: object
-      properties:
-        id:
-          type: string
-        filename:
-          type: string
-        url:
-          type: string
-      required:
-      - filename
-      - url
     RentalPlaceBlockInfo:
       type: object
       properties:
@@ -1138,6 +450,132 @@ components:
           type: string
         fontStyle:
           type: string
+    ReservationRange:
+      type: object
+      properties:
+        nbHours:
+          type: number
+        activated:
+          type: boolean
+      required:
+      - nbHours
+      - activated
+    DeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - price
+      - cities
+    DateRange:
+      type: object
+      properties:
+        id:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - from
+      - to
+    RentalPlaceText:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        style:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+      required:
+      - text
+      - style
+    ReservationRanges:
+      type: object
+      properties:
+        minimum:
+          $ref: '#/components/schemas/ReservationRange'
+        maximum:
+          $ref: '#/components/schemas/ReservationRange'
+      required:
+      - minimum
+      - maximum
+    CompanyDeliveryCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+        sublocalityName:
+          type: string
+        zipCode:
+          type: string
+        placeId:
+          type: string
+        hasMultiplePostcodeLocalities:
+          type: boolean
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
+    RentalPlaceSearchBar:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        titleStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        button:
+          $ref: '#/components/schemas/RentalPlaceSearchBarButton'
+      required:
+      - style
+      - titleStyle
+      - button
+    ManagingPlaceUser:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      required:
+      - name
+      - email
+    ManagingPlaceCompany:
+      type: object
+      properties:
+        companyId:
+          type: string
+        status:
+          type: string
+      required:
+      - companyId
+      - status
+    RentalPlaceFooterLinkSocial:
+      type: object
+      properties:
+        name:
+          type: string
+        icon:
+          type: string
+        link:
+          type: string
+        id:
+          type: string
+        available:
+          type: boolean
+      required:
+      - name
+      - icon
+      - link
+      - id
+      - available
     RentalPlaceMainImagesText:
       type: object
       properties:
@@ -1148,6 +586,233 @@ components:
       required:
       - value
       - style
+    DeliveryRange:
+      type: object
+      properties:
+        min:
+          type: number
+        max:
+          type: number
+        price:
+          type: number
+        specificPrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRangeSpecificPrice'
+      required:
+      - min
+      - max
+      - price
+      - specificPrices
+    RentalPlaceBlock:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        text:
+          $ref: '#/components/schemas/LocalizedContent'
+        style:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+      required:
+      - image
+      - text
+      - style
+    PatchManagingPlaceDto:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            type: string
+    PublicManagingPlace:
+      type: object
+      properties:
+        id:
+          type: string
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicManagingPlaceStore'
+        rentalPlaceId:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        generalConditions:
+          type: string
+        legalMention:
+          type: string
+        termsOfService:
+          type: string
+        dataProtection:
+          type: string
+        cookiePolicy:
+          type: string
+        isLive:
+          type: boolean
+        rentalPlaceInfos:
+          $ref: '#/components/schemas/RentalPlaceInfos'
+      required:
+      - id
+      - companies
+      - rentalPlaceId
+      - name
+      - url
+      - generalConditions
+      - legalMention
+      - termsOfService
+      - dataProtection
+      - cookiePolicy
+      - isLive
+    RentalPlaceInfos:
+      type: object
+      properties:
+        id:
+          type: string
+        owners:
+          type: array
+          items:
+            type: string
+        navBar:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        mainInfo:
+          $ref: '#/components/schemas/RentalPlaceMainInfo'
+        searchBar:
+          $ref: '#/components/schemas/RentalPlaceSearchBar'
+        mainImages:
+          $ref: '#/components/schemas/RentalPlaceMainImages'
+        texts:
+          $ref: '#/components/schemas/RentalPlaceTexts'
+        categoryTitle:
+          $ref: '#/components/schemas/RentalPlaceText'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceCategory'
+        ads:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceAd'
+        blockInfo:
+          $ref: '#/components/schemas/RentalPlaceBlockInfo'
+        bannerInfo:
+          $ref: '#/components/schemas/RentalPlaceBannerInfo'
+        footer:
+          $ref: '#/components/schemas/RentalPlaceFooter'
+        myShop:
+          $ref: '#/components/schemas/RentalPlaceMyShop'
+        metaTitle:
+          type: string
+        metaDescription:
+          type: string
+        customScript:
+          type: string
+      required:
+      - id
+      - owners
+      - navBar
+      - mainInfo
+      - searchBar
+      - mainImages
+      - texts
+      - categoryTitle
+      - categories
+      - ads
+      - blockInfo
+      - bannerInfo
+      - footer
+      - myShop
+      - metaTitle
+      - metaDescription
+      - customScript
+    ReservationTime:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - start
+          - end
+        time:
+          type: string
+      required:
+      - id
+      - type
+      - time
+    RentalPlaceSearchBarButton:
+      type: object
+      properties:
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+      required:
+      - textStyle
+      - style
+    RentalPlaceTexts:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/RentalPlaceText'
+        description:
+          $ref: '#/components/schemas/RentalPlaceText'
+      required:
+      - title
+      - description
+    PublicManagingPlaceUniverses:
+      type: object
+      properties:
+        id:
+          type: string
+        categoryId:
+          type: string
+      required:
+      - id
+      - categoryId
+    RentalPlaceMainInfo:
+      type: object
+      properties:
+        font:
+          type: string
+          enum:
+          - DM Sans
+          - MontSerrat
+          - Open Sans
+          - Roboto Condensed
+          - Roboto
+          - PT Sans
+          - Poppins
+          - Lato
+          - Raleway
+          - Ubuntu
+          - Source Sans Pro
+        accentColor:
+          type: string
+        textColor:
+          type: string
+        backgroundColor:
+          type: string
+        favicon:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        logo:
+          $ref: '#/components/schemas/RentalPlaceFile'
+      required:
+      - font
+      - accentColor
+      - textColor
+      - backgroundColor
+      - favicon
+      - logo
+    ManagingPlacePatchErrorDto:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            type: string
     EventUniverse:
       type: object
       properties:
@@ -1161,6 +826,341 @@ components:
       - id
       - name
       - imageUrl
+    RentalPlaceMyShopCardStyle:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+      required:
+      - style
+      - textStyle
+    UpdateDataProtectionTextDto:
+      type: object
+      properties:
+        dataProtectionText:
+          type: string
+      required:
+      - dataProtectionText
+    PublicManagingPlaceStore:
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        name:
+          type: string
+        logoURL:
+          type: string
+        description:
+          type: string
+        bannerURL:
+          type: array
+          items:
+            type: string
+        address:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        onlineStoreConfig:
+          $ref: '#/components/schemas/OnlineStoreConfig'
+        distance:
+          type: number
+        universes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicManagingPlaceUniverses'
+      required:
+      - id
+      - slug
+      - name
+      - logoURL
+      - description
+      - bannerURL
+      - address
+      - lat
+      - lng
+      - onlineStoreConfig
+      - distance
+      - universes
+    RentalPlaceMyShop:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/RentalPlaceText'
+        card:
+          $ref: '#/components/schemas/RentalPlaceMyShopCard'
+      required:
+      - title
+      - card
+    RentalPlaceBannerInfo:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        block1:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+        block2:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+        block3:
+          $ref: '#/components/schemas/RentalPlaceBlock'
+      required:
+      - style
+      - block1
+      - block2
+      - block3
+    UpdateRentalPlaceB2BDto:
+      type: object
+      properties:
+        navBar:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        mainInfo:
+          $ref: '#/components/schemas/RentalPlaceMainInfo'
+        searchBar:
+          $ref: '#/components/schemas/RentalPlaceSearchBar'
+        mainImages:
+          $ref: '#/components/schemas/RentalPlaceMainImages'
+        texts:
+          $ref: '#/components/schemas/RentalPlaceTexts'
+        categoryTitle:
+          $ref: '#/components/schemas/RentalPlaceText'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceCategory'
+        ads:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceAd'
+        blockInfo:
+          $ref: '#/components/schemas/RentalPlaceBlockInfo'
+        bannerInfo:
+          $ref: '#/components/schemas/RentalPlaceBannerInfo'
+        footer:
+          $ref: '#/components/schemas/RentalPlaceFooter'
+        myShop:
+          $ref: '#/components/schemas/RentalPlaceMyShop'
+        metaTitle:
+          type: string
+        metaDescription:
+          type: string
+        customScript:
+          type: string
+        rentalPlaceCategoriesToDelete:
+          type: array
+          items:
+            type: string
+      required:
+      - navBar
+      - mainInfo
+      - searchBar
+      - mainImages
+      - texts
+      - categoryTitle
+      - categories
+      - ads
+      - blockInfo
+      - bannerInfo
+      - footer
+      - myShop
+      - metaTitle
+      - metaDescription
+      - customScript
+    RentalPlaceCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
+        image:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+      required:
+      - id
+      - text
+      - image
+      - style
+    CompanyDelivery:
+      type: object
+      properties:
+        activated:
+          type: boolean
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryRange'
+        deliveryOnly:
+          type: boolean
+        returnDelivery:
+          type: boolean
+        freeDeliveryActivated:
+          type: boolean
+        freeDeliveryMinimumType:
+          type: string
+          enum:
+          - MINUTES
+          - SUBTOTAL
+        freeDeliveryMinimumVal:
+          type: number
+        excludedCities:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDeliveryCity'
+      required:
+      - activated
+      - ranges
+      - deliveryOnly
+      - returnDelivery
+      - freeDeliveryActivated
+      - freeDeliveryMinimumType
+      - freeDeliveryMinimumVal
+      - excludedCities
+    ManagingPlaceStoresClientCsvDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    OpeningTimeFrame:
+      type: object
+      properties:
+        id:
+          type: string
+        day:
+          type: string
+          enum:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          - saturday
+          - sunday
+          - ALL
+        isOpen:
+          type: boolean
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - id
+      - day
+      - isOpen
+    RentalPlaceFile:
+      type: object
+      properties:
+        id:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+      required:
+      - filename
+      - url
+    PatchManagingPlaceReturnDto:
+      type: object
+      properties:
+        managingPlace:
+          $ref: '#/components/schemas/ManagingPlace'
+        errors:
+          $ref: '#/components/schemas/ManagingPlacePatchErrorDto'
+      required:
+      - managingPlace
+      - errors
+    UpdateCookiePolicyTextDto:
+      type: object
+      properties:
+        cookiePolicyText:
+          type: string
+      required:
+      - cookiePolicyText
+    RentalPlaceAdButton:
+      type: object
+      properties:
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+      required:
+      - text
+      - style
+    RentalPlaceAd:
+      type: object
+      properties:
+        id:
+          type: string
+        redirectUrl:
+          type: string
+        image:
+          $ref: '#/components/schemas/RentalPlaceFile'
+        text:
+          $ref: '#/components/schemas/RentalPlaceText'
+        button:
+          $ref: '#/components/schemas/RentalPlaceAdButton'
+      required:
+      - id
+      - redirectUrl
+      - image
+      - text
+      - button
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    RentalPlaceFooter:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        textStyle:
+          $ref: '#/components/schemas/RentalPlaceTextStyle'
+        linkColOne:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkColTwo:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkCol'
+        linkSocial:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentalPlaceFooterLinkSocial'
+      required:
+      - style
+      - textStyle
+      - linkColOne
+      - linkColTwo
+      - linkSocial
+    RentalPlaceMyShopCard:
+      type: object
+      properties:
+        style:
+          $ref: '#/components/schemas/RentalPlaceStyle'
+        button:
+          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
+        distance:
+          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
+        title:
+          $ref: '#/components/schemas/RentalPlaceMyShopCardStyle'
+      required:
+      - style
+      - button
+      - distance
+      - title
   securitySchemes:
     x-access-token:
       scheme: bearer

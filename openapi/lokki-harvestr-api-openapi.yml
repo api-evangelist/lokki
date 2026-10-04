@@ -33,32 +33,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    HarvestrRequesterType:
-      type: string
-      enum:
-      - USER
-      - COMPANY
-    CreateHarvestrMessageDto:
+    CreateHarvestrMessageSubmitter:
       type: object
       properties:
-        channel:
-          $ref: '#/components/schemas/HarvestrMessageChannel'
-        integrationUrl:
+        name:
           type: string
-        integrationId:
+        email:
           type: string
-        title:
+        externalUid:
           type: string
-        content:
-          type: string
-        requester:
-          $ref: '#/components/schemas/CreateHarvestrMessageRequester'
-        submitter:
-          $ref: '#/components/schemas/CreateHarvestrMessageSubmitter'
       required:
-      - title
-      - content
-      - requester
+      - name
     CreateHarvestrMessageRequester:
       type: object
       properties:
@@ -73,31 +58,6 @@ components:
       required:
       - type
       - name
-    CreateHarvestrMessageSubmitter:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        externalUid:
-          type: string
-      required:
-      - name
-    HarvestrMessageChannel:
-      type: string
-      enum:
-      - CHROME_WIDGET
-      - FORM
-      - FRESHDESK
-      - HUBSPOT
-      - INTERCOM
-      - MAIL
-      - NOTE
-      - SALESFORCE
-      - SHEET
-      - SLACK
-      - ZENDESK
     HarvestrPostMessageResult:
       type: object
       properties:
@@ -162,6 +122,46 @@ components:
       - labels
       - code
       - messageStatus
+    HarvestrMessageChannel:
+      type: string
+      enum:
+      - CHROME_WIDGET
+      - FORM
+      - FRESHDESK
+      - HUBSPOT
+      - INTERCOM
+      - MAIL
+      - NOTE
+      - SALESFORCE
+      - SHEET
+      - SLACK
+      - ZENDESK
+    HarvestrRequesterType:
+      type: string
+      enum:
+      - USER
+      - COMPANY
+    CreateHarvestrMessageDto:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/HarvestrMessageChannel'
+        integrationUrl:
+          type: string
+        integrationId:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        requester:
+          $ref: '#/components/schemas/CreateHarvestrMessageRequester'
+        submitter:
+          $ref: '#/components/schemas/CreateHarvestrMessageSubmitter'
+      required:
+      - title
+      - content
+      - requester
   securitySchemes:
     x-access-token:
       scheme: bearer

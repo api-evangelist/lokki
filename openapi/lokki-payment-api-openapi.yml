@@ -177,15 +177,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LokkiPaymentTransactionsDto:
-      type: object
-      properties:
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/StripeTransaction'
-      required:
-      - transactions
     StripeCheckoutResultDto:
       type: object
       properties:
@@ -193,41 +184,6 @@ components:
           type: string
       required:
       - paymentClientSecret
-    StripeLoginLinkDto:
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-      - url
-    LokkiPaymentDashboardInfoResponseDto:
-      type: object
-      properties:
-        monthAmount:
-          type: number
-        monthFees:
-          type: number
-        lastPayout:
-          $ref: '#/components/schemas/LastPayoutDashboardInfo'
-        nextPayout:
-          $ref: '#/components/schemas/NextPayoutDashboardInfo'
-        stripePendingPayout:
-          $ref: '#/components/schemas/StripePendingPayoutDashboardInfo'
-      required:
-      - monthAmount
-      - monthFees
-      - nextPayout
-    StripePendingPayoutItem:
-      type: object
-      properties:
-        amount:
-          type: number
-        arrivalDate:
-          format: date-time
-          type: string
-      required:
-      - amount
-      - arrivalDate
     PayoutRelatedRefund:
       type: object
       properties:
@@ -242,72 +198,6 @@ components:
       - paymentIntentId
       - amount
       - date
-    LokkiPaymentPayoutsDto:
-      type: object
-      properties:
-        payouts:
-          type: array
-          items:
-            $ref: '#/components/schemas/StripePayout'
-      required:
-      - payouts
-    LokkiPaymentTransactionsCSVResponse:
-      type: object
-      properties:
-        csv:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csv
-    GetStripeExpressAcountStatusRespDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - RESTRICTED
-          - COMPLETED
-      required:
-      - status
-    InitiateInternalStripeCheckoutDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        orderId:
-          type: string
-        isEvent:
-          type: boolean
-        paymentCheckoutType:
-          type: string
-          enum:
-          - PAYMENT
-          - BAIL
-      required:
-      - amount
-      - orderId
-      - isEvent
-      - paymentCheckoutType
-    LastPayoutDashboardInfo:
-      type: object
-      properties:
-        date:
-          format: date-time
-          type: string
-        amount:
-          type: number
-        refundAmount:
-          type: number
-        fees:
-          type: number
-      required:
-      - date
-      - amount
-      - refundAmount
-      - fees
     StripeTransaction:
       type: object
       properties:
@@ -328,6 +218,44 @@ components:
       - amount
       - fee
       - amountHT
+    InitiateInternalStripeCheckoutDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        orderId:
+          type: string
+        isEvent:
+          type: boolean
+        paymentCheckoutType:
+          type: string
+          enum:
+          - PAYMENT
+          - BAIL
+      required:
+      - amount
+      - orderId
+      - isEvent
+      - paymentCheckoutType
+    LokkiPaymentTransactionsDto:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StripeTransaction'
+      required:
+      - transactions
+    GetStripeExpressAcountStatusRespDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - RESTRICTED
+          - COMPLETED
+      required:
+      - status
     StripePendingPayoutDashboardInfo:
       type: object
       properties:
@@ -337,6 +265,65 @@ components:
             $ref: '#/components/schemas/StripePendingPayoutItem'
       required:
       - payouts
+    LokkiPaymentPayoutsDto:
+      type: object
+      properties:
+        payouts:
+          type: array
+          items:
+            $ref: '#/components/schemas/StripePayout'
+      required:
+      - payouts
+    LokkiPaymentBalanceResponseDto:
+      type: object
+      properties:
+        available:
+          type: number
+        pending:
+          type: number
+      required:
+      - available
+      - pending
+    LokkiPaymentDashboardInfoResponseDto:
+      type: object
+      properties:
+        monthAmount:
+          type: number
+        monthFees:
+          type: number
+        lastPayout:
+          $ref: '#/components/schemas/LastPayoutDashboardInfo'
+        nextPayout:
+          $ref: '#/components/schemas/NextPayoutDashboardInfo'
+        stripePendingPayout:
+          $ref: '#/components/schemas/StripePendingPayoutDashboardInfo'
+      required:
+      - monthAmount
+      - monthFees
+      - nextPayout
+    StripeLoginLinkDto:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+      - url
+    NextPayoutDashboardInfo:
+      type: object
+      properties:
+        amount:
+          type: number
+        refundAmount:
+          type: number
+        fees:
+          type: number
+        pendingAmount:
+          type: number
+        pendingFees:
+          type: number
+      required:
+      - amount
+      - fees
     StripePayout:
       type: object
       properties:
@@ -364,32 +351,45 @@ components:
       - fee
       - amountHT
       - amountRefund
-    LokkiPaymentBalanceResponseDto:
+    LastPayoutDashboardInfo:
       type: object
       properties:
-        available:
-          type: number
-        pending:
-          type: number
-      required:
-      - available
-      - pending
-    NextPayoutDashboardInfo:
-      type: object
-      properties:
+        date:
+          format: date-time
+          type: string
         amount:
           type: number
         refundAmount:
           type: number
         fees:
           type: number
-        pendingAmount:
+      required:
+      - date
+      - amount
+      - refundAmount
+      - fees
+    LokkiPaymentTransactionsCSVResponse:
+      type: object
+      properties:
+        csv:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csv
+    StripePendingPayoutItem:
+      type: object
+      properties:
+        amount:
           type: number
-        pendingFees:
-          type: number
+        arrivalDate:
+          format: date-time
+          type: string
       required:
       - amount
-      - fees
+      - arrivalDate
   securitySchemes:
     x-access-token:
       scheme: bearer

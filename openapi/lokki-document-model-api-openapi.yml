@@ -110,6 +110,118 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CreateDocumentModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        companyId:
+          type: string
+        legalMentions:
+          type: string
+        signature:
+          type: boolean
+        onlineProductsName:
+          type: boolean
+        addComment:
+          type: boolean
+        termsAndConditions:
+          type: boolean
+        displayProductImage:
+          type: boolean
+        sortItemsByType:
+          type: boolean
+        sortItemsAlphabetically:
+          type: boolean
+        displayProductDescription:
+          type: boolean
+        onlineStore:
+          type: boolean
+        isWorkshop:
+          type: boolean
+        displaySubProducts:
+          type: boolean
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+        hidePrice:
+          type: boolean
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - companyId
+      - legalMentions
+      - signature
+      - onlineProductsName
+      - addComment
+      - termsAndConditions
+      - displayProductImage
+      - sortItemsByType
+      - sortItemsAlphabetically
+      - displayProductDescription
+      - onlineStore
+      - isWorkshop
+      - displaySubProducts
+      - hideTime
+      - hideDate
+      - hidePrice
+    UpdateDocumentModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        legalMentions:
+          type: string
+        signature:
+          type: boolean
+        onlineProductsName:
+          type: boolean
+        addComment:
+          type: boolean
+        termsAndConditions:
+          type: boolean
+        displayProductImage:
+          type: boolean
+        sortItemsByType:
+          type: boolean
+        sortItemsAlphabetically:
+          type: boolean
+        displayProductDescription:
+          type: boolean
+        onlineStore:
+          type: boolean
+        isWorkshop:
+          type: boolean
+        displaySubProducts:
+          type: boolean
+        hideTime:
+          type: boolean
+        hideDate:
+          type: boolean
+        hidePrice:
+          type: boolean
+        useLegalCompanyInfo:
+          type: boolean
+      required:
+      - name
+      - legalMentions
+      - signature
+      - onlineProductsName
+      - addComment
+      - termsAndConditions
+      - displayProductImage
+      - sortItemsByType
+      - sortItemsAlphabetically
+      - displayProductDescription
+      - onlineStore
+      - isWorkshop
+      - displaySubProducts
+      - hideTime
+      - hideDate
+      - hidePrice
+      - useLegalCompanyInfo
     DocumentModel:
       type: object
       properties:
@@ -178,118 +290,6 @@ components:
       - hidePrice
       - useLegalCompanyInfo
       - createdAt
-    UpdateDocumentModelDto:
-      type: object
-      properties:
-        name:
-          type: string
-        legalMentions:
-          type: string
-        signature:
-          type: boolean
-        onlineProductsName:
-          type: boolean
-        addComment:
-          type: boolean
-        termsAndConditions:
-          type: boolean
-        displayProductImage:
-          type: boolean
-        sortItemsByType:
-          type: boolean
-        sortItemsAlphabetically:
-          type: boolean
-        displayProductDescription:
-          type: boolean
-        onlineStore:
-          type: boolean
-        isWorkshop:
-          type: boolean
-        displaySubProducts:
-          type: boolean
-        hideTime:
-          type: boolean
-        hideDate:
-          type: boolean
-        hidePrice:
-          type: boolean
-        useLegalCompanyInfo:
-          type: boolean
-      required:
-      - name
-      - legalMentions
-      - signature
-      - onlineProductsName
-      - addComment
-      - termsAndConditions
-      - displayProductImage
-      - sortItemsByType
-      - sortItemsAlphabetically
-      - displayProductDescription
-      - onlineStore
-      - isWorkshop
-      - displaySubProducts
-      - hideTime
-      - hideDate
-      - hidePrice
-      - useLegalCompanyInfo
-    CreateDocumentModelDto:
-      type: object
-      properties:
-        name:
-          type: string
-        companyId:
-          type: string
-        legalMentions:
-          type: string
-        signature:
-          type: boolean
-        onlineProductsName:
-          type: boolean
-        addComment:
-          type: boolean
-        termsAndConditions:
-          type: boolean
-        displayProductImage:
-          type: boolean
-        sortItemsByType:
-          type: boolean
-        sortItemsAlphabetically:
-          type: boolean
-        displayProductDescription:
-          type: boolean
-        onlineStore:
-          type: boolean
-        isWorkshop:
-          type: boolean
-        displaySubProducts:
-          type: boolean
-        hideTime:
-          type: boolean
-        hideDate:
-          type: boolean
-        hidePrice:
-          type: boolean
-        useLegalCompanyInfo:
-          type: boolean
-      required:
-      - name
-      - companyId
-      - legalMentions
-      - signature
-      - onlineProductsName
-      - addComment
-      - termsAndConditions
-      - displayProductImage
-      - sortItemsByType
-      - sortItemsAlphabetically
-      - displayProductDescription
-      - onlineStore
-      - isWorkshop
-      - displaySubProducts
-      - hideTime
-      - hideDate
-      - hidePrice
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -56,6 +56,36 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CreateUpdateOrderWaitingListDto:
+      type: object
+      properties:
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        companyId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderWaitingListItem'
+        customer:
+          $ref: '#/components/schemas/OrderWaitingListCustomer'
+        durationInMonths:
+          type: number
+        startDate:
+          format: date-time
+          type: string
+        rank:
+          type: number
+      required:
+      - rentalType
+      - companyId
+      - items
+      - customer
+      - durationInMonths
+      - startDate
     OrderWaitingList:
       type: object
       properties:
@@ -102,36 +132,6 @@ components:
       type: object
       additionalProperties:
         type: string
-    CreateUpdateOrderWaitingListDto:
-      type: object
-      properties:
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        companyId:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderWaitingListItem'
-        customer:
-          $ref: '#/components/schemas/OrderWaitingListCustomer'
-        durationInMonths:
-          type: number
-        startDate:
-          format: date-time
-          type: string
-        rank:
-          type: number
-      required:
-      - rentalType
-      - companyId
-      - items
-      - customer
-      - durationInMonths
-      - startDate
     WaitingListCsvDto:
       type: object
       properties:

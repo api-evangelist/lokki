@@ -226,22 +226,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CreateOnePriceTemplateDto:
-      type: object
-      properties:
-        name:
-          type: string
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductModelPriceRange'
-      required:
-      - name
-      - ranges
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
     ProductModelPriceRange:
       type: object
       properties:
@@ -272,24 +256,6 @@ components:
       - timeStartMinutes
       - timeEndHours
       - timeEndMinutes
-    PriceTemplate:
-      type: object
-      properties:
-        id:
-          type: string
-        companyId:
-          type: string
-        name:
-          type: string
-        ranges:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductModelPriceRange'
-      required:
-      - id
-      - companyId
-      - name
-      - ranges
     GetManyPriceTemplatesResponseDto:
       type: object
       properties:
@@ -314,6 +280,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductModelPriceRange'
+    PriceTemplate:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        name:
+          type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelPriceRange'
+      required:
+      - id
+      - companyId
+      - name
+      - ranges
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CreateOnePriceTemplateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        ranges:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductModelPriceRange'
+      required:
+      - name
+      - ranges
   securitySchemes:
     x-access-token:
       scheme: bearer

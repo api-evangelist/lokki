@@ -44,74 +44,19 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PointOfSalesOrderCustomerDto:
+    PointOfSalesItemDiscount:
       type: object
       properties:
-        id:
-          type: string
-        type:
+        discountType:
           type: string
           enum:
-          - entreprise
-          - individual
-        email:
-          type: string
-        phone:
-          type: string
-        firstName:
-          type: string
-        companyName:
-          type: string
-        lastName:
-          type: string
-        address:
-          type: string
-        zipCode:
-          type: string
-        city:
-          type: string
-        streetNumber:
-          type: string
-      required:
-      - id
-      - type
-      - email
-      - phone
-      - firstName
-      - companyName
-      - lastName
-      - address
-      - zipCode
-      - city
-      - streetNumber
-    UpdateOrderG8Id:
-      type: object
-      properties:
-        g8Ids:
-          type: array
-          items:
-            $ref: '#/components/schemas/G8Ids'
-      required:
-      - g8Ids
-    PointOfSalesOrderDeliveryDto:
-      type: object
-      properties:
-        amountTTC:
-          type: number
-        vat:
+          - AMOUNT
+          - PERCENTAGE
+        discountAmount:
           type: number
       required:
-      - amountTTC
-      - vat
-    PointOfSalesOrdersToImport:
-      type: object
-      properties:
-        orders:
-          type: array
-          items:
-            $ref: '#/components/schemas/PointOfSalesOrderDto'
-      required:
-      - orders
+      - discountType
+      - discountAmount
     PointOfSalesOrderItemDto:
       type: object
       properties:
@@ -137,6 +82,79 @@ components:
       - totalHT
       - name
       - vat
+    PointOfSalesOrderPaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+        paymentMethod:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Autre
+          - Boutique en ligne
+          - Lien de paiement
+        paymentDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+      required:
+      - amount
+      - paymentMethod
+      - paymentDate
+      - id
+    PointOfSalesOrdersToImport:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PointOfSalesOrderDto'
+      required:
+      - orders
+    PointOfSalesOrderWarrantDto:
+      type: object
+      properties:
+        totalAmountTTC:
+          type: number
+        vat:
+          type: number
+        quantity:
+          type: number
+      required:
+      - totalAmountTTC
+      - vat
+      - quantity
+    PointOfSalesOrderPromoCodeDto:
+      type: object
+      properties:
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+          enum:
+          - PERCENTAGE
+          - AMOUNT
+        appliesToDelivery:
+          type: boolean
+      required:
+      - discountAmount
+      - discountType
+      - appliesToDelivery
+    UpdateOrderG8Id:
+      type: object
+      properties:
+        g8Ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/G8Ids'
+      required:
+      - g8Ids
     PointOfSalesOrderDto:
       type: object
       properties:
@@ -200,22 +218,56 @@ components:
       - warrant
       - currency
       - type
-    PointOfSalesOrderPromoCodeDto:
+    PointOfSalesOrderDeliveryDto:
       type: object
       properties:
-        discountAmount:
+        amountTTC:
           type: number
-        discountType:
+        vat:
+          type: number
+      required:
+      - amountTTC
+      - vat
+    PointOfSalesOrderCustomerDto:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
           type: string
           enum:
-          - PERCENTAGE
-          - AMOUNT
-        appliesToDelivery:
-          type: boolean
+          - entreprise
+          - individual
+        email:
+          type: string
+        phone:
+          type: string
+        firstName:
+          type: string
+        companyName:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        zipCode:
+          type: string
+        city:
+          type: string
+        streetNumber:
+          type: string
       required:
-      - discountAmount
-      - discountType
-      - appliesToDelivery
+      - id
+      - type
+      - email
+      - phone
+      - firstName
+      - companyName
+      - lastName
+      - address
+      - zipCode
+      - city
+      - streetNumber
     G8Ids:
       type: object
       properties:
@@ -226,58 +278,6 @@ components:
       required:
       - lokkiOrderId
       - g8OrderId
-    PointOfSalesItemDiscount:
-      type: object
-      properties:
-        discountType:
-          type: string
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-        discountAmount:
-          type: number
-      required:
-      - discountType
-      - discountAmount
-    PointOfSalesOrderWarrantDto:
-      type: object
-      properties:
-        totalAmountTTC:
-          type: number
-        vat:
-          type: number
-        quantity:
-          type: number
-      required:
-      - totalAmountTTC
-      - vat
-      - quantity
-    PointOfSalesOrderPaymentDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        paymentMethod:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Autre
-          - Boutique en ligne
-          - Lien de paiement
-        paymentDate:
-          format: date-time
-          type: string
-        id:
-          type: string
-      required:
-      - amount
-      - paymentMethod
-      - paymentDate
-      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

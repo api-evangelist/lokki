@@ -519,104 +519,93 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    StoreProfile:
+    StoreRentalPlaceNetwork:
       type: object
       properties:
-        name:
+        enabled:
+          type: boolean
+          description: Indicates if this store participates in the rental place network newsletter
+          example: true
+      required:
+      - enabled
+    StoreBranding:
+      type: object
+      properties:
+        logoURL:
           type: string
-          description: Store name
-          example: Henri Corp
-        description:
+          description: Logo image URL for the online store
+        banners:
+          description: Banner images and settings for the online store
+          allOf:
+          - $ref: '#/components/schemas/StoreBrandingBanners'
+      required:
+      - logoURL
+      - banners
+    StoreLocalization:
+      type: object
+      properties:
+        current:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
           type: string
-          description: Store description in the requested language, or fallback to French
-          example: Location de vélos entre particuliers. Louez un vélo près de chez vous, où que vous soyez en France.
-        verticales:
+          description: Language used in this response
+          example: fr
+        default:
+          enum:
+          - fr
+          - en
+          - nl
+          - de
+          - it
+          - pt
+          - es
+          - pl
+          type: string
+          description: Default language of the store
+          example: fr
+        available:
           type: array
           items:
             type: string
             enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-          description: List of company verticales (sectors of activity)
+            - fr
+            - en
+            - nl
+            - de
+            - it
+            - pt
+            - es
+            - pl
+          description: List of available languages for the store
           example:
-          - BIKE
-          - SCOOTER
+          - fr
+          - en
       required:
-      - name
-      - description
-      - verticales
-    StoreLocationPoint:
+      - current
+      - default
+      - available
+    ItemMediaVideos:
       type: object
       properties:
-        lat:
-          type: number
-          description: Latitude of the location
-          example: 48.8728361
-        lng:
-          type: number
-          description: Longitude of the location
-          example: 2.3094988
+        youtubeUrls:
+          description: Array of YouTube video URLs associated with the item
+          example:
+          - https://www.youtube.com/watch?v=dQw4w9WgXcQ
+          - https://www.youtube.com/watch?v=sNPnbI1arSE
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       required:
-      - lat
-      - lng
-    StoreLocation:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the secondary location
-          example: 64b64c4f5f3c2a6d8e7f9b0b
-        name:
-          type: string
-          description: Name of the secondary location
-          example: Point de retrait - Gare de Lyon
-        slug:
-          type: string
-          description: Unique slug for the secondary location, used in URLs (https://www.lokki.rent/loueur/my-store/magasin/my-location)
-          example: my-location
-        address:
-          type: string
-          description: Full address as a single string
-          example: 4 Rue du Commandant Rivière, 75008 Paris, France
-        placeId:
-          type: string
-          description: Google Place ID for the location
-          example: ChIJLU7jZClu5kcR4PcOOO6p3I0
-        components:
-          description: Detailed address components
-          allOf:
-          - $ref: '#/components/schemas/AddressComponents'
-        canonicalComponents:
-          description: Detailed address components, normalized in english
-          allOf:
-          - $ref: '#/components/schemas/AddressComponents'
-        point:
-          description: Geographical point (latitude and longitude)
-          allOf:
-          - $ref: '#/components/schemas/StoreLocationPoint'
-      required:
-      - id
-      - name
-      - slug
-      - address
-      - placeId
-      - components
-      - canonicalComponents
-      - point
+      - youtubeUrls
     StoreDiscount:
       type: object
       properties:
@@ -633,133 +622,6 @@ components:
       required:
       - globalDiscounts
       - categoryDiscounts
-    StoreInsuranceTulipDetails:
-      type: object
-      properties:
-        provider:
-          type: string
-          enum:
-          - TULIP
-        status:
-          enum:
-          - 'off'
-          - on_inclusion_hidden
-          - on_inclusion
-          - on_option
-          - with_assurance
-          type: string
-          description: Tulip insurance status for the store
-          example: on_inclusion
-      required:
-      - provider
-      - status
-    StoreModules:
-      type: object
-      properties:
-        delivery:
-          description: Delivery module settings
-          allOf:
-          - $ref: '#/components/schemas/StoreDelivery'
-        onlinePayment:
-          description: Online payment module settings
-          allOf:
-          - $ref: '#/components/schemas/StoreOnlinePayment'
-        insurance:
-          description: Insurance module settings
-          allOf:
-          - $ref: '#/components/schemas/StoreInsurance'
-        multipleLocations:
-          description: Multiple locations module settings
-          allOf:
-          - $ref: '#/components/schemas/StoreMultipleLocations'
-        cancellation:
-          description: Cancellation module settings
-          allOf:
-          - $ref: '#/components/schemas/StoreCancellation'
-        rentalPlaceNetwork:
-          description: Rental place network participation settings
-          allOf:
-          - $ref: '#/components/schemas/StoreRentalPlaceNetwork'
-        stockVisibility:
-          description: Stock visibility module settings
-          allOf:
-          - $ref: '#/components/schemas/StoreStockVisibility'
-        breadcrumbVisibility:
-          description: Breadcrumb visibility on BEL 2.0 store pages
-          allOf:
-          - $ref: '#/components/schemas/StoreBreadcrumbVisibility'
-      required:
-      - delivery
-      - onlinePayment
-      - insurance
-      - multipleLocations
-      - cancellation
-      - rentalPlaceNetwork
-      - stockVisibility
-      - breadcrumbVisibility
-    StoreAncvProviderConfig:
-      type: object
-      properties: {}
-    StoreGoogleReviews:
-      type: object
-      properties:
-        rating:
-          type: number
-          description: Average rating from Google Reviews (out of 5)
-          example: 4.5
-        total:
-          type: number
-          description: Total number of Google Reviews
-          example: 120
-        placeId:
-          type: string
-          description: Google Place ID associated with the reviews
-          example: ChIJLU7jZClu5kcR4PcOOO6p3I0
-        reviews:
-          description: List of individual Google Reviews
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreGoogleReview'
-        mapsUrl:
-          type: string
-          description: URL to the Google Maps page for the store
-          example: https://maps.google.com/?cid=1234567890123456789
-        updatedAt:
-          format: date-time
-          type: string
-          description: Date when the Google Reviews were last updated
-          example: '2024-11-01T12:00:00.000Z'
-      required:
-      - rating
-      - total
-      - placeId
-      - reviews
-      - mapsUrl
-      - updatedAt
-    StoreBookingSettings:
-      type: object
-      properties:
-        bookingType:
-          description: Booking type settings
-          allOf:
-          - $ref: '#/components/schemas/StoreBookingType'
-        instantBooking:
-          description: Indicates if automatic online store booking is enabled
-          allOf:
-          - $ref: '#/components/schemas/StoreInstantBooking'
-        fixedDurations:
-          description: Predefined booking durations
-          allOf:
-          - $ref: '#/components/schemas/StoreBookingFixedDurations'
-        rules:
-          description: Booking rules and restrictions
-          allOf:
-          - $ref: '#/components/schemas/StoreBookingRules'
-      required:
-      - bookingType
-      - instantBooking
-      - fixedDurations
-      - rules
     StoreGoogleReview:
       type: object
       properties:
@@ -785,56 +647,78 @@ components:
       - comment
       - rating
       - publishTime
-    StoreDateRange:
+    StoreMetadata:
       type: object
       properties:
-        id:
-          type: string
-          description: Unique identifier for the date range
-          example: 64b64c4f5f3c2a6d8e7f9b0d
-        from:
-          format: date-time
-          type: string
-          description: Start date of the range (inclusive)
-          example: '2024-12-01T00:00:00.000Z'
-        to:
-          format: date-time
-          type: string
-          description: End date of the range (inclusive)
-          example: '2024-12-31T23:59:59.999Z'
+        timestamps:
+          description: Store lifecycle timestamps
+          allOf:
+          - $ref: '#/components/schemas/StoreTimestamps'
       required:
-      - id
-      - from
-      - to
-    StoreDeliveryRangeSpecificPriceCity:
+      - timestamps
+    StoreBookingFixedDurations:
       type: object
       properties:
-        cityName:
-          type: string
-          description: Name of the city
-          example: Paris
-        sublocalityName:
-          type: string
-          description: Name of the sublocality (e.g., neighborhood or district)
-          example: Batignolles
-        zipCode:
-          type: string
-          description: Postal code
-          example: '75017'
-        placeId:
-          type: string
-          description: Google Place ID for the city
-          example: ChIJD7fiBh9u5kcRYJSMaMOCCwQ
-        hasMultiplePostcodeLocalities:
+        enabled:
           type: boolean
-          description: Indicates if the city has multiple postal code localities
-          example: false
+          description: Indicates if predefined booking durations are enabled
+          example: true
+        durations:
+          description: List of predefined booking durations
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreBookingFixedDuration'
       required:
-      - cityName
-      - sublocalityName
-      - zipCode
-      - placeId
-      - hasMultiplePostcodeLocalities
+      - enabled
+      - durations
+    StoreDeliveryRangeSpecificPrice:
+      type: object
+      properties:
+        price:
+          type: number
+          description: Price for delivery to the specified cities
+          example: 5
+        cities:
+          description: List of cities with specific delivery prices
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDeliveryRangeSpecificPriceCity'
+      required:
+      - price
+      - cities
+    StoreBookingType:
+      type: object
+      properties:
+        lcd:
+          type: boolean
+          description: Indicates if short-term rentals (LCD) are enabled
+          example: true
+        lld:
+          type: boolean
+          description: Indicates if long-term rentals (LLD) are enabled
+          example: true
+        event:
+          type: boolean
+          description: Indicates if events are enabled
+          example: true
+      required:
+      - lcd
+      - lld
+      - event
+    StoreBookingTimeAnchorTime:
+      type: object
+      properties:
+        hours:
+          type: number
+          description: Hours of the time anchor
+          example: 9
+        minutes:
+          type: number
+          description: Minutes of the time anchor
+          example: 30
+      required:
+      - hours
+      - minutes
     StoreBookingFixedDuration:
       type: object
       properties:
@@ -876,200 +760,138 @@ components:
       required:
       - enabled
       - dropoffRule
-    StoreContactSocialMedia:
+    GetManyQuoteRequestsResponseDto:
       type: object
       properties:
-        facebook:
-          type:
-          - string
-          - 'null'
-          description: Facebook profile URL
-          example: https://www.facebook.com/henricorp
-        twitter:
-          type:
-          - string
-          - 'null'
-          description: Twitter profile URL
-          example: https://www.twitter.com/henricorp
-        instagram:
-          type:
-          - string
-          - 'null'
-          description: Instagram profile URL
-          example: https://www.instagram.com/henricorp
-        linkedIn:
-          type:
-          - string
-          - 'null'
-          description: LinkedIn profile URL
-          example: https://www.linkedin.com/company/henricorp
-        tiktok:
-          type:
-          - string
-          - 'null'
-          description: TikTok profile URL
-          example: https://www.tiktok.com/@henricorp
-      required:
-      - facebook
-      - twitter
-      - instagram
-      - linkedIn
-      - tiktok
-    PatchOneQuoteRequestDto:
-      type: object
-      properties:
-        status:
-          enum:
-          - REQUEST
-          - CANCELED
-          - SENDED
-          - CONVERTED
-          - EXPIRED
-          type: string
-          description: The new status of the quote request
-          example: CONVERTED
-        orderId:
-          type: string
-          description: Order Id (ObjectId) when quote created from quote request
-          example: 64b7f8f2e4b0c2a1d5e6f789
-        cancelReason:
-          enum:
-          - NO_SUPPLY
-          - UNAVAILABLE_ACCESSORY
-          - SCHEDULING_ISSUE
-          - NON_COMPATIBLE_REQUEST
-          - UNSPECIFIC_REQUEST
-          - CUSTOMER_SUITABILITY
-          - INVENTORY_UNAVAILABILITY
-          - WEATHER
-          - EXCEPTIONAL_CLOSURE
-          - LAST_MINUTE_REQUEST
-          - OTHER
-          - USER_SELF_CHECKOUT
-          type: string
-          description: Reason for quote request cancellation
-          example: INVENTORY_UNAVAILABILITY
-        customCancelReason:
-          type: string
-          description: Reason for quote request cancellation
-          example: Found a better deal elsewhere
-    QuoteRequestOrderInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Order ID (MongoDB ObjectId)
-          example: 692f10cc2c110b2849967659
-        delivery:
-          description: Departure point label or identifier. Null if not applicable.
-          example: Shop - Gare de Lyon
-          allOf:
-          - $ref: '#/components/schemas/DeliveryInfo'
-        startDate:
-          format: date-time
-          type: string
-          description: Quote request start date the customer wants
-          example: '2025-10-16T10:30:00.000Z'
-        endDate:
-          format: date-time
-          type: string
-          description: Quote request end date the customer wants
-          example: '2025-10-20T10:30:00.000Z'
-        price:
+        total:
           type: number
-          description: Total order price including taxes (TTC)
-          example: 152.5
-        items:
-          description: Item details for this order
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
           type: array
           items:
-            $ref: '#/components/schemas/QuoteRequestOrderItem'
-        paymentInfo:
-          description: Payment information
-          allOf:
-          - $ref: '#/components/schemas/PaymentInfo'
-        orderStatus:
-          enum:
-          - TO_COME
-          - IN_PROGRESS
-          - ENDED
-          type: string
-          description: Order status
+            $ref: '#/components/schemas/QuoteRequestEntity'
       required:
-      - id
-      - startDate
-      - endDate
-      - price
-      - items
-      - paymentInfo
-      - orderStatus
-    StoreInsurance:
+      - total
+      - docs
+    QuoteRequestCustomer:
       type: object
       properties:
-        enabled:
-          type: boolean
-          description: Indicates if insurance is enabled for this store
-          example: true
-        provider:
+        rentalPlaceUserId:
           type: string
-          enum:
-          - TULIP
-          description: Insurance provider for this store
-          example: TULIP
-        details:
-          description: Detailed settings for the insurance provider
-          allOf:
-          - $ref: '#/components/schemas/StoreInsuranceTulipDetails'
+          description: Rental place user ID if the customer is a registered user (ObjectId)
+          example: 64b7f8f2e4b0c2a1d5e6f785
+        email:
+          type: string
+          description: Customer email
+          example: john@doe.com
+        phoneNumber:
+          type: string
+          description: Customer phone number
+          example: '+33612345678'
+        firstName:
+          type: string
+          description: Customer first name
+          example: John
+        lastName:
+          type: string
+          description: Customer last name
+          example: Doe
       required:
-      - enabled
-      - provider
-      - details
-    StoreMarketing:
+      - rentalPlaceUserId
+      - email
+      - phoneNumber
+    StoreTemporal:
       type: object
       properties:
-        trackers:
-          description: Third-party analytics tracker IDs configured by the store owner
+        timezone:
+          type: string
+          description: Store timezone in IANA format (e.g., Europe/Paris)
+          example: Europe/Paris
+        schedule:
+          description: Store opening hours and schedule
           allOf:
-          - $ref: '#/components/schemas/StoreMarketingTrackers'
+          - $ref: '#/components/schemas/StoreSchedule'
       required:
-      - trackers
-    StoreBookingType:
+      - timezone
+      - schedule
+    StoreInstantBooking:
       type: object
       properties:
         lcd:
           type: boolean
-          description: Indicates if short-term rentals (LCD) are enabled
+          description: Indicates if automatic online store booking is enabled for short-term rentals
           example: true
         lld:
           type: boolean
-          description: Indicates if long-term rentals (LLD) are enabled
+          description: Indicates if automatic online store booking is enabled for long-term rentals
           example: true
         event:
           type: boolean
-          description: Indicates if events are enabled
-          example: true
+          description: Indicates if automatic online store booking is enabled for events
+          example: false
       required:
       - lcd
       - lld
       - event
-    DeliveryInfo:
+    ItemMediaImages:
       type: object
       properties:
-        departurePoint:
-          type:
-          - string
-          - 'null'
-          description: Departure point label or identifier. Null if not applicable.
-          example: Shop - Gare de Lyon
-        arrivalPoint:
-          type:
-          - string
-          - 'null'
-          description: Arrival point label or identifier. Null if not applicable.
-          example: Shop - Gare de Lyon
+        urls:
+          description: Array of image URLs associated with the item
+          example:
+          - https://example.com/images/item1.jpg
+          - https://example.com/images/item2.jpg
+          type: array
+          items:
+            type: string
       required:
-      - departurePoint
-      - arrivalPoint
+      - urls
+    StoreBookingSettings:
+      type: object
+      properties:
+        bookingType:
+          description: Booking type settings
+          allOf:
+          - $ref: '#/components/schemas/StoreBookingType'
+        instantBooking:
+          description: Indicates if automatic online store booking is enabled
+          allOf:
+          - $ref: '#/components/schemas/StoreInstantBooking'
+        fixedDurations:
+          description: Predefined booking durations
+          allOf:
+          - $ref: '#/components/schemas/StoreBookingFixedDurations'
+        rules:
+          description: Booking rules and restrictions
+          allOf:
+          - $ref: '#/components/schemas/StoreBookingRules'
+      required:
+      - bookingType
+      - instantBooking
+      - fixedDurations
+      - rules
+    StoreInsuranceTulipDetails:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+          - TULIP
+        status:
+          enum:
+          - 'off'
+          - on_inclusion_hidden
+          - on_inclusion
+          - on_option
+          - with_assurance
+          type: string
+          description: Tulip insurance status for the store
+          example: on_inclusion
+      required:
+      - provider
+      - status
     StoreDto:
       type: object
       properties:
@@ -1152,96 +974,64 @@ components:
       - booking
       - checkout
       - metadata
-    CompanyCategoryDiscountRange:
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    StoreContactSocialMedia:
       type: object
       properties:
-        discount:
-          type: number
-          description: Discount value for the range
-        discountType:
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-          type: string
-          description: Type of discount applied (amount or percentage)
-        rangeFrom:
+        facebook:
           type:
-          - number
+          - string
           - 'null'
-          description: Minimum value of the range (Quantity of items)
-        rangeTo:
+          description: Facebook profile URL
+          example: https://www.facebook.com/henricorp
+        twitter:
           type:
-          - number
+          - string
           - 'null'
-          description: Maximum value of the range (Quantity of items)
-        infiniteTo:
-          type: boolean
-          description: Indicates if the range has no upper limit
+          description: Twitter profile URL
+          example: https://www.twitter.com/henricorp
+        instagram:
+          type:
+          - string
+          - 'null'
+          description: Instagram profile URL
+          example: https://www.instagram.com/henricorp
+        linkedIn:
+          type:
+          - string
+          - 'null'
+          description: LinkedIn profile URL
+          example: https://www.linkedin.com/company/henricorp
+        tiktok:
+          type:
+          - string
+          - 'null'
+          description: TikTok profile URL
+          example: https://www.tiktok.com/@henricorp
       required:
-      - discount
-      - discountType
-      - rangeFrom
-      - rangeTo
-      - infiniteTo
-    StoreSchedule:
+      - facebook
+      - twitter
+      - instagram
+      - linkedIn
+      - tiktok
+    StoreBrandingBanners:
       type: object
       properties:
-        openingHours:
-          description: List of regular opening hours
+        urls:
+          description: List of banner image URLs
           type: array
           items:
-            $ref: '#/components/schemas/StoreOpeningHours'
-        openingHoursLowSeason:
-          description: List of opening hours for the low season
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreOpeningHours'
-        lowSeasonRanges:
-          description: List of date ranges for the low season
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreDateRange'
-        closedRanges:
-          description: List of date ranges when the store is closed
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreDateRange'
-      required:
-      - openingHours
-      - openingHoursLowSeason
-      - lowSeasonRanges
-      - closedRanges
-    StoreTax:
-      type: object
-      properties:
-        type:
-          enum:
-          - INCLUSIVE
-          - EXCLUSIVE
-          type: string
-          description: Type of tax applied to prices (inclusive or exclusive of tax)
-          example: INCLUSIVE
-        value:
+            type: string
+        scrollTime:
           type: number
-          description: Tax percentage applied to prices
-          example: 20
-        name:
-          type: string
-          description: Name of the tax (e.g., VAT)
-          example: TVA
+          description: Time each banner is displayed before transitioning to the next one
+          example: 5
       required:
-      - type
-      - value
-      - name
-    StoreBookingLeadTimeRule:
-      type: object
-      properties:
-        minHours:
-          type: number
-          description: Minimum lead time required before a booking can be made, in hours
-          example: 2
-      required:
-      - minHours
+      - urls
+      - scrollTime
     StoreStockVisibility:
       type: object
       properties:
@@ -1251,302 +1041,51 @@ components:
           example: false
       required:
       - enabled
-    GetManyQuoteRequestsPublicResponseDto:
+    ItemMediaDocuments:
       type: object
       properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteRequestsPublic'
-      required:
-      - total
-      - docs
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    QuoteRequestProjectInfos:
-      type: object
-      properties:
-        startDate:
-          format: date-time
+        url:
           type: string
-          description: Quote request start date the customer wants
-          example: '2025-10-16T10:30:00.000Z'
-        endDate:
-          format: date-time
-          type: string
-          description: Quote request end date the customer wants
-          example: '2025-10-20T10:30:00.000Z'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-          description: Product verticales concerned by the quote request
+          description: document URLs associated with the item
           example:
-          - BIKE
-          - MOPED
-        description:
+          - https://example.com/documents/item1.pdf
+          - https://example.com/documents/item2.pdf
+        name:
           type: string
-          description: Detailed description of the customer's project
-          example: I need a bike for a week...
-        participants:
-          description: List of participants informations that will help the renter to provide a relevant quote
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteRequestParticipant'
-        budget:
-          type:
-          - number
-          - 'null'
-          description: Estimated maximum budget of the customer for this quote request, may help the renter to provide a relevant quote
-          example: 100
-        flexibility:
-          enum:
-          - exact_dates
-          - more_less_1_day
-          - more_less_2_days
-          - more_less_3_days
-          - more_less_7_days
-          type: string
-          description: Flexibility of the customer's dates, may help the renter to provide a relevant quote if stock is limited
-          example: more_less_1_day
-        rentDuration:
-          enum:
-          - 2_hours
-          - half_day
-          - 1_day
-          type: string
-          description: If the rental is for one day, precise the duration of the rent
-          example: 2_hours
-        pickUpTime:
-          enum:
-          - morning
-          - afternoon
-          - whenever
-          type: string
-          description: The pick-up time the customer would prefer for the rental
-          example: morning
-        location:
-          type: string
-          description: Full address of the event or project location
-          example: 12 Rue de Rivoli, 75001 Paris, France
-        lat:
-          type: number
-          description: Latitude of the project location
-          example: 48.8566
-        lng:
-          type: number
-          description: Longitude of the project location
-          example: 2.3522
-        projectDetails:
-          description: Additional project details specific to agency quote requests
-          type: array
-          items:
-            type: string
+          description: Name of the document
+          example: Item Manual
       required:
-      - startDate
-      - endDate
-      - verticales
-      - participants
-    StoreCheckout:
+      - url
+      - name
+    ItemMedia:
       type: object
       properties:
-        partPayment:
-          description: Part payment settings — whether and how much the customer must pay upfront
+        images:
+          description: Images associated with the item
           allOf:
-          - $ref: '#/components/schemas/StorePartPayment'
-        deposit:
-          description: Deposit settings — cap amount and whether online payment is enabled
+          - $ref: '#/components/schemas/ItemMediaImages'
+        videos:
+          description: Videos associated with the item
           allOf:
-          - $ref: '#/components/schemas/StoreDeposit'
-        payOnSite:
-          type: boolean
-          description: Whether the store allows customers to pay in person at pickup
-          example: true
-      required:
-      - partPayment
-      - deposit
-      - payOnSite
-    StoreMarketingTrackers:
-      type: object
-      properties:
-        ga4Id:
-          type: string
-          description: Google Analytics 4 measurement ID
-          example: G-XXXXXXXXXX
-        googleAdsId:
-          type: string
-          description: Google Ads conversion ID
-          example: AW-123456789
-        metaPixelId:
-          type: string
-          description: Meta (Facebook) Pixel ID
-          example: '123456789012345'
-        tiktokPixelId:
-          type: string
-          description: TikTok Pixel ID
-          example: ABCDEFGHIJKLMNOPQRST
-        linkedinPartnerId:
-          type: string
-          description: LinkedIn Partner ID
-          example: '123456'
-        linkedinConversionId:
-          type: string
-          description: LinkedIn Conversion ID
-          example: '1234567'
-    StoreBookingFixedDurations:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Indicates if predefined booking durations are enabled
-          example: true
-        durations:
-          description: List of predefined booking durations
+          - $ref: '#/components/schemas/ItemMediaVideos'
+        documents:
+          description: Documents associated with the item
           type: array
           items:
-            $ref: '#/components/schemas/StoreBookingFixedDuration'
+            $ref: '#/components/schemas/ItemMediaDocuments'
       required:
-      - enabled
-      - durations
-    QuoteRequestParticipant:
+      - images
+      - videos
+      - documents
+    StoreBookingLeadTimeRule:
       type: object
       properties:
-        type:
-          type: string
-          description: Type of participant
-          enum:
-          - adult
-          - child
-          example: adult
-        questions:
-          description: List of questions and answers provided by the participant
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteRequestParticipantQuestion'
-      required:
-      - type
-      - questions
-    StoreRentalPlaceNetwork:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Indicates if this store participates in the rental place network newsletter
-          example: true
-      required:
-      - enabled
-    StoreDeliveryFreeSettings:
-      type: object
-      properties:
-        activated:
-          type: boolean
-          description: Indicates if free delivery is activated
-          example: true
-        type:
-          enum:
-          - MINUTES
-          - SUBTOTAL
-          type: string
-          description: Type of condition for free delivery (either minimum minutes or subtotal amount)
-          example: MINUTES
-        value:
+        minHours:
           type: number
-          description: Value corresponding to the type (minutes or subtotal amount)
-          example: 60
+          description: Minimum lead time required before a booking can be made, in hours
+          example: 2
       required:
-      - activated
-      - type
-      - value
-    StoreGlobalDiscount:
-      type: object
-      properties:
-        percentage:
-          type: number
-          description: Percentage value of the discount
-          example: '10.0'
-        from:
-          format: date-time
-          type:
-          - string
-          - 'null'
-          description: Start date of the discount period (null if always applicable)
-          example: '2024-12-01T00:00:00.000Z'
-        to:
-          format: date-time
-          type:
-          - string
-          - 'null'
-          description: End date of the discount period (null if always applicable)
-          example: '2024-12-31T23:59:59.999Z'
-        applicableDate:
-          enum:
-          - CREATED_DATE
-          - START_DATE
-          type: string
-          description: Whether the discount applies on the start date of the booking or when the booking is made
-          example: START_DATE
-      required:
-      - percentage
-      - from
-      - to
-      - applicableDate
-    StoreBookingTimeAnchorTime:
-      type: object
-      properties:
-        hours:
-          type: number
-          description: Hours of the time anchor
-          example: 9
-        minutes:
-          type: number
-          description: Minutes of the time anchor
-          example: 30
-      required:
-      - hours
-      - minutes
-    StoreInstantBooking:
-      type: object
-      properties:
-        lcd:
-          type: boolean
-          description: Indicates if automatic online store booking is enabled for short-term rentals
-          example: true
-        lld:
-          type: boolean
-          description: Indicates if automatic online store booking is enabled for long-term rentals
-          example: true
-        event:
-          type: boolean
-          description: Indicates if automatic online store booking is enabled for events
-          example: false
-      required:
-      - lcd
-      - lld
-      - event
+      - minHours
     ItemInfos:
       type: object
       properties:
@@ -1565,303 +1104,50 @@ components:
       required:
       - name
       - description
-    ItemMediaImages:
+    StoreLocation:
       type: object
       properties:
-        urls:
-          description: Array of image URLs associated with the item
-          example:
-          - https://example.com/images/item1.jpg
-          - https://example.com/images/item2.jpg
-          type: array
-          items:
-            type: string
-      required:
-      - urls
-    StoreDelivery:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Indicates if delivery is enabled for this store
-          example: true
-        deliveryOnly:
-          type: boolean
-          description: Indicates if only delivery is allowed for this store
-          example: false
-        ranges:
-          description: List of delivery ranges for this store
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreDeliveryRange'
-        excludedCities:
-          description: List of cities excluded from delivery
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreDeliveryRangeSpecificPriceCity'
-        freeDelivery:
-          description: Free delivery settings for this store
+        id:
+          type: string
+          description: Unique identifier for the secondary location
+          example: 64b64c4f5f3c2a6d8e7f9b0b
+        name:
+          type: string
+          description: Name of the secondary location
+          example: Point de retrait - Gare de Lyon
+        slug:
+          type: string
+          description: Unique slug for the secondary location, used in URLs (https://www.lokki.rent/loueur/my-store/magasin/my-location)
+          example: my-location
+        address:
+          type: string
+          description: Full address as a single string
+          example: 4 Rue du Commandant Rivière, 75008 Paris, France
+        placeId:
+          type: string
+          description: Google Place ID for the location
+          example: ChIJLU7jZClu5kcR4PcOOO6p3I0
+        components:
+          description: Detailed address components
           allOf:
-          - $ref: '#/components/schemas/StoreDeliveryFreeSettings'
-        returnDelivery:
-          type: boolean
-          description: Indicates if return delivery is enabled for this store
-          example: false
-      required:
-      - enabled
-      - deliveryOnly
-      - ranges
-      - excludedCities
-      - freeDelivery
-      - returnDelivery
-    StoreBranding:
-      type: object
-      properties:
-        logoURL:
-          type: string
-          description: Logo image URL for the online store
-        banners:
-          description: Banner images and settings for the online store
+          - $ref: '#/components/schemas/AddressComponents'
+        canonicalComponents:
+          description: Detailed address components, normalized in english
           allOf:
-          - $ref: '#/components/schemas/StoreBrandingBanners'
-      required:
-      - logoURL
-      - banners
-    StoreCancellation:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: True when the store has a cancellation policy set up
-          example: true
-        onlineRequests:
-          type: boolean
-          description: True when the store allows customers to request cancellation online
-          example: true
-        automaticRefunds:
-          type: boolean
-          description: True when the store supports automatic refunds on cancellation
-          example: false
-        ranges:
-          description: List of cancellation ranges and their refund policies
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreCancellationRange'
-      required:
-      - enabled
-      - onlineRequests
-      - automaticRefunds
-      - ranges
-    StoreMetadata:
-      type: object
-      properties:
-        timestamps:
-          description: Store lifecycle timestamps
+          - $ref: '#/components/schemas/AddressComponents'
+        point:
+          description: Geographical point (latitude and longitude)
           allOf:
-          - $ref: '#/components/schemas/StoreTimestamps'
+          - $ref: '#/components/schemas/StoreLocationPoint'
       required:
-      - timestamps
-    QuoteRequestMetadata:
-      type: object
-      properties:
-        quoteEntryPoint:
-          type: string
-          description: Entry point from which the customer accessed the quote request form
-          example: discover_page
-        sessionEntryUrl:
-          type: string
-          description: URL of the page where the customer started their session on the website
-          example: https://www.lokki.rent/location/annecy/velo
-        origin:
-          enum:
-          - SEARCH_RP
-          - RENTER_PAGE
-          - PRODUCT_MODAL
-          - QUICK_CART
-          type: string
-          description: Origin of the quote request
-          example: RENTER_PAGE
-    StoreBreadcrumbVisibility:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the breadcrumb is displayed on the BEL 2.0 store pages.
-          example: true
-      required:
-      - enabled
-    StoreTemporal:
-      type: object
-      properties:
-        timezone:
-          type: string
-          description: Store timezone in IANA format (e.g., Europe/Paris)
-          example: Europe/Paris
-        schedule:
-          description: Store opening hours and schedule
-          allOf:
-          - $ref: '#/components/schemas/StoreSchedule'
-      required:
-      - timezone
-      - schedule
-    GetManyQuoteRequestsResponseDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total number of documents matching the query
-          minimum: 0
-          example: 150
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuoteRequestEntity'
-      required:
-      - total
-      - docs
-    CancelQuoteRequestDto:
-      type: object
-      properties:
-        cancelReason:
-          enum:
-          - NO_SUPPLY
-          - UNAVAILABLE_ACCESSORY
-          - SCHEDULING_ISSUE
-          - NON_COMPATIBLE_REQUEST
-          - UNSPECIFIC_REQUEST
-          - CUSTOMER_SUITABILITY
-          - INVENTORY_UNAVAILABILITY
-          - WEATHER
-          - EXCEPTIONAL_CLOSURE
-          - LAST_MINUTE_REQUEST
-          - OTHER
-          - USER_SELF_CHECKOUT
-          type: string
-          description: Reason for canceling the quote request
-          example: NO_SUPPLY
-        customCancelReason:
-          type: string
-          description: Custom cancellation reason when cancelReason is OTHER
-          example: Equipment not suitable for the requested dates
-      required:
-      - cancelReason
-    StoreStripePaymentMethods:
-      type: object
-      properties:
-        card:
-          type: boolean
-          description: Credit card enabled
-          example: true
-        applePay:
-          type: boolean
-          description: Apple Pay enabled
-          example: true
-        googlePay:
-          type: boolean
-          description: Google Pay enabled
-          example: true
-        sepa:
-          type: boolean
-          description: SEPA enabled
-          example: false
-        ideal:
-          type: boolean
-          description: iDEAL enabled
-          example: false
-        bancontact:
-          type: boolean
-          description: Bancontact enabled
-          example: false
-        giroPay:
-          type: boolean
-          description: Giropay enabled
-          example: false
-        p24:
-          type: boolean
-          description: Przelewy24 enabled
-          example: false
-        blik:
-          type: boolean
-          description: BLIK enabled
-          example: false
-        multibanco:
-          type: boolean
-          description: Multibanco enabled
-          example: false
-        eps:
-          type: boolean
-          description: EPS enabled
-          example: false
-      required:
-      - card
-      - applePay
-      - googlePay
-      - sepa
-      - ideal
-      - bancontact
-      - giroPay
-      - p24
-      - blik
-      - multibanco
-      - eps
-    StoreContact:
-      type: object
-      properties:
-        phone:
-          type:
-          - string
-          - 'null'
-          description: Phone number for contacting the store. Only present if the store has opted in to display their phone number.
-          example: +33 1 23 45 67 89
-        email:
-          type: string
-          description: Email address for contacting the store
-          example: contact@henricorp.com
-        website:
-          type: string
-          description: Website URL for the store
-          example: https://www.henricorp.com
-        socialMedia:
-          description: List of social media profiles for the store
-          allOf:
-          - $ref: '#/components/schemas/StoreContactSocialMedia'
-      required:
-      - phone
-      - email
-      - website
-      - socialMedia
-    StoreCategoryDiscount:
-      type: object
-      properties:
-        itemCategoryIds:
-          description: Categories of items to which the discount applies
-          type: array
-          items:
-            type: string
-        rules:
-          description: List of discount rules for the category
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
-      required:
-      - itemCategoryIds
-      - rules
-    StoreBookingTimeAnchorsRule:
-      type: object
-      properties:
-        startTimes:
-          description: List of allowed booking start times (e.g., specific time slots)
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreBookingTimeAnchorTime'
-        endTimes:
-          description: List of allowed booking end times (e.g., specific time slots)
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreBookingTimeAnchorTime'
-      required:
-      - startTimes
-      - endTimes
+      - id
+      - name
+      - slug
+      - address
+      - placeId
+      - components
+      - canonicalComponents
+      - point
     StoreDeliveryRange:
       type: object
       properties:
@@ -1887,347 +1173,20 @@ components:
       - max
       - price
       - specificPrices
-    StoreDeposit:
+    StoreDepositMax:
       type: object
       properties:
-        max:
-          description: Maximum deposit settings
-          allOf:
-          - $ref: '#/components/schemas/StoreDepositMax'
-        online:
+        activated:
           type: boolean
-          description: Whether the customer can pay the deposit online
+          description: Whether the deposit max value is activated
           example: true
-      required:
-      - max
-      - online
-    StorePartPayment:
-      type: object
-      properties:
-        isActive:
-          type: boolean
-          description: Whether part payment (upfront deposit) is active for this store
-          example: true
-        percentage:
+        amount:
           type: number
-          description: Percentage of the total amount the customer must pay upfront
-          example: 30
+          description: Maximum deposit amount
+          example: 200
       required:
-      - isActive
-      - percentage
-    PaymentInfo:
-      type: object
-      properties:
-        paymentLink:
-          type: string
-          description: Payment link URL (your-order)
-          example: https://rent-item.lokki.rent/your-order/{orderId}
-    StoreReviews:
-      type: object
-      properties:
-        google:
-          description: Google Reviews data
-          allOf:
-          - $ref: '#/components/schemas/StoreGoogleReviews'
-      required:
-      - google
-    StoreDeliveryRangeSpecificPrice:
-      type: object
-      properties:
-        price:
-          type: number
-          description: Price for delivery to the specified cities
-          example: 5
-        cities:
-          description: List of cities with specific delivery prices
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreDeliveryRangeSpecificPriceCity'
-      required:
-      - price
-      - cities
-    StoreBrandingBanners:
-      type: object
-      properties:
-        urls:
-          description: List of banner image URLs
-          type: array
-          items:
-            type: string
-        scrollTime:
-          type: number
-          description: Time each banner is displayed before transitioning to the next one
-          example: 5
-      required:
-      - urls
-      - scrollTime
-    StoreCurrency:
-      type: object
-      properties:
-        isoCode:
-          type: string
-          description: Currency code in ISO 4217 format
-          example: EUR
-        symbol:
-          type: string
-          description: Currency symbol
-          example: €
-      required:
-      - isoCode
-      - symbol
-    StoreTimestamps:
-      type: object
-      properties:
-        createdAt:
-          format: date-time
-          type: string
-          description: Date when the store was created
-          example: '2024-10-15T10:30:00.000Z'
-      required:
-      - createdAt
-    StoreGoogleReviewAuthor:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Author name of the Google Review
-          example: John Doe
-        profilePictureUrl:
-          type: string
-          description: Profile picture URL of the Google Review author
-          example: https://example.com/profile.jpg
-      required:
-      - name
-      - profilePictureUrl
-    QuoteRequestEntity:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Quote ID (ObjectId)
-          example: 64b7f8f2e4b0c2a1d5e6f789
-        type:
-          enum:
-          - agency
-          - renter
-          type: string
-          description: Type of quote request (agency or private)
-          example: agency
-        companyId:
-          type: string
-          description: Company ID which received the quote request (ObjectId)
-          example: 64b7f8f2e4b0c2a1d5e6f788
-        rentalPointId:
-          type: string
-          description: Rental point ID where the quote request has been made (ObjectId)
-          example: 64b7f8f2e4b0c2a1d5e6f787
-        status:
-          enum:
-          - REQUEST
-          - CANCELED
-          - SENDED
-          - CONVERTED
-          - EXPIRED
-          type: string
-          description: Quote request status
-          example: REQUEST
-        orderId:
-          type: string
-          description: Linked order ID of the order created from the quote (ObjectId)
-          example: 64b7f8f2e4b0c2a1d5e6f786
-        customer:
-          description: Customer information, filled by the user who made the quote request
-          allOf:
-          - $ref: '#/components/schemas/QuoteRequestCustomer'
-        projectInfos:
-          description: Project information, filled by the user who made the quote request
-          allOf:
-          - $ref: '#/components/schemas/QuoteRequestProjectInfos'
-        cancelReason:
-          enum:
-          - NO_SUPPLY
-          - UNAVAILABLE_ACCESSORY
-          - SCHEDULING_ISSUE
-          - NON_COMPATIBLE_REQUEST
-          - UNSPECIFIC_REQUEST
-          - CUSTOMER_SUITABILITY
-          - INVENTORY_UNAVAILABILITY
-          - WEATHER
-          - EXCEPTIONAL_CLOSURE
-          - LAST_MINUTE_REQUEST
-          - OTHER
-          - USER_SELF_CHECKOUT
-          type: string
-          description: Reason for quote request cancellation
-          example: INVENTORY_UNAVAILABILITY
-        customCancelReason:
-          type: string
-          description: Reason for quote request cancellation that is not in the predefined list
-          example: Found a better deal elsewhere
-        metadata:
-          description: Additional metadata about the quote request
-          allOf:
-          - $ref: '#/components/schemas/QuoteRequestMetadata'
-        sendedDate:
-          format: date-time
-          type: string
-          description: Date when the renter sent an answer to the quote request
-          example: '2025-10-16T10:30:00.000Z'
-        cancelDate:
-          format: date-time
-          type: string
-          description: Date when the quote request has been canceled
-          example: '2025-10-16T10:30:00.000Z'
-        convertedDate:
-          format: date-time
-          type: string
-          description: Date when the quote request has been converted into an order
-          example: '2025-10-16T10:30:00.000Z'
-        createdDate:
-          format: date-time
-          type: string
-          description: Date when the quote request has been created
-          example: '2025-10-16T10:30:00.000Z'
-      required:
-      - id
-      - type
-      - companyId
-      - rentalPointId
-      - status
-      - customer
-      - projectInfos
-    ItemMediaDocuments:
-      type: object
-      properties:
-        url:
-          type: string
-          description: document URLs associated with the item
-          example:
-          - https://example.com/documents/item1.pdf
-          - https://example.com/documents/item2.pdf
-        name:
-          type: string
-          description: Name of the document
-          example: Item Manual
-      required:
-      - url
-      - name
-    StoreBookingRules:
-      type: object
-      properties:
-        timeAnchors:
-          description: Allowed booking times (e.g., specific time slots)
-          allOf:
-          - $ref: '#/components/schemas/StoreBookingTimeAnchorsRule'
-        leadTime:
-          description: Lead time required before a booking can be made
-          allOf:
-          - $ref: '#/components/schemas/StoreBookingLeadTimeRule'
-        duration:
-          description: Minimum and maximum booking durations
-          allOf:
-          - $ref: '#/components/schemas/StoreBookingDurationRule'
-        gapBeforeOrderInMinutes:
-          type: number
-          description: Preparation time required before an order starts, in minutes. A product is unavailable for this duration ahead of each existing order (derived from timeProductsUnavailableBeforeOrder + dayProductsUnavailableBeforeOrder).
-          example: 60
-        gapAfterOrderInMinutes:
-          type: number
-          description: Time required after an order ends before the product is available again, in minutes (derived from timeProductsUnavailableAfterOrder + dayProductsUnavailableAfterOrder).
-          example: 120
-      required:
-      - timeAnchors
-      - leadTime
-      - duration
-      - gapBeforeOrderInMinutes
-      - gapAfterOrderInMinutes
-    PostOneQuoteRequestDto:
-      type: object
-      properties:
-        type:
-          enum:
-          - agency
-          - renter
-          type: string
-          description: Type of the quote request
-          example: renter
-        companyId:
-          type: string
-          description: Company ID which received the quote request (ObjectId) — required when type is renter
-          example: 64b7f8f2e4b0c2a1d5e6f788
-        rentalPointId:
-          type: string
-          description: Rental point ID where the quote request has been made (ObjectId)
-          example: 64b7f8f2e4b0c2a1d5e6f787
-        customer:
-          description: Customer information, filled by the user who made the quote request
-          allOf:
-          - $ref: '#/components/schemas/QuoteRequestCustomer'
-        projectInfos:
-          description: Project information, filled by the user who made the quote request
-          allOf:
-          - $ref: '#/components/schemas/QuoteRequestProjectInfos'
-        metadata:
-          description: Additional metadata about the quote request
-          allOf:
-          - $ref: '#/components/schemas/QuoteRequestMetadata'
-        lang:
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-          type: string
-          description: Language of the online store where the quote request has been made. Used to send the email in the correct language
-          example: fr
-      required:
-      - type
-      - customer
-      - projectInfos
-      - lang
-    AddressComponents:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-          description: Street number
-          example: '4'
-        street:
-          type: string
-          description: Street name
-          example: Rue du Commandant Rivière
-        postalCode:
-          type: string
-          description: Postal code
-          example: '75008'
-        city:
-          type: string
-          description: City name
-          example: Paris
-        administrativeAreaLevel1:
-          type: string
-          description: Administrative area level 1 (e.g. state or province)
-          example: Île-de-France
-        administrativeAreaLevel2:
-          type: string
-          description: Administrative area level 2 (e.g. city or district)
-          example: Paris
-        country:
-          type: string
-          description: Country name
-          example: France
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
+      - activated
+      - amount
     QuoteRequestsPublic:
       type: object
       properties:
@@ -2334,95 +1293,539 @@ components:
       - customer
       - projectInfos
       - store
-    StoreLocalization:
+    StoreMarketing:
       type: object
       properties:
-        current:
-          enum:
-          - fr
-          - en
-          - nl
-          - de
-          - it
-          - pt
-          - es
-          - pl
+        trackers:
+          description: Third-party analytics tracker IDs configured by the store owner
+          allOf:
+          - $ref: '#/components/schemas/StoreMarketingTrackers'
+      required:
+      - trackers
+    StoreDelivery:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if delivery is enabled for this store
+          example: true
+        deliveryOnly:
+          type: boolean
+          description: Indicates if only delivery is allowed for this store
+          example: false
+        ranges:
+          description: List of delivery ranges for this store
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDeliveryRange'
+        excludedCities:
+          description: List of cities excluded from delivery
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDeliveryRangeSpecificPriceCity'
+        freeDelivery:
+          description: Free delivery settings for this store
+          allOf:
+          - $ref: '#/components/schemas/StoreDeliveryFreeSettings'
+        returnDelivery:
+          type: boolean
+          description: Indicates if return delivery is enabled for this store
+          example: false
+      required:
+      - enabled
+      - deliveryOnly
+      - ranges
+      - excludedCities
+      - freeDelivery
+      - returnDelivery
+    PaymentInfo:
+      type: object
+      properties:
+        paymentLink:
           type: string
-          description: Language used in this response
-          example: fr
-        default:
-          enum:
-          - fr
-          - en
-          - nl
-          - de
-          - it
-          - pt
-          - es
-          - pl
+          description: Payment link URL (your-order)
+          example: https://rent-item.lokki.rent/your-order/{orderId}
+    StoreTimestamps:
+      type: object
+      properties:
+        createdAt:
+          format: date-time
           type: string
-          description: Default language of the store
-          example: fr
-        available:
+          description: Date when the store was created
+          example: '2024-10-15T10:30:00.000Z'
+      required:
+      - createdAt
+    StoreGeo:
+      type: object
+      properties:
+        location:
+          description: Queried location for the store (or main location if none queried). May be null if address display is disabled
+          allOf:
+          - $ref: '#/components/schemas/StoreLocation'
+        locations:
+          description: List of rental point locations. May be null if none exist or address display is disabled
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StoreLocation'
+      required:
+      - location
+      - locations
+    PatchOneQuoteRequestDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - REQUEST
+          - CANCELED
+          - SENDED
+          - CONVERTED
+          - EXPIRED
+          type: string
+          description: The new status of the quote request
+          example: CONVERTED
+        orderId:
+          type: string
+          description: Order Id (ObjectId) when quote created from quote request
+          example: 64b7f8f2e4b0c2a1d5e6f789
+        cancelReason:
+          enum:
+          - NO_SUPPLY
+          - UNAVAILABLE_ACCESSORY
+          - SCHEDULING_ISSUE
+          - NON_COMPATIBLE_REQUEST
+          - UNSPECIFIC_REQUEST
+          - CUSTOMER_SUITABILITY
+          - INVENTORY_UNAVAILABILITY
+          - WEATHER
+          - EXCEPTIONAL_CLOSURE
+          - LAST_MINUTE_REQUEST
+          - OTHER
+          - USER_SELF_CHECKOUT
+          type: string
+          description: Reason for quote request cancellation
+          example: INVENTORY_UNAVAILABILITY
+        customCancelReason:
+          type: string
+          description: Reason for quote request cancellation
+          example: Found a better deal elsewhere
+    StoreSchedule:
+      type: object
+      properties:
+        openingHours:
+          description: List of regular opening hours
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreOpeningHours'
+        openingHoursLowSeason:
+          description: List of opening hours for the low season
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreOpeningHours'
+        lowSeasonRanges:
+          description: List of date ranges for the low season
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDateRange'
+        closedRanges:
+          description: List of date ranges when the store is closed
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreDateRange'
+      required:
+      - openingHours
+      - openingHoursLowSeason
+      - lowSeasonRanges
+      - closedRanges
+    QuoteRequestEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Quote ID (ObjectId)
+          example: 64b7f8f2e4b0c2a1d5e6f789
+        type:
+          enum:
+          - agency
+          - renter
+          type: string
+          description: Type of quote request (agency or private)
+          example: agency
+        companyId:
+          type: string
+          description: Company ID which received the quote request (ObjectId)
+          example: 64b7f8f2e4b0c2a1d5e6f788
+        rentalPointId:
+          type: string
+          description: Rental point ID where the quote request has been made (ObjectId)
+          example: 64b7f8f2e4b0c2a1d5e6f787
+        status:
+          enum:
+          - REQUEST
+          - CANCELED
+          - SENDED
+          - CONVERTED
+          - EXPIRED
+          type: string
+          description: Quote request status
+          example: REQUEST
+        orderId:
+          type: string
+          description: Linked order ID of the order created from the quote (ObjectId)
+          example: 64b7f8f2e4b0c2a1d5e6f786
+        customer:
+          description: Customer information, filled by the user who made the quote request
+          allOf:
+          - $ref: '#/components/schemas/QuoteRequestCustomer'
+        projectInfos:
+          description: Project information, filled by the user who made the quote request
+          allOf:
+          - $ref: '#/components/schemas/QuoteRequestProjectInfos'
+        cancelReason:
+          enum:
+          - NO_SUPPLY
+          - UNAVAILABLE_ACCESSORY
+          - SCHEDULING_ISSUE
+          - NON_COMPATIBLE_REQUEST
+          - UNSPECIFIC_REQUEST
+          - CUSTOMER_SUITABILITY
+          - INVENTORY_UNAVAILABILITY
+          - WEATHER
+          - EXCEPTIONAL_CLOSURE
+          - LAST_MINUTE_REQUEST
+          - OTHER
+          - USER_SELF_CHECKOUT
+          type: string
+          description: Reason for quote request cancellation
+          example: INVENTORY_UNAVAILABILITY
+        customCancelReason:
+          type: string
+          description: Reason for quote request cancellation that is not in the predefined list
+          example: Found a better deal elsewhere
+        metadata:
+          description: Additional metadata about the quote request
+          allOf:
+          - $ref: '#/components/schemas/QuoteRequestMetadata'
+        sendedDate:
+          format: date-time
+          type: string
+          description: Date when the renter sent an answer to the quote request
+          example: '2025-10-16T10:30:00.000Z'
+        cancelDate:
+          format: date-time
+          type: string
+          description: Date when the quote request has been canceled
+          example: '2025-10-16T10:30:00.000Z'
+        convertedDate:
+          format: date-time
+          type: string
+          description: Date when the quote request has been converted into an order
+          example: '2025-10-16T10:30:00.000Z'
+        createdDate:
+          format: date-time
+          type: string
+          description: Date when the quote request has been created
+          example: '2025-10-16T10:30:00.000Z'
+      required:
+      - id
+      - type
+      - companyId
+      - rentalPointId
+      - status
+      - customer
+      - projectInfos
+    QuoteRequestParticipantQuestion:
+      type: object
+      properties:
+        question:
+          type: string
+          description: Question asked to the participant
+          example: What is your age?
+        answers:
+          description: Answers provided by the participant
+          example:
+          - 25-34
+          - 35-44
+          type: array
+          items:
+            type: string
+      required:
+      - question
+      - answers
+    StoreCancellation:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: True when the store has a cancellation policy set up
+          example: true
+        onlineRequests:
+          type: boolean
+          description: True when the store allows customers to request cancellation online
+          example: true
+        automaticRefunds:
+          type: boolean
+          description: True when the store supports automatic refunds on cancellation
+          example: false
+        ranges:
+          description: List of cancellation ranges and their refund policies
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreCancellationRange'
+      required:
+      - enabled
+      - onlineRequests
+      - automaticRefunds
+      - ranges
+    StoreBookingRules:
+      type: object
+      properties:
+        timeAnchors:
+          description: Allowed booking times (e.g., specific time slots)
+          allOf:
+          - $ref: '#/components/schemas/StoreBookingTimeAnchorsRule'
+        leadTime:
+          description: Lead time required before a booking can be made
+          allOf:
+          - $ref: '#/components/schemas/StoreBookingLeadTimeRule'
+        duration:
+          description: Minimum and maximum booking durations
+          allOf:
+          - $ref: '#/components/schemas/StoreBookingDurationRule'
+        gapBeforeOrderInMinutes:
+          type: number
+          description: Preparation time required before an order starts, in minutes. A product is unavailable for this duration ahead of each existing order (derived from timeProductsUnavailableBeforeOrder + dayProductsUnavailableBeforeOrder).
+          example: 60
+        gapAfterOrderInMinutes:
+          type: number
+          description: Time required after an order ends before the product is available again, in minutes (derived from timeProductsUnavailableAfterOrder + dayProductsUnavailableAfterOrder).
+          example: 120
+      required:
+      - timeAnchors
+      - leadTime
+      - duration
+      - gapBeforeOrderInMinutes
+      - gapAfterOrderInMinutes
+    StoreContact:
+      type: object
+      properties:
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Phone number for contacting the store. Only present if the store has opted in to display their phone number.
+          example: +33 1 23 45 67 89
+        email:
+          type: string
+          description: Email address for contacting the store
+          example: contact@henricorp.com
+        website:
+          type: string
+          description: Website URL for the store
+          example: https://www.henricorp.com
+        socialMedia:
+          description: List of social media profiles for the store
+          allOf:
+          - $ref: '#/components/schemas/StoreContactSocialMedia'
+      required:
+      - phone
+      - email
+      - website
+      - socialMedia
+    AddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+          description: Street number
+          example: '4'
+        street:
+          type: string
+          description: Street name
+          example: Rue du Commandant Rivière
+        postalCode:
+          type: string
+          description: Postal code
+          example: '75008'
+        city:
+          type: string
+          description: City name
+          example: Paris
+        administrativeAreaLevel1:
+          type: string
+          description: Administrative area level 1 (e.g. state or province)
+          example: Île-de-France
+        administrativeAreaLevel2:
+          type: string
+          description: Administrative area level 2 (e.g. city or district)
+          example: Paris
+        country:
+          type: string
+          description: Country name
+          example: France
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    StoreOnlinePaymentProviders:
+      type: object
+      properties:
+        stripe:
+          description: Stripe provider config — present only when Stripe is active for this store
+          allOf:
+          - $ref: '#/components/schemas/StoreStripeProviderConfig'
+        ancv:
+          description: ANCV Connect provider config — present only when ANCV is active for this store
+          allOf:
+          - $ref: '#/components/schemas/StoreAncvProviderConfig'
+    StoreCurrency:
+      type: object
+      properties:
+        isoCode:
+          type: string
+          description: Currency code in ISO 4217 format
+          example: EUR
+        symbol:
+          type: string
+          description: Currency symbol
+          example: €
+      required:
+      - isoCode
+      - symbol
+    StorePartPayment:
+      type: object
+      properties:
+        isActive:
+          type: boolean
+          description: Whether part payment (upfront deposit) is active for this store
+          example: true
+        percentage:
+          type: number
+          description: Percentage of the total amount the customer must pay upfront
+          example: 30
+      required:
+      - isActive
+      - percentage
+    StoreGoogleReviewAuthor:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Author name of the Google Review
+          example: John Doe
+        profilePictureUrl:
+          type: string
+          description: Profile picture URL of the Google Review author
+          example: https://example.com/profile.jpg
+      required:
+      - name
+      - profilePictureUrl
+    QuoteRequestProjectInfos:
+      type: object
+      properties:
+        startDate:
+          format: date-time
+          type: string
+          description: Quote request start date the customer wants
+          example: '2025-10-16T10:30:00.000Z'
+        endDate:
+          format: date-time
+          type: string
+          description: Quote request end date the customer wants
+          example: '2025-10-20T10:30:00.000Z'
+        verticales:
           type: array
           items:
             type: string
             enum:
-            - fr
-            - en
-            - nl
-            - de
-            - it
-            - pt
-            - es
-            - pl
-          description: List of available languages for the store
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+          description: Product verticales concerned by the quote request
           example:
-          - fr
-          - en
-      required:
-      - current
-      - default
-      - available
-    ItemMedia:
-      type: object
-      properties:
-        images:
-          description: Images associated with the item
-          allOf:
-          - $ref: '#/components/schemas/ItemMediaImages'
-        videos:
-          description: Videos associated with the item
-          allOf:
-          - $ref: '#/components/schemas/ItemMediaVideos'
-        documents:
-          description: Documents associated with the item
+          - BIKE
+          - MOPED
+        description:
+          type: string
+          description: Detailed description of the customer's project
+          example: I need a bike for a week...
+        participants:
+          description: List of participants informations that will help the renter to provide a relevant quote
           type: array
           items:
-            $ref: '#/components/schemas/ItemMediaDocuments'
-      required:
-      - images
-      - videos
-      - documents
-    StoreStripeProviderConfig:
-      type: object
-      properties:
-        publishableKey:
+            $ref: '#/components/schemas/QuoteRequestParticipant'
+        budget:
+          type:
+          - number
+          - 'null'
+          description: Estimated maximum budget of the customer for this quote request, may help the renter to provide a relevant quote
+          example: 100
+        flexibility:
+          enum:
+          - exact_dates
+          - more_less_1_day
+          - more_less_2_days
+          - more_less_3_days
+          - more_less_7_days
           type: string
-          description: Stripe publishable key resolved by the backend (live or test)
-          example: pk_live_...
-        accountId:
+          description: Flexibility of the customer's dates, may help the renter to provide a relevant quote if stock is limited
+          example: more_less_1_day
+        rentDuration:
+          enum:
+          - 2_hours
+          - half_day
+          - 1_day
           type: string
-          description: Stripe connected account ID
-          example: acct_...
-        methods:
-          description: Available Stripe payment methods
-          allOf:
-          - $ref: '#/components/schemas/StoreStripePaymentMethods'
+          description: If the rental is for one day, precise the duration of the rent
+          example: 2_hours
+        pickUpTime:
+          enum:
+          - morning
+          - afternoon
+          - whenever
+          type: string
+          description: The pick-up time the customer would prefer for the rental
+          example: morning
+        location:
+          type: string
+          description: Full address of the event or project location
+          example: 12 Rue de Rivoli, 75001 Paris, France
+        lat:
+          type: number
+          description: Latitude of the project location
+          example: 48.8566
+        lng:
+          type: number
+          description: Longitude of the project location
+          example: 2.3522
+        projectDetails:
+          description: Additional project details specific to agency quote requests
+          type: array
+          items:
+            type: string
       required:
-      - publishableKey
-      - accountId
-      - methods
+      - startDate
+      - endDate
+      - verticales
+      - participants
     StoreCancellationRange:
       type: object
       properties:
@@ -2445,82 +1848,22 @@ components:
       - hourThreshold
       - refundType
       - refundAmount
-    StoreBookingDurationRule:
+    StoreCategoryDiscount:
       type: object
       properties:
-        minHours:
-          type:
-          - number
-          - 'null'
-          description: Minimum booking duration in hours, null if no minimum
-          example: 1
-        maxHours:
-          type:
-          - number
-          - 'null'
-          description: Maximum booking duration in hours, null if no maximum
-          example: 24
-      required:
-      - minHours
-      - maxHours
-    QuoteRequestParticipantQuestion:
-      type: object
-      properties:
-        question:
-          type: string
-          description: Question asked to the participant
-          example: What is your age?
-        answers:
-          description: Answers provided by the participant
-          example:
-          - 25-34
-          - 35-44
+        itemCategoryIds:
+          description: Categories of items to which the discount applies
           type: array
           items:
             type: string
-      required:
-      - question
-      - answers
-    ItemMediaVideos:
-      type: object
-      properties:
-        youtubeUrls:
-          description: Array of YouTube video URLs associated with the item
-          example:
-          - https://www.youtube.com/watch?v=dQw4w9WgXcQ
-          - https://www.youtube.com/watch?v=sNPnbI1arSE
-          type:
-          - array
-          - 'null'
+        rules:
+          description: List of discount rules for the category
+          type: array
           items:
-            type: string
+            $ref: '#/components/schemas/CompanyCategoryDiscountRange'
       required:
-      - youtubeUrls
-    StoreOnlinePaymentProviders:
-      type: object
-      properties:
-        stripe:
-          description: Stripe provider config — present only when Stripe is active for this store
-          allOf:
-          - $ref: '#/components/schemas/StoreStripeProviderConfig'
-        ancv:
-          description: ANCV Connect provider config — present only when ANCV is active for this store
-          allOf:
-          - $ref: '#/components/schemas/StoreAncvProviderConfig'
-    StoreDepositMax:
-      type: object
-      properties:
-        activated:
-          type: boolean
-          description: Whether the deposit max value is activated
-          example: true
-        amount:
-          type: number
-          description: Maximum deposit amount
-          example: 200
-      required:
-      - activated
-      - amount
+      - itemCategoryIds
+      - rules
     QuoteRequestOrderItem:
       type: object
       properties:
@@ -2554,20 +1897,6 @@ components:
       - price
       - media
       - type
-    StoreOnlinePayment:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: True if at least one payment provider is configured for this store
-          example: true
-        providers:
-          description: Available payment providers for this store
-          allOf:
-          - $ref: '#/components/schemas/StoreOnlinePaymentProviders'
-      required:
-      - enabled
-      - providers
     StorePricing:
       type: object
       properties:
@@ -2592,6 +1921,286 @@ components:
       - tax
       - discount
       - showPricingTable
+    StoreStripePaymentMethods:
+      type: object
+      properties:
+        card:
+          type: boolean
+          description: Credit card enabled
+          example: true
+        applePay:
+          type: boolean
+          description: Apple Pay enabled
+          example: true
+        googlePay:
+          type: boolean
+          description: Google Pay enabled
+          example: true
+        sepa:
+          type: boolean
+          description: SEPA enabled
+          example: false
+        ideal:
+          type: boolean
+          description: iDEAL enabled
+          example: false
+        bancontact:
+          type: boolean
+          description: Bancontact enabled
+          example: false
+        giroPay:
+          type: boolean
+          description: Giropay enabled
+          example: false
+        p24:
+          type: boolean
+          description: Przelewy24 enabled
+          example: false
+        blik:
+          type: boolean
+          description: BLIK enabled
+          example: false
+        multibanco:
+          type: boolean
+          description: Multibanco enabled
+          example: false
+        eps:
+          type: boolean
+          description: EPS enabled
+          example: false
+      required:
+      - card
+      - applePay
+      - googlePay
+      - sepa
+      - ideal
+      - bancontact
+      - giroPay
+      - p24
+      - blik
+      - multibanco
+      - eps
+    StoreLocationPoint:
+      type: object
+      properties:
+        lat:
+          type: number
+          description: Latitude of the location
+          example: 48.8728361
+        lng:
+          type: number
+          description: Longitude of the location
+          example: 2.3094988
+      required:
+      - lat
+      - lng
+    QuoteRequestMetadata:
+      type: object
+      properties:
+        quoteEntryPoint:
+          type: string
+          description: Entry point from which the customer accessed the quote request form
+          example: discover_page
+        sessionEntryUrl:
+          type: string
+          description: URL of the page where the customer started their session on the website
+          example: https://www.lokki.rent/location/annecy/velo
+        origin:
+          enum:
+          - SEARCH_RP
+          - RENTER_PAGE
+          - PRODUCT_MODAL
+          - QUICK_CART
+          type: string
+          description: Origin of the quote request
+          example: RENTER_PAGE
+    StoreDeliveryRangeSpecificPriceCity:
+      type: object
+      properties:
+        cityName:
+          type: string
+          description: Name of the city
+          example: Paris
+        sublocalityName:
+          type: string
+          description: Name of the sublocality (e.g., neighborhood or district)
+          example: Batignolles
+        zipCode:
+          type: string
+          description: Postal code
+          example: '75017'
+        placeId:
+          type: string
+          description: Google Place ID for the city
+          example: ChIJD7fiBh9u5kcRYJSMaMOCCwQ
+        hasMultiplePostcodeLocalities:
+          type: boolean
+          description: Indicates if the city has multiple postal code localities
+          example: false
+      required:
+      - cityName
+      - sublocalityName
+      - zipCode
+      - placeId
+      - hasMultiplePostcodeLocalities
+    StoreMarketingTrackers:
+      type: object
+      properties:
+        ga4Id:
+          type: string
+          description: Google Analytics 4 measurement ID
+          example: G-XXXXXXXXXX
+        googleAdsId:
+          type: string
+          description: Google Ads conversion ID
+          example: AW-123456789
+        metaPixelId:
+          type: string
+          description: Meta (Facebook) Pixel ID
+          example: '123456789012345'
+        tiktokPixelId:
+          type: string
+          description: TikTok Pixel ID
+          example: ABCDEFGHIJKLMNOPQRST
+        linkedinPartnerId:
+          type: string
+          description: LinkedIn Partner ID
+          example: '123456'
+        linkedinConversionId:
+          type: string
+          description: LinkedIn Conversion ID
+          example: '1234567'
+    StoreBookingDurationRule:
+      type: object
+      properties:
+        minHours:
+          type:
+          - number
+          - 'null'
+          description: Minimum booking duration in hours, null if no minimum
+          example: 1
+        maxHours:
+          type:
+          - number
+          - 'null'
+          description: Maximum booking duration in hours, null if no maximum
+          example: 24
+      required:
+      - minHours
+      - maxHours
+    StoreReviews:
+      type: object
+      properties:
+        google:
+          description: Google Reviews data
+          allOf:
+          - $ref: '#/components/schemas/StoreGoogleReviews'
+      required:
+      - google
+    StoreStripeProviderConfig:
+      type: object
+      properties:
+        publishableKey:
+          type: string
+          description: Stripe publishable key resolved by the backend (live or test)
+          example: pk_live_...
+        accountId:
+          type: string
+          description: Stripe connected account ID
+          example: acct_...
+        methods:
+          description: Available Stripe payment methods
+          allOf:
+          - $ref: '#/components/schemas/StoreStripePaymentMethods'
+      required:
+      - publishableKey
+      - accountId
+      - methods
+    StoreModules:
+      type: object
+      properties:
+        delivery:
+          description: Delivery module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreDelivery'
+        onlinePayment:
+          description: Online payment module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreOnlinePayment'
+        insurance:
+          description: Insurance module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreInsurance'
+        multipleLocations:
+          description: Multiple locations module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreMultipleLocations'
+        cancellation:
+          description: Cancellation module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreCancellation'
+        rentalPlaceNetwork:
+          description: Rental place network participation settings
+          allOf:
+          - $ref: '#/components/schemas/StoreRentalPlaceNetwork'
+        stockVisibility:
+          description: Stock visibility module settings
+          allOf:
+          - $ref: '#/components/schemas/StoreStockVisibility'
+        breadcrumbVisibility:
+          description: Breadcrumb visibility on BEL 2.0 store pages
+          allOf:
+          - $ref: '#/components/schemas/StoreBreadcrumbVisibility'
+      required:
+      - delivery
+      - onlinePayment
+      - insurance
+      - multipleLocations
+      - cancellation
+      - rentalPlaceNetwork
+      - stockVisibility
+      - breadcrumbVisibility
+    StoreAncvProviderConfig:
+      type: object
+      properties: {}
+    StoreBookingTimeAnchorsRule:
+      type: object
+      properties:
+        startTimes:
+          description: List of allowed booking start times (e.g., specific time slots)
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreBookingTimeAnchorTime'
+        endTimes:
+          description: List of allowed booking end times (e.g., specific time slots)
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreBookingTimeAnchorTime'
+      required:
+      - startTimes
+      - endTimes
+    StoreTax:
+      type: object
+      properties:
+        type:
+          enum:
+          - INCLUSIVE
+          - EXCLUSIVE
+          type: string
+          description: Type of tax applied to prices (inclusive or exclusive of tax)
+          example: INCLUSIVE
+        value:
+          type: number
+          description: Tax percentage applied to prices
+          example: 20
+        name:
+          type: string
+          description: Name of the tax (e.g., VAT)
+          example: TVA
+      required:
+      - type
+      - value
+      - name
     StoreOpeningHours:
       type: object
       properties:
@@ -2630,50 +2239,441 @@ components:
       - from
       - to
       - open
-    StoreGeo:
+    StoreGlobalDiscount:
       type: object
       properties:
-        location:
-          description: Queried location for the store (or main location if none queried). May be null if address display is disabled
-          allOf:
-          - $ref: '#/components/schemas/StoreLocation'
-        locations:
-          description: List of rental point locations. May be null if none exist or address display is disabled
+        percentage:
+          type: number
+          description: Percentage value of the discount
+          example: '10.0'
+        from:
+          format: date-time
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/StoreLocation'
+          description: Start date of the discount period (null if always applicable)
+          example: '2024-12-01T00:00:00.000Z'
+        to:
+          format: date-time
+          type:
+          - string
+          - 'null'
+          description: End date of the discount period (null if always applicable)
+          example: '2024-12-31T23:59:59.999Z'
+        applicableDate:
+          enum:
+          - CREATED_DATE
+          - START_DATE
+          type: string
+          description: Whether the discount applies on the start date of the booking or when the booking is made
+          example: START_DATE
       required:
-      - location
-      - locations
-    QuoteRequestCustomer:
+      - percentage
+      - from
+      - to
+      - applicableDate
+    PostOneQuoteRequestDto:
       type: object
       properties:
-        rentalPlaceUserId:
+        type:
+          enum:
+          - agency
+          - renter
           type: string
-          description: Rental place user ID if the customer is a registered user (ObjectId)
-          example: 64b7f8f2e4b0c2a1d5e6f785
-        email:
+          description: Type of the quote request
+          example: renter
+        companyId:
           type: string
-          description: Customer email
-          example: john@doe.com
-        phoneNumber:
+          description: Company ID which received the quote request (ObjectId) — required when type is renter
+          example: 64b7f8f2e4b0c2a1d5e6f788
+        rentalPointId:
           type: string
-          description: Customer phone number
-          example: '+33612345678'
-        firstName:
+          description: Rental point ID where the quote request has been made (ObjectId)
+          example: 64b7f8f2e4b0c2a1d5e6f787
+        customer:
+          description: Customer information, filled by the user who made the quote request
+          allOf:
+          - $ref: '#/components/schemas/QuoteRequestCustomer'
+        projectInfos:
+          description: Project information, filled by the user who made the quote request
+          allOf:
+          - $ref: '#/components/schemas/QuoteRequestProjectInfos'
+        metadata:
+          description: Additional metadata about the quote request
+          allOf:
+          - $ref: '#/components/schemas/QuoteRequestMetadata'
+        lang:
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
           type: string
-          description: Customer first name
-          example: John
-        lastName:
-          type: string
-          description: Customer last name
-          example: Doe
+          description: Language of the online store where the quote request has been made. Used to send the email in the correct language
+          example: fr
       required:
-      - rentalPlaceUserId
-      - email
-      - phoneNumber
+      - type
+      - customer
+      - projectInfos
+      - lang
+    CompanyCategoryDiscountRange:
+      type: object
+      properties:
+        discount:
+          type: number
+          description: Discount value for the range
+        discountType:
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+          type: string
+          description: Type of discount applied (amount or percentage)
+        rangeFrom:
+          type:
+          - number
+          - 'null'
+          description: Minimum value of the range (Quantity of items)
+        rangeTo:
+          type:
+          - number
+          - 'null'
+          description: Maximum value of the range (Quantity of items)
+        infiniteTo:
+          type: boolean
+          description: Indicates if the range has no upper limit
+      required:
+      - discount
+      - discountType
+      - rangeFrom
+      - rangeTo
+      - infiniteTo
+    StoreDeposit:
+      type: object
+      properties:
+        max:
+          description: Maximum deposit settings
+          allOf:
+          - $ref: '#/components/schemas/StoreDepositMax'
+        online:
+          type: boolean
+          description: Whether the customer can pay the deposit online
+          example: true
+      required:
+      - max
+      - online
+    StoreDateRange:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the date range
+          example: 64b64c4f5f3c2a6d8e7f9b0d
+        from:
+          format: date-time
+          type: string
+          description: Start date of the range (inclusive)
+          example: '2024-12-01T00:00:00.000Z'
+        to:
+          format: date-time
+          type: string
+          description: End date of the range (inclusive)
+          example: '2024-12-31T23:59:59.999Z'
+      required:
+      - id
+      - from
+      - to
+    QuoteRequestOrderInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Order ID (MongoDB ObjectId)
+          example: 692f10cc2c110b2849967659
+        delivery:
+          description: Departure point label or identifier. Null if not applicable.
+          example: Shop - Gare de Lyon
+          allOf:
+          - $ref: '#/components/schemas/DeliveryInfo'
+        startDate:
+          format: date-time
+          type: string
+          description: Quote request start date the customer wants
+          example: '2025-10-16T10:30:00.000Z'
+        endDate:
+          format: date-time
+          type: string
+          description: Quote request end date the customer wants
+          example: '2025-10-20T10:30:00.000Z'
+        price:
+          type: number
+          description: Total order price including taxes (TTC)
+          example: 152.5
+        items:
+          description: Item details for this order
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteRequestOrderItem'
+        paymentInfo:
+          description: Payment information
+          allOf:
+          - $ref: '#/components/schemas/PaymentInfo'
+        orderStatus:
+          enum:
+          - TO_COME
+          - IN_PROGRESS
+          - ENDED
+          type: string
+          description: Order status
+      required:
+      - id
+      - startDate
+      - endDate
+      - price
+      - items
+      - paymentInfo
+      - orderStatus
+    StoreDeliveryFreeSettings:
+      type: object
+      properties:
+        activated:
+          type: boolean
+          description: Indicates if free delivery is activated
+          example: true
+        type:
+          enum:
+          - MINUTES
+          - SUBTOTAL
+          type: string
+          description: Type of condition for free delivery (either minimum minutes or subtotal amount)
+          example: MINUTES
+        value:
+          type: number
+          description: Value corresponding to the type (minutes or subtotal amount)
+          example: 60
+      required:
+      - activated
+      - type
+      - value
+    DeliveryInfo:
+      type: object
+      properties:
+        departurePoint:
+          type:
+          - string
+          - 'null'
+          description: Departure point label or identifier. Null if not applicable.
+          example: Shop - Gare de Lyon
+        arrivalPoint:
+          type:
+          - string
+          - 'null'
+          description: Arrival point label or identifier. Null if not applicable.
+          example: Shop - Gare de Lyon
+      required:
+      - departurePoint
+      - arrivalPoint
+    GetManyQuoteRequestsPublicResponseDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of documents matching the query
+          minimum: 0
+          example: 150
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteRequestsPublic'
+      required:
+      - total
+      - docs
+    QuoteRequestParticipant:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of participant
+          enum:
+          - adult
+          - child
+          example: adult
+        questions:
+          description: List of questions and answers provided by the participant
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteRequestParticipantQuestion'
+      required:
+      - type
+      - questions
+    StoreProfile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Store name
+          example: Henri Corp
+        description:
+          type: string
+          description: Store description in the requested language, or fallback to French
+          example: Location de vélos entre particuliers. Louez un vélo près de chez vous, où que vous soyez en France.
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+          description: List of company verticales (sectors of activity)
+          example:
+          - BIKE
+          - SCOOTER
+      required:
+      - name
+      - description
+      - verticales
+    StoreOnlinePayment:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: True if at least one payment provider is configured for this store
+          example: true
+        providers:
+          description: Available payment providers for this store
+          allOf:
+          - $ref: '#/components/schemas/StoreOnlinePaymentProviders'
+      required:
+      - enabled
+      - providers
+    StoreInsurance:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if insurance is enabled for this store
+          example: true
+        provider:
+          type: string
+          enum:
+          - TULIP
+          description: Insurance provider for this store
+          example: TULIP
+        details:
+          description: Detailed settings for the insurance provider
+          allOf:
+          - $ref: '#/components/schemas/StoreInsuranceTulipDetails'
+      required:
+      - enabled
+      - provider
+      - details
+    CancelQuoteRequestDto:
+      type: object
+      properties:
+        cancelReason:
+          enum:
+          - NO_SUPPLY
+          - UNAVAILABLE_ACCESSORY
+          - SCHEDULING_ISSUE
+          - NON_COMPATIBLE_REQUEST
+          - UNSPECIFIC_REQUEST
+          - CUSTOMER_SUITABILITY
+          - INVENTORY_UNAVAILABILITY
+          - WEATHER
+          - EXCEPTIONAL_CLOSURE
+          - LAST_MINUTE_REQUEST
+          - OTHER
+          - USER_SELF_CHECKOUT
+          type: string
+          description: Reason for canceling the quote request
+          example: NO_SUPPLY
+        customCancelReason:
+          type: string
+          description: Custom cancellation reason when cancelReason is OTHER
+          example: Equipment not suitable for the requested dates
+      required:
+      - cancelReason
+    StoreBreadcrumbVisibility:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the breadcrumb is displayed on the BEL 2.0 store pages.
+          example: true
+      required:
+      - enabled
+    StoreCheckout:
+      type: object
+      properties:
+        partPayment:
+          description: Part payment settings — whether and how much the customer must pay upfront
+          allOf:
+          - $ref: '#/components/schemas/StorePartPayment'
+        deposit:
+          description: Deposit settings — cap amount and whether online payment is enabled
+          allOf:
+          - $ref: '#/components/schemas/StoreDeposit'
+        payOnSite:
+          type: boolean
+          description: Whether the store allows customers to pay in person at pickup
+          example: true
+      required:
+      - partPayment
+      - deposit
+      - payOnSite
+    StoreGoogleReviews:
+      type: object
+      properties:
+        rating:
+          type: number
+          description: Average rating from Google Reviews (out of 5)
+          example: 4.5
+        total:
+          type: number
+          description: Total number of Google Reviews
+          example: 120
+        placeId:
+          type: string
+          description: Google Place ID associated with the reviews
+          example: ChIJLU7jZClu5kcR4PcOOO6p3I0
+        reviews:
+          description: List of individual Google Reviews
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreGoogleReview'
+        mapsUrl:
+          type: string
+          description: URL to the Google Maps page for the store
+          example: https://maps.google.com/?cid=1234567890123456789
+        updatedAt:
+          format: date-time
+          type: string
+          description: Date when the Google Reviews were last updated
+          example: '2024-11-01T12:00:00.000Z'
+      required:
+      - rating
+      - total
+      - placeId
+      - reviews
+      - mapsUrl
+      - updatedAt
   securitySchemes:
     x-access-token:
       scheme: bearer

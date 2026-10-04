@@ -486,145 +486,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PaginatedPaymentsWithWorkshopOrderDto:
-      type: object
-      properties:
-        totalCount:
-          type: number
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentWithWorkshopOrderDto'
-      required:
-      - totalCount
-      - payments
-    Customer:
-      type: object
-      properties:
-        id:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        companyName:
-          type: string
-        phone:
-          type: string
-        email:
-          type: string
-        zipCode:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerField'
-        companyId:
-          type: string
-        deliveryAddress:
-          type: string
-        deliveryZipCode:
-          type: string
-        deliveryCity:
-          type: string
-        isNewsletterSubscribe:
-          type: boolean
-        isLokkiNewsletterSubscribe:
-          type: boolean
-        customerImage:
-          type: string
-        type:
-          enum:
-          - entreprise
-          - individual
-          type: string
-        skisetInfos:
-          $ref: '#/components/schemas/CustomerSkisetInfos'
-        tulipInfos:
-          $ref: '#/components/schemas/TulipInfos'
-        createdAt:
-          format: date-time
-          type: string
-        remark:
-          type: string
-        customerRpId:
-          type: string
-        hidden:
-          type: boolean
-        createdFrom:
-          enum:
-          - DASHBOARD
-          - ONLINE_STORE
-          - RENTAL_PLACE_LOKKI
-          type: string
-      required:
-      - id
-      - firstName
-      - lastName
-      - companyName
-      - phone
-      - email
-      - zipCode
-      - fields
-      - companyId
-      - deliveryAddress
-      - deliveryZipCode
-      - deliveryCity
-      - isNewsletterSubscribe
-      - isLokkiNewsletterSubscribe
-      - customerImage
-      - type
-      - createdAt
-      - hidden
-      - createdFrom
-    WorkshopPaymentDto:
-      type: object
-      properties:
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopPayment'
-      required:
-      - payments
-    RepairerWorkshop:
-      type: object
-      properties:
-        userId:
-          type: string
-        name:
-          type: string
-      required:
-      - userId
-      - name
-    WorkshopOrderDocument:
-      type: object
-      properties:
-        documentId:
-          type: string
-        documentModelId:
-          type: string
-        name:
-          type: string
-        createdDate:
-          format: date-time
-          type: string
-        key:
-          type: string
-        isEmailSend:
-          type: boolean
-        isSigned:
-          type: boolean
-        documentUrl:
-          type: string
-      required:
-      - documentId
-      - documentModelId
-      - name
-      - createdDate
-      - key
-      - isEmailSend
-      - isSigned
-      - documentUrl
     CustomerField:
       type: object
       properties:
@@ -638,15 +499,6 @@ components:
       - label
       - value
       - id
-    CustomerSkisetInfos:
-      type: object
-      properties:
-        customerId:
-          type:
-          - string
-          - 'null'
-      required:
-      - customerId
     WorkshopPaymentRefund:
       type: object
       properties:
@@ -682,85 +534,6 @@ components:
       - date
       - method
       - reason
-    WorkshopBatchRefundDto:
-      type: object
-      properties:
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopRefundPaymentDto'
-      required:
-      - refunds
-    WorkshopCreatePaymentDto:
-      type: object
-      properties:
-        amount:
-          type: number
-        initialAmount:
-          type: number
-        paymentIntentId:
-          type: string
-        status:
-          type: string
-          enum:
-          - waiting
-          - pending
-          - paid
-        method:
-          type: string
-          enum:
-          - Carte bleue
-          - Espèces
-          - Chèques
-          - Chèque vacances
-          - Virement
-          - Boutique en ligne
-          - Lien de paiement
-          - Autre
-          - Square Terminal
-        paymentDate:
-          format: date-time
-          type: string
-        isPartPayment:
-          type: boolean
-        isEmailSent:
-          type: boolean
-        refunds:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkshopPaymentRefund'
-        squareInfo:
-          allOf:
-          - $ref: '#/components/schemas/SquarePaymentInfo'
-      required:
-      - amount
-      - method
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    TulipInfos:
-      type: object
-      properties:
-        address:
-          type: string
-        zipcode:
-          type: string
-        city:
-          type: string
-        managerFirstName:
-          type: string
-        managerLastName:
-          type: string
-        sirenNumber:
-          type: string
-      required:
-      - address
-      - zipcode
-      - city
-      - managerFirstName
-      - managerLastName
-      - sirenNumber
     WorkshopOrder:
       type: object
       properties:
@@ -860,6 +633,101 @@ components:
       - sentMails
       - updatedAt
       - createdAt
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        companyName:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        zipCode:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerField'
+        companyId:
+          type: string
+        deliveryAddress:
+          type: string
+        deliveryZipCode:
+          type: string
+        deliveryCity:
+          type: string
+        isNewsletterSubscribe:
+          type: boolean
+        isLokkiNewsletterSubscribe:
+          type: boolean
+        customerImage:
+          type: string
+        type:
+          enum:
+          - entreprise
+          - individual
+          type: string
+        skisetInfos:
+          $ref: '#/components/schemas/CustomerSkisetInfos'
+        tulipInfos:
+          $ref: '#/components/schemas/TulipInfos'
+        createdAt:
+          format: date-time
+          type: string
+        remark:
+          type: string
+        customerRpId:
+          type: string
+        hidden:
+          type: boolean
+        createdFrom:
+          enum:
+          - DASHBOARD
+          - ONLINE_STORE
+          - RENTAL_PLACE_LOKKI
+          type: string
+      required:
+      - id
+      - firstName
+      - lastName
+      - companyName
+      - phone
+      - email
+      - zipCode
+      - fields
+      - companyId
+      - deliveryAddress
+      - deliveryZipCode
+      - deliveryCity
+      - isNewsletterSubscribe
+      - isLokkiNewsletterSubscribe
+      - customerImage
+      - type
+      - createdAt
+      - hidden
+      - createdFrom
+    CustomInputWorkshop:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        isDone:
+          type: boolean
+      required:
+      - id
+      - name
+      - price
+      - isDone
     StatusHistory:
       type: object
       properties:
@@ -874,17 +742,69 @@ components:
       - from
       - to
       - date
-    WorkshopPaymentCsvDto:
+    WorkshopCreatePaymentDto:
       type: object
       properties:
-        payments:
+        amount:
+          type: number
+        initialAmount:
+          type: number
+        paymentIntentId:
+          type: string
+        status:
+          type: string
+          enum:
+          - waiting
+          - pending
+          - paid
+        method:
+          type: string
+          enum:
+          - Carte bleue
+          - Espèces
+          - Chèques
+          - Chèque vacances
+          - Virement
+          - Boutique en ligne
+          - Lien de paiement
+          - Autre
+          - Square Terminal
+        paymentDate:
+          format: date-time
+          type: string
+        isPartPayment:
+          type: boolean
+        isEmailSent:
+          type: boolean
+        refunds:
           type: array
           items:
-            type: array
-            items:
-              type: string
+            $ref: '#/components/schemas/WorkshopPaymentRefund'
+        squareInfo:
+          allOf:
+          - $ref: '#/components/schemas/SquarePaymentInfo'
       required:
-      - payments
+      - amount
+      - method
+    RepairerWorkshop:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+      required:
+      - userId
+      - name
+    WorkshopBatchRefundDto:
+      type: object
+      properties:
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopRefundPaymentDto'
+      required:
+      - refunds
     WorkshopPayment:
       type: object
       properties:
@@ -958,16 +878,18 @@ components:
       - createdAt
       - isPartPayment
       - refunds
-    PaymentsInfo:
+    PaginatedPaymentsWithWorkshopOrderDto:
       type: object
       properties:
-        method:
-          type: string
-        amount:
+        totalCount:
           type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentWithWorkshopOrderDto'
       required:
-      - method
-      - amount
+      - totalCount
+      - payments
     PaymentInfoDto:
       type: object
       properties:
@@ -986,62 +908,6 @@ components:
       - totalTTC
       - totalHT
       - payments
-    PaymentWithWorkshopOrderDto:
-      type: object
-      properties:
-        payment:
-          $ref: '#/components/schemas/WorkshopPayment'
-        workshopOrder:
-          $ref: '#/components/schemas/WorkshopOrder'
-      required:
-      - payment
-    WorkshopOrderQuotes:
-      type: object
-      properties:
-        id:
-          type: string
-        isDone:
-          type: boolean
-        name:
-          type: string
-        price:
-          type: number
-        timeInMinutes:
-          type: number
-        number:
-          type: number
-      required:
-      - id
-      - isDone
-      - name
-      - price
-      - timeInMinutes
-    SquarePaymentInfo:
-      type: object
-      properties:
-        squarePaymentId:
-          type: string
-        squareOrderId:
-          type: string
-      required:
-      - squarePaymentId
-      - squareOrderId
-    CustomInputWorkshop:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        price:
-          type: number
-        isDone:
-          type: boolean
-      required:
-      - id
-      - name
-      - price
-      - isDone
     WorkshopRefundPaymentDto:
       type: object
       properties:
@@ -1079,6 +945,140 @@ components:
       - date
       - method
       - reason
+    PaymentWithWorkshopOrderDto:
+      type: object
+      properties:
+        payment:
+          $ref: '#/components/schemas/WorkshopPayment'
+        workshopOrder:
+          $ref: '#/components/schemas/WorkshopOrder'
+      required:
+      - payment
+    PaymentsInfo:
+      type: object
+      properties:
+        method:
+          type: string
+        amount:
+          type: number
+      required:
+      - method
+      - amount
+    WorkshopOrderDocument:
+      type: object
+      properties:
+        documentId:
+          type: string
+        documentModelId:
+          type: string
+        name:
+          type: string
+        createdDate:
+          format: date-time
+          type: string
+        key:
+          type: string
+        isEmailSend:
+          type: boolean
+        isSigned:
+          type: boolean
+        documentUrl:
+          type: string
+      required:
+      - documentId
+      - documentModelId
+      - name
+      - createdDate
+      - key
+      - isEmailSend
+      - isSigned
+      - documentUrl
+    WorkshopPaymentCsvDto:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - payments
+    WorkshopPaymentDto:
+      type: object
+      properties:
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkshopPayment'
+      required:
+      - payments
+    CustomerSkisetInfos:
+      type: object
+      properties:
+        customerId:
+          type:
+          - string
+          - 'null'
+      required:
+      - customerId
+    SquarePaymentInfo:
+      type: object
+      properties:
+        squarePaymentId:
+          type: string
+        squareOrderId:
+          type: string
+      required:
+      - squarePaymentId
+      - squareOrderId
+    WorkshopOrderQuotes:
+      type: object
+      properties:
+        id:
+          type: string
+        isDone:
+          type: boolean
+        name:
+          type: string
+        price:
+          type: number
+        timeInMinutes:
+          type: number
+        number:
+          type: number
+      required:
+      - id
+      - isDone
+      - name
+      - price
+      - timeInMinutes
+    TulipInfos:
+      type: object
+      properties:
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
+      required:
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

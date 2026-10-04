@@ -90,16 +90,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PriceRuleDate:
+    ItemPriceRule:
       type: object
       properties:
-        day:
-          type: number
-        time:
+        id:
           type: string
+        companyId:
+          type: string
+        title:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceRule'
       required:
-      - day
-      - time
+      - id
+      - companyId
+      - title
+      - rules
     PriceRulesDto:
       type: object
       properties:
@@ -141,24 +149,16 @@ components:
           $ref: '#/components/schemas/PriceRulesDto'
       required:
       - rule
-    ItemPriceRule:
+    PriceRuleDate:
       type: object
       properties:
-        id:
+        day:
+          type: number
+        time:
           type: string
-        companyId:
-          type: string
-        title:
-          type: string
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceRule'
       required:
-      - id
-      - companyId
-      - title
-      - rules
+      - day
+      - time
   securitySchemes:
     x-access-token:
       scheme: bearer

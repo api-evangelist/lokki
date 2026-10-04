@@ -491,6 +491,35 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    PriceModelSpecificDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        duration:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - duration
+      - id
+      - price
+      - priceLowSeason
+      - label
     ServiceField:
       type: object
       properties:
@@ -507,49 +536,46 @@ components:
       - name
       - value
       - isTagged
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    ServiceTag:
+    AttachedFile:
       type: object
       properties:
         name:
           type: string
-        value:
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
           type: string
       required:
       - name
-      - value
-    PriceModelLLDDuration:
+      - key
+      - size
+      - type
+    ItemAttribute:
       type: object
       properties:
-        type:
+        attribute:
           type: string
-          default: LLD
-          enum:
-          - LLD
-        calendarMonths:
-          type: number
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    UpdateServiceAvailabilityDto:
+      type: object
+      properties:
         id:
           type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
+        available:
+          type: boolean
       required:
-      - type
-      - calendarMonths
       - id
-      - price
-      - priceLowSeason
-      - label
+      - available
     UpdateServiceDto:
       type: object
       properties:
@@ -631,35 +657,6 @@ components:
       required:
       - id
       - onlineStoreInformation
-    PriceModelSpecificDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: specific
-          enum:
-          - specific
-        duration:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - duration
-      - id
-      - price
-      - priceLowSeason
-      - label
     ItemOnlineStoreInformation:
       type: object
       properties:
@@ -670,40 +667,6 @@ components:
       required:
       - name
       - description
-    ItemAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    ServiceAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    UpdateServiceAvailabilityDto:
-      type: object
-      properties:
-        id:
-          type: string
-        available:
-          type: boolean
-      required:
-      - id
-      - available
     GetManyServicesResponseDto:
       type: object
       properties:
@@ -719,15 +682,6 @@ components:
       required:
       - total
       - docs
-    UpdateManyServicesDto:
-      type: object
-      properties:
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateServiceDto'
-      required:
-      - services
     Service:
       type: object
       properties:
@@ -831,38 +785,6 @@ components:
       - printed
       - vat
       - translationInProgress
-    TentativeCategorization:
-      type: object
-      properties:
-        subcategoryName:
-          type:
-          - string
-          - 'null'
-        verticalName:
-          type:
-          - string
-          - 'null'
-      required:
-      - subcategoryName
-      - verticalName
-    AttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
     CreateUpdateServiceDto:
       type: object
       properties:
@@ -962,6 +884,84 @@ components:
       - isAssuranceTulip
       - onlineAvailability
       - printed
+    TentativeCategorization:
+      type: object
+      properties:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    ServiceTag:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    UpdateManyServicesDto:
+      type: object
+      properties:
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateServiceDto'
+      required:
+      - services
+    ServiceAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
     PriceModelRangeDuration:
       type: object
       properties:

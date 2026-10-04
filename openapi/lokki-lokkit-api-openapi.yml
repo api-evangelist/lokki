@@ -91,6 +91,38 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UpdateLokkiUserDataDto:
+      type: object
+      properties:
+        launchDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+      required:
+      - launchDate
+      - verticales
     User:
       type: object
       properties:
@@ -163,16 +195,13 @@ components:
       - createdAt
       - connectionAttempt
       - availableTools
-    UpdateLokkitUserDataTaskDto:
+    LokkitCreateAccountResultDto:
       type: object
       properties:
-        taskId:
-          type: number
-        isCompleted:
-          type: boolean
+        user:
+          $ref: '#/components/schemas/User'
       required:
-      - taskId
-      - isCompleted
+      - user
     LokkitTask:
       type: object
       properties:
@@ -186,103 +215,6 @@ components:
       - id
       - taskId
       - isCompleted
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    UpdateLokkiUserDataDto:
-      type: object
-      properties:
-        launchDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-      required:
-      - launchDate
-      - verticales
-    LokkitCreateAccountResultDto:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-      - user
-    LokkitUserData:
-      type: object
-      properties:
-        id:
-          type: string
-        userId:
-          type: string
-        launchDate:
-          format: date-time
-          type:
-          - string
-          - 'null'
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        tasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/LokkitTask'
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - userId
-      - launchDate
-      - verticales
-      - tasks
-      - createdAt
     SelfTestUtmInfos:
       type: object
       properties:
@@ -308,6 +240,16 @@ components:
           type: string
         GeoLoc:
           type: string
+    UpdateLokkitUserDataTaskDto:
+      type: object
+      properties:
+        taskId:
+          type: number
+        isCompleted:
+          type: boolean
+      required:
+      - taskId
+      - isCompleted
     LokkitCompleteFormInfosDto:
       type: object
       properties:
@@ -365,6 +307,64 @@ components:
       - projectDescription
       - utmInfos
       - lang
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    LokkitUserData:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        launchDate:
+          format: date-time
+          type:
+          - string
+          - 'null'
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/LokkitTask'
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - userId
+      - launchDate
+      - verticales
+      - tasks
+      - createdAt
   securitySchemes:
     x-access-token:
       scheme: bearer

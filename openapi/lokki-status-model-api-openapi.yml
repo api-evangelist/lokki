@@ -117,6 +117,43 @@ components:
       - id
       - color
       - name
+    CreateStatusModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateStatusModelStatusDto'
+        companyId:
+          type: string
+        isFirst:
+          type: boolean
+      required:
+      - name
+      - status
+      - companyId
+    UpdateStatusModelDto:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateStatusModelStatusDto'
+        companyId:
+          type: string
+        isFirst:
+          type: boolean
+        id:
+          type: string
+      required:
+      - name
+      - status
+      - companyId
+      - id
     StatusModel:
       type: object
       properties:
@@ -142,43 +179,6 @@ components:
       - status
       - companyId
       - createdAt
-    UpdateStatusModelDto:
-      type: object
-      properties:
-        name:
-          type: string
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateStatusModelStatusDto'
-        companyId:
-          type: string
-        isFirst:
-          type: boolean
-        id:
-          type: string
-      required:
-      - name
-      - status
-      - companyId
-      - id
-    CreateStatusModelDto:
-      type: object
-      properties:
-        name:
-          type: string
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateStatusModelStatusDto'
-        companyId:
-          type: string
-        isFirst:
-          type: boolean
-      required:
-      - name
-      - status
-      - companyId
   securitySchemes:
     x-access-token:
       scheme: bearer

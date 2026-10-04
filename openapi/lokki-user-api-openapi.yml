@@ -147,6 +147,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UpdateUserPasswordDto:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+      required:
+      - oldPassword
+      - newPassword
     User:
       type: object
       properties:
@@ -232,6 +242,17 @@ components:
       - name
       - email
       - phone
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
     EmployeeAccess:
       type: object
       properties:
@@ -275,27 +296,6 @@ components:
           format: binary
       required:
       - file
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    UpdateUserPasswordDto:
-      type: object
-      properties:
-        oldPassword:
-          type: string
-        newPassword:
-          type: string
-      required:
-      - oldPassword
-      - newPassword
   securitySchemes:
     x-access-token:
       scheme: bearer

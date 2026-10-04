@@ -166,7 +166,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UpdateProductVerticaleCategoryDto:
+    CreateUpdateProductVerticaleCategoryDto:
       type: object
       properties:
         name:
@@ -216,8 +216,6 @@ components:
           - 'null'
         legacy:
           type: boolean
-        id:
-          type: string
       required:
       - name
       - i18nKey
@@ -226,7 +224,15 @@ components:
       - isDefault
       - isOptions
       - hasChildItems
-      - id
+    ProductVerticaleCategoryListDto:
+      type: object
+      properties:
+        productVerticaleCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVerticaleCategory'
+      required:
+      - productVerticaleCategories
     ProductVerticaleCategory:
       type: object
       properties:
@@ -293,31 +299,16 @@ components:
       - attributes
       - createdAt
       - updatedAt
-    ProductVerticalCategoryAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        mandatory:
-          type: boolean
-      required:
-      - attribute
-      - tags
-      - mandatory
-    ProductVerticaleCategoryListDto:
+    UpdateManyProductVerticaleCategoryDto:
       type: object
       properties:
         productVerticaleCategories:
           type: array
           items:
-            $ref: '#/components/schemas/ProductVerticaleCategory'
+            $ref: '#/components/schemas/UpdateProductVerticaleCategoryDto'
       required:
       - productVerticaleCategories
-    CreateUpdateProductVerticaleCategoryDto:
+    UpdateProductVerticaleCategoryDto:
       type: object
       properties:
         name:
@@ -367,6 +358,8 @@ components:
           - 'null'
         legacy:
           type: boolean
+        id:
+          type: string
       required:
       - name
       - i18nKey
@@ -375,15 +368,22 @@ components:
       - isDefault
       - isOptions
       - hasChildItems
-    UpdateManyProductVerticaleCategoryDto:
+      - id
+    ProductVerticalCategoryAttribute:
       type: object
       properties:
-        productVerticaleCategories:
+        attribute:
+          type: string
+        tags:
           type: array
           items:
-            $ref: '#/components/schemas/UpdateProductVerticaleCategoryDto'
+            type: string
+        mandatory:
+          type: boolean
       required:
-      - productVerticaleCategories
+      - attribute
+      - tags
+      - mandatory
   securitySchemes:
     x-access-token:
       scheme: bearer

@@ -238,44 +238,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    VisibilitySetupUserResultDto:
-      type: object
-      properties:
-        isSuccess:
-          type: boolean
-        code:
-          type: string
-          enum:
-          - NO_ACCOUNT
-          - NO_COMPANY
-          - EMPLOYEE
-          - OWNER
-          - OWNER_DEMO
-      required:
-      - isSuccess
-      - code
-    ServiceTag:
+    AttachedFile:
       type: object
       properties:
         name:
           type: string
-        value:
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        uid:
           type: string
       required:
       - name
-      - value
-    CheckStripeSetupStatusReturnDto:
-      type: object
-      properties:
-        isSuccess:
-          type: boolean
-        url:
-          type:
-          - string
-          - 'null'
-      required:
-      - isSuccess
-      - url
+      - key
+      - size
+      - type
     VisibilitySetupUserDto:
       type: object
       properties:
@@ -309,28 +289,16 @@ components:
       required:
       - subcategoryName
       - verticalName
-    VisibilityHelpRequestDto:
+    ServiceTag:
       type: object
       properties:
-        vatNumber:
+        name:
           type: string
-        businessId:
+        value:
           type: string
-        siretCountry:
-          type: string
-          enum:
-          - FR
-          - BE
-          - CH
-          - DE
-          - NL
-          - ES
-          - PT
-          - IT
       required:
-      - vatNumber
-      - businessId
-      - siretCountry
+      - name
+      - value
     PriceModelRangeDuration:
       type: object
       properties:
@@ -365,442 +333,6 @@ components:
       - price
       - priceLowSeason
       - label
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        picture:
-          type: string
-        role:
-          enum:
-          - user
-          - manager
-          - admin
-          - reconditioner
-          type: string
-        password:
-          type: string
-        validationCode:
-          $ref: '#/components/schemas/UserValidationCode'
-        isDemoAccount:
-          type: boolean
-        isAccountActivated:
-          type: boolean
-        lastConnection:
-          format: date-time
-          type: string
-        createdFrom:
-          enum:
-          - admin_dashboard
-          - employee
-          - lokkit
-          - visibility
-          - self_test
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-        connectionAttempt:
-          type: number
-        availableTools:
-          type: array
-          items:
-            type: string
-            enum:
-            - dashboard
-            - lokkit
-            - visibility
-            - visibility_one
-            - reconditioning
-        signedUpWith:
-          enum:
-          - google
-          - apple
-          type: string
-      required:
-      - id
-      - name
-      - email
-      - phone
-      - picture
-      - role
-      - isDemoAccount
-      - isAccountActivated
-      - createdFrom
-      - createdAt
-      - connectionAttempt
-      - availableTools
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    VisibilitySetupStripeDto:
-      type: object
-      properties:
-        from:
-          enum:
-          - settings
-          - visibility-free
-          type:
-          - string
-          - 'null'
-        country:
-          type: string
-      required:
-      - country
-    PriceModelLLDDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: LLD
-          enum:
-          - LLD
-        calendarMonths:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - calendarMonths
-      - id
-      - price
-      - priceLowSeason
-      - label
-    CheckOnboardingStatusReturnDto:
-      type: object
-      properties:
-        isSuccess:
-          type: boolean
-        message:
-          type:
-          - string
-          - 'null'
-      required:
-      - isSuccess
-      - message
-    UserValidationCode:
-      type: object
-      properties:
-        code:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - code
-      - expiresAt
-    CheckVisibilityValidationCodeDto:
-      type: object
-      properties:
-        email:
-          type: string
-        code:
-          type: string
-      required:
-      - email
-      - code
-    VisibilityCompleteFormInfosDto:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        companyName:
-          type: string
-        website:
-          type: string
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-        verticales:
-          type: array
-          items:
-            type: string
-            enum:
-            - BIKE
-            - ELECTRIC_BIKE
-            - MOPED
-            - MOTORCYCLE
-            - CAR
-            - SCOOTER
-            - SKI
-            - CLIMBING
-            - SNOWSHOES
-            - SURF
-            - PADDLE
-            - CANOE_KAYAK
-            - BOAT
-            - EVENT
-            - MOTOCULTURE
-            - TOOLING
-        companyInfos:
-          $ref: '#/components/schemas/VisibilityFormExternalCompanyDto'
-        utmInfos:
-          $ref: '#/components/schemas/SelfTestUtmInfos'
-      required:
-      - firstName
-      - lastName
-      - email
-      - phone
-      - companyName
-      - website
-      - lang
-      - verticales
-      - companyInfos
-      - utmInfos
-    CheckValidationCodeStatusReturnDto:
-      type: object
-      properties:
-        isValid:
-          type: boolean
-      required:
-      - isValid
-    ServiceField:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        isTagged:
-          type: boolean
-      required:
-      - id
-      - name
-      - value
-      - isTagged
-    PriceModelSpecificDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: specific
-          enum:
-          - specific
-        duration:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - duration
-      - id
-      - price
-      - priceLowSeason
-      - label
-    ItemOnlineStoreInformation:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - name
-      - description
-    ItemAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    CompanyDocumentBodyDto:
-      type: object
-      properties:
-        id:
-          type: string
-        internalTitle:
-          type: string
-        collection:
-          type: string
-          enum:
-          - termsAndConditions
-        type:
-          type: string
-          enum:
-          - lokkiPayment
-          - lokkiVisibility
-          - lokkiRent
-      required:
-      - id
-      - internalTitle
-      - collection
-      - type
-    CreateUpdateExternalCompanyAddressComponentsDto:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        street:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        administrativeAreaLevel1:
-          type: string
-        administrativeAreaLevel2:
-          type: string
-        country:
-          type: string
-        placeId:
-          type: string
-      required:
-      - streetNumber
-      - street
-      - postalCode
-      - city
-      - administrativeAreaLevel1
-      - administrativeAreaLevel2
-      - country
-    CreateUpdateServiceDto:
-      type: object
-      properties:
-        priceModels:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/PriceModelSpecificDuration'
-            - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
-        id:
-          type: string
-        name:
-          type: string
-        rentalType:
-          enum:
-          - LCD
-          - LLD
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceField'
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceTag'
-        imageUrl:
-          type: array
-          items:
-            type: string
-        videoLink:
-          type: string
-        attachedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachedFile'
-        rank:
-          type: number
-        isAvailable:
-          type: boolean
-        onlineStoreInformation:
-          type: object
-          properties:
-            name:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-            description:
-              required: true
-              $ref: '#/components/schemas/LocalizedContent'
-        productModel:
-          type: string
-        relatedProducts:
-          type: array
-          items:
-            type: string
-        isRelatedProducts:
-          type: boolean
-        productSurveyId:
-          type: string
-        hideOnOnlineStore:
-          type: boolean
-        vat:
-          type: number
-        isAssuranceTulip:
-          type: boolean
-        verticalCategoryId:
-          type: string
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceAttribute'
-        translationInProgress:
-          type: boolean
-        onlineAvailability:
-          type: boolean
-        printed:
-          type: boolean
-      required:
-      - priceModels
-      - name
-      - rentalType
-      - fields
-      - tags
-      - imageUrl
-      - videoLink
-      - attachedFiles
-      - rank
-      - isAvailable
-      - onlineStoreInformation
-      - productModel
-      - relatedProducts
-      - isRelatedProducts
-      - productSurveyId
-      - hideOnOnlineStore
-      - vat
-      - isAssuranceTulip
-      - onlineAvailability
-      - printed
     VisibilityCompanyData:
       type: object
       properties:
@@ -897,56 +429,35 @@ components:
       - claimStatus
       - upgradeStatus
       - visible
-    VisibilityCreateUserDto:
+    VisibilityFormExternalCompanyDto:
       type: object
       properties:
-        email:
+        address:
           type: string
-        password:
-          type: string
-        lang:
-          type: string
-          enum:
-          - fr
-          - en
-          - es
-          - pt
-          - it
-          - pl
-          - de
-          - nl
-        fromE2E:
-          type: boolean
+        addressComponents:
+          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
+        lat:
+          type: number
+        lng:
+          type: number
       required:
-      - email
-      - password
-      - lang
-    SelfTestUtmInfos:
+      - address
+      - addressComponents
+      - lat
+      - lng
+    ItemAttribute:
       type: object
       properties:
-        utm_source:
+        attribute:
           type: string
-        utm_medium:
-          type: string
-        utm_campaign:
-          type: string
-        utm_content:
-          type: string
-        utm_term:
-          type: string
-        device:
-          type: string
-        matchtype:
-          type: string
-        campaign_id:
-          type: string
-        adset_id:
-          type: string
-        ad_id:
-          type: string
-        GeoLoc:
-          type: string
-    ExternalCompanyAddressComponents:
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    CreateUpdateExternalCompanyAddressComponentsDto:
       type: object
       properties:
         streetNumber:
@@ -992,41 +503,40 @@ components:
       required:
       - email
       - lang
-    ServiceAttribute:
+    CompanyDocumentBodyDto:
       type: object
       properties:
-        attribute:
+        id:
           type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    VisibilityFormExternalCompanyDto:
-      type: object
-      properties:
-        address:
+        internalTitle:
           type: string
-        addressComponents:
-          $ref: '#/components/schemas/CreateUpdateExternalCompanyAddressComponentsDto'
-        lat:
-          type: number
-        lng:
-          type: number
+        collection:
+          type: string
+          enum:
+          - termsAndConditions
+        type:
+          type: string
+          enum:
+          - lokkiPayment
+          - lokkiVisibility
+          - lokkiRent
       required:
-      - address
-      - addressComponents
-      - lat
-      - lng
-    VisibilityCreateAccountResultDto:
+      - id
+      - internalTitle
+      - collection
+      - type
+    CheckOnboardingStatusReturnDto:
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/User'
+        isSuccess:
+          type: boolean
+        message:
+          type:
+          - string
+          - 'null'
       required:
-      - user
+      - isSuccess
+      - message
     Service:
       type: object
       properties:
@@ -1130,6 +640,203 @@ components:
       - printed
       - vat
       - translationInProgress
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    VisibilityCreateAccountResultDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - user
+    VisibilityCompleteFormInfosDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        companyName:
+          type: string
+        website:
+          type: string
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+        verticales:
+          type: array
+          items:
+            type: string
+            enum:
+            - BIKE
+            - ELECTRIC_BIKE
+            - MOPED
+            - MOTORCYCLE
+            - CAR
+            - SCOOTER
+            - SKI
+            - CLIMBING
+            - SNOWSHOES
+            - SURF
+            - PADDLE
+            - CANOE_KAYAK
+            - BOAT
+            - EVENT
+            - MOTOCULTURE
+            - TOOLING
+        companyInfos:
+          $ref: '#/components/schemas/VisibilityFormExternalCompanyDto'
+        utmInfos:
+          $ref: '#/components/schemas/SelfTestUtmInfos'
+      required:
+      - firstName
+      - lastName
+      - email
+      - phone
+      - companyName
+      - website
+      - lang
+      - verticales
+      - companyInfos
+      - utmInfos
+    CreateUpdateServiceDto:
+      type: object
+      properties:
+        priceModels:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/PriceModelSpecificDuration'
+            - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
+        id:
+          type: string
+        name:
+          type: string
+        rentalType:
+          enum:
+          - LCD
+          - LLD
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceField'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceTag'
+        imageUrl:
+          type: array
+          items:
+            type: string
+        videoLink:
+          type: string
+        attachedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachedFile'
+        rank:
+          type: number
+        isAvailable:
+          type: boolean
+        onlineStoreInformation:
+          type: object
+          properties:
+            name:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+            description:
+              required: true
+              $ref: '#/components/schemas/LocalizedContent'
+        productModel:
+          type: string
+        relatedProducts:
+          type: array
+          items:
+            type: string
+        isRelatedProducts:
+          type: boolean
+        productSurveyId:
+          type: string
+        hideOnOnlineStore:
+          type: boolean
+        vat:
+          type: number
+        isAssuranceTulip:
+          type: boolean
+        verticalCategoryId:
+          type: string
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceAttribute'
+        translationInProgress:
+          type: boolean
+        onlineAvailability:
+          type: boolean
+        printed:
+          type: boolean
+      required:
+      - priceModels
+      - name
+      - rentalType
+      - fields
+      - tags
+      - imageUrl
+      - videoLink
+      - attachedFiles
+      - rank
+      - isAvailable
+      - onlineStoreInformation
+      - productModel
+      - relatedProducts
+      - isRelatedProducts
+      - productSurveyId
+      - hideOnOnlineStore
+      - vat
+      - isAssuranceTulip
+      - onlineAvailability
+      - printed
     VisibilityUpgradeFormInfosDto:
       type: object
       properties:
@@ -1195,24 +902,254 @@ components:
       - lng
       - country
       - companySignatureDocument
-    AttachedFile:
+    PriceModelSpecificDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        duration:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - duration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    ExternalCompanyAddressComponents:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        street:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        country:
+          type: string
+        placeId:
+          type: string
+      required:
+      - streetNumber
+      - street
+      - postalCode
+      - city
+      - administrativeAreaLevel1
+      - administrativeAreaLevel2
+      - country
+    VisibilityCreateUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        lang:
+          type: string
+          enum:
+          - fr
+          - en
+          - es
+          - pt
+          - it
+          - pl
+          - de
+          - nl
+        fromE2E:
+          type: boolean
+      required:
+      - email
+      - password
+      - lang
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        picture:
+          type: string
+        role:
+          enum:
+          - user
+          - manager
+          - admin
+          - reconditioner
+          type: string
+        password:
+          type: string
+        validationCode:
+          $ref: '#/components/schemas/UserValidationCode'
+        isDemoAccount:
+          type: boolean
+        isAccountActivated:
+          type: boolean
+        lastConnection:
+          format: date-time
+          type: string
+        createdFrom:
+          enum:
+          - admin_dashboard
+          - employee
+          - lokkit
+          - visibility
+          - self_test
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        connectionAttempt:
+          type: number
+        availableTools:
+          type: array
+          items:
+            type: string
+            enum:
+            - dashboard
+            - lokkit
+            - visibility
+            - visibility_one
+            - reconditioning
+        signedUpWith:
+          enum:
+          - google
+          - apple
+          type: string
+      required:
+      - id
+      - name
+      - email
+      - phone
+      - picture
+      - role
+      - isDemoAccount
+      - isAccountActivated
+      - createdFrom
+      - createdAt
+      - connectionAttempt
+      - availableTools
+    CheckStripeSetupStatusReturnDto:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+        url:
+          type:
+          - string
+          - 'null'
+      required:
+      - isSuccess
+      - url
+    ItemOnlineStoreInformation:
       type: object
       properties:
         name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
-          type: string
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
       required:
       - name
-      - key
-      - size
-      - type
+      - description
+    VisibilityHelpRequestDto:
+      type: object
+      properties:
+        vatNumber:
+          type: string
+        businessId:
+          type: string
+        siretCountry:
+          type: string
+          enum:
+          - FR
+          - BE
+          - CH
+          - DE
+          - NL
+          - ES
+          - PT
+          - IT
+      required:
+      - vatNumber
+      - businessId
+      - siretCountry
+    SelfTestUtmInfos:
+      type: object
+      properties:
+        utm_source:
+          type: string
+        utm_medium:
+          type: string
+        utm_campaign:
+          type: string
+        utm_content:
+          type: string
+        utm_term:
+          type: string
+        device:
+          type: string
+        matchtype:
+          type: string
+        campaign_id:
+          type: string
+        adset_id:
+          type: string
+        ad_id:
+          type: string
+        GeoLoc:
+          type: string
+    UserValidationCode:
+      type: object
+      properties:
+        code:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - code
+      - expiresAt
+    VisibilitySetupUserResultDto:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+        code:
+          type: string
+          enum:
+          - NO_ACCOUNT
+          - NO_COMPANY
+          - EMPLOYEE
+          - OWNER
+          - OWNER_DEMO
+      required:
+      - isSuccess
+      - code
     StripeAccountUrlDto:
       type: object
       properties:
@@ -1220,6 +1157,69 @@ components:
           type: string
       required:
       - url
+    VisibilitySetupStripeDto:
+      type: object
+      properties:
+        from:
+          enum:
+          - settings
+          - visibility-free
+          type:
+          - string
+          - 'null'
+        country:
+          type: string
+      required:
+      - country
+    ServiceField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    CheckVisibilityValidationCodeDto:
+      type: object
+      properties:
+        email:
+          type: string
+        code:
+          type: string
+      required:
+      - email
+      - code
+    CheckValidationCodeStatusReturnDto:
+      type: object
+      properties:
+        isValid:
+          type: boolean
+      required:
+      - isValid
+    ServiceAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

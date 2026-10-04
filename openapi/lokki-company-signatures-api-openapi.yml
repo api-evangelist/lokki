@@ -382,28 +382,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CompanyDocument:
-      type: object
-      properties:
-        id:
-          type: string
-        collection:
-          type: string
-          enum:
-          - termsAndConditions
-        internalTitle:
-          type: string
-        type:
-          type: string
-          enum:
-          - lokkiPayment
-          - lokkiVisibility
-          - lokkiRent
-      required:
-      - id
-      - collection
-      - internalTitle
-      - type
     GetManyCompanySignaturesResponseDto:
       type: object
       properties:
@@ -419,19 +397,6 @@ components:
       required:
       - total
       - docs
-    CreateOneCompanySignatureBodyDto:
-      type: object
-      properties:
-        document:
-          $ref: '#/components/schemas/CompanyDocumentBodyDto'
-        userId:
-          type: string
-        companyId:
-          type: string
-      required:
-      - document
-      - userId
-      - companyId
     CompanyDocumentBodyDto:
       type: object
       properties:
@@ -454,6 +419,28 @@ components:
       - internalTitle
       - collection
       - type
+    CompanyDocument:
+      type: object
+      properties:
+        id:
+          type: string
+        collection:
+          type: string
+          enum:
+          - termsAndConditions
+        internalTitle:
+          type: string
+        type:
+          type: string
+          enum:
+          - lokkiPayment
+          - lokkiVisibility
+          - lokkiRent
+      required:
+      - id
+      - collection
+      - internalTitle
+      - type
     CompanySignature:
       type: object
       properties:
@@ -474,6 +461,19 @@ components:
       - document
       - userId
       - id
+    CreateOneCompanySignatureBodyDto:
+      type: object
+      properties:
+        document:
+          $ref: '#/components/schemas/CompanyDocumentBodyDto'
+        userId:
+          type: string
+        companyId:
+          type: string
+      required:
+      - document
+      - userId
+      - companyId
   securitySchemes:
     x-access-token:
       scheme: bearer

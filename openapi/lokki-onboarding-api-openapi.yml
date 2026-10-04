@@ -160,21 +160,6 @@ components:
       - userId
       - tool
       - step
-    UpdateUserOnboardingDto:
-      type: object
-      properties:
-        step:
-          enum:
-          - account-creation
-          - shop-search
-          - user-infos
-          - company-verticales
-          - completed
-          type: string
-        metadata:
-          type: object
-      required:
-      - step
     UserOnboarding:
       type: object
       properties:
@@ -212,6 +197,21 @@ components:
       - tool
       - step
       - createdAt
+    UpdateUserOnboardingDto:
+      type: object
+      properties:
+        step:
+          enum:
+          - account-creation
+          - shop-search
+          - user-infos
+          - company-verticales
+          - completed
+          type: string
+        metadata:
+          type: object
+      required:
+      - step
   securitySchemes:
     x-access-token:
       scheme: bearer

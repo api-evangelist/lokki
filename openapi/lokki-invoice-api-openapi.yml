@@ -82,7 +82,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GetSubscriptionInvoicesResponseDto:
+    GetLokkiPaymentInvoicesResponseDto:
       type: object
       properties:
         totalItems:
@@ -90,7 +90,7 @@ components:
         invoices:
           type: array
           items:
-            $ref: '#/components/schemas/SubscriptionInvoice'
+            $ref: '#/components/schemas/LokkiPaymentInvoice'
       required:
       - totalItems
       - invoices
@@ -111,7 +111,7 @@ components:
       - invoiceNb
       - createdAt
       - currency
-    GetLokkiPaymentInvoicesResponseDto:
+    GetSubscriptionInvoicesResponseDto:
       type: object
       properties:
         totalItems:
@@ -119,7 +119,7 @@ components:
         invoices:
           type: array
           items:
-            $ref: '#/components/schemas/LokkiPaymentInvoice'
+            $ref: '#/components/schemas/SubscriptionInvoice'
       required:
       - totalItems
       - invoices

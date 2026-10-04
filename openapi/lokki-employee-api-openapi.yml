@@ -162,16 +162,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EmployeeRegistrationInfoDto:
-      type: object
-      properties:
-        companyName:
-          type: string
-        newUserName:
-          type: string
-      required:
-      - companyName
-      - newUserName
     UpdateEmployeeDto:
       type: object
       properties:
@@ -181,38 +171,6 @@ components:
           type: string
         isAccountActivated:
           type: boolean
-    EmployeeAccess:
-      type: object
-      properties:
-        clients:
-          type: boolean
-        getNewOrderMails:
-          type: boolean
-        editCatalog:
-          type: boolean
-        addPromo:
-          type: boolean
-        workshop:
-          type: boolean
-        workshopStat:
-          type: boolean
-        marketing:
-          type: boolean
-        statistics:
-          type: boolean
-        cashBook:
-          type: boolean
-        settings:
-          type: boolean
-        bookingDeletion:
-          type: boolean
-    UpdateEmployeeAccessDto:
-      type: object
-      properties:
-        access:
-          $ref: '#/components/schemas/EmployeeAccess'
-      required:
-      - access
     CompanyEmployee:
       type: object
       properties:
@@ -248,19 +206,16 @@ components:
       - isMonitor
       - name
       - email
-    AddEmployeeDto:
+    EmployeeRegistrationInfoDto:
       type: object
       properties:
-        name:
+        companyName:
           type: string
-        email:
+        newUserName:
           type: string
-        isMonitor:
-          type: boolean
       required:
-      - name
-      - email
-      - isMonitor
+      - companyName
+      - newUserName
     ValidateEmployeeDto:
       type: object
       properties:
@@ -274,6 +229,51 @@ components:
       - encryptedUserId
       - encryptedCompanyId
       - password
+    AddEmployeeDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        isMonitor:
+          type: boolean
+      required:
+      - name
+      - email
+      - isMonitor
+    UpdateEmployeeAccessDto:
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/EmployeeAccess'
+      required:
+      - access
+    EmployeeAccess:
+      type: object
+      properties:
+        clients:
+          type: boolean
+        getNewOrderMails:
+          type: boolean
+        editCatalog:
+          type: boolean
+        addPromo:
+          type: boolean
+        workshop:
+          type: boolean
+        workshopStat:
+          type: boolean
+        marketing:
+          type: boolean
+        statistics:
+          type: boolean
+        cashBook:
+          type: boolean
+        settings:
+          type: boolean
+        bookingDeletion:
+          type: boolean
   securitySchemes:
     x-access-token:
       scheme: bearer

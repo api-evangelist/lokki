@@ -91,10 +91,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
     UpdateUniverseControllerFormDataDto:
       type: object
       properties:
@@ -111,20 +107,6 @@ components:
           type: number
         minimumPrice:
           type: string
-    UniverseMinimumPrice:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - ALL_ASSOCIATED_CATEGORIES
-          - SPECIFIC_CATEGORY
-          - SPECIFIC_ITEM
-        id:
-          type: string
-      required:
-      - type
-      - id
     Universe:
       type: object
       properties:
@@ -180,6 +162,24 @@ components:
       - productModelIds
       - ranking
       - minimumPrice
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    UniverseMinimumPrice:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - ALL_ASSOCIATED_CATEGORIES
+          - SPECIFIC_CATEGORY
+          - SPECIFIC_ITEM
+        id:
+          type: string
+      required:
+      - type
+      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

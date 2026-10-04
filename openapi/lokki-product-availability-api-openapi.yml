@@ -265,75 +265,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PriceRuleDate:
+    IsSubProductRentedDuringPeriodResponseDto:
       type: object
       properties:
-        day:
-          type: number
-        time:
-          type: string
+        isRented:
+          type: boolean
       required:
-      - day
-      - time
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    PriceRuleVariation:
-      type: object
-      properties:
-        rule:
-          allOf:
-          - $ref: '#/components/schemas/ProductPriceRule'
-        deltaAmount:
-          type: number
-        price:
-          type: number
-      required:
-      - rule
-      - deltaAmount
-      - price
-    PriceModelLLDDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: LLD
-          enum:
-          - LLD
-        calendarMonths:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - calendarMonths
-      - id
-      - price
-      - priceLowSeason
-      - label
-    ItemAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
+      - isRented
     PriceModelSpecificDuration:
       type: object
       properties:
@@ -405,95 +343,6 @@ components:
       - id
       - title
       - rules
-    ProductField:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        isTagged:
-          type: boolean
-      required:
-      - id
-      - name
-      - value
-      - isTagged
-    PriceRule:
-      type: object
-      properties:
-        _id:
-          type: string
-        startDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        endDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        type:
-          type: string
-          enum:
-          - in
-          - include
-          - overlap
-        variation:
-          type: number
-      required:
-      - startDate
-      - endDate
-      - type
-      - variation
-    ProductInsurance:
-      type: object
-      properties:
-        isActivated:
-          type: boolean
-        tulipProductId:
-          type: string
-        averagePurchasePrice:
-          type: number
-        margin:
-          type: number
-        sum:
-          type: number
-        contractType:
-          type: string
-          enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-      required:
-      - isActivated
-      - tulipProductId
-      - averagePurchasePrice
-      - margin
-      - sum
-    TentativeCategorization:
-      type: object
-      properties:
-        subcategoryName:
-          type:
-          - string
-          - 'null'
-        verticalName:
-          type:
-          - string
-          - 'null'
-      required:
-      - subcategoryName
-      - verticalName
-    NotAvailableRange:
-      type: object
-      properties:
-        from:
-          format: date-time
-          type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
     AttachedFile:
       type: object
       properties:
@@ -512,13 +361,6 @@ components:
       - key
       - size
       - type
-    IsSubProductRentedDuringPeriodResponseDto:
-      type: object
-      properties:
-        isRented:
-          type: boolean
-      required:
-      - isRented
     Product:
       type: object
       properties:
@@ -644,6 +486,152 @@ components:
       - displaySubProducts
       - number
       - inspectionReports
+    ItemAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - attribute
+      - tags
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
+    PriceRuleVariation:
+      type: object
+      properties:
+        rule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        deltaAmount:
+          type: number
+        price:
+          type: number
+      required:
+      - rule
+      - deltaAmount
+      - price
+    ProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+        contractType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    ProductField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    PriceRuleDate:
+      type: object
+      properties:
+        day:
+          type: number
+        time:
+          type: string
+      required:
+      - day
+      - time
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    TentativeCategorization:
+      type: object
+      properties:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
     AvailableProduct:
       type: object
       properties:
@@ -825,6 +813,18 @@ components:
       - price
       - priceLowSeason
       - label
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
   securitySchemes:
     x-access-token:
       scheme: bearer

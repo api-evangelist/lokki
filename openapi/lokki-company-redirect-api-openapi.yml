@@ -50,13 +50,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CompanyRedirectTargetType:
-      type: string
-      description: 'DISCOVER: redirect to /location/{citySlug}/{categorySlug}. SEARCH: redirect to a /rent search scoped to lat/lng/address/verticales. HOME: redirect to the homepage (the archived renter had no usable location).'
-      enum:
-      - DISCOVER
-      - SEARCH
-      - HOME
     CompanyRedirectTargetDto:
       type: object
       properties:
@@ -101,6 +94,13 @@ components:
           description: Archived renter's verticales (type=SEARCH)
       required:
       - type
+    CompanyRedirectTargetType:
+      type: string
+      description: 'DISCOVER: redirect to /location/{citySlug}/{categorySlug}. SEARCH: redirect to a /rent search scoped to lat/lng/address/verticales. HOME: redirect to the homepage (the archived renter had no usable location).'
+      enum:
+      - DISCOVER
+      - SEARCH
+      - HOME
   securitySchemes:
     x-access-token:
       scheme: bearer

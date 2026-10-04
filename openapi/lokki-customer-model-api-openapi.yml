@@ -84,22 +84,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    UpdateCustomerModelDto:
-      type: object
-      properties:
-        id:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
-      required:
-      - id
-      - fields
     CreateCustomerModelDto:
       type: object
       properties:
@@ -115,6 +99,15 @@ components:
       required:
       - type
       - fields
+    BulkCreateCustomerModelsDto:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateCustomerModelDto'
+      required:
+      - models
     BulkUpdateCustomerModelsDto:
       type: object
       properties:
@@ -133,25 +126,18 @@ components:
           $ref: '#/components/schemas/LocalizedContent'
       required:
       - value
-    CustomerModelField:
+    UpdateCustomerModelDto:
       type: object
       properties:
         id:
           type: string
-        value:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - id
-      - value
-    BulkCreateCustomerModelsDto:
-      type: object
-      properties:
-        models:
+        fields:
           type: array
           items:
-            $ref: '#/components/schemas/CreateCustomerModelDto'
+            $ref: '#/components/schemas/CreateUpdateCustomerModelField'
       required:
-      - models
+      - id
+      - fields
     CustomerModel:
       type: object
       properties:
@@ -177,6 +163,20 @@ components:
       - fields
       - companyId
       - createdAt
+    CustomerModelField:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - id
+      - value
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
   securitySchemes:
     x-access-token:
       scheme: bearer

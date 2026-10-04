@@ -283,51 +283,23 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GetExportStrapiActivityCityPagesDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    GetExportStrapiCitiesDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    CleanupObsoleteCategoriesResponseDto:
+    CleanupObsoleteStrapiLokkiBodyDto:
       type: object
       properties:
         dryRun:
           type: boolean
-        verticales:
-          type: object
-        orphanCategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/StrapiOrphanCategory'
       required:
       - dryRun
-      - verticales
-      - orphanCategories
-    FileUploadDto:
+    StrapiOrphanCategory:
       type: object
       properties:
-        file:
+        id:
+          type: number
+        name:
           type: string
-          format: binary
       required:
-      - file
+      - id
+      - name
     StrapiImportStatus:
       type: object
       properties:
@@ -363,34 +335,6 @@ components:
       - importStep
       - importStartedAt
       - importEndedAt
-    DiscoverPageAggregate:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    StrapiOrphanCategory:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-      required:
-      - id
-      - name
-    CleanupObsoleteStrapiLokkiBodyDto:
-      type: object
-      properties:
-        dryRun:
-          type: boolean
-      required:
-      - dryRun
     GetExportStrapiDiscoverPagesDto:
       type: object
       properties:
@@ -402,6 +346,62 @@ components:
               type: string
       required:
       - csvData
+    GetExportStrapiActivityCityPagesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    DiscoverPageAggregate:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    CleanupObsoleteCategoriesResponseDto:
+      type: object
+      properties:
+        dryRun:
+          type: boolean
+        verticales:
+          type: object
+        orphanCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrapiOrphanCategory'
+      required:
+      - dryRun
+      - verticales
+      - orphanCategories
+    GetExportStrapiCitiesDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
   securitySchemes:
     x-access-token:
       scheme: bearer

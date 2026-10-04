@@ -78,6 +78,49 @@ components:
       - size
       - type
       - url
+    HistoryAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+        url:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    DocumentStateProductAttachedFile:
+      type: object
+      properties:
+        name:
+          type: string
+        key:
+          type: string
+        size:
+          type: number
+        type:
+          type: string
+      required:
+      - name
+      - key
+      - size
+      - type
+    GetProductStateAttachmentPreviewDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryAttachedFile'
+      required:
+      - files
     ProductStateUploadAttachmentDto:
       type: object
       properties:
@@ -100,49 +143,6 @@ components:
       - orderId
       - subProductId
       - scope
-    DocumentStateProductAttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-    HistoryAttachedFile:
-      type: object
-      properties:
-        name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        url:
-          type: string
-      required:
-      - name
-      - key
-      - size
-      - type
-    GetProductStateAttachmentPreviewDto:
-      type: object
-      properties:
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoryAttachedFile'
-      required:
-      - files
   securitySchemes:
     x-access-token:
       scheme: bearer

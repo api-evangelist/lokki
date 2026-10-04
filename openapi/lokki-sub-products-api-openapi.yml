@@ -80,44 +80,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    BulkPatchSubProductDto:
-      type: object
-      properties:
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        isAvailable:
-          type: boolean
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        id:
-          type: string
-      required:
-      - id
-    PatchSubProductsDto:
-      type: object
-      properties:
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        isAvailable:
-          type: boolean
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
     SubProduct:
       type: object
       properties:
@@ -145,6 +107,23 @@ components:
       - archive
       - externalQrCode
       - notAvailableRanges
+    PatchSubProductsDto:
+      type: object
+      properties:
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        isAvailable:
+          type: boolean
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
     BulkPatchSubProductsDto:
       type: object
       properties:
@@ -166,6 +145,27 @@ components:
       required:
       - from
       - to
+    BulkPatchSubProductDto:
+      type: object
+      properties:
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        isAvailable:
+          type: boolean
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        id:
+          type: string
+      required:
+      - id
   securitySchemes:
     x-access-token:
       scheme: bearer

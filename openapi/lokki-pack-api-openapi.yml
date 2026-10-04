@@ -214,210 +214,25 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ServiceTag:
+    AttachedFile:
       type: object
       properties:
         name:
           type: string
-        value:
+        key:
           type: string
-      required:
-      - name
-      - value
-    PackOption:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
-      required:
-      - name
-      - products
-      - services
-    PriceRule:
-      type: object
-      properties:
-        _id:
-          type: string
-        startDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        endDate:
-          $ref: '#/components/schemas/PriceRuleDate'
+        size:
+          type: number
         type:
           type: string
-          enum:
-          - in
-          - include
-          - overlap
-        variation:
-          type: number
+        uid:
+          type: string
       required:
-      - startDate
-      - endDate
-      - type
-      - variation
-    ProductField:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-        isTagged:
-          type: boolean
-      required:
-      - id
       - name
-      - value
-      - isTagged
-    TentativeCategorization:
-      type: object
-      properties:
-        subcategoryName:
-          type:
-          - string
-          - 'null'
-        verticalName:
-          type:
-          - string
-          - 'null'
-      required:
-      - subcategoryName
-      - verticalName
-    PriceModelRangeDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: range
-          enum:
-          - range
-        minDuration:
-          type: number
-        maxDuration:
-          type: number
-        durationInDays:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
+      - key
+      - size
       - type
-      - minDuration
-      - maxDuration
-      - id
-      - price
-      - priceLowSeason
-      - label
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    PriceModelLLDDuration:
-      type: object
-      properties:
-        type:
-          type: string
-          default: LLD
-          enum:
-          - LLD
-        calendarMonths:
-          type: number
-        id:
-          type: string
-        price:
-          type:
-          - number
-          - 'null'
-        priceLowSeason:
-          type:
-          - number
-          - 'null'
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - type
-      - calendarMonths
-      - id
-      - price
-      - priceLowSeason
-      - label
-    SubProduct:
-      type: object
-      properties:
-        id:
-          type: string
-        isAvailable:
-          type: boolean
-        printed:
-          type: boolean
-        serialNumber:
-          type: string
-        archive:
-          type: boolean
-        externalQrCode:
-          type: string
-        notAvailableRanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotAvailableRange'
-      required:
-      - id
-      - isAvailable
-      - printed
-      - serialNumber
-      - archive
-      - externalQrCode
-      - notAvailableRanges
-    PackCategory:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        productModelId:
-          type: string
-        fieldId:
-          type: string
-      required:
-      - id
-      - name
-      - productModelId
-      - fieldId
-    NotAvailableRange:
-      type: object
-      properties:
-        from:
-          format: date-time
-          type: string
-        to:
-          format: date-time
-          type: string
-      required:
-      - from
-      - to
-    CreateUpdatePackDto:
+    Pack:
       type: object
       properties:
         priceModels:
@@ -426,7 +241,6 @@ components:
             oneOf:
             - $ref: '#/components/schemas/PriceModelSpecificDuration'
             - $ref: '#/components/schemas/PriceModelRangeDuration'
-            - $ref: '#/components/schemas/PriceModelLLDDuration'
         id:
           type: string
         name:
@@ -464,7 +278,7 @@ components:
           type: array
           items:
             type: string
-        isRelatedProducts:
+        isRelatedProduct:
           type: boolean
         productSurveyId:
           type: string
@@ -477,16 +291,23 @@ components:
           type: string
         skisetInfos:
           $ref: '#/components/schemas/PackSkisetInfos'
+        isAvailable:
+          type: boolean
         onlineAvailability:
           type: boolean
-        isAvailable:
+        isRelatedProducts:
           type: boolean
         companyId:
           type: string
         translationInProgress:
           type: boolean
+        standardizedNameI18nKeys:
+          type: array
+          items:
+            type: string
       required:
       - priceModels
+      - id
       - name
       - rentalType
       - options
@@ -498,14 +319,17 @@ components:
       - rank
       - bailAmount
       - relatedProducts
-      - isRelatedProducts
+      - isRelatedProduct
       - productSurveyId
       - vat
       - type
-      - onlineAvailability
       - isAvailable
+      - onlineAvailability
+      - isRelatedProducts
       - companyId
-    ServiceField:
+      - translationInProgress
+      - standardizedNameI18nKeys
+    ProductField:
       type: object
       properties:
         id:
@@ -521,27 +345,39 @@ components:
       - name
       - value
       - isTagged
-    UpdateMultiplePackAvailabilityDto:
+    PriceRuleDate:
       type: object
       properties:
-        packIds:
-          type: array
-          items:
-            type: string
-        available:
-          type: boolean
+        day:
+          type: number
+        time:
+          type: string
       required:
-      - packIds
-      - available
-    PriceModelSpecificDuration:
+      - day
+      - time
+    ServiceTag:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+    PriceModelRangeDuration:
       type: object
       properties:
         type:
           type: string
-          default: specific
+          default: range
           enum:
-          - specific
-        duration:
+          - range
+        minDuration:
+          type: number
+        maxDuration:
+          type: number
+        durationInDays:
           type: number
         id:
           type: string
@@ -557,77 +393,12 @@ components:
           $ref: '#/components/schemas/LocalizedContent'
       required:
       - type
-      - duration
+      - minDuration
+      - maxDuration
       - id
       - price
       - priceLowSeason
       - label
-    ItemOnlineStoreInformation:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - name
-      - description
-    ItemAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-      required:
-      - attribute
-      - tags
-    ProductInsurance:
-      type: object
-      properties:
-        isActivated:
-          type: boolean
-        tulipProductId:
-          type: string
-        averagePurchasePrice:
-          type: number
-        margin:
-          type: number
-        sum:
-          type: number
-        contractType:
-          type: string
-          enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-      required:
-      - isActivated
-      - tulipProductId
-      - averagePurchasePrice
-      - margin
-      - sum
-    PackSkisetInfos:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-      required:
-      - ids
-    UpdatePackAvailabilityDto:
-      type: object
-      properties:
-        packId:
-          type: string
-        available:
-          type: boolean
-      required:
-      - packId
-      - available
     Product:
       type: object
       properties:
@@ -753,41 +524,30 @@ components:
       - displaySubProducts
       - number
       - inspectionReports
-    PriceRuleDate:
+    ItemAttribute:
       type: object
       properties:
-        day:
-          type: number
-        time:
+        attribute:
           type: string
-      required:
-      - day
-      - time
-    PackOnlineStoreInformation:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/LocalizedContent'
-        description:
-          $ref: '#/components/schemas/LocalizedContent'
-      required:
-      - name
-      - description
-    ProductPriceRule:
-      type: object
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        rules:
+        tags:
           type: array
           items:
-            $ref: '#/components/schemas/PriceRule'
+            type: string
       required:
-      - id
-      - title
-      - rules
+      - attribute
+      - tags
+    UpdateMultiplePackAvailabilityDto:
+      type: object
+      properties:
+        packIds:
+          type: array
+          items:
+            type: string
+        available:
+          type: boolean
+      required:
+      - packIds
+      - available
     Service:
       type: object
       properties:
@@ -891,25 +651,274 @@ components:
       - printed
       - vat
       - translationInProgress
-    AttachedFile:
+    PriceModelLLDDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: LLD
+          enum:
+          - LLD
+        calendarMonths:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - calendarMonths
+      - id
+      - price
+      - priceLowSeason
+      - label
+    PackSkisetInfos:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+      required:
+      - ids
+    PackOption:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+      required:
+      - name
+      - products
+      - services
+    NotAvailableRange:
+      type: object
+      properties:
+        from:
+          format: date-time
+          type: string
+        to:
+          format: date-time
+          type: string
+      required:
+      - from
+      - to
+    PriceModelSpecificDuration:
+      type: object
+      properties:
+        type:
+          type: string
+          default: specific
+          enum:
+          - specific
+        duration:
+          type: number
+        id:
+          type: string
+        price:
+          type:
+          - number
+          - 'null'
+        priceLowSeason:
+          type:
+          - number
+          - 'null'
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - type
+      - duration
+      - id
+      - price
+      - priceLowSeason
+      - label
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
+    ItemOnlineStoreInformation:
       type: object
       properties:
         name:
-          type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
-          type: string
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
       required:
       - name
-      - key
-      - size
-      - type
-    Pack:
+      - description
+    SubProduct:
+      type: object
+      properties:
+        id:
+          type: string
+        isAvailable:
+          type: boolean
+        printed:
+          type: boolean
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        externalQrCode:
+          type: string
+        notAvailableRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotAvailableRange'
+      required:
+      - id
+      - isAvailable
+      - printed
+      - serialNumber
+      - archive
+      - externalQrCode
+      - notAvailableRanges
+    ServiceField:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        isTagged:
+          type: boolean
+      required:
+      - id
+      - name
+      - value
+      - isTagged
+    ProductPriceRule:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceRule'
+      required:
+      - id
+      - title
+      - rules
+    UpdatePackAvailabilityDto:
+      type: object
+      properties:
+        packId:
+          type: string
+        available:
+          type: boolean
+      required:
+      - packId
+      - available
+    PackOnlineStoreInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/LocalizedContent'
+        description:
+          $ref: '#/components/schemas/LocalizedContent'
+      required:
+      - name
+      - description
+    PackCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        productModelId:
+          type: string
+        fieldId:
+          type: string
+      required:
+      - id
+      - name
+      - productModelId
+      - fieldId
+    ProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+        contractType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    TentativeCategorization:
+      type: object
+      properties:
+        subcategoryName:
+          type:
+          - string
+          - 'null'
+        verticalName:
+          type:
+          - string
+          - 'null'
+      required:
+      - subcategoryName
+      - verticalName
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    CreateUpdatePackDto:
       type: object
       properties:
         priceModels:
@@ -918,6 +927,7 @@ components:
             oneOf:
             - $ref: '#/components/schemas/PriceModelSpecificDuration'
             - $ref: '#/components/schemas/PriceModelRangeDuration'
+            - $ref: '#/components/schemas/PriceModelLLDDuration'
         id:
           type: string
         name:
@@ -955,7 +965,7 @@ components:
           type: array
           items:
             type: string
-        isRelatedProduct:
+        isRelatedProducts:
           type: boolean
         productSurveyId:
           type: string
@@ -968,23 +978,16 @@ components:
           type: string
         skisetInfos:
           $ref: '#/components/schemas/PackSkisetInfos'
-        isAvailable:
-          type: boolean
         onlineAvailability:
           type: boolean
-        isRelatedProducts:
+        isAvailable:
           type: boolean
         companyId:
           type: string
         translationInProgress:
           type: boolean
-        standardizedNameI18nKeys:
-          type: array
-          items:
-            type: string
       required:
       - priceModels
-      - id
       - name
       - rentalType
       - options
@@ -996,16 +999,13 @@ components:
       - rank
       - bailAmount
       - relatedProducts
-      - isRelatedProduct
+      - isRelatedProducts
       - productSurveyId
       - vat
       - type
-      - isAvailable
       - onlineAvailability
-      - isRelatedProducts
+      - isAvailable
       - companyId
-      - translationInProgress
-      - standardizedNameI18nKeys
   securitySchemes:
     x-access-token:
       scheme: bearer

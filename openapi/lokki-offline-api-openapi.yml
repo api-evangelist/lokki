@@ -33,275 +33,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PriceRuleVariation:
+    AttachedFile:
       type: object
       properties:
-        rule:
-          allOf:
-          - $ref: '#/components/schemas/ProductPriceRule'
-        deltaAmount:
-          type: number
-        price:
-          type: number
-      required:
-      - rule
-      - deltaAmount
-      - price
-    SubProductCreateUpdateOrderDto:
-      type: object
-      properties:
-        _id:
-          type: string
-        serialNumber:
-          type: string
-        archive:
-          type: boolean
-        available:
-          type: boolean
-        status:
-          type: string
-          enum:
-          - WAITING
-          - USED
-          - ENDED
-        externalQrCode:
-          type: string
-        answers:
-          type: object
-        printed:
-          type: boolean
-        returnDate:
-          format: date-time
-          type: string
-      required:
-      - _id
-      - serialNumber
-      - archive
-      - available
-      - status
-      - externalQrCode
-      - answers
-    WarrantedProducts:
-      type: object
-      properties:
-        productId:
-          type: string
-        subProductId:
-          type: string
-        serialNumber:
-          type: string
-        margin:
-          type: number
-        pricePerDay:
-          type: number
-        tulipProductId:
-          type: string
-        tulipContractOptionType:
-          type: string
-          enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-        packId:
-          type: string
-      required:
-      - productId
-      - subProductId
-      - serialNumber
-      - margin
-      - pricePerDay
-      - tulipProductId
-      - tulipContractOptionType
-    PriceRule:
-      type: object
-      properties:
-        _id:
-          type: string
-        startDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        endDate:
-          $ref: '#/components/schemas/PriceRuleDate'
-        type:
-          type: string
-          enum:
-          - in
-          - include
-          - overlap
-        variation:
-          type: number
-      required:
-      - startDate
-      - endDate
-      - type
-      - variation
-    Delivery:
-      type: object
-      properties:
-        status:
-          type: boolean
-        departureAddress:
-          allOf:
-          - $ref: '#/components/schemas/DeliveryAddress'
-        departurePrice:
-          type: number
-        departureReferencePrice:
-          type: number
-        departureDeliveredDate:
-          format: date-time
-          type: string
-        arrivalAddress:
-          allOf:
-          - $ref: '#/components/schemas/DeliveryAddress'
-        arrivalPrice:
-          type: number
-        arrivalReferencePrice:
-          type: number
-        arrivalDeliveredDate:
-          format: date-time
-          type: string
-        price:
-          type: number
-      required:
-      - status
-      - departureAddress
-      - departurePrice
-      - departureReferencePrice
-      - departureDeliveredDate
-      - arrivalAddress
-      - arrivalPrice
-      - arrivalReferencePrice
-      - arrivalDeliveredDate
-    PromoCodeCreateOrderDto:
-      type: object
-      properties:
-        code:
-          type: string
-        source:
-          type: string
-          enum:
-          - COMPANY
-          - LOKKI
-        discountAmount:
-          type: number
-        discountType:
-          type: string
-        applyOnDelivery:
-          type: boolean
-        limitToNewCustomers:
-          type: boolean
-        limitToVerticales:
-          type: array
-          items:
-            type: string
-        limitToCompanies:
-          type: array
-          items:
-            type: string
-        appliedDiscountAmount:
-          type: number
-      required:
-      - code
-      - source
-      - discountAmount
-      - discountType
-      - applyOnDelivery
-    DeliveryAddress:
-      type: object
-      properties:
-        streetNumber:
-          type: string
-        streetName:
-          type: string
-        additional:
-          type: string
-        postalCode:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-        location:
-          $ref: '#/components/schemas/PointSchema'
-        fullAddress:
-          type: string
-      required:
-      - streetNumber
-      - streetName
-      - additional
-      - postalCode
-      - city
-      - country
-      - location
-      - fullAddress
-    SyncOfflineDataAnomaliesResultDto:
-      type: object
-      properties:
-        csvData:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-      required:
-      - csvData
-    LocalizedContent:
-      type: object
-      additionalProperties:
-        type: string
-    CustomerFieldDto:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LocalizedContent'
-        value:
-          type: string
-        id:
-          type: string
-      required:
-      - label
-      - value
-      - id
-    TulipInfos:
-      type: object
-      properties:
-        address:
-          type: string
-        zipcode:
-          type: string
-        city:
-          type: string
-        managerFirstName:
-          type: string
-        managerLastName:
-          type: string
-        sirenNumber:
-          type: string
-      required:
-      - address
-      - zipcode
-      - city
-      - managerFirstName
-      - managerLastName
-      - sirenNumber
-    Status:
-      type: object
-      properties:
-        category:
-          type: string
         name:
           type: string
-        color:
+        key:
           type: string
-        id:
+        size:
+          type: number
+        type:
           type: string
-        statusId:
+        uid:
           type: string
       required:
-      - category
       - name
-      - color
-      - id
-      - statusId
+      - key
+      - size
+      - type
     CustomItemCreateUpdateOrderDto:
       type: object
       properties:
@@ -318,136 +67,6 @@ components:
       - name
       - numberSelected
       - price
-    ItemDiscount:
-      type: object
-      properties:
-        discountType:
-          type: string
-          enum:
-          - AMOUNT
-          - PERCENTAGE
-        amount:
-          type: number
-      required:
-      - discountType
-      - amount
-    PackCreateUpdateOrderDto:
-      type: object
-      properties:
-        id:
-          type: string
-        depositAmount:
-          type: number
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        onlineStoreDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        numberSelected:
-          type: number
-        packId:
-          type: string
-        packImage:
-          type: array
-          items:
-            type: string
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackProductCreateUpdateOrderDto'
-        price:
-          type: number
-        vat:
-          type: number
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackCategoryCreateOrderDto'
-        type:
-          type: string
-          enum:
-          - PRODUCT
-          - CATEGORY
-        initialUnitPrice:
-          type: number
-        discount:
-          $ref: '#/components/schemas/ItemDiscount'
-        surveyId:
-          type: string
-        answers:
-          type: object
-      required:
-      - id
-      - depositAmount
-      - rentalType
-      - name
-      - onlineStoreName
-      - onlineStoreDescription
-      - numberSelected
-      - packId
-      - packImage
-      - products
-      - price
-      - vat
-      - categories
-      - type
-      - initialUnitPrice
-      - discount
-      - answers
-    PackProductCreateUpdateOrderDto:
-      type: object
-      properties:
-        depositAmount:
-          type: number
-        rentalType:
-          type: string
-          enum:
-          - LCD
-          - LLD
-        id:
-          type: string
-        name:
-          type: string
-        onlineStoreName:
-          $ref: '#/components/schemas/LocalizedContent'
-        onlineStoreDescription:
-          $ref: '#/components/schemas/LocalizedContent'
-        subProducts:
-          type: array
-          items:
-            $ref: '#/components/schemas/SubProductCreateUpdateOrderDto'
-        productImage:
-          type: array
-          items:
-            type: string
-        uuid:
-          type: string
-        vat:
-          type: number
-        type:
-          type: string
-          enum:
-          - product
-          - service
-        surveyId:
-          type: string
-      required:
-      - depositAmount
-      - id
-      - name
-      - onlineStoreName
-      - onlineStoreDescription
-      - subProducts
-      - productImage
-      - uuid
-      - vat
-      - type
     CreateUpdateOrderBodyDto:
       type: object
       properties:
@@ -587,50 +206,101 @@ components:
       - lang
       - additionalTimeBeforeOrder
       - additionalTimeAfterOrder
-    ProductInsurance:
+    PromoCodeCreateOrderDto:
       type: object
       properties:
-        isActivated:
-          type: boolean
-        tulipProductId:
+        code:
           type: string
-        averagePurchasePrice:
-          type: number
-        margin:
-          type: number
-        sum:
-          type: number
-        contractType:
+        source:
           type: string
           enum:
-          - OPTION
-          - INCLUSION
-          - HIDDEN_INCLUSION
-      required:
-      - isActivated
-      - tulipProductId
-      - averagePurchasePrice
-      - margin
-      - sum
-    SyncOfflineDataDto:
-      type: object
-      properties:
-        orders:
+          - COMPANY
+          - LOKKI
+        discountAmount:
+          type: number
+        discountType:
+          type: string
+        applyOnDelivery:
+          type: boolean
+        limitToNewCustomers:
+          type: boolean
+        limitToVerticales:
           type: array
           items:
-            $ref: '#/components/schemas/CreateUpdateOrderBodyDto'
+            type: string
+        limitToCompanies:
+          type: array
+          items:
+            type: string
+        appliedDiscountAmount:
+          type: number
       required:
-      - orders
-    PackCategoryCreateOrderDto:
+      - code
+      - source
+      - discountAmount
+      - discountType
+      - applyOnDelivery
+    ItemDiscount:
       type: object
       properties:
+        discountType:
+          type: string
+          enum:
+          - AMOUNT
+          - PERCENTAGE
+        amount:
+          type: number
+      required:
+      - discountType
+      - amount
+    PackProductCreateUpdateOrderDto:
+      type: object
+      properties:
+        depositAmount:
+          type: number
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
         id:
           type: string
-        value:
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        subProducts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubProductCreateUpdateOrderDto'
+        productImage:
+          type: array
+          items:
+            type: string
+        uuid:
+          type: string
+        vat:
+          type: number
+        type:
+          type: string
+          enum:
+          - product
+          - service
+        surveyId:
           type: string
       required:
+      - depositAmount
       - id
-      - value
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
+      - subProducts
+      - productImage
+      - uuid
+      - vat
+      - type
     PriceRuleDate:
       type: object
       properties:
@@ -641,6 +311,217 @@ components:
       required:
       - day
       - time
+    Status:
+      type: object
+      properties:
+        category:
+          type: string
+        name:
+          type: string
+        color:
+          type: string
+        id:
+          type: string
+        statusId:
+          type: string
+      required:
+      - category
+      - name
+      - color
+      - id
+      - statusId
+    WarrantedProducts:
+      type: object
+      properties:
+        productId:
+          type: string
+        subProductId:
+          type: string
+        serialNumber:
+          type: string
+        margin:
+          type: number
+        pricePerDay:
+          type: number
+        tulipProductId:
+          type: string
+        tulipContractOptionType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+        packId:
+          type: string
+      required:
+      - productId
+      - subProductId
+      - serialNumber
+      - margin
+      - pricePerDay
+      - tulipProductId
+      - tulipContractOptionType
+    PackCategoryCreateOrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      required:
+      - id
+      - value
+    SyncOfflineDataAnomaliesResultDto:
+      type: object
+      properties:
+        csvData:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+      required:
+      - csvData
+    SyncOfflineDataDto:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateUpdateOrderBodyDto'
+      required:
+      - orders
+    PackCreateUpdateOrderDto:
+      type: object
+      properties:
+        id:
+          type: string
+        depositAmount:
+          type: number
+        rentalType:
+          type: string
+          enum:
+          - LCD
+          - LLD
+        name:
+          type: string
+        onlineStoreName:
+          $ref: '#/components/schemas/LocalizedContent'
+        onlineStoreDescription:
+          $ref: '#/components/schemas/LocalizedContent'
+        numberSelected:
+          type: number
+        packId:
+          type: string
+        packImage:
+          type: array
+          items:
+            type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackProductCreateUpdateOrderDto'
+        price:
+          type: number
+        vat:
+          type: number
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackCategoryCreateOrderDto'
+        type:
+          type: string
+          enum:
+          - PRODUCT
+          - CATEGORY
+        initialUnitPrice:
+          type: number
+        discount:
+          $ref: '#/components/schemas/ItemDiscount'
+        surveyId:
+          type: string
+        answers:
+          type: object
+      required:
+      - id
+      - depositAmount
+      - rentalType
+      - name
+      - onlineStoreName
+      - onlineStoreDescription
+      - numberSelected
+      - packId
+      - packImage
+      - products
+      - price
+      - vat
+      - categories
+      - type
+      - initialUnitPrice
+      - discount
+      - answers
+    DeliveryAddress:
+      type: object
+      properties:
+        streetNumber:
+          type: string
+        streetName:
+          type: string
+        additional:
+          type: string
+        postalCode:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        location:
+          $ref: '#/components/schemas/PointSchema'
+        fullAddress:
+          type: string
+      required:
+      - streetNumber
+      - streetName
+      - additional
+      - postalCode
+      - city
+      - country
+      - location
+      - fullAddress
+    SubProductCreateUpdateOrderDto:
+      type: object
+      properties:
+        _id:
+          type: string
+        serialNumber:
+          type: string
+        archive:
+          type: boolean
+        available:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - WAITING
+          - USED
+          - ENDED
+        externalQrCode:
+          type: string
+        answers:
+          type: object
+        printed:
+          type: boolean
+        returnDate:
+          format: date-time
+          type: string
+      required:
+      - _id
+      - serialNumber
+      - archive
+      - available
+      - status
+      - externalQrCode
+      - answers
     ProductCreateUpdateOrderDto:
       type: object
       properties:
@@ -706,6 +587,42 @@ components:
       - initialUnitPrice
       - priceRuleVariation
       - discount
+    PriceRuleVariation:
+      type: object
+      properties:
+        rule:
+          allOf:
+          - $ref: '#/components/schemas/ProductPriceRule'
+        deltaAmount:
+          type: number
+        price:
+          type: number
+      required:
+      - rule
+      - deltaAmount
+      - price
+    PriceRule:
+      type: object
+      properties:
+        _id:
+          type: string
+        startDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        endDate:
+          $ref: '#/components/schemas/PriceRuleDate'
+        type:
+          type: string
+          enum:
+          - in
+          - include
+          - overlap
+        variation:
+          type: number
+      required:
+      - startDate
+      - endDate
+      - type
+      - variation
     PointSchema:
       type: object
       properties:
@@ -733,39 +650,6 @@ components:
       - id
       - title
       - rules
-    CreateUpdateOrderCustomer:
-      type: object
-      properties:
-        id:
-          type: string
-        lastName:
-          type: string
-        firstName:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        zipCode:
-          type: string
-        companyName:
-          type: string
-        isNewsletterSubscribe:
-          type: boolean
-        isLokkiNewsletterSubscribe:
-          type: boolean
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerFieldDto'
-        tulipInfos:
-          $ref: '#/components/schemas/TulipInfos'
-        customerRpId:
-          type: string
-        hidden:
-          type: boolean
-      required:
-      - lastName
     ServiceCreateUpdateOrderDto:
       type: object
       properties:
@@ -819,24 +703,140 @@ components:
       - initialUnitPrice
       - discount
       - answers
-    AttachedFile:
+    CustomerFieldDto:
       type: object
       properties:
-        name:
+        label:
+          $ref: '#/components/schemas/LocalizedContent'
+        value:
           type: string
-        key:
-          type: string
-        size:
-          type: number
-        type:
-          type: string
-        uid:
+        id:
           type: string
       required:
-      - name
-      - key
-      - size
-      - type
+      - label
+      - value
+      - id
+    ProductInsurance:
+      type: object
+      properties:
+        isActivated:
+          type: boolean
+        tulipProductId:
+          type: string
+        averagePurchasePrice:
+          type: number
+        margin:
+          type: number
+        sum:
+          type: number
+        contractType:
+          type: string
+          enum:
+          - OPTION
+          - INCLUSION
+          - HIDDEN_INCLUSION
+      required:
+      - isActivated
+      - tulipProductId
+      - averagePurchasePrice
+      - margin
+      - sum
+    CreateUpdateOrderCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+        lastName:
+          type: string
+        firstName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        zipCode:
+          type: string
+        companyName:
+          type: string
+        isNewsletterSubscribe:
+          type: boolean
+        isLokkiNewsletterSubscribe:
+          type: boolean
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerFieldDto'
+        tulipInfos:
+          $ref: '#/components/schemas/TulipInfos'
+        customerRpId:
+          type: string
+        hidden:
+          type: boolean
+      required:
+      - lastName
+    TulipInfos:
+      type: object
+      properties:
+        address:
+          type: string
+        zipcode:
+          type: string
+        city:
+          type: string
+        managerFirstName:
+          type: string
+        managerLastName:
+          type: string
+        sirenNumber:
+          type: string
+      required:
+      - address
+      - zipcode
+      - city
+      - managerFirstName
+      - managerLastName
+      - sirenNumber
+    LocalizedContent:
+      type: object
+      additionalProperties:
+        type: string
+    Delivery:
+      type: object
+      properties:
+        status:
+          type: boolean
+        departureAddress:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryAddress'
+        departurePrice:
+          type: number
+        departureReferencePrice:
+          type: number
+        departureDeliveredDate:
+          format: date-time
+          type: string
+        arrivalAddress:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryAddress'
+        arrivalPrice:
+          type: number
+        arrivalReferencePrice:
+          type: number
+        arrivalDeliveredDate:
+          format: date-time
+          type: string
+        price:
+          type: number
+      required:
+      - status
+      - departureAddress
+      - departurePrice
+      - departureReferencePrice
+      - departureDeliveredDate
+      - arrivalAddress
+      - arrivalPrice
+      - arrivalReferencePrice
+      - arrivalDeliveredDate
   securitySchemes:
     x-access-token:
       scheme: bearer
