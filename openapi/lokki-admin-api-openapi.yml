@@ -1083,7 +1083,7 @@ paths:
                 $ref: '#/components/schemas/ManagingPlace'
       tags:
       - Admin
-      summary: Admin create rental place B2 B
+      summary: Admin create rental place B2B
       x-summary-source: derived
   /v2/admin/rental-place-b2b/update/{id}:
     put:
@@ -1109,7 +1109,7 @@ paths:
                 $ref: '#/components/schemas/ManagingPlace'
       tags:
       - Admin
-      summary: Admin update rental place B2 B
+      summary: Admin update rental place B2B
       x-summary-source: derived
   /v2/admin/user:
     get:

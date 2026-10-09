@@ -58,7 +58,7 @@ paths:
                 $ref: '#/components/schemas/PublicManagingPlace'
       tags:
       - Rental Place B2b
-      summary: Get rental place B2 BBy slug
+      summary: Get rental place B2B by slug
       x-summary-source: derived
   /v2/rental-place-b2b/stores-clients-csv:
     get:
@@ -120,7 +120,7 @@ paths:
                 $ref: '#/components/schemas/RentalPlaceInfos'
       tags:
       - Rental Place B2b
-      summary: Update rental place B2 B
+      summary: Update rental place B2B
       x-summary-source: derived
   /v2/rental-place-b2b/dataProtectionText:
     put:

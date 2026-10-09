@@ -75,7 +75,7 @@ paths:
           description: ''
       tags:
       - Login
-      summary: Log as user from rp B2 B
+      summary: Log as user from rp B2B
       x-summary-source: derived
   /v2/login/goBackOnRpB2B:
     get:
@@ -86,7 +86,7 @@ paths:
           description: ''
       tags:
       - Login
-      summary: Go back on rp B2 B
+      summary: Go back on rp B2B
       x-summary-source: derived
   /v2/login/check-token-rp-b2b:
     get:
@@ -101,7 +101,7 @@ paths:
                 type: boolean
       tags:
       - Login
-      summary: Check token rp B2 B
+      summary: Check token rp B2B
       x-summary-source: derived
   /v2/login/checkTokenReconditioner:
     get:
